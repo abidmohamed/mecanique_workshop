@@ -1,0 +1,80 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Customers</h5>
+            </div>
+            <div class="card card-body">
+                <table id="table_id" class="display text-center">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Debt</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>
+                            {{customer.firstname}} {{customer.lastname}}
+                        </td>
+                        <td>
+                            {{customer.phone}}
+                        </td>
+                        <td>
+                            {{customer.address}}
+                        </td>
+                        <td>
+                            {{customer.email}}
+                        </td>
+                        <td>
+                            {{customer.debt}}
+                        </td>
+                        <td>
+                            <a class="btn btn-success "
+                               href="{% url 'customer:update_customer' customer.id %}">Update</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-warning "
+                               href="{% url 'customer:customer_detail' customer.id %}">Details</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' customer.id %}">PayDebt</a>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block jsscript %}
+<!-- Data Table  -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+<script type='text/javascript'>
+    //Data Table init
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+    } );
+
+</script>
+{% endblock %}

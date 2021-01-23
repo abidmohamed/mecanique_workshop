@@ -1,0 +1,32 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<br>
+<div class="row">
+    <div class="col-md-2 col-sm-1"></div>
+    <div class="col-md-10 col-sm-12">
+        <div class="card card-body">
+            <h2>Payment Form</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{customerchequeform|crispy}}
+                <div class="row spacer">
+                    <div class="col-md offset-2">
+                        <input class="btn btn-primary" type="submit" name="submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% for error in customerchequeform.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-md-2 col-sm-1"></div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,345 @@
+{% load  static %}
+{% load i18n %}
+<!-- how the translation is done
+1- django-admin makemessages -l fr
+2- django-admin compilemessages
+-->
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-cogs"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Garage <sup>My</sup></div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="/">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>{% trans "Dashboard" %}</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Interface
+    </div>
+
+
+    <!-- Nav Item - Family Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+           aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-object-group"></i>
+            <span>Product Family</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'family:add_family' %}">Add</a>
+                <a class="collapse-item" href="{% url 'family:family_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+
+    <!-- Nav Item - Categories Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+           aria-controls="collapseTwo">
+            <i class="fas fa-object-ungroup"></i>
+            <span>Product Category</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'category:add_category' %}">Add</a>
+                <a class="collapse-item" href="{% url 'category:all_category_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Vehicule Brand Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBrand"
+           aria-expanded="true" aria-controls="collapseBrand">
+    <i class="fas fa-car-alt"></i><i class="fas fa-car-alt"></i><i class="fas fa-car-alt"></i>
+            <span>Vehicule Brand</span>
+        </a>
+        <div id="collapseBrand" class="collapse" aria-labelledby="headingBrand" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'vehicule:add_brand' %}">Add</a>
+                <a class="collapse-item" href="{% url 'vehicule:brand_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Vehicule Type Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseType"
+           aria-expanded="true" aria-controls="collapseType">
+    <i class="fas fa-car-alt"></i><i class="fas fa-car-alt"></i>
+            <span>Vehicule Type</span>
+        </a>
+        <div id="collapseType" class="collapse" aria-labelledby="headingType" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'vehicule:add_type' %}">Add</a>
+                <a class="collapse-item" href="{% url 'vehicule:all_type_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Vehicule Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVehicule"
+           aria-expanded="true" aria-controls="collapseVehicule">
+    <i class="fas fa-car-alt"></i>
+            <span>Vehicule</span>
+        </a>
+        <div id="collapseVehicule" class="collapse" aria-labelledby="headingVehicule" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'vehicule:add_vehicule' %}">Add</a>
+                <a class="collapse-item" href="{% url 'vehicule:all_vehicule_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Customer Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomer"
+           aria-expanded="true" aria-controls="collapseCustomer">
+            <i class="fas fa-user-tie"></i>
+            <span>Customer</span>
+        </a>
+        <div id="collapseCustomer" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'customer:add_customer' %}">Add</a>
+                <a class="collapse-item" href="{% url 'customer:customer_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Rdv Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRdv"
+           aria-expanded="true" aria-controls="collapseRdv">
+            <i class="fas fa-user-clock"></i>
+            <span>Rdv</span>
+        </a>
+        <div id="collapseRdv" class="collapse" aria-labelledby="headingRdv" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'rdv:create_rdv_customer' %}">Add</a>
+                <a class="collapse-item" href="{% url 'rdv:rdv_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Panne Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePanne"
+           aria-expanded="true" aria-controls="collapsePanne">
+            <i class="fas fa-cog"></i>
+            <span>Panne</span>
+        </a>
+        <div id="collapsePanne" class="collapse" aria-labelledby="headingPanne" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'rdv:create_panne' %}">Add</a>
+                <a class="collapse-item" href="{% url 'rdv:panne_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Supplier Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsesupplier"
+           aria-expanded="true" aria-controls="collapsesupplier">
+            <i class="fas fa-truck"></i>
+            <span>Supplier</span>
+        </a>
+        <div id="collapsesupplier" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'supplier:add_supplier' %}">Add</a>
+                <a class="collapse-item" href="{% url 'supplier:supplier_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - City Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCity"
+           aria-expanded="true" aria-controls="collapseCity">
+            <i class="fas fa-city"></i>
+            <span>City</span>
+        </a>
+        <div id="collapseCity" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'customer:add_city' %}">Add</a>
+                <a class="collapse-item" href="{% url 'customer:city_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Stock Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsestock"
+           aria-expanded="true" aria-controls="collapsestock">
+            <i class="fas fa-boxes"></i>
+            <span>Stock</span>
+        </a>
+        <div id="collapsestock" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'stock:add_stock' %}">Add</a>
+                <a class="collapse-item" href="{% url 'stock:all_stock_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Product Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseproduct"
+           aria-expanded="true" aria-controls="collapseproduct">
+            <i class="fas fa-box"></i>
+            <span>Product</span>
+        </a>
+        <div id="collapseproduct" class="collapse" aria-labelledby="headingproduct" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'product:add_product' %}">Add</a>
+                <a class="collapse-item" href="{% url 'product:all_product_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+        <!-- Nav Item - StockProduct Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsestockproduct"
+           aria-expanded="true" aria-controls="collapsestockproduct">
+            <i class="fas fa-pallet"></i>
+            <span>Stock Products</span>
+        </a>
+        <div id="collapsestockproduct" class="collapse" aria-labelledby="headingUtilities"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'stock:all_stockproduct_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Buyorder Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsebuyorder"
+           aria-expanded="true" aria-controls="collapsebuyorder">
+            <i class="fas fa-clipboard-list"></i>
+            <span>Buyorder</span>
+        </a>
+        <div id="collapsebuyorder" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'buyorder:create_buyorder' %}">Add</a>
+                <a class="collapse-item" href="{% url 'buyorder:buyorder_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+     <!-- Nav Item - Sellorder Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsesellorder"
+           aria-expanded="true" aria-controls="collapsesellorder">
+            <i class="fas fa-clipboard-list"></i>
+            <span>Sell Order</span>
+        </a>
+        <div id="collapsesellorder" class="collapse" aria-labelledby="headingsellorder" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'stock:order_stockproduct_list' %}">Add</a>
+                <a class="collapse-item" href="{% url 'sellorder:sellorder_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+      <!-- Nav Item - BuyOrder Billing Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsebuyorderbill"
+           aria-expanded="true" aria-controls="collapsebuyorderbill">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Billing</span>
+        </a>
+        <div id="collapsebuyorderbill" class="collapse" aria-labelledby="headingbuyorderbill"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Operations :</h6>
+                <a class="collapse-item" href="{% url 'supplier:buyorder_supplier_list' %}">Add Buy Order</a>
+                <a class="collapse-item" href="{% url 'billing:buybill_list' %}">List Buy Order</a>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+                <a class="collapse-item" href="{% url 'customer:sellorder_customer_list' %}">Add Sell Order</a>
+                <a class="collapse-item" href="{% url 'billing:sellbill_list' %}">List Sell Order</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        More Info
+    </div>
+              <!-- Nav Item - Payments -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'payments:customer_payment_list' %}">
+            <i class="fas fa-search-dollar"></i>
+            <span>Customers Payments</span></a>
+    </li>
+
+    <!-- Nav Item - Supplier Payments -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'payments:supplier_payment_list' %}">
+            <i class="fas fa-search-dollar"></i>
+            <span>Suppliers Payments</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    {% get_current_language as LANGUAGE_CODE %}
+          <form action="{% url 'set_language'%}" method="post">
+              {%csrf_token%}
+              <input type="hidden" name="next" value="{{ redirect_to }}">
+              <select class="form-control" name="language" id="">
+                  {% get_available_languages as LANGUAGES %}
+                  {% get_language_info_list for LANGUAGES as languages %}
+                  {% for language in languages %}
+                    <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                       <i class="fas fa-clipboard-list"></i>  {{ language.name_local}} {{ language.code }}
+                    </option>
+                  {% endfor %}
+              </select>
+              <input class="btn btn-warning btn-block mt-3" type="submit" value="Go">
+          </form>
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+
+</ul>
+<!-- End of Sidebar -->

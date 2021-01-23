@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="product-detail">
+    <img class="img-fluid" src="{% if stockproduct.product.image %}{{ stockproduct.product.image.url }}{% else %} {% static 'img/no_image.png' %}{% endif %}">
+    <h1>{{ stockproduct.product.name }}</h1>
+    <h2>
+            {{ stockproduct.category }}
+    </h2>
+
+    {% if customertype == 'Grou'%}
+                <p class="price">{{stockproduct.product.sellpricegrou}} DZD </p>
+                {% elif customertype == 'Semi-Grou'%}
+                <p class="price">{{stockproduct.product.sellpricesemi_grou}} DZD</p>
+                {% elif customertype == 'Detaille'%}
+                <p class="price">{{stockproduct.product.sellpricenormal}} DZD</p>
+                {% elif customertype == 'Special'%}
+                <p class="price">{{stockproduct.product.sellspecialprice}} DZD</p>
+                {% else %}
+                <p class="price">0</p>
+                {% endif %}
+
+    <form action="{% url 'cart:cart_add' stockproduct.id %}" method="post">
+        {% csrf_token %}
+        {{ cart_product_form }}
+        <input type="submit" value="Add to Cart">
+    </form>
+</div>
+{% endblock %}

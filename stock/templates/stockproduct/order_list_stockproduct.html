@@ -1,0 +1,134 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Sell Order</h5>
+            </div>
+            <div class="card card-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h2>Choose Products</h2>
+                    <table id="table_id" class=" table display text-center">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Stock</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for prod in stockproducts %}
+                        <tr>
+                            <td>
+                                <input class="form-check-input" type="checkbox" value="{{prod.id}}" id="{{prod.id}}"
+                                       name="products">
+                            </td>
+                            <td>
+                                {{prod.product.name}}
+                            </td>
+                            <td>
+                                {{prod.stock}}
+                            </td>
+                            <td>
+                                {{prod.category}}
+                            </td>
+                            <td>
+                                {{prod.quantity}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+                    <br>
+                    <hr>
+                    <br>
+                    <h2>Choose Customers</h2>
+                    <!-- Customers Table -->
+                    <table id="table_customer" class="display text-center">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Adress</th>
+                            <th>Nationa N°</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Debt</th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for customer in customers %}
+                        <tr>
+                            <td>
+                                <input class="form-check-input" type="radio" value="{{customer.id}}"
+                                       id="{{customer.id}}" name="customers">
+                            </td>
+                            <td>
+                                {{customer.firstname}}
+                                {{customer.lastname}}
+                            </td>
+                            <td>
+                                {{customer.address}}
+                            </td>
+                            <td>
+                                {{customer.national_number}}
+                            </td>
+                            <td>
+                                {{customer.email}}
+                            </td>
+                            <td>
+                                {{customer.phone}}
+                            </td>
+                            <td>
+                                {{customer.debt}}
+                            </td>
+
+
+                        </tr>
+
+                        {% endfor %}
+                        </tbody>
+                        <tr class="text-center">
+                            <td class="text-center">
+                                <input class="btn btn-primary" type="submit" name="submit">
+                            </td>
+                        </tr>
+                    </table>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block jsscript %}
+<!-- custom javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
+<!-- Data Table  -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+<script type='text/javascript'>
+    //Data Table init
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+    $('#table_customer').DataTable();
+} );
+
+
+
+</script>
+{% endblock %}

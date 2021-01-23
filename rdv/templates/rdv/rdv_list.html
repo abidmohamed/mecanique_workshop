@@ -1,0 +1,93 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Appointments</h5>
+        </div>
+        <div class="card card-body">
+            <table id="table_id" class="table display text-center">
+                {% for rdv in rdvs %}
+                <thead>
+                <tr>
+                    <th>RDV ID</th>
+                    <th>Customer</th>
+                    <th>Vehicle</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{rdv.id}}</td>
+                    <td>{{rdv.customer}}</td>
+                    <td>{{rdv.vehicle}}</td>
+                    <td>{{rdv.rdv_date}} </td>
+                    <td>{{rdv.rdv_time}} </td>
+                    <td>{{rdv.get_total_cost}} </td>
+                </tr>
+
+                <thead class="thead-light">
+                <tr>
+                    <th></th>
+                    <th>Description</th>
+                    <th>Price</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in rdv.items.all %}
+                <tr>
+                    <td class="table-light"></td>
+                    <td class="table-light">{{ item.panne.desc }}</td>
+                    <td class="table-light ">DZD{{ item.price }}</td>
+                    <td class="table-light"></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block jsscript %}
+<!-- custom javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
+<!-- Data Table  -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+<script type='text/javascript'>
+    //Data Table init
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+
+
+</script>
+{% endblock %}

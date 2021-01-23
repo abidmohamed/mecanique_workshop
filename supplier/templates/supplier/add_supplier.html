@@ -1,0 +1,42 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<head>
+    {{ supplier_form.media }}
+</head>
+<br>
+
+<div class="row">
+    <div class="col-md-2 col-sm-1"></div>
+    <div class="col-md-8 col-sm-12">
+        <div class="card card-body">
+
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{supplier_form|crispy}}
+                <input class="btn btn-primary" type="submit" name="submit">
+            </form>
+        </div>
+        {% if supplier_form.errors %}
+        {% for field in supplier_form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{field.label}} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in supplier_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+<div class="col-md-2 col-sm-1"></div>
+</div>
+
+<script>
+
+</script>
+{% endblock %}

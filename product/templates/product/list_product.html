@@ -1,0 +1,56 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Products</h5>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Sell Price</th>
+                    <th>Buy Price</th>
+                    <th>Stock</th>
+                </tr>
+
+                {% for prod in products %}
+                <tr>
+                   <td>
+                       <img class="card-img" style="width: 100%; height: 20vh;" src="{{prod.image.url}}" alt="{{prod.name}}">
+                   </td>
+                    <td>
+                       {{prod.name}}
+                   </td>
+                    <td>
+                       {{prod.category}}
+                   </td>
+                    <td>
+                       {{prod.sellpricenormal}} DZD
+                   </td>
+                    <td>
+                       {{prod.buyprice}} DZD
+                   </td>
+                    <td>
+                       {{prod.stock}}
+                   </td>
+                    <td>
+                        <a class="btn btn-success " href="{% url 'product:update_product' prod.id %}">Update</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger " href="{% url 'product:delete_product' prod.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}

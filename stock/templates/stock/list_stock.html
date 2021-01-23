@@ -1,0 +1,39 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Stocks</h5>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <tr>
+
+                    <th>Name</th>
+
+                </tr>
+
+                {% for stock in stocks %}
+                <tr>
+                    <td>
+                       {{stock.name}}
+                   </td>
+
+                    <td>
+                        <a class="btn btn-success " href="{% url 'stock:update_stock' stock.id %}">Update</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger " href="{% url 'stock:delete_stock' stock.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}

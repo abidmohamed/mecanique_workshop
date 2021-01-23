@@ -1,0 +1,107 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-sm-1">
+
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="card card-body">
+
+                <form id="stockproductform" action="" method="post" enctype="multipart/form-data" data-types-url="{% url 'warehouse:ajax_load_types' %}" data-colors-url="{% url 'warehouse:ajax_load_colors' %}" novalidate>
+                    {% csrf_token %}
+                    {{stockproductform|crispy}}
+      <!--              <div class="col-md-12 col-sm-12">
+                        <label class="mr-sm-2" for="inlinetypeSelect">Type</label>
+                        <select class="custom-select mr-sm-2" id="inlinetypeSelect">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        <label class="mr-sm-2" for="inlinecolorSelect">Color</label>
+                        <select class="custom-select mr-sm-2" id="inlinecolorSelect">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div> -->
+                    <br>
+                    <input class="btn btn-primary" type="submit" name="submit">
+                </form>
+            </div>
+            {% if stockproductform.errors %}
+            {% for field in stockproductform %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{field.label}} {{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in stockproductform.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+
+        </div>
+        <div class="col-md-3 col-sm-1">
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block jsscript %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+
+$( function() {
+
+    $( "#product" ).autocomplete({
+      source: "{% url 'warehouse:autocomplete_product' %}"
+    });
+  } );
+
+$("#product").change(function () {
+
+    var url = $("#stockproductform").attr("data-types-url");  // get the url of the `load_types` warehouse view
+    var url_color = $("#stockproductform").attr("data-colors-url");  // get the url of the `load_types` warehouse view
+    var personId = $(this).val(); // get the selected product ID from the HTML input
+    console.log(personId)
+     $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load_types/)
+        data: {
+          'product': personId       // add the product id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_types` view function
+          $("#id_type").html(data);  // replace the contents of the type input with the data that came from the server
+        }
+      });
+
+
+     $.ajax({                       // initialize an AJAX request
+        url: url_color,                    // set the url of the request (= localhost:8000/hr/ajax/load_types/)
+        data: {
+          'product': personId       // add the product id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_types` view function
+          $("#id_color").html(data);  // replace the contents of the type input with the data that came from the server
+        }
+      });
+});
+
+</script>
+{% endblock %}
+
