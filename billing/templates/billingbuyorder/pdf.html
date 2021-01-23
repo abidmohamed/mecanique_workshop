@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+<h1>My Garage</h1>
+<p>
+    Invoice no. {{ bill.id }}</br>
+    <span class="secondary">
+        {{ bill.created|date:"M d, Y" }}
+    </span>
+</p>
+<h3>Bill to</h3>
+<p>
+
+    {{ bill.items.all.0.order.supplier.firstname }} {{ bill.items.all.0.order.supplier.lastname }}<br>
+    {{ bill.items.all.0.order.supplier.email }}<br>
+    {{ bill.items.all.0.order.supplier.address }}<br>
+    {{ bill.items.all.0.order.supplier.postal_code }}, {{ bill.items.all.0.order.supplier.city }}
+</p>
+<h3>Item bought</h3>
+<table>
+    <thead>
+    <tr>
+        <th class="text-center">Product</th>
+        <th>Price</th>
+        <th>Weight</th>
+        <th>Quantity</th>
+        <th>Cost</th>
+        <th>Weight</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for billorder in bill.items.all %}
+    {% for item in billorder.order.items.all %}
+    <tr class="row{% cycle '1' '2' %}">
+        <td class="table-light"></td>
+        <td class="table-light">{{ item.product.name }}</td>
+        <td class="table-light ">DZD{{ item.price }}</td>
+        <td class="table-light ">{{ item.quantity }}</td>
+        <td class="table-light">DZD{{ item.get_cost }}</td>
+        <td class="table-light">KG {{ item.get_weight }}</td>
+        <td class="table-light"></td>
+    </tr>
+    {% endfor %}
+    {% endfor %}
+    <tr class="total">
+        <td colspan="3">Total Price</td>
+        <td class="num">DZD {{ bill.get_total_cost }}</td>
+    </tr>
+    <tr class="total">
+        <td colspan="3">Total Weight</td>
+        <td class="num">KG {{ bill.get_total_weight }}</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Card -->
+<!--<div class="">
+
+  <div class="view zoom overlay z-depth-2 rounded">
+    <img class="img-fluid w-100"
+      src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg" alt="Sample">
+    <a href="#!">
+      <div class="mask">
+        <img class="img-fluid w-100"
+          src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg">
+        <div class="mask rgba-black-slight"></div>
+      </div>
+    </a>
+  </div>
+
+  <div class="text-center pt-4">
+
+    <h5>Fantasy T-shirt</h5>
+    <p class="mb-2 text-muted text-uppercase small">Shirts</p>
+    <hr>
+    <h6 class="mb-3">12.99 $</h6>
+    <button type="button" class="btn btn-primary btn-sm mr-1 mb-2"><i
+        class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
+    <button type="button" class="btn btn-light btn-sm mr-1 mb-2"><i
+        class="fas fa-info-circle pr-2"></i>Details</button>
+    <button type="button" class="btn btn-danger btn-sm px-3 mb-2 material-tooltip-main" data-toggle="tooltip"
+      data-placement="top" title="Add to wishlist"><i class="far fa-heart"></i></button>
+
+  </div>
+
+</div>-->
+<!-- Card -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

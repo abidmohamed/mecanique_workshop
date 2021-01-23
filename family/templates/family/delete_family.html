@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block content %}
+
+<br>
+<div class="container">
+    <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+        <div class="card card-body">
+            <P>ARE YOU SURE YOU WANT TO DELETE {{family}}</P>
+            <form action="{% url 'family:delete_family' family.id %}" method="post">
+
+                {% csrf_token %}
+                <a class="btn btn-warning" href="{% url 'family:family_list' %}">Cancel</a>
+                <input class="btn btn-danger" type="submit" name="Confirm">
+            </form>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+</div>
+
+{% endblock %}

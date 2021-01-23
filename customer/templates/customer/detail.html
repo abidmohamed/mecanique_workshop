@@ -1,0 +1,21 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+<div class="product-detail">
+    <img src="{% if customer.image %}{{ customer.image.url }}{% else %} {% static 'img/no_image.png' %}{% endif %}">
+    <h1>{{ customer.name }}</h1>
+    <h2>
+            {{ customer.city }}
+    </h2>
+    <h2>
+            {{ customer.phone }}
+    </h2>
+        <h2>
+            {{ customer.location }}
+    </h2>
+    <h2>
+            {{ customer.debt }}
+    </h2>
+</div>
+{% endblock %}

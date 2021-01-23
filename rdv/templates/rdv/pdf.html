@@ -1,0 +1,93 @@
+{% load static %}
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Appointment</title>
+  <style type="text/css">
+
+table {
+    width:100%;
+    border-spacing:0;
+    border-collapse: collapse;
+    margin:20px 0;
+}
+
+table th, table td {
+    text-align:left;
+    font-size:14px;
+    padding:5px;
+    margin:0;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000;
+}
+
+tbody tr:nth-child(odd) {
+    background:#efefef;
+}
+
+thead th, tbody tr.total {
+    background:#5993bb;
+    color:#000;
+    font-weight:bold;
+}
+
+.secondary {
+    color:#bbb;
+    margin-bottom:20px;
+}
+
+.num {
+    text-align:right;
+}
+
+
+  </style>
+</head>
+<body>
+<h1>My Garage</h1>
+<p>
+    Appointment no. {{ rdv.id }}</br>
+    <span class="secondary">
+        {{ rdv.created|date:"M d, Y" }}
+    </span>
+</p>
+<h3>Rdv to</h3>
+<p>
+    <span class="font-weight-bold">Customer : </span>{{ rdv.customer.firstname }} {{ rdv.customer.last_name }}<br>
+    <span class="font-weight-bold">Email : </span>{{ rdv.customer.email }}<br>
+    <span class="font-weight-bold">Address : </span>{{ rdv.customer.address }}<br>
+    <span class="font-weight-bold">National N° : </span>{{ rdv.customer.national_number }},
+    <span class="font-weight-bold">Phone N° : </span>{{ rdv.customer.phone }}
+</p>
+<h3>Vehicle</h3>
+<p>
+    <span >Vehicle Name : </span>{{ rdv.vehicle.vehicle_name }},
+    <span >Vehicle Type : </span>{{ rdv.vehicle.vehicle_type }}<br>
+    <span >Vehicle MAT : </span>{{ rdv.vehicle.vehicle_mat }}<br>
+    <span >Vehicle Carte Grise : </span>{{ rdv.vehicle.vehicle_cart_gris }}<br>
+</p>
+<h3>Pannes</h3>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Panne</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in rdv.items.all %}
+    <tr class="row{% cycle '1' '2' %} ">
+        <td>{{ item.panne.desc }}</td>
+        <td class="num">DZD {{ item.price }}</td>
+    </tr>
+    {% endfor %}
+    <tr class="total">
+        <td colspan="3">Total Price</td>
+        <td class="num">DZD {{ rdv.get_total_cost }}</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<div class="">
+    <div class="row">
+        <div class="col-sm-12 col-md-3 col-lg-3">
+            <h3>Brands</h3>
+            <div class="list-group">
+                {% for b in brands %}
+                <a {% if brand == f %}
+                        class=" list-group-item list-group-item-action active"
+                       {% else %}
+                       class="list-group-item list-group-item-action"
+                       {% endif %}
+                        href="{{b.get_absolute_url}}">
+                    {{b.name}}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-9 col-lg-9">
+            <div class="card card-body">
+                <table id="table_id" class="display text-center table">
+                <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for type in types %}
+                <tr>
+                   <td>
+                       <img class="card-img" style="width: 100%; height: 20vh;" src="{{type.image.url}}" alt="{{type.name}}">
+                   </td>
+                    <td>
+                       {{type.name}}
+
+                    </td>
+                    <td>
+                        <a class="btn btn-success " href="{% url 'vehicule:update_type' type.id %}">Update</a>
+                        <a class="btn btn-danger " href="{% url 'vehicule:delete_type' type.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block jsscript %}
+<!-- custom javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
+<!-- Data Table  -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+<script type='text/javascript'>
+    //Data Table init
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+
+</script>
+{% endblock %}

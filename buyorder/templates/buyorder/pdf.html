@@ -1,0 +1,56 @@
+{% load  static %}
+{% load i18n %}
+<html>
+<body>
+<h1>My Garage</h1>
+<p>
+    Invoice no. {{ buyorder.id }}</br>
+    <span class="secondary">
+        {{ buyorder.created|date:"M d, Y" }}
+    </span>
+</p>
+<h3>Bill to</h3>
+<p>
+    {{ buyorder.supplier.firstname }} {{ buyorder.supplier.last_name }}<br>
+    {{ buyorder.supplier.email }}<br>
+    {{ buyorder.supplier.address }}<br>
+    {{ buyorder.supplier.postal_code }}, {{ buyorder.supplier.city }}
+</p>
+<h3>Item bought</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Weight</th>
+        <th>Quantity</th>
+        <th>Cost</th>
+        <th>Weight</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in buyorder.items.all %}
+    <tr class="row{% cycle '1' '2' %} ">
+        <td>{{ item.stockproduct.product.name }}</td>
+        <td class="num">DZD {{ item.price }}</td>
+        <td class="num">KG {{ item.weight }}</td>
+        <td class="num">{{ item.quantity }}</td>
+        <td class="num">DZD {{ item.get_cost }}</td>
+        <td class="num">KG {{ item.get_weight }}</td>
+    </tr>
+    {% endfor %}
+    <tr class="total">
+        <td colspan="3">Total Price</td>
+        <td class="num">DZD {{ buyorder.get_total_cost }}</td>
+    </tr>
+    <tr class="total">
+        <td colspan="3">Total Weight</td>
+        <td class="num">KG {{ buyorder.get_total_weight }}</td>
+    </tr>
+    </tbody>
+</table>
+<span class="{% if buyorder.paid %}paid{% else %}pending{% endif %}">
+    {% if buyorder.paid %}Paid{% else %}Pending payment{% endif %}
+</span>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Pannes</h5>
+            </div>
+            <div class="card card-body">
+                <table id="table_id" class="display text-center">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for panne in pannes %}
+                    <tr>
+                        <td>
+                            {{panne.desc}}
+                        </td>
+                        <td>
+                            {{panne.price}}
+                        </td>
+
+                        <td>
+                            <a class="btn btn-success "
+                               href="{% url 'rdv:update_panne' panne.id %}">Update</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'rdv:delete_panne' panne.id %}">Delete</a>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block jsscript %}
+<!-- Data Table  -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+<script type='text/javascript'>
+    //Data Table init
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+    } );
+
+</script>
+{% endblock %}

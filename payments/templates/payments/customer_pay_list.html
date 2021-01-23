@@ -1,0 +1,44 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+            <h5>Customers</h5>
+        </div>
+        <div class="card card-body">
+            <table id="table_id" class="display text-center">
+                <thead>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Date</th>
+                </thead>
+                <tbody>
+                {% for pay in customerspayments %}
+                <tr>
+                    <td>{{pay.customer}}</td>
+                    <td>{{pay.amount}}</td>
+                    <td>{{pay.created}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block jsscript %}
+<!-- Data Table  -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+<script type='text/javascript'>
+    //Data Table init
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+
+</script>
+{% endblock %}

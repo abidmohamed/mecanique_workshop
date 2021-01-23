@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-3 col-lg-3">
+            <h3>Categories</h3>
+            <div class="list-group">
+                {% for c in categories %}
+                    <a
+                       {% if category == c %}
+                        class=" list-group-item list-group-item-action active"
+                       {% else %}
+                       class="list-group-item list-group-item-action"
+                       {% endif %}
+                       href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-9 col-lg-9">
+            <div class="row">
+                {% for stockproduct in stockproducts %}
+                <div class="col-lg-4 col-md-3 mb-3">
+
+                    <div class="view zoom overlay z-depth-2 rounded">
+                        <img class="card-img img-fluid w-100 mask waves-effect waves-light" style=" height: 25vh;"
+                             src="{{stockproduct.product.image.url}}"
+                             alt="{{stockproduct.product.name}}">
+                    </div>
+                    <div class="text-center pt-4">
+                        <h5>{{stockproduct.product.name}}</h5>
+                        <p class="mb-2 text-muted text-uppercase small">{{stockproduct.product.category}}</p>
+                        <hr>
+                        {% if customertype == 'Grou'%}
+                        <h6 class="mb-3">{{stockproduct.product.sellpricegrou}} DZD </h6>
+                        {% elif customertype == 'Semi-Grou'%}
+                        <h6 class="mb-3">{{stockproduct.product.sellpricesemi_grou}} DZD</h6>
+                        {% elif customertype == 'Detaille'%}
+                        <h6 class="mb-3">{{stockproduct.product.sellpricenormal}} DZD</h6>
+                        {% elif customertype == 'Special'%}
+                        <h6 class="mb-3">{{stockproduct.product.sellspecialprice}} DZD</h6>
+                        {% else %}
+                        <h6 class="mb-3">0</h6>
+                        {% endif %}
+                        <a class="btn btn-primary btn-sm mr-1 mb-2"
+                           href=" {% url 'warehouse:stockproduct_detail' stockproduct.id %}">
+                            <i
+                                    class="fas fa-shopping-cart pr-2"></i>Add to cart
+                        </a>
+
+                    </div>
+                    <!--  <div class="card family-card bg-dark text-white"></div>-->
+                </div>
+
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+{% endblock %}
