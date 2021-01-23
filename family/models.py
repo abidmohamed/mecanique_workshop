@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.text import slugify
-from sorl.thumbnail import ImageField, get_thumbnail
 from django.urls import reverse
 
 
