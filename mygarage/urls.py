@@ -37,6 +37,8 @@ urlpatterns = [
     path('billing/', include('billing.urls', namespace='billing')),
     path('vehicule/', include('vehicule.urls', namespace='vehicule')),
     path('rdv/', include('rdv.urls', namespace='rdv')),
+    path('caisse/', include('caisse.urls', namespace='caisse')),
+    # path('discount/', include('discount.urls', namespace='discount')),
 
     ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:

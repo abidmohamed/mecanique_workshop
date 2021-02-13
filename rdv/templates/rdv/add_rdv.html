@@ -34,7 +34,7 @@
                     <tbody>
                     {% for panne in pannes %}
                     <tr>
-                        <td><input class="form-check-input" type="checkbox" value="{{panne.id}}" id="{{panne.id}}" name="pannes">
+                        <td><input class="form-check-input" type="checkbox" value="{{panne.id}}" id="{{panne.id}}" name="pannes" >
                         </td>
                         <td class="h6">{{panne.desc}}</td>
                         <td class="h6">
@@ -84,6 +84,7 @@
     $('#table_id').DataTable();
 } );
 
+    document.getElementByClass("form-check-input").required = false;
 
 
 </script>

@@ -16,9 +16,12 @@
                         <thead>
                         <tr>
                             <th></th>
+                            <th>Brand</th>
                             <th>Name</th>
+                            <th>Ref</th>
+                            <th>Sell Price</th>
+                            <th>Buy Price</th>
                             <th>Stock</th>
-                            <th>Category</th>
                             <th>Quantity</th>
                         </tr>
                         </thead>
@@ -30,14 +33,24 @@
                                        name="products">
                             </td>
                             <td>
+                                {{prod.product.brand}}
+                            </td>
+                            <td>
                                 {{prod.product.name}}
+                            </td>
+                            <td>
+                                {{prod.product.ref}}
+                            </td>
+                            <td>
+                                {{prod.product.sellprice}}
+                            </td>
+                            <td>
+                                {{prod.product.buyprice}}
                             </td>
                             <td>
                                 {{prod.stock}}
                             </td>
-                            <td>
-                                {{prod.category}}
-                            </td>
+
                             <td>
                                 {{prod.quantity}}
                             </td>
@@ -58,6 +71,7 @@
                             <th>Name</th>
                             <th>Adress</th>
                             <th>Nationa N°</th>
+                            <th>Vehicle</th>
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Debt</th>
@@ -81,6 +95,16 @@
                             </td>
                             <td>
                                 {{customer.national_number}}
+                            </td>
+                            <td>
+
+                                <select  class="form-control" name="vehicle">
+                                {% for vehicle in customer.get_vehicles%}
+                                <option value="{{vehicle.id}}">{{vehicle}}</option>
+                                {% empty %}
+                                <option value="None">None</option>
+                                {% endfor %}
+                                    </select>
                             </td>
                             <td>
                                 {{customer.email}}

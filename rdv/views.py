@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -9,6 +10,7 @@ from customer.models import Customer
 from rdv.forms import RdvFrom, PanneForm
 from rdv.models import Panne, RdvItem, Rdv
 from vehicule.models import Vehicle
+import calendar
 
 
 def create_rdv_customer(request):
@@ -42,14 +44,14 @@ def create_rdv(request, pk):
 
     if request.method == 'POST':
         rdvform = RdvFrom(request.POST)
-        panne_list = request.POST.getlist('pannes')
+        pannes_list = request.POST.getlist('pannes')
         if rdvform.is_valid():
-            if len(panne_list):
-                rdv = rdvform.save(commit=False)
-                rdv.vehicle = vehicle
-                rdv.customer = vehicle.customer
-                rdv.save()
-                for panne in panne_list:
+            rdv = rdvform.save(commit=False)
+            rdv.vehicle = vehicle
+            rdv.customer = vehicle.customer
+            rdv.save()
+            if len(pannes_list):
+                for panne in pannes_list:
                     rdvitem = RdvItem()
                     rdvitem.rdv = rdv
                     rdvitem.panne = Panne.objects.get(id=panne)
@@ -62,6 +64,14 @@ def create_rdv(request, pk):
         'pannes': pannes,
     }
     return render(request, 'rdv/add_rdv.html', context)
+
+
+def rdv_details(request, pk):
+    rdv = Rdv.objects.get(id=pk)
+    context = {
+        'rdv': rdv,
+    }
+    return render(request, 'rdv/rdv_detail.html', context)
 
 
 def rdv_pdf(request, pk):
@@ -132,3 +142,5 @@ def delete_panne(request, pk):
         panne.delete()
         return redirect('rdv:panne_list')
     return render(request, 'panne/delete_panne.html', context)
+
+

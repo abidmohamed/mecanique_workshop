@@ -7,6 +7,7 @@ from product.models import Product
 from sellorder.models import Order, OrderItem
 from stock.forms import StockForm, StockProductForm
 from stock.models import Stock, StockProduct
+from vehicule.models import Vehicle
 
 
 def add_stock(request):
@@ -118,10 +119,13 @@ def order_stockproduct_list(request):
         # get submitted orders
         chosenproducts = request.POST.getlist("products")
         chosencustomer = request.POST.getlist("customers")
+        chosenvehicule = request.POST.getlist("vehicle")
         if len(chosenproducts) != 0 and len(chosencustomer) != 0:
             customer = Customer.objects.get(id=chosencustomer[0])
+            vehicle = Vehicle.objects.get(id=chosenvehicule[0])
             sellorder = Order()
             sellorder.customer = customer
+            sellorder.vehicle = vehicle
             sellorder.save()
             for product in chosenproducts:
                 currentproduct = StockProduct.objects.get(id=product)
@@ -129,8 +133,8 @@ def order_stockproduct_list(request):
                 OrderItem.objects.create(
                     order=sellorder,
                     stockproduct=currentproduct,
-                    price=currentproduct.product.sellpricenormal,
-                    weight=currentproduct.product.weight,
+                    price=currentproduct.product.sellprice,
+                    # weight=currentproduct.product.weight,
                     quantity=1,
                 )
             return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')

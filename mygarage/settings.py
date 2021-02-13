@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-wx59#clvu0c72ph%aj2jeh-!(970fwt@b%w4fvdjga02$@gv2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['nadhir-mygarage.herokuapp.com', '127.0.0.1']
 
@@ -38,13 +38,15 @@ INSTALLED_APPS = [
     'crispy_forms',
     'customer', 'accounts', 'supplier', 'payments',
     'family', 'category', 'stock', 'product', 'buyorder',
-    'billing', 'sellorder', 'vehicule', 'rdv',
+    'billing', 'sellorder', 'vehicule', 'rdv', 'caisse',
+    'discount',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

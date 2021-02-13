@@ -67,8 +67,10 @@ thead th, tbody tr.total {
     <span >Vehicle MAT : </span>{{ rdv.vehicle.vehicle_mat }}<br>
     <span >Vehicle Carte Grise : </span>{{ rdv.vehicle.vehicle_cart_gris }}<br>
 </p>
+{% if rdv.items.all %}
 <h3>Pannes</h3>
 <table class="table table-bordered">
+
     <thead>
     <tr>
         <th>Panne</th>
@@ -76,6 +78,7 @@ thead th, tbody tr.total {
     </tr>
     </thead>
     <tbody>
+
     {% for item in rdv.items.all %}
     <tr class="row{% cycle '1' '2' %} ">
         <td>{{ item.panne.desc }}</td>
@@ -86,8 +89,9 @@ thead th, tbody tr.total {
         <td colspan="3">Total Price</td>
         <td class="num">DZD {{ rdv.get_total_cost }}</td>
     </tr>
+
     </tbody>
 </table>
-
+{% endif %}
 </body>
 </html>

@@ -24,3 +24,6 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.firstname + " " + self.lastname
+
+    def get_vehicles(self):
+        return self.vehicles.all().filter(customer=self)

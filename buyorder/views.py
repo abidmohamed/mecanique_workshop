@@ -8,6 +8,8 @@ from xhtml2pdf import pisa
 from billing.models import BuyOrderBilling, BillBuyOrderItem
 from buyorder.forms import BuyOrderForm, BuyOrderItemFormset
 from buyorder.models import BuyOrderItem, BuyOrder
+from caisse.models import Caisse
+from product.forms import ProductForm
 from product.models import Product
 from supplier.models import Supplier
 from stock.models import StockProduct
@@ -16,7 +18,7 @@ from stock.models import StockProduct
 def create_buyorder(request):
     buyorderform = BuyOrderForm()
     buyorderitemformset = BuyOrderItemFormset(queryset=BuyOrderItem.objects.none())
-
+    productform = ProductForm()
     products = Product.objects.all()
 
     if request.method == 'POST':
@@ -47,7 +49,8 @@ def create_buyorder(request):
     context = {
         'products': products,
         'buyorderform': buyorderform,
-        'buyorderitemformset': buyorderitemformset
+        'buyorderitemformset': buyorderitemformset,
+        'productform': productform,
     }
     return render(request, 'buyorder/add_buyorder.html', context)
 
@@ -79,49 +82,59 @@ def buyorder_confirmation(request, pk):
                 # adding the bought products to stock
                 stockitems = StockProduct.objects.all().filter(stock=item.product.stock)
                 itemexist = 1
-                #     # check if stock doesn't have the product
-                # if len(stockitems) > 0:
-                #     # stock has products check if product exist
-                #     for stockitem in stockitems:
-                #         # the same product exist
-                #         if stockitem.product.id == item.product.id:
-                #             stockitem.quantity += int(item.quantity)
-                #             stockitem.save()
-                #             itemexist = 2
-                #             #                 # operation done same product plus the new quantity
-                #
-                #     if itemexist == 1:
-                #         #             # stock not empty product doesn't exist in it
-                #         #             # create new stockproduct
-                #         StockProduct.objects.create(
-                #             product=item.product,
-                #             quantity=int(item.quantity),
-                #             category=item.product.category,
-                #             stock=item.product.stock
-                #         )
-                # else:
-                #     #         # stock is empty
-                #     itemexist = 0
-                #     if itemexist == 0:
-                #         # create new stockproduct
-                #         StockProduct.objects.create(
-                #             product=item.product,
-                #             quantity=int(item.quantity),
-                #             type=item.type,
-                #             color=item.color,
-                #             category=item.product.category,
-                #             stock=item.product.stock
-                #         )
+                # check if stock doesn't have the product
+                if len(stockitems) > 0:
+                    # stock has products check if product exist
+                    for stockitem in stockitems:
+                        # the same product exist
+                        if stockitem.product.id == item.product.id:
+                            stockitem.quantity += int(item.quantity)
+                            stockitem.save()
+                            itemexist = 2
+                            # operation done same product plus the new quantity
+
+                    if itemexist == 1:
+                        #             # stock not empty product doesn't exist in it
+                        #             # create new stockproduct
+                        StockProduct.objects.create(
+                            product=item.product,
+                            quantity=int(item.quantity),
+                            # category=item.product.category,
+                            stock=item.product.stock
+                        )
+                else:
+                    #         # stock is empty
+                    itemexist = 0
+                    if itemexist == 0:
+                        # create new stockproduct
+                        StockProduct.objects.create(
+                            product=item.product,
+                            quantity=int(item.quantity),
+                            # type=item.type,
+                            # color=item.color,
+                            # category=item.product.category,
+                            stock=item.product.stock
+                        )
             print(buyorder.get_total_cost())
             print(supplier)
-            # supplier.credit += buyorder.get_total_cost()
-            # supplier.save()
+            buyorder.debt = buyorder.get_total_cost()
+            supplier.credit += buyorder.get_total_cost()
+            supplier.save()
+            buyorder.save()
             return redirect('buyorder:buyorder_list')
     context = {
         'buyorderform': buyorderform,
         'buyorder': buyorder,
     }
     return render(request, 'buyorder/buyorder_confirmation.html', context)
+
+
+def buyorder_details(request, pk):
+    order = BuyOrder.objects.get(id=pk)
+    context = {
+        'order': order
+    }
+    return render(request, 'buyorder/buyorder_details.html', context)
 
 
 def buyorder_list(request):
@@ -186,7 +199,7 @@ def buyorderorder_list_by_supplier(request, pk):
                             StockProduct.objects.create(
                                 product=item.product,
                                 quantity=int(item.quantity),
-                                category=item.product.category,
+                                # category=item.product.category,
                                 stock=item.product.stock
                             )
                     else:
@@ -197,12 +210,12 @@ def buyorderorder_list_by_supplier(request, pk):
                             StockProduct.objects.create(
                                 product=item.product,
                                 quantity=int(item.quantity),
-                                category=item.product.category,
+                                # category=item.product.category,
                                 stock=item.product.stock
                             )
             # send bill to be printed
             pk = buyorderbilling.pk
-            return redirect(f'../../billing/buybill_pdf/{pk}')
+            return redirect(f'../../buyor/buyorder_pdf/{pk}')
 
     context = {
         'buyorders': buyorders

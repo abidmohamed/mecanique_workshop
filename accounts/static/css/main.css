@@ -414,3 +414,36 @@ form div.field {
     margin: 5%;
     margin-bottom: 5%;
 }
+
+// Calendar CSS
+.calendar {
+    width: 98%;
+    margin: auto;
+    font-size: 13px;
+    background: -webkit-linear-gradient(left, #25c481, #25b7c4) !important;
+    background: linear-gradient(to right, #25c481, #25b7c4)  !important;
+  }
+
+  .calendar tr, .calendar td {
+    border: 1px solid black;
+  }
+
+  .calendar th {
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .calendar td {
+    width: 200px;
+    height: 150px;
+    padding: 20px 0px 0px 5px;
+  }
+
+  .month {
+    font-size: 25px;
+  }
+
+  .date {
+    font-size: 16px;
+  }

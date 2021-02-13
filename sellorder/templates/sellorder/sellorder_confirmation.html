@@ -10,6 +10,9 @@
         </div>
         <div class="card card-body">
             <h2>Customer: <span>{{customer}}</span></h2>
+                <label for="total-price">Total :</label>
+
+            <input id="total-price" type="number" class="form-control" value="{{sellorder.get_total_cost}}" disabled>
             <form action="" method="post">
                 {% csrf_token %}
                 <hr>
@@ -19,12 +22,14 @@
                     <tr>
                         <th>Order ID</th>
                         <th>Customer</th>
+                        <th>Vehicle</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td>{{sellorder.id}}</td>
                         <td>{{sellorder.customer}}</td>
+                        <td>{{sellorder.vehicle}}</td>
                     </tr>
                     <thead class="thead-light">
                     <tr>
@@ -41,11 +46,11 @@
                                    disabled>
                         </td>
                         <td class="table-light ">
-                            <input class="form-control" type="number" name="prices" value="{{ item.price }}">
+                            <input onkeyup="calc()" class="form-control" type="number" name="prices" value="{{ item.price }}">
 
                         </td>
                         <td class="table-light ">
-                            <input class="form-control" type="number" name="quantities" value="{{ item.quantity }}">
+                            <input onkeyup="calc()" class="form-control" type="number" name="quantities" value="{{ item.quantity }}">
                         </td>
                     </tr>
                     {% endfor %}
@@ -63,4 +68,30 @@
         </div>
     </div>
 </div>
+<script>
+    function calc(){
+    var prices = document.getElementsByName("prices");
+    var quantities = document.getElementsByName("quantities");
+    var discount_status = document.getElementsByName("discount_status");
+    var discount_value = document.getElementsByName("value");
+    var total_price = 0;
+    // console.log(prices);
+    for (var i = 0; i<prices.length; i++)
+    {
+    if (i == 0){
+        document.getElementById("total-price").value = prices[i].value * quantities[i].value;
+
+    }else {
+           var total_price =  parseFloat(document.getElementById("total-price").value);
+           total_price += parseFloat(prices[i].value * quantities[i].value);
+           document.getElementById("total-price").value = total_price;
+           console.log(total_price);
+
+    }
+    }
+     console.log(discount_status.value);
+     console.log(discount_value.value);
+    }
+
+</script>
 {% endblock %}

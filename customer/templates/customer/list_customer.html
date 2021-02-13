@@ -19,7 +19,6 @@
                         <th>Debt</th>
                         <th></th>
                         <th></th>
-                        <th></th>
                     </tr>
                     </thead>
 
@@ -49,9 +48,7 @@
                             <a class="btn btn-warning "
                                href="{% url 'customer:customer_detail' customer.id %}">Details</a>
                         </td>
-                        <td>
-                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' customer.id %}">PayDebt</a>
-                        </td>
+
 
                     </tr>
 

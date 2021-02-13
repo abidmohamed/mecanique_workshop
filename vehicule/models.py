@@ -8,7 +8,6 @@ from customer.models import Customer
 
 class Brand(models.Model):
     name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, unique=True)
     image = models.ImageField(upload_to='brands/%Y/%m/%d', blank=True, )
 
     class Meta:
@@ -18,13 +17,6 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
-
-    # auto fill the slug when saving
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        # if self.image:
-        #    self.image = get_thumbnail(self.image, '570x320').url
-        super(Brand, self).save(*args, **kwargs)
 
     # provides a category_slug parameter to the
     # view for filtering products according to a given category.
@@ -60,7 +52,7 @@ class Type(models.Model):
 
 class Vehicle(models.Model):
     vehicle_name = models.CharField(max_length=200, null=True)
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE, related_name="vehicles")
     vehicle_type = models.ForeignKey(Type, null=True, on_delete=models.CASCADE)
     vehicle_mat = models.CharField(max_length=200, null=True)
     vehicle_cart_gris = models.CharField(max_length=200, null=True)

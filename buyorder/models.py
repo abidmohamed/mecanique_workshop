@@ -7,11 +7,11 @@ from supplier.models import Supplier
 
 class BuyOrder(models.Model):
     user = models.IntegerField(default=0)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.DO_NOTHING)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-    factured = models.BooleanField(default=False)
+    debt = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
 
     class Meta:
         ordering = ('-created',)
@@ -29,7 +29,7 @@ class BuyOrderItem(models.Model):
                               on_delete=models.CASCADE)
     product = models.ForeignKey(Product,
                                 related_name='buyorder_item',
-                                on_delete=models.CASCADE, null=True, blank=True)
+                                on_delete=models.DO_NOTHING, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
 
