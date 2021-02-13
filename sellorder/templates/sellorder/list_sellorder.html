@@ -9,61 +9,39 @@
         </div>
         <div class="card card-body">
             <table id="table_id" class="table display text-center">
-                {% for order in sellorders %}
                 <thead>
                 <tr>
                     <th>Order ID</th>
                     <th>Supplier</th>
                     <th>Address</th>
                     <th>Total Price</th>
-                    <th>Total Weight</th>
+                    <th>Debt</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
+                {% for order in sellorders %}
+
                 <tr>
                     <td>{{order.id}}</td>
                     <td>{{order.customer}}</td>
                     <td>{{order.customer.address}}</td>
                     <td>{{order.get_total_cost}} DZD</td>
-                    <td>{{order.get_total_weight}} KG</td>
+                    <td>{{order.debt}} DZD</td>
+                    <td>
+                        {% if order.debt > 0%}
+                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">PayDebt</a>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">Details</a>
+                    </td>
                 </tr>
 
-                <thead class="thead-light">
-                <tr>
-                    <th></th>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total Price</th>
-                    <th>Total Weight</th>
-                    <th></th>
-                </tr>
-                </thead>
-
-                {% for item in order.items.all %}
-                <tr>
-                    <td class="table-light"></td>
-                    <td class="table-light">{{ item.stockproduct.product.name }}</td>
-                    <td class="table-light ">DZD{{ item.price }}</td>
-                    <td class="table-light ">{{ item.quantity }}</td>
-                    <td class="table-light">DZD{{ item.get_cost }}</td>
-                    <td class="table-light">KG {{ item.get_weight }}</td>
-                    <td class="table-light"></td>
-                </tr>
                 {% endfor %}
-
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
                 </tbody>
-
-                {% endfor %}
             </table>
         </div>
     </div>

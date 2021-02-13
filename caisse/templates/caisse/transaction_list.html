@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'home.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!-- how the translation is done
+1- django-admin makemessages -l fr
+2- django-admin compilemessages
+-->
+
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md-1 col-sm-1">
+
+        </div>
+        <div class="col-md-10 col-sm-12">
+            <hr>
+            <div class="card card-body">
+                <h5 class="display-5 text-center"><i class="fas fa-exchange-alt"></i>Transactions</h5>
+            </div>
+            <div class="card card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th> Name</th>
+                        <th>Amount</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Date Created</th>
+                    </tr>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{transaction.Transaction_name}}</td>
+                        <td>{{transaction.amount}}</td>
+                        <td>{{transaction.Transaction_type}}</td>
+                        <td>{{transaction.trans_date}}</td>
+                        <td>{{transaction.date_created}}</td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="col-md-1 col-sm-1">
+
+        </div>
+    </div>
+
+{% endblock %}

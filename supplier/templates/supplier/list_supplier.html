@@ -18,7 +18,6 @@
                     <th>Credit</th>
                     <th></th>
                     <th></th>
-                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,9 +44,7 @@
                     <td>
                         <a class="btn btn-danger " href="{% url 'supplier:delete_supplier' supplier.id %}">Delete</a>
                     </td>
-                    <td>
-                        <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment' supplier.id %}">PayDebt</a>
-                    </td>
+
                 </tr>
                 {% endfor %}
                 </tbody>

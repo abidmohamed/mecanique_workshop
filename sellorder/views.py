@@ -6,6 +6,7 @@ from django.http import HttpResponse
 # Create your views here.
 from billing.models import OrderBilling, BillOrderItem
 from customer.models import Customer
+from discount.forms import DiscountForm
 from sellorder.apps import SellorderConfig
 from sellorder.models import Order
 from stock.models import StockProduct
@@ -16,9 +17,16 @@ def confirm_order(request, pk):
     sellorder = Order.objects.get(id=pk)
     # get customer to add debt
     customer = Customer.objects.get(id=sellorder.customer.pk)
+    # Get Discount
+    discountform = DiscountForm()
+    print(sellorder.vehicle)
     if request.method == 'POST':
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
+        discountform = DiscountForm(request.POST)
+        if discountform.is_valid():
+            discount = discountform.save(commit=False)
+            print(discount)
         for index, item in enumerate(sellorder.items.all()):
             # get the price and value of each element
             # Saving the orderitem
@@ -47,7 +55,7 @@ def confirm_order(request, pk):
                         quantity=int(item.quantity),
                         # type=item.type,
                         # color=item.color,
-                        category=item.stockproduct.product.category,
+                        # category=item.stockproduct.product.category,
                         stock=item.stockproduct.product.stock
                     )
             else:
@@ -60,9 +68,11 @@ def confirm_order(request, pk):
                         quantity=int(item.quantity),
                         # type=item.type,
                         # color=item.color,
-                        category=item.stockproduct.product.category,
+                        # category=item.stockproduct.product.category,
                         stock=item.stockproduct.product.stock
                     )
+        sellorder.debt = sellorder.get_total_cost()
+        sellorder.total_price = sellorder.get_total_cost()
         sellorder.save()
         # customer debt
         customer.debt += sellorder.get_total_cost()
@@ -72,8 +82,17 @@ def confirm_order(request, pk):
     context = {
         'customer': customer,
         'sellorder': sellorder,
+        'discountform': discountform,
     }
     return render(request, 'sellorder/sellorder_confirmation.html', context)
+
+
+def sellorder_details(request, pk):
+    order = Order.objects.get(id=pk)
+    context = {
+        'order': order
+    }
+    return render(request, 'sellorder/sellorder_details.html', context)
 
 
 def sellorder_list(request):
@@ -82,6 +101,17 @@ def sellorder_list(request):
         'sellorders': sellorders
     }
     return render(request, 'sellorder/list_sellorder.html', context)
+
+
+def sellorder_delete(request, pk):
+    order = Order.objects.get(id=pk)
+    if request.method == 'POST':
+        order.delete()
+        return redirect('sellorder:sellorder_list')
+    context = {
+        'order': order
+    }
+    return render(request, 'sellorder/sellorder_delete.html', context)
 
 
 def sellorder_list_by_customer(request, pk):

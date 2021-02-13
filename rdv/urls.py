@@ -10,6 +10,7 @@ urlpatterns = [
     path('rdv_list', views.rdv_list, name='rdv_list'),
     path('create_rdv/<str:pk>', views.create_rdv, name='create_rdv'),
     path('rdv_pdf/<str:pk>', views.rdv_pdf, name='rdv_pdf'),
+    path('rdv_details/<str:pk>', views.rdv_details, name='rdv_details'),
 
     # Panne
     path('create_panne', views.create_panne, name='create_panne'),

@@ -3,13 +3,17 @@ from django.db import models
 # Create your models here.
 from customer.models import Customer
 from stock.models import StockProduct
+from vehicule.models import Vehicle
 
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.DO_NOTHING, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    factured = models.BooleanField(default=False)
+    debt = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
+    paid = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('-created',)
@@ -20,9 +24,6 @@ class Order(models.Model):
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
 
-    def get_total_weight(self):
-        return sum(item.get_weight() for item in self.items.all())
-
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,
@@ -30,9 +31,8 @@ class OrderItem(models.Model):
                               on_delete=models.CASCADE)
     stockproduct = models.ForeignKey(StockProduct,
                                      related_name='order_item',
-                                     on_delete=models.CASCADE, null=True, blank=True)
+                                     on_delete=models.DO_NOTHING, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    weight = models.DecimalField(max_digits=10, null=True, decimal_places=2, default=0.0)
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
@@ -40,6 +40,3 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
-
-    def get_weight(self):
-        return self.weight * self.quantity

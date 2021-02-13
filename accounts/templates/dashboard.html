@@ -1,6 +1,78 @@
 {% extends 'home.html' %}
 {% load static %}
+<head>
+    <style>
+ /*Calendar CSS*/
+.calendar {
+    width: 98%;
+    margin: auto;
+    font-size: 13px;
+    background: -webkit-linear-gradient(left, #25c481, #25b7c4) !important;
+    background: linear-gradient(to right, #25c481, #25b7c4)  !important;
+  }
+
+  .calendar tr, .calendar td {
+    border: 1px solid black;
+  }
+
+  .calendar th {
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .calendar td {
+    width: 200px;
+    height: 150px;
+    padding: 20px 0px 0px 5px;
+  }
+
+  .month {
+    font-size: 25px;
+  }
+
+  .date {
+    font-size: 16px;
+  }
+
+
+    </style>
+</head>
 {% block content %}
+<!-- First Caisse row Starts Here -->
+<div class="row">
+    <div class="col-xl-6 col-md-6 mb-4">
+        <div class="card bg-primary shadow h-100 py-2">
+            <div class="card-header bg-primary">
+                <div class="row">
+                    <div class="col-9">
+                        <h1 class="bg-primary text-white">Caisse</h1>
+                    </div>
+                    <div class="col-3">
+                        <a class="mr-3" href="{% url 'caisse:create_transaction' %}"><i
+                                class="fas fa-plus-square fa-2x text-white"></i></a>
+                        <a class="mr-0" href="{% url 'caisse:transaction_list' %}"><i
+                                class="fas fa-list-ul fa-2x text-white"></i></a>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Caisse</div>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{caisse}} DZD</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-coins fa-5x text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- First Caisse row Ends Here -->
 
 <div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
@@ -9,7 +81,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Customers</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{customers}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-user-tie fa-2x text-primary"></i>
@@ -24,7 +96,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Sell Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{sellorder_number}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-success"></i>
@@ -39,7 +111,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Buy Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{buyorder_number}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-info"></i>
@@ -54,7 +126,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Suppliers</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{suppliers}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-truck fa-2x text-warning"></i>
@@ -71,28 +143,30 @@
     <br>
     <!-- Second Cards row Starts Here -->
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Customers Debt</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"> DZD</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-user-tie fa-2x text-primary"></i>
+        <div class="card border-left-danger shadow h-100 py-2">
+            <a href="{% url 'stock:stockproduct_stockalert'%}">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Stock Alert</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{stockproductsalertcount}}</div>
+
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-boxes fa-2x text-danger text-300"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
-
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-success shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Sell Order</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"> DZD</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalsellorders}} DZD</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-success"></i>
@@ -107,7 +181,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Buy Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"> DZD</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalbuyorders}} DZD</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-info"></i>
@@ -137,10 +211,31 @@
         <hr>
     </div>
     <br>
-    <!-- Second Cards row Starts Here -->
 
 </div>
-    <!-- New row Starts Here -->
+<!-- New row Starts Here -->
+<!-- Second row Starts Here Calendar -->
+<div class="row">
+    <div class="clearfix">
+        <a class="btn btn-info right mr-2" href="{% url 'accounts:home' %}?{{ next_month }} "> Next Month >> </a>
+        <a class="btn btn-info right mr-2" href="{% url 'accounts:home' %}?{{ prev_month }}"> << Previous Month </a>
+        <a class="btn btn-info right mr-2" href=""> + New RDV </a>
+    </div>
+    <div style="">
+        {{ calendar }}
+    </div>
+    <br>
+</div>
+<br>
+<div class="row">
+    <div class="col-12">
+        <hr>
+    </div>
+</div>
+<div class="row">
+
+</div>
+
 {% endblock %}
 {% block jsscript %}
 <!-- Data Table  -->

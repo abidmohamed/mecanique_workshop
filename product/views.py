@@ -18,13 +18,26 @@ def add_product(request):
     return render(request, 'product/add_product.html', context)
 
 
-def product_list(request, pk):
-    category = Category.objects.get(id=pk)
-    products = Product.objects.all().filter(category=category)
-    context = {
-        'products': products,
-    }
-    return render(request, 'product/list_product.html', context)
+# from add buyorder we can product
+def add_product_buyorder(request):
+    if request.method == 'GET':
+        productform = ProductForm()
+    elif request.method == 'POST':
+        productform = ProductForm(request.POST, request.FILES)
+        print("----------------BUY ORDER ADD PRODUCT")
+        if productform.is_valid():
+            product = productform.save()
+            return redirect("buyorder:create_buyorder")
+    context = {'productform': productform}
+    return render(request, 'product/add_product.html', context)
+
+# def product_list(request, pk):
+#     category = Category.objects.get(id=pk)
+#     products = Product.objects.all().filter(category=category)
+#     context = {
+#         'products': products,
+#     }
+#     return render(request, 'product/list_product.html', context)
 
 
 def all_product_list(request):

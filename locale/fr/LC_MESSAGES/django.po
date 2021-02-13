@@ -20,7 +20,7 @@ msgstr ""
 
 #: .\accounts\templates\sidenavbar.html:25
 msgid "Dashboard"
-msgstr ""
+msgstr "Table de Board"
 
 #: .\venv\Lib\site-packages\crispy_forms\tests\test_form_helper.py:129
 #: .\venv\Lib\site-packages\crispy_forms\tests\test_form_helper.py:139

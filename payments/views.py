@@ -1,24 +1,41 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from buyorder.models import BuyOrder
+from caisse.models import Caisse
 from customer.models import Customer
 from payments.forms import CustomerChequeForm, SupplierPaymentForm, SupplierChequeForm, CustomerPaymentForm
-from payments.models import CustomerPayment, SupplierPayment
+from payments.models import SellOrderPayment, BuyOrderPayment
+from sellorder.models import Order
 from supplier.models import Supplier
 
 
+# Sell Order Payment is Customer Payment
 def create_customer_payment(request, pk):
-    customer = Customer.objects.get(id=pk)
+    # customer = Customer.objects.get(id=pk)
+    order = Order.objects.get(id=pk)
     customerpaymentform = CustomerPaymentForm()
     if request.method == "POST":
         customerpaymentform = CustomerPaymentForm(request.POST)
         if customerpaymentform.is_valid():
             customerpayment = customerpaymentform.save(commit=False)
             print(customerpayment.amount)
-            customerpayment.customer = customer
+            customerpayment.order = order
+            customerpayment.customer = order.customer
             customerpayment.save()
-            customer.debt -= customerpayment.amount
-            customer.save()
+            if order.debt == 0 or order.debt is None:
+                order.debt = order.get_total_cost()
+            print(order.debt)
+            order.debt -= customerpayment.amount
+            # print(order.debt)
+            if order.debt == 0:
+                order.paid = True
+            order.save()
+            order.customer.debt -= customerpayment.amount
+            caisse = Caisse.objects.all().filter()[:1].get()
+            caisse.caisse_value += customerpayment.amount
+            caisse.save()
+            order.customer.save()
             # TODO: Uncomment this one
             # customerpayment.user = request.user.id
             if customerpayment.pay_status == "Cheque":
@@ -31,7 +48,7 @@ def create_customer_payment(request, pk):
 
 
 def create_customer_cheque(request, pk):
-    customerpayment = CustomerPayment.objects.get(id=pk)
+    customerpayment = SellOrderPayment.objects.get(id=pk)
     customerchequeform = CustomerChequeForm()
     if request.method == "POST":
         customerchequeform = CustomerChequeForm(request.POST)
@@ -49,25 +66,36 @@ def create_customer_cheque(request, pk):
 
 
 def customer_payment_list(request):
-    customerpayments = CustomerPayment.objects.all()
+    customerpayments = SellOrderPayment.objects.all()
     context = {
         "customerpayments": customerpayments
     }
     return render(request, 'payments/customer/payment_list.html', context)
 
 
+# Supplier Payment is BuyOrderPayment
 def create_supplier_payment(request, pk):
-    supplier = Supplier.objects.get(id=pk)
+    # supplier = Supplier.objects.get(id=pk)
+    order = BuyOrder.objects.get(id=pk)
     supplierpaymentform = SupplierPaymentForm()
     if request.method == "POST":
         supplierpaymentform = SupplierPaymentForm(request.POST)
         if supplierpaymentform.is_valid():
             supplierpayment = supplierpaymentform.save(commit=False)
             print(supplierpayment.amount)
-            supplierpayment.supplier = supplier
+            supplierpayment.supplier = order.supplier
             supplierpayment.save()
-            supplier.credit -= supplierpayment.amount
-            supplier.save()
+            if order.debt == 0 or order.debt is None:
+                order.debt = order.get_total_cost()
+            order.debt -= supplierpayment.amount
+            order.supplier.credit -= supplierpayment.amount
+            caisse = Caisse.objects.all().filter()[:1].get()
+            caisse.save()
+            caisse.caisse_value -= supplierpayment.amount
+            if order.debt == 0:
+                order.paid = True
+            order.supplier.save()
+            order.save()
             # TODO: Uncomment this one
             # supplierpayment.user = request.user.id
             if supplierpayment.pay_status == "Cheque":
@@ -80,7 +108,7 @@ def create_supplier_payment(request, pk):
 
 
 def create_supplier_cheque(request, pk):
-    supplierpayment = SupplierPayment.objects.get(id=pk)
+    supplierpayment = BuyOrderPayment.objects.get(id=pk)
     supplierchequeform = SupplierChequeForm()
     if request.method == "POST":
         supplierchequeform = SupplierChequeForm(request.POST)
@@ -98,7 +126,7 @@ def create_supplier_cheque(request, pk):
 
 
 def supplier_payment_list(request):
-    supplierpayments = SupplierPayment.objects.all()
+    supplierpayments = BuyOrderPayment.objects.all()
     context = {
         "supplierpayments": supplierpayments
     }

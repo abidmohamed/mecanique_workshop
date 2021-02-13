@@ -8,7 +8,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-cogs"></i>
         </div>
@@ -33,87 +33,44 @@
         Interface
     </div>
 
-
-    <!-- Nav Item - Family Collapse Menu -->
+<!-- Nav Item - Caisse Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-           aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-object-group"></i>
-            <span>Product Family</span>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCaisse"
+           aria-expanded="true" aria-controls="collapseCaisse">
+            <i class="fas fa-coins"></i>
+            <span>Caisse</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="collapseCaisse" class="collapse" aria-labelledby="headingCaisse" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Operations :</h6>
-                <a class="collapse-item" href="{% url 'family:add_family' %}">Add</a>
-                <a class="collapse-item" href="{% url 'family:family_list' %}">List</a>
+                <a class="collapse-item" href="{% url 'caisse:create_transaction' %}">Add</a>
+                <a class="collapse-item" href="{% url 'caisse:transaction_list' %}">List</a>
             </div>
         </div>
     </li>
 
-
-    <!-- Nav Item - Categories Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-           aria-controls="collapseTwo">
-            <i class="fas fa-object-ungroup"></i>
-            <span>Product Category</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Operations :</h6>
-                <a class="collapse-item" href="{% url 'category:add_category' %}">Add</a>
-                <a class="collapse-item" href="{% url 'category:all_category_list' %}">List</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Vehicule Brand Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBrand"
-           aria-expanded="true" aria-controls="collapseBrand">
-    <i class="fas fa-car-alt"></i><i class="fas fa-car-alt"></i><i class="fas fa-car-alt"></i>
-            <span>Vehicule Brand</span>
-        </a>
-        <div id="collapseBrand" class="collapse" aria-labelledby="headingBrand" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Operations :</h6>
-                <a class="collapse-item" href="{% url 'vehicule:add_brand' %}">Add</a>
-                <a class="collapse-item" href="{% url 'vehicule:brand_list' %}">List</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Vehicule Type Collapse Menu -->
+    <!-- Nav Item - Vehicle Type Brand Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseType"
            aria-expanded="true" aria-controls="collapseType">
-    <i class="fas fa-car-alt"></i><i class="fas fa-car-alt"></i>
-            <span>Vehicule Type</span>
+    <i class="fas fa-car-alt"></i>
+            <span>Vehicle</span>
         </a>
         <div id="collapseType" class="collapse" aria-labelledby="headingType" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Operations :</h6>
-                <a class="collapse-item" href="{% url 'vehicule:add_type' %}">Add</a>
-                <a class="collapse-item" href="{% url 'vehicule:all_type_list' %}">List</a>
+                <a class="collapse-item" href="{% url 'vehicule:add_brand' %}">Add Brand</a>
+                <a class="collapse-item" href="{% url 'vehicule:brand_list' %}">Brand List</a>
+                <hr>
+                <a class="collapse-item" href="{% url 'vehicule:add_type' %}">Add Type </a>
+                <a class="collapse-item" href="{% url 'vehicule:all_type_list' %}">Type List</a>
+                <hr>
+                <a class="collapse-item" href="{% url 'vehicule:add_vehicule' %}">Add Vehicle</a>
+                <a class="collapse-item" href="{% url 'vehicule:all_vehicule_list' %}">Vehicle List</a>
             </div>
         </div>
     </li>
 
-    <!-- Nav Item - Vehicule Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVehicule"
-           aria-expanded="true" aria-controls="collapseVehicule">
-    <i class="fas fa-car-alt"></i>
-            <span>Vehicule</span>
-        </a>
-        <div id="collapseVehicule" class="collapse" aria-labelledby="headingVehicule" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Operations :</h6>
-                <a class="collapse-item" href="{% url 'vehicule:add_vehicule' %}">Add</a>
-                <a class="collapse-item" href="{% url 'vehicule:all_vehicule_list' %}">List</a>
-            </div>
-        </div>
-    </li>
 
     <!-- Nav Item - Customer Collapse Menu -->
     <li class="nav-item">
@@ -275,26 +232,6 @@
         </div>
     </li>
 
-      <!-- Nav Item - BuyOrder Billing Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsebuyorderbill"
-           aria-expanded="true" aria-controls="collapsebuyorderbill">
-            <i class="fas fa-file-invoice-dollar"></i>
-            <span>Billing</span>
-        </a>
-        <div id="collapsebuyorderbill" class="collapse" aria-labelledby="headingbuyorderbill"
-             data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Operations :</h6>
-                <a class="collapse-item" href="{% url 'supplier:buyorder_supplier_list' %}">Add Buy Order</a>
-                <a class="collapse-item" href="{% url 'billing:buybill_list' %}">List Buy Order</a>
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-                <a class="collapse-item" href="{% url 'customer:sellorder_customer_list' %}">Add Sell Order</a>
-                <a class="collapse-item" href="{% url 'billing:sellbill_list' %}">List Sell Order</a>
-            </div>
-        </div>
-    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">

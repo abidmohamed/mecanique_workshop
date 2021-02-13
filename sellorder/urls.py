@@ -10,5 +10,7 @@ urlpatterns = [
     path('sellorder_list_by_customer/<str:pk>', views.sellorder_list_by_customer,
          name='sellorder_list_by_customer'),
     path('sellorder_pdf/<str:pk>', views.sellorder_pdf, name='sellorder_pdf'),
+    path('sellorder_details/<str:pk>', views.sellorder_details, name='sellorder_details'),
+    path('sellorder_delete/<str:pk>', views.sellorder_delete, name='sellorder_delete'),
 
 ]
