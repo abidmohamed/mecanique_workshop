@@ -28,7 +28,7 @@ class Type(models.Model):
     brand = models.ForeignKey(Brand, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=250, null=True)
     slug = models.SlugField(max_length=200, unique=True)
-    image = models.ImageField(upload_to='types/%Y/%m/%d', blank=True, )
+    image = models.ImageField(upload_to='types/%Y/%m/%d', blank=True,)
 
     class Meta:
         ordering = ('name',)

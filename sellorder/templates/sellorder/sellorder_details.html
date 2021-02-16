@@ -10,6 +10,9 @@
             {% if order.debt > 0%}
                         <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">PayDebt</a>
             {% endif %}
+            <br>
+            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_pdf' order.id %}">Print </a>
+
         </div>
         <div class="card card-body">
             <div class="row">
@@ -18,7 +21,7 @@
                     <td>{{order.id}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Supplier: </h6>
+                    <h6>Customer: </h6>
                     <td>{{order.customer}}</td>
                 </div>
                 <div class="col-md-2">
@@ -31,13 +34,17 @@
                 </div>
                 <div class="col-md-2">
                     <h6>Total Price: </h6>
-                    <td>{{order.get_total_cost}} DZD</td>
+                    <td>{{order.total_price}} DZD</td>
                 </div>
                 <div class="col-md-2">
                     <h6>Debt: </h6>
                     <td>{{order.debt}} DZD</td>
                 </div>
             </div>
+            <hr>
+            <br>
+            <h2> Products : {{order.get_total_cost}}</h2>
+            <hr>
             <table id="table_id" class="table display text-center">
                 <thead class="thead-light">
                 <tr>
@@ -57,6 +64,28 @@
                     <td class="table-light ">DZD{{ item.price }}</td>
                     <td class="table-light ">{{ item.quantity }}</td>
                     <td class="table-light">DZD{{ item.get_cost }}</td>
+                    <td class="table-light"></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <h2>Pannes : {{order.get_total_panne}}</h2>
+            <hr>
+            <table id="table_panne" class="table display text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th>Panne</th>
+                    <th>Price</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in order.pannes.all %}
+                <tr>
+                    <td class="table-light">{{ item.panne.desc }}</td>
+                    <td class="table-light">{{ item.price }} DZD</td>
                     <td class="table-light"></td>
                 </tr>
                 {% endfor %}

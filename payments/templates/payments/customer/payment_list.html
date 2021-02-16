@@ -12,29 +12,36 @@
                 <table id="table_id" class="display text-center">
                     <thead>
                     <tr>
+                        <th>Order</th>
                         <th>Customer</th>
                         <th>Pay Status</th>
                         <th>Amount</th>
                         <th>Created</th>
+                        <th></th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    {% for payement in customerpayments %}
+                    {% for payment in customerpayments %}
                     <tr>
                         <td>
-                            {{payement.customer}}
+                            {{payment.order}}
                         </td>
                         <td>
-                            {{payement.pay_status}}
+                            {{payment.customer}}
                         </td>
                         <td>
-                            {{payement.amount}}
+                            {{payment.pay_status}}
                         </td>
                         <td>
-                            {{payement.created}}
+                            {{payment.amount}}
                         </td>
-
+                        <td>
+                            {{payment.created}}
+                        </td>
+ <td>
+                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' payment.order.id %}">Details</a>
+                    </td>
                     </tr>
 
                     {% endfor %}

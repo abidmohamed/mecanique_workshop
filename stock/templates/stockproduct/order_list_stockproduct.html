@@ -29,7 +29,7 @@
                         {% for prod in stockproducts %}
                         <tr>
                             <td>
-                                <input class="form-check-input" type="checkbox" value="{{prod.id}}" id="{{prod.id}}"
+                                <input class="form-check-input product-input" type="checkbox" value="{{prod.id}}" id="{{prod.id}}"
                                        name="products">
                             </td>
                             <td>
@@ -98,13 +98,13 @@
                             </td>
                             <td>
 
-                                <select  class="form-control" name="vehicle">
-                                {% for vehicle in customer.get_vehicles%}
-                                <option value="{{vehicle.id}}">{{vehicle}}</option>
-                                {% empty %}
-                                <option value="None">None</option>
-                                {% endfor %}
-                                    </select>
+                                <select class="form-control" name="vehicle">
+                                    {% for vehicle in customer.get_vehicles%}
+                                    <option value="{{vehicle.id}}">{{vehicle}}</option>
+                                    {% empty %}
+                                    <option value="None">None</option>
+                                    {% endfor %}
+                                </select>
                             </td>
                             <td>
                                 {{customer.email}}
@@ -121,13 +121,46 @@
 
                         {% endfor %}
                         </tbody>
+
+                    </table>
+                    <br>
+                    <hr>
+                    <br>
+                    <h2>Choose Pannes</h2>
+                    <!-- Pannes Table -->
+                    <table id="table_panne" class="display text-center">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Price</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for panne in pannes %}
+                        <tr>
+                            <td>
+                                <input class="form-check-input panne-input" type="checkbox" value="{{panne.id}}" id="{{panne.id}}"
+                                       name="pannes">
+                            </td>
+                            <td>
+                                {{panne.desc}}
+                            </td>
+                            <td>
+                                {{panne.price}}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+                        </tbody>
                         <tr class="text-center">
                             <td class="text-center">
                                 <input class="btn btn-primary" type="submit" name="submit">
                             </td>
                         </tr>
                     </table>
-
                 </form>
             </div>
         </div>
@@ -150,8 +183,11 @@
     $(document).ready( function () {
     $('#table_id').DataTable();
     $('#table_customer').DataTable();
+    $('#table_panne').DataTable();
 } );
 
+    document.getElementByClass("panne-input").required = false;
+    document.getElementByClass("product-input").required = false;
 
 
 </script>

@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from category.models import Category
 from customer.models import Customer
 from product.models import Product
-from sellorder.models import Order, OrderItem
+from rdv.models import Panne
+from sellorder.models import Order, OrderItem, PanneItem
 from stock.forms import StockForm, StockProductForm
 from stock.models import Stock, StockProduct
 from vehicule.models import Vehicle
@@ -112,14 +113,43 @@ def all_stockproduct_list(request):
     return render(request, 'stockproduct/all_list_stockproduct.html', context)
 
 
+# Modal Add Stock Product To Sell Order
+def modal_order_stockproduct_list(request, pk):
+    sellorder = Order.objects.get(id=pk)
+    stockproducts = StockProduct.objects.all()
+    if request.method == 'POST':
+        # get submitted orders
+        chosenproducts = request.POST.getlist("products")
+        if len(chosenproducts) != 0:
+            for product in chosenproducts:
+                currentproduct = StockProduct.objects.get(id=product)
+                # print(currentproduct)
+                OrderItem.objects.create(
+                    order=sellorder,
+                    stockproduct=currentproduct,
+                    price=currentproduct.product.sellprice,
+                    # weight=currentproduct.product.weight,
+                    quantity=1,
+                )
+        return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
+    context = {
+        'stockproducts': stockproducts,
+    }
+    return render(request, 'stockproduct/modal_order_list_stockproduct.html', context)
+
+
+# Normal
 def order_stockproduct_list(request):
     stockproducts = StockProduct.objects.all()
     customers = Customer.objects.all()
+    pannes = Panne.objects.all()
+
     if request.method == 'POST':
         # get submitted orders
         chosenproducts = request.POST.getlist("products")
         chosencustomer = request.POST.getlist("customers")
         chosenvehicule = request.POST.getlist("vehicle")
+        chosenpannes = request.POST.getlist("pannes")
         if len(chosenproducts) != 0 and len(chosencustomer) != 0:
             customer = Customer.objects.get(id=chosencustomer[0])
             vehicle = Vehicle.objects.get(id=chosenvehicule[0])
@@ -137,11 +167,20 @@ def order_stockproduct_list(request):
                     # weight=currentproduct.product.weight,
                     quantity=1,
                 )
+            for panne in chosenpannes:
+                currentpanne = Panne.objects.get(id=panne)
+                print(currentpanne)
+                PanneItem.objects.create(
+                    order=sellorder,
+                    panne=currentpanne,
+                    price=currentpanne.price
+                )
             return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
 
     context = {
         'customers': customers,
         'stockproducts': stockproducts,
+        'pannes': pannes,
     }
     return render(request, 'stockproduct/order_list_stockproduct.html', context)
 
