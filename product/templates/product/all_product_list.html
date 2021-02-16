@@ -27,7 +27,7 @@
                 {% for prod in products %}
                 <tr>
                    <td>
-                       <img class="card-img" style="width: 100%; height: 20vh;" src="{{prod.image.url}}" alt="{{prod.name}}">
+                       <img class="card-img" style="width: 100%; height: 20vh;" src="{% if prod.image %}{{prod.image.url}}{% else %} {% static 'img/no_image.png' %}{% endif %}" alt="{{prod.name}}">
                    </td>
                     <td>
                        {{prod.brand}}

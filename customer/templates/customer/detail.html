@@ -2,20 +2,104 @@
 {% load static %}
 
 {% block content %}
-<div class="product-detail">
-    <img src="{% if customer.image %}{{ customer.image.url }}{% else %} {% static 'img/no_image.png' %}{% endif %}">
-    <h1>{{ customer.name }}</h1>
-    <h2>
-            {{ customer.city }}
-    </h2>
-    <h2>
-            {{ customer.phone }}
-    </h2>
-        <h2>
-            {{ customer.location }}
-    </h2>
-    <h2>
-            {{ customer.debt }}
-    </h2>
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Order Details</h5>
+        </div>
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-md-3">
+                    <h6>Customer: </h6>
+                    <td>{{ customer.firstname }} {{ customer.lastname }}</td>
+            </div>
+            <div class="col-md-3">
+                    <h6>Address: </h6>
+                    <td>{{ customer.address }}</td>
+            </div>
+            <div class="col-md-3">
+                    <h6>Phone: </h6>
+                    <td>{{ customer.phone }}</td>
+            </div>
+            <div class="col-md-3">
+                    <h6>Debt: </h6>
+                    <td>{{ customer.debt }}</td>
+            </div>
+        </div>
+        <hr>
+        <br>
+        <h2>Orders</h2>
+        <hr>
+        <table id="table_order">
+            <thead class="thead-light">
+            <tr>
+                <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Address</th>
+                    <th>Total Piece</th>
+                    <th>Total Panne</th>
+                    <th>Total</th>
+                    <th>Debt</th>
+                    <th></th>
+                    <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{order.id}}</td>
+                    <td>{{order.customer}}</td>
+                    <td>{{order.customer.address}}</td>
+                    <td>{{order.get_total_cost}} DZD</td>
+                    <td>{{order.get_total_panne}} DZD</td>
+                    <td>{{order.get_total_item_panne}} DZD</td>
+                    <td>{{order.debt}} DZD</td>
+                    <td>
+                        {% if order.debt > 0%}
+                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">PayDebt</a>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">Details</a>
+                    </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        <br>
+        <h2>RDVs</h2>
+        <hr>
+        <table id="table_rdv">
+            <thead class="thead-light">
+            <tr>
+                <th>RDV ID</th>
+                    <th>Vehicle</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Total Price</th>
+                    <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for rdv in rdvs %}
+                <tr>
+                    <td>{{rdv.id}}</td>
+                    <td>{{rdv.vehicle}}</td>
+                    <td>{{rdv.rdv_date}} </td>
+                    <td>{{rdv.rdv_time}} </td>
+                    <td>{{rdv.get_total_cost}} </td>
+                    <td>
+                        <a class="btn btn-success " href="{% url 'rdv:rdv_details' rdv.id %}">Details</a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
 </div>
 {% endblock %}

@@ -81,7 +81,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Customers</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{customers}}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{totaldebt}} DZD</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-user-tie fa-2x text-primary"></i>
@@ -196,7 +196,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Suppliers Credit</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"> DZD</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{totalcredit}} DZD</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-truck fa-2x text-warning"></i>
@@ -219,7 +219,8 @@
     <div class="clearfix">
         <a class="btn btn-info right mr-2" href="{% url 'accounts:home' %}?{{ next_month }} "> Next Month >> </a>
         <a class="btn btn-info right mr-2" href="{% url 'accounts:home' %}?{{ prev_month }}"> << Previous Month </a>
-        <a class="btn btn-info right mr-2" href=""> + New RDV </a>
+        <a class="btn btn-info right mr-2" href="{% url 'rdv:create_rdv_customer' %}"> + New RDV </a>
+
     </div>
     <div style="">
         {{ calendar }}

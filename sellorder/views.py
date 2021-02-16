@@ -14,19 +14,17 @@ from stock.models import StockProduct
 
 # confirmation get order object from the stock view
 def confirm_order(request, pk):
+    stockproducts = StockProduct.objects.all()
     sellorder = Order.objects.get(id=pk)
     # get customer to add debt
     customer = Customer.objects.get(id=sellorder.customer.pk)
     # Get Discount
     discountform = DiscountForm()
-    print(sellorder.vehicle)
+    # print(sellorder.vehicle)
     if request.method == 'POST':
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
-        discountform = DiscountForm(request.POST)
-        if discountform.is_valid():
-            discount = discountform.save(commit=False)
-            print(discount)
+
         for index, item in enumerate(sellorder.items.all()):
             # get the price and value of each element
             # Saving the orderitem
@@ -71,11 +69,11 @@ def confirm_order(request, pk):
                         # category=item.stockproduct.product.category,
                         stock=item.stockproduct.product.stock
                     )
-        sellorder.debt = sellorder.get_total_cost()
-        sellorder.total_price = sellorder.get_total_cost()
+        sellorder.debt = sellorder.get_total_item_panne()
+        sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.save()
         # customer debt
-        customer.debt += sellorder.get_total_cost()
+        customer.debt += sellorder.get_total_item_panne()
         customer.save()
         # batch (installement) page
         return redirect('sellorder:sellorder_list')
@@ -83,6 +81,7 @@ def confirm_order(request, pk):
         'customer': customer,
         'sellorder': sellorder,
         'discountform': discountform,
+        'stockproducts': stockproducts,
     }
     return render(request, 'sellorder/sellorder_confirmation.html', context)
 
@@ -156,7 +155,7 @@ def sellorder_list_by_customer(request, pk):
 
 def sellorder_pdf(request, pk):
     sellorder = get_object_or_404(Order, id=pk)
-    html = render_to_string('buyorder/pdf.html', {'order': sellorder})
+    html = render_to_string('sellorder/pdf.html', {'order': sellorder})
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}.pdf'
 

@@ -47,12 +47,25 @@ def home(request):
     html_calendar = none_html_calendar.formatmonth(withyear=True)
     sellorders = Order.objects.all()  # .filter(created__year=now.year, created__month=now.month)
     buyorders = BuyOrder.objects.all()  # can be filtred by year & month
+    # customers + suppliers all objects
+    allcustomers = Customer.objects.all()
+    allsuppliers = Supplier.objects.all()
     # Caisse
     caisse = Caisse.objects.all().filter()[:1].get().caisse_value
     # Customer
     customers = Customer.objects.all().count()
     # Supplier
     suppliers = Supplier.objects.all().count()
+    # Total customers Debt
+    totaldebt = 0
+    for customer in allcustomers:
+        totaldebt += customer.debt
+
+    # Total suppliers Credit
+    totalcredit = 0
+    for supplier in allsuppliers:
+        totalcredit += supplier.credit
+
     # BuyOrder
     buyorder_number = BuyOrder.objects.all().count()
     # SellOrder
@@ -79,5 +92,6 @@ def home(request):
         'buyorder_number': buyorder_number, 'sellorder_number': sellorder_number,
         'totalsellorders': totalsellorders, 'totalbuyorders': totalbuyorders,
         'stockproductsalertcount': stockproductsalertcount, 'suppliers': suppliers,
+        'totaldebt': totaldebt, 'totalcredit': totalcredit,
     }
     return render(request, 'dashboard.html', context)

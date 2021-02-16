@@ -3,32 +3,35 @@ from customer.models import Customer, City
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
 
+from rdv.models import Rdv
+from sellorder.models import Order
+
 
 def add_customer(request):
-    user_form = UserForm()
+    # user_form = UserForm()
     customer_form = CustomerForm()
 
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
+        # user_form = UserForm(request.POST)
         customer_form = CustomerForm(request.POST)
 
         if customer_form.is_valid():
-            user = user_form.save()
+            # user = user_form.save()
             customer = customer_form.save(commit=False)
 
             group = Group.objects.get(name='customer')
-            user.groups.add(group)
+            # user.groups.add(group)
 
-            customer.user = user
-            customer.firstname = user.first_name
-            customer.lastname = user.last_name
-            customer.email = user.email
+            # customer.user = user
+            # customer.firstname = user.first_name
+            # customer.lastname = user.last_name
+            # customer.email = user.email
             customer.save()
 
             return redirect('customer:customer_list')
 
     context = {
-        'user_form': user_form,
+        # 'user_form': user_form,
         'customer_form': customer_form
     }
     return render(request, 'customer/add_customer.html', context)
@@ -77,8 +80,12 @@ def delete_customer(request, pk):
 
 def customer_detail(request, pk):
     customer = get_object_or_404(Customer, id=pk)
+    orders = Order.objects.all().filter(customer=customer)
+    rdvs = Rdv.objects.all().filter(customer=customer)
     context = {
-        'customer': customer
+        'customer': customer,
+        'orders': orders,
+        'rdvs': rdvs,
     }
     return render(request, 'customer/detail.html', context)
 

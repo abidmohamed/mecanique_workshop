@@ -10,6 +10,7 @@
         <div class="card card-body">
             <table id="table_id" class="display text-center">
                 <thead>
+                <th>Order</th>
                 <th>Customer</th>
                 <th>Amount</th>
                 <th>Date</th>
@@ -17,6 +18,7 @@
                 <tbody>
                 {% for pay in customerspayments %}
                 <tr>
+                    <td>{{pay.Order}}</td>
                     <td>{{pay.customer}}</td>
                     <td>{{pay.amount}}</td>
                     <td>{{pay.created}}</td>
