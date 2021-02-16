@@ -80,9 +80,13 @@ def home(request):
         totalbuyorders += order.get_total_cost()
 
     # Stock Qt Alert
+    stockproductsalertcount=0
     products = Product.objects.all()
     for product in products:
         stockproductsalertcount = StockProduct.objects.all().filter(quantity__lte=product.alert_quantity).count()
+
+    if not stockproductsalertcount:
+        stockproductsalertcount= 0
 
     context = {
         'calendar': mark_safe(html_calendar),
