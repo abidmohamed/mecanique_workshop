@@ -81,7 +81,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Customers</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{totaldebt}} DZD</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{% if totaldebt %}{{totaldebt}}{% else %} 0 DZD {% endif %}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-user-tie fa-2x text-primary"></i>
@@ -96,7 +96,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Sell Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{sellorder_number}}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{% if sellorder_number %}{{sellorder_number}}{% else %} 0 {% endif %}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-success"></i>
@@ -111,7 +111,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Buy Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{buyorder_number}}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{% if buyorder_number %}{{buyorder_number}} {% else %} 0 {% endif %}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-info"></i>
@@ -126,7 +126,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Suppliers</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{suppliers}}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{% if suppliers %}{{suppliers}}{% else %} 0 {% endif %}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-truck fa-2x text-warning"></i>
@@ -149,7 +149,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Stock Alert</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{stockproductsalertcount}}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"> {% if stockproductsalertcount %}{{stockproductsalertcount}}{% else %} 0 {% endif %}</div>
 
                         </div>
                         <div class="col-auto">
