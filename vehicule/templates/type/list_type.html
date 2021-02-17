@@ -34,7 +34,7 @@
                 {% for type in types %}
                 <tr>
                    <td>
-                       <img class="card-img" style="width: 100%; height: 20vh;" src="{{type.image.url}}" alt="{{type.name}}">
+                       <img class="card-img" style="width: 100%; height: 20vh;" src="{% if type.image %}{{type.image.url}}{%else%} {% static 'img/no_image.png' %}{%endif%}" alt="{{type.name}}">
                    </td>
                     <td>
                        {{type.name}}

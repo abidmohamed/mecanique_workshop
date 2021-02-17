@@ -23,7 +23,7 @@
 
                 <tr>
                    <td>
-                       <img class="card-img" style="width: 100%; height: 20vh;" src="{{brand.image.url}}" alt="{{brand.name}}">
+                       <img class="card-img" style="width: 100%; height: 20vh;" src="{% if brand.image %}{{brand.image.url}} {%else%} {% static 'img/no_image.png' %}{%endif%}" alt="{{brand.name}}">
                    </td>
 
                     <td>
