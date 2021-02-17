@@ -65,7 +65,7 @@
                                    name="type">
                         </td>
                         <td>
-                            <img class="card-img" style="width: 50%; height: 20vh;" src="{{type.image.url}}"
+                            <img class="card-img" style="width: 50%; height: 20vh;" src="{% if type.image %}{{type.image.url}}{%else%} {% static 'img/no_image.png' %}{%endif%}"
                                  alt="{{type.name}}">
                         </td>
                         <td>
