@@ -163,12 +163,9 @@
         <td class="font-14"><span class="font-weight-bold">Mr:</span> {{ order.customer.firstname }}
             {{ order.customer.lastname }}
         </td>
-        <td class="font-14"><span class="font-weight-bold">City:</span>
-            {% if order.customer.city %}
-            {{ order.customer.city }}
-            {% else %}
-            El Oued
-            {% endif %}
+        <td class="font-14"><span class="font-weight-bold">Address:</span>
+            {{ order.customer.address }}
+
         </td>
         <td class="font-14"><span class="font-weight-bold">Phone:</span> {{ order.customer.phone }}</td>
         <td class="font-14"><span class="font-weight-bold">Date:</span> {{ order.created|date:"M d, Y" }}</td>
@@ -212,7 +209,7 @@
 <table class="items-table">
     <thead>
     <tr>
-        <th>Panne</th>
+        <th>main d’œuvre</th>
         <th>Price</th>
 
     </tr>
@@ -234,7 +231,7 @@
         <td class="num">DZD {{ order.get_total_cost }}</td>
     </tr>
     <tr class="total">
-        <td colspan="3">Total Panne</td>
+        <td colspan="3">Total main d’œuvre</td>
         <td class="num">DZD {{ order.get_total_panne }}</td>
     </tr>
     <tr class="total">
