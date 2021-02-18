@@ -105,6 +105,12 @@ def sellorder_list(request):
 def sellorder_delete(request, pk):
     order = Order.objects.get(id=pk)
     if request.method == 'POST':
+        if order.items.all():
+
+            for item in order.items.all():
+                stockitem = StockProduct.objects.get(id=item.stockproduct.id)
+                stockitem.quantity += int(item.quantity)
+                stockitem.save()
         order.delete()
         return redirect('sellorder:sellorder_list')
     context = {

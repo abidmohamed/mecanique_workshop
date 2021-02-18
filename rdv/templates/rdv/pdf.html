@@ -141,16 +141,16 @@ thead th, tbody tr.total {
 <h4>Customer</h4>
 <table class="customer_table">
     <tr>
-        <td class="font-14"><span class="font-weight-bold">Mr:</span> {{ order.customer.firstname }}
-            {{ order.customer.lastname }}
+        <td class="font-14"><span class="font-weight-bold">Mr:</span> {{ rdv.customer.firstname }}
+            {{ rdv.customer.lastname }}
         </td>
         <td class="font-14"><span class="font-weight-bold">Address:</span>
-            {{ order.customer.address }}
+            {{ rdv.customer.address }}
 
 
         </td>
-        <td class="font-14"><span class="font-weight-bold">Phone:</span> {{ order.customer.phone }}</td>
-        <td class="font-14"><span class="font-weight-bold">Date:</span> {{ order.created|date:"M d, Y" }}</td>
+        <td class="font-14"><span class="font-weight-bold">Phone:</span> {{ rdv.customer.phone }}</td>
+        <td class="font-14"><span class="font-weight-bold">Date:</span> {{ rdv.created|date:"M d, Y" }}</td>
     </tr>
 
 </table>
@@ -159,9 +159,9 @@ thead th, tbody tr.total {
 
 <table class="vehicle_table">
     <tr>
-        <td class="font-14"><span class="font-weight-bold">Type:</span> {{ order.vehicle.vehicle_type }}</td>
-        <td class="font-14"><span class="font-weight-bold">Mat:</span> {{ order.vehicle.vehicle_mat }}</td>
-        <td class="font-14"><span class="font-weight-bold">Grey Card:</span> {{ order.vehicle.vehicle_cart_gris }}</td>
+        <td class="font-14"><span class="font-weight-bold">Type:</span> {{ rdv.vehicle.vehicle_type }}</td>
+        <td class="font-14"><span class="font-weight-bold">Mat:</span> {{ rdv.vehicle.vehicle_mat }}</td>
+        <td class="font-14"><span class="font-weight-bold">Grey Card:</span> {{ rdv.vehicle.vehicle_cart_gris }}</td>
     </tr>
 </table>
 {% if rdv.items.all %}

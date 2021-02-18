@@ -20,6 +20,7 @@
                     <th>Debt</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,9 @@
 
                     <td>
                            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">Details</a>
+                    </td>
+                    <td>
+                           <a class="btn btn-danger " href="{% url 'sellorder:sellorder_delete' order.id %}">Delete</a>
                     </td>
                 </tr>
 
