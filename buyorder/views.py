@@ -236,3 +236,20 @@ def buyorder_pdf(request, pk):
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+
+def buyorder_delete(request, pk):
+    order = get_object_or_404(BuyOrder, id=pk)
+    if request.method == 'POST':
+        if order.items.all():
+            for item in order.items.all():
+                stockitem = StockProduct.objects.get(product__id=item.product.id)
+                stockitem.quantity -= int(item.quantity)
+                stockitem.save()
+        order.delete()
+        return redirect('buyorder:buyorder_list')
+    context = {
+        'order': order
+    }
+    return render(request, 'buyorder/buyorder_delete.html', context)
+
