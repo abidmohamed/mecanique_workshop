@@ -10,6 +10,9 @@
             {% if order.debt > 0 %}
                         <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment' order.id %}">PayDebt</a>
             {% endif %}
+            <br>
+            <a class="btn btn-warning " href="{% url 'buyorder:buyorder_pdf' order.id %}">Print </a>
+
         </div>
         <div class="card card-body">
             <div class="row">
