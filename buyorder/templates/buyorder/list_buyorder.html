@@ -41,7 +41,7 @@
                         <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' order.id %}">Details</a>
                     </td>
                     <td>
-                        <a class="btn btn-success " href="{% url 'buyorder:buyorder_confirmation' order.id %}">update</a>
+                        <a class="btn btn-danger " href="{% url 'buyorder:buyorder_delete' order.id %}">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
