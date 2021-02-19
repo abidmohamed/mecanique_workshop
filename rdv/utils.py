@@ -16,7 +16,7 @@ class Calendar(HTMLCalendar):
         d = '<ul class="list-group">'
 
         for rdv in rdvs_per_day:
-            d += f'<li class="list-group-item list-group-item-info"> {rdv.get_absolute_url()} </li>'
+            d += f'<li class="list-group-item list-group-item-info"> {rdv.get_absolute_url()}_{rdv.rdv_time} </li>'
         d += '</ul>'
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul class='list-group'> {d} </ul></td>"
