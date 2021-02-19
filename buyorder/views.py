@@ -9,6 +9,7 @@ from billing.models import BuyOrderBilling, BillBuyOrderItem
 from buyorder.forms import BuyOrderForm, BuyOrderItemFormset
 from buyorder.models import BuyOrderItem, BuyOrder
 from caisse.models import Caisse
+from payments.models import BuyOrderPayment
 from product.forms import ProductForm
 from product.models import Product
 from supplier.models import Supplier
@@ -246,6 +247,14 @@ def buyorder_delete(request, pk):
                 stockitem = StockProduct.objects.get(product__id=item.product.id)
                 stockitem.quantity -= int(item.quantity)
                 stockitem.save()
+        supplier = Supplier.objects.get(id=order.supplier.id)
+        supplier.credit -= order.debt
+        supplier.save()
+        supplierpayment = BuyOrderPayment.objects.get(order=order)
+        caisse = Caisse.objects.all().filter()[:1].get()
+        caisse.caisse_value += supplierpayment.amount
+        caisse.save()
+        supplierpayment.delete()
         order.delete()
         return redirect('buyorder:buyorder_list')
     context = {
