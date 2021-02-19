@@ -5,8 +5,11 @@ from django.http import HttpResponse
 
 # Create your views here.
 from billing.models import OrderBilling, BillOrderItem
+from caisse.models import Caisse
 from customer.models import Customer
 from discount.forms import DiscountForm
+from payments.forms import CustomerPaymentForm
+from payments.models import SellOrderPayment
 from sellorder.apps import SellorderConfig
 from sellorder.models import Order
 from stock.models import StockProduct
@@ -111,6 +114,14 @@ def sellorder_delete(request, pk):
                 stockitem = StockProduct.objects.get(id=item.stockproduct.id)
                 stockitem.quantity += int(item.quantity)
                 stockitem.save()
+        customer = Customer.objects.get(id=order.customer.id)
+        customer.debt -= order.debt
+        customer.save()
+        customerpayment = SellOrderPayment.objects.get(order=order)
+        caisse = Caisse.objects.all().filter()[:1].get()
+        caisse.caisse_value -= customerpayment.amount
+        caisse.save()
+        customerpayment.delete()
         order.delete()
         return redirect('sellorder:sellorder_list')
     context = {
