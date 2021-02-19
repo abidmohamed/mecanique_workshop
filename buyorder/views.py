@@ -251,10 +251,11 @@ def buyorder_delete(request, pk):
         supplier.credit -= order.debt
         supplier.save()
         supplierpayment = BuyOrderPayment.objects.get(order=order)
-        caisse = Caisse.objects.all().filter()[:1].get()
-        caisse.caisse_value += supplierpayment.amount
-        caisse.save()
-        supplierpayment.delete()
+        if supplierpayment:
+            caisse = Caisse.objects.all().filter()[:1].get()
+            caisse.caisse_value += supplierpayment.amount
+            caisse.save()
+            supplierpayment.delete()
         order.delete()
         return redirect('buyorder:buyorder_list')
     context = {
