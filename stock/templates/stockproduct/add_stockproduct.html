@@ -13,7 +13,7 @@
         <div class="col-md-6 col-sm-12">
             <div class="card card-body">
 
-                <form id="stockproductform" action="" method="post" enctype="multipart/form-data" data-types-url="{% url 'warehouse:ajax_load_types' %}" data-colors-url="{% url 'warehouse:ajax_load_colors' %}" novalidate>
+                <form id="stockproductform" action="" method="post">
                     {% csrf_token %}
                     {{stockproductform|crispy}}
       <!--              <div class="col-md-12 col-sm-12">
@@ -66,41 +66,6 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-
-$( function() {
-
-    $( "#product" ).autocomplete({
-      source: "{% url 'warehouse:autocomplete_product' %}"
-    });
-  } );
-
-$("#product").change(function () {
-
-    var url = $("#stockproductform").attr("data-types-url");  // get the url of the `load_types` warehouse view
-    var url_color = $("#stockproductform").attr("data-colors-url");  // get the url of the `load_types` warehouse view
-    var personId = $(this).val(); // get the selected product ID from the HTML input
-    console.log(personId)
-     $.ajax({                       // initialize an AJAX request
-        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load_types/)
-        data: {
-          'product': personId       // add the product id to the GET parameters
-        },
-        success: function (data) {   // `data` is the return of the `load_types` view function
-          $("#id_type").html(data);  // replace the contents of the type input with the data that came from the server
-        }
-      });
-
-
-     $.ajax({                       // initialize an AJAX request
-        url: url_color,                    // set the url of the request (= localhost:8000/hr/ajax/load_types/)
-        data: {
-          'product': personId       // add the product id to the GET parameters
-        },
-        success: function (data) {   // `data` is the return of the `load_types` view function
-          $("#id_color").html(data);  // replace the contents of the type input with the data that came from the server
-        }
-      });
-});
 
 </script>
 {% endblock %}

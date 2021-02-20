@@ -109,7 +109,6 @@ def sellorder_delete(request, pk):
     order = Order.objects.get(id=pk)
     if request.method == 'POST':
         if order.items.all():
-
             for item in order.items.all():
                 stockitem = StockProduct.objects.get(id=item.stockproduct.id)
                 stockitem.quantity += int(item.quantity)
@@ -117,8 +116,8 @@ def sellorder_delete(request, pk):
         customer = Customer.objects.get(id=order.customer.id)
         customer.debt -= order.debt
         customer.save()
-        customerpayment = SellOrderPayment.objects.get(order=order)
-        if customerpayment:
+        if SellOrderPayment.objects.get(order=order):
+            customerpayment = SellOrderPayment.objects.get(order=order)
             caisse = Caisse.objects.all().filter()[:1].get()
             caisse.caisse_value -= customerpayment.amount
             caisse.save()
