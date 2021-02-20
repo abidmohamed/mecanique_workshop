@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # Create your models here.
 from category.models import Category
 from product.models import Product
@@ -32,9 +31,8 @@ class StockProduct(models.Model):
     def __str__(self):
         return self.product.name
 
-    def save(self, *args, **kwargs):
-        # self.category = self.product.category
-        # if self.image:
-        #    self.image = get_thumbnail(self.image, '570x320').url
-        super(StockProduct, self).save(*args, **kwargs)
-
+#  def save(self, *args, **kwargs):
+# self.category = self.product.category
+# if self.image:
+#    self.image = get_thumbnail(self.image, '570x320').url
+# super(StockProduct, self).save(*args, **kwargs)

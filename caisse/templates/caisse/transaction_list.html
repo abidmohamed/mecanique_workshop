@@ -42,6 +42,7 @@
                     </tr>
                     </thead>
                    <tbody>
+                   {% if transactions %}
                    {% for transaction in transactions %}
                     <tr>
                         <td>{{transaction.Transaction_name}}</td>
@@ -54,6 +55,9 @@
                     </td>
                     </tr>
                     {% endfor %}
+                   {% else %}
+                    <h2>No Elements</h2>
+                   {% endif %}
                    </tbody>
 
                 </table>
@@ -92,6 +96,5 @@
         ]
     });
     } );
-console.log({{transactions}})
 </script>
 {% endblock %}
