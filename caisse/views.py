@@ -68,10 +68,10 @@ def delete_transaction(request, pk):
         caisse_history.save()
 
         if transaction.Transaction_type == 'Income':
-            caisse.caisse_value = caisse.caisse_value + transaction.amount
+            caisse.caisse_value = caisse.caisse_value - transaction.amount
 
         elif transaction.Transaction_type == 'Expense':
-            caisse.caisse_value = caisse.caisse_value - transaction.amount
+            caisse.caisse_value = caisse.caisse_value + transaction.amount
 
         caisse.save()
         transaction.delete()
