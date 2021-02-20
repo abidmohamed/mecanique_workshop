@@ -25,4 +25,4 @@ class CustomerForm(ModelForm):
 
         }
 
-        fields = ('firstname', 'lastname', 'address', 'phone')
+        fields = ('firstname', 'lastname', 'address', 'phone', 'debt')
