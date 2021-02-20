@@ -245,13 +245,14 @@ def buyorder_delete(request, pk):
         if order.items.all():
             for item in order.items.all():
                 stockitem = StockProduct.objects.get(product__id=item.product.id)
-                stockitem.quantity -= int(item.quantity)
+                if stockitem.quantity > 0:
+                    stockitem.quantity -= int(item.quantity)
                 stockitem.save()
         supplier = Supplier.objects.get(id=order.supplier.id)
         supplier.credit -= order.debt
         supplier.save()
-        supplierpayment = BuyOrderPayment.objects.get(order=order)
-        if supplierpayment:
+        if BuyOrderPayment.objects.get(order=order):
+            supplierpayment = BuyOrderPayment.objects.get(order=order)
             caisse = Caisse.objects.all().filter()[:1].get()
             caisse.caisse_value += supplierpayment.amount
             caisse.save()

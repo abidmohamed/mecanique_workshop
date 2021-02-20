@@ -11,11 +11,11 @@
     <div class="col-md-6">
         <div class="card card-body">
             <P>ARE YOU SURE YOU WANT TO DELETE {{stockproduct}}</P>
-            <form action="{% url 'warehouse:delete_stockproduct' stockproduct.id %}" method="post">
+            <form action="{% url 'stock:delete_stockproduct' stockproduct.id %}" method="post">
 
                 {% csrf_token %}
                 <input class="btn btn-danger" type="submit" name="Confirm">
-                <a class="btn btn-warning" href="{% url 'warehouse:warehouse_list' %}">Cancel</a>
+                <a class="btn btn-warning" href="{% url 'stock:warehouse_list' %}">Cancel</a>
             </form>
         </div>
     </div>
