@@ -251,7 +251,7 @@ def buyorder_delete(request, pk):
         supplier = Supplier.objects.get(id=order.supplier.id)
         supplier.credit -= order.debt
         supplier.save()
-        if BuyOrderPayment.objects.get(order=order):
+        if BuyOrderPayment.objects.all().filter(order=order):
             supplierpayment = BuyOrderPayment.objects.get(order=order)
             caisse = Caisse.objects.all().filter()[:1].get()
             caisse.caisse_value += supplierpayment.amount
