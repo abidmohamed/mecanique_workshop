@@ -116,7 +116,7 @@ def sellorder_delete(request, pk):
         customer = Customer.objects.get(id=order.customer.id)
         customer.debt -= order.debt
         customer.save()
-        if SellOrderPayment.objects.get(order=order):
+        if SellOrderPayment.objects.all().filter(order=order):
             customerpayment = SellOrderPayment.objects.get(order=order)
             caisse = Caisse.objects.all().filter()[:1].get()
             caisse.caisse_value -= customerpayment.amount
