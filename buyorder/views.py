@@ -247,7 +247,7 @@ def buyorder_delete(request, pk):
                 stockitem = StockProduct.objects.get(product__id=item.product.id)
                 if stockitem.quantity > 0:
                     stockitem.quantity -= int(item.quantity)
-                stockitem.save()
+                    stockitem.save()
         supplier = Supplier.objects.get(id=order.supplier.id)
         supplier.credit -= order.debt
         supplier.save()
