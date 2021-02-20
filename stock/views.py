@@ -159,17 +159,17 @@ def order_stockproduct_list(request):
             sellorder = Order()
             sellorder.customer = customer
             sellorder.vehicle = vehicle
-            # sellorder.save()
+            sellorder.save()
             for product in chosenproducts:
                 currentproduct = StockProduct.objects.get(id=product)
                 # print(currentproduct)
-                # OrderItem.objects.create(
-                #     order=sellorder,
-                #     stockproduct=currentproduct,
-                #     price=currentproduct.product.sellprice,
-                #     # weight=currentproduct.product.weight,
-                #     quantity=1,
-                # )
+                OrderItem.objects.create(
+                    order=sellorder,
+                    stockproduct=currentproduct,
+                    price=currentproduct.product.sellprice,
+                    # weight=currentproduct.product.weight,
+                    quantity=1,
+                )
             for panne in chosenpannes:
                 currentpanne = Panne.objects.get(id=panne)
                 print(currentpanne)
@@ -178,7 +178,7 @@ def order_stockproduct_list(request):
                     panne=currentpanne,
                     price=currentpanne.price
                 )
-            # return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
+            return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
 
     context = {
         'customers': customers,
