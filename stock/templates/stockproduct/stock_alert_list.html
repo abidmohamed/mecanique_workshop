@@ -12,9 +12,10 @@
             <table id="table_id" class="table display text-center">
                <thead>
                <tr>
+                    <th>Brand</th>
+                    <th>Ref</th>
                     <th>Name</th>
                     <th>Stock</th>
-                    <th>Category</th>
                     <th>Quantity</th>
 
                 </tr>
@@ -24,13 +25,16 @@
                 {% for prod in stockproductsalert %}
                 <tr>
                     <td>
+                       {{prod.product.brand}}
+                   </td>
+                    <td>
                        {{prod.product.name}}
                    </td>
                     <td>
-                       {{prod.stock}}
+                       {{prod.product.ref}}
                    </td>
                     <td>
-                       {{prod.category}}
+                       {{prod.stock}}
                    </td>
                     <td>
                        {{prod.quantity}}
