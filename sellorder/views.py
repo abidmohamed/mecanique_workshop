@@ -27,51 +27,51 @@ def confirm_order(request, pk):
     if request.method == 'POST':
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
+        if sellorder.items.all():
+            for index, item in enumerate(sellorder.items.all()):
+                # get the price and value of each element
+                # Saving the orderitem
+                item.price = prices[index]
+                item.quantity = quantities[index]
+                item.save()
+                # Reducing the sold products from stock
+                stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.product.stock)
+                itemexist = 1
+                #     # check if stock doesn't have the product
+                if len(stockitems) > 0:
+                    # stock has products check if product exist
+                    for stockitem in stockitems:
+                        # the same product exist
+                        if stockitem.product.id == item.stockproduct.product.id:
+                            stockitem.quantity -= int(item.quantity)
+                            stockitem.save()
+                            itemexist = 2
+                            #                 # operation done same product plus the new quantity
 
-        for index, item in enumerate(sellorder.items.all()):
-            # get the price and value of each element
-            # Saving the orderitem
-            item.price = prices[index]
-            item.quantity = quantities[index]
-            item.save()
-            # Reducing the sold products from stock
-            stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.product.stock)
-            itemexist = 1
-            #     # check if stock doesn't have the product
-            if len(stockitems) > 0:
-                # stock has products check if product exist
-                for stockitem in stockitems:
-                    # the same product exist
-                    if stockitem.product.id == item.stockproduct.product.id:
-                        stockitem.quantity -= int(item.quantity)
-                        stockitem.save()
-                        itemexist = 2
-                        #                 # operation done same product plus the new quantity
-
-                if itemexist == 1:
-                    #             # stock not empty product doesn't exist in it
-                    #             # create new stockproduct
-                    StockProduct.objects.create(
-                        product=item.stockproduct.product,
-                        quantity=int(item.quantity),
-                        # type=item.type,
-                        # color=item.color,
-                        # category=item.stockproduct.product.category,
-                        stock=item.stockproduct.product.stock
-                    )
-            else:
-                #         # stock is empty
-                itemexist = 0
-                if itemexist == 0:
-                    # create new stockproduct
-                    StockProduct.objects.create(
-                        product=item.stockproduct.product,
-                        quantity=int(item.quantity),
-                        # type=item.type,
-                        # color=item.color,
-                        # category=item.stockproduct.product.category,
-                        stock=item.stockproduct.product.stock
-                    )
+                    if itemexist == 1:
+                        #             # stock not empty product doesn't exist in it
+                        #             # create new stockproduct
+                        StockProduct.objects.create(
+                            product=item.stockproduct.product,
+                            quantity=int(item.quantity),
+                            # type=item.type,
+                            # color=item.color,
+                            # category=item.stockproduct.product.category,
+                            stock=item.stockproduct.product.stock
+                        )
+                else:
+                    #         # stock is empty
+                    itemexist = 0
+                    if itemexist == 0:
+                        # create new stockproduct
+                        StockProduct.objects.create(
+                            product=item.stockproduct.product,
+                            quantity=int(item.quantity),
+                            # type=item.type,
+                            # color=item.color,
+                            # category=item.stockproduct.product.category,
+                            stock=item.stockproduct.product.stock
+                        )
         sellorder.debt = sellorder.get_total_item_panne()
         sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.confirmed = True
@@ -79,7 +79,6 @@ def confirm_order(request, pk):
         # customer debt
         customer.debt += sellorder.get_total_item_panne()
         customer.save()
-        # batch (installement) page
         return redirect('sellorder:sellorder_list')
     context = {
         'customer': customer,

@@ -178,15 +178,16 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 
 <script type='text/javascript'>
+
+
     //Data Table init
     $(document).ready( function () {
     $('#table_id').DataTable();
     $('#table_customer').DataTable();
     $('#table_panne').DataTable();
 } );
-
-    document.getElementsByClassName("panne-input").required = false;
-    document.getElementsByClassName("product-input").required = false;
+  document.getElementsByClassName("panne-input").required = false;
+   document.getElementsByClassName("product-input").required = false;
 
 </script>
 {% endblock %}
