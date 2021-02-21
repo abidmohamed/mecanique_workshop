@@ -46,7 +46,7 @@
                     </thead>
                     <tbody>
                     {% for product in products %}
-                    <tr>
+                    <tr  class="row{% cycle '1' '2' %}" >
                         <td><input class="form-check-input" type="checkbox" value="{{product.id}}" id="{{product.id}}"
                                    name="products">
                         </td>
