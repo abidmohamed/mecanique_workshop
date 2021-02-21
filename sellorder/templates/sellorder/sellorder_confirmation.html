@@ -12,7 +12,8 @@
             <h2>Customer: <span>{{customer}}</span></h2>
                 <label for="total-price">Total :</label>
 
-            <input id="total-price" type="number" class="form-control" value="{{sellorder.get_total_cost}}" disabled>
+            <input id="total-price" type="number" class="form-control" value="{{sellorder.get_total_item_panne}}" disabled>
+            <h2>{{get_total_item_panne}}</h2>
             <br>
             <hr>
             <div class="row">
@@ -79,6 +80,22 @@
                         <td class="table-light ">
                             <input onkeyup="calc()" class="form-control" type="number" name="quantities" value="{{ item.quantity }}">
                         </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <table class="thead-light">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Mo</th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in sellorder.pannes.all %}
+                    <tr>
+                        <td>{{item.panne.desc}}</td>
+                        <td>{{item.price}}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
