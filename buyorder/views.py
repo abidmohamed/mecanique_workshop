@@ -33,6 +33,7 @@ def create_buyorder(request):
 
         if buyorderform.is_valid():
             if len(products_list):
+                print(products_list)
                 buyorder = buyorderform.save()
                 # to add credit
                 # supplier = Supplier.objects.get(id=request.POST['supplier'])

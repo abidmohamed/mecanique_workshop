@@ -1,13 +1,15 @@
 from django.forms import ModelForm, modelformset_factory
-
+from django import forms
 from payments.models import SellOrderPayment, CustomerCheque, BuyOrderPayment, SupplierCheque
 
 
 class CustomerPaymentForm(ModelForm):
     class Meta:
         model = SellOrderPayment
-
-        fields = ['amount', 'pay_status', ]
+        widgets = {
+            'pay_date': forms.DateInput(attrs={'class': 'datepicker', 'type': 'date'}),
+        }
+        fields = ['amount', 'pay_status', 'pay_date']
 
 
 class CustomerChequeForm(ModelForm):
@@ -20,8 +22,10 @@ class CustomerChequeForm(ModelForm):
 class SupplierPaymentForm(ModelForm):
     class Meta:
         model = BuyOrderPayment
-
-        fields = ['amount', 'pay_status']
+        widgets = {
+            'pay_date': forms.DateInput(attrs={'class': 'datepicker', 'type': 'date'}),
+        }
+        fields = ['amount', 'pay_status', 'pay_date']
 
 
 class SupplierChequeForm(ModelForm):

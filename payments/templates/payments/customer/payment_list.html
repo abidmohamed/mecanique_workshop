@@ -17,6 +17,7 @@
                         <th>Pay Status</th>
                         <th>Amount</th>
                         <th>Created</th>
+                        <th>Payed</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -38,6 +39,9 @@
                         </td>
                         <td>
                             {{payment.created}}
+                        </td>
+                        <td>
+                            {{payment.pay_date}}
                         </td>
  <td>
                            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' payment.order.id %}">Details</a>
