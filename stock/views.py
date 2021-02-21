@@ -149,39 +149,42 @@ def order_stockproduct_list(request):
         chosenproducts = request.POST.getlist("products")
         chosencustomer = request.POST.getlist("customers")
         chosenvehicule = request.POST.getlist("vehicle")
-        print(chosencustomer)
-        print(chosenvehicule)
         chosenpannes = request.POST.getlist("pannes")
-        if len(chosenproducts) != 0 and len(chosencustomer) != 0:
+        # print(chosencustomer)
+        # print(chosenvehicule)
+        if len(chosencustomer) != 0:
+            sellorder = Order()
             customer = Customer.objects.get(id=chosencustomer[0])
             # print(customer)
             # vehicles = Vehicle.objects.all().filter(customer=customer)
             # print(vehicles)
 
-            vehicle = Vehicle.objects.get(id=chosenvehicule[int(chosencustomer[0])-1])
+            vehicle = Vehicle.objects.get(id=chosenvehicule[int(chosencustomer[0]) - 1])
             print(vehicle)
-            sellorder = Order()
+
             sellorder.customer = customer
             sellorder.vehicle = vehicle
             sellorder.save()
-            for product in chosenproducts:
-                currentproduct = StockProduct.objects.get(id=product)
-                # print(currentproduct)
-                OrderItem.objects.create(
-                    order=sellorder,
-                    stockproduct=currentproduct,
-                    price=currentproduct.product.sellprice,
-                    # weight=currentproduct.product.weight,
-                    quantity=1,
-                )
-            for panne in chosenpannes:
-                currentpanne = Panne.objects.get(id=panne)
-                print(currentpanne)
-                PanneItem.objects.create(
-                    order=sellorder,
-                    panne=currentpanne,
-                    price=currentpanne.price
-                )
+            if len(chosenproducts) != 0:
+                for product in chosenproducts:
+                    currentproduct = StockProduct.objects.get(id=product)
+                    # print(currentproduct)
+                    OrderItem.objects.create(
+                        order=sellorder,
+                        stockproduct=currentproduct,
+                        price=currentproduct.product.sellprice,
+                        # weight=currentproduct.product.weight,
+                        quantity=1,
+                    )
+            if len(chosenpannes) != 0:
+                for panne in chosenpannes:
+                    currentpanne = Panne.objects.get(id=panne)
+                    # print(currentpanne)
+                    PanneItem.objects.create(
+                        order=sellorder,
+                        panne=currentpanne,
+                        price=currentpanne.price
+                    )
             return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
 
     context = {
