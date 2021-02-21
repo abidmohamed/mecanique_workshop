@@ -140,7 +140,7 @@ def modal_order_stockproduct_list(request, pk):
 
 # Normal
 def order_stockproduct_list(request):
-    stockproducts = StockProduct.objects.all()
+    stockproducts = StockProduct.objects.all().filter(quantity__gte=0)
     customers = Customer.objects.all()
     pannes = Panne.objects.all()
 
@@ -148,14 +148,18 @@ def order_stockproduct_list(request):
         # get submitted orders
         chosenproducts = request.POST.getlist("products")
         chosencustomer = request.POST.getlist("customers")
-        chosenvehicule = request.POST.get("vehicle")
+        chosenvehicule = request.POST.getlist("vehicle")
+        print(chosencustomer)
         print(chosenvehicule)
         chosenpannes = request.POST.getlist("pannes")
         if len(chosenproducts) != 0 and len(chosencustomer) != 0:
             customer = Customer.objects.get(id=chosencustomer[0])
             # print(customer)
-            vehicle = Vehicle.objects.get(id=chosenvehicule)
-            # print(vehicle)
+            # vehicles = Vehicle.objects.all().filter(customer=customer)
+            # print(vehicles)
+
+            vehicle = Vehicle.objects.get(id=chosenvehicule[int(chosencustomer[0])-1])
+            print(vehicle)
             sellorder = Order()
             sellorder.customer = customer
             sellorder.vehicle = vehicle

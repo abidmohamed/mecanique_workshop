@@ -97,7 +97,6 @@
                                 {{customer.national_number}}
                             </td>
                             <td>
-
                                 <select class="form-control" name="vehicle">
                                     {% for vehicle in customer.get_vehicles%}
                                     <option value="{{vehicle.id}}">{{vehicle}}</option>
@@ -186,9 +185,8 @@
     $('#table_panne').DataTable();
 } );
 
-    document.getElementByClass("panne-input").required = false;
-    document.getElementByClass("product-input").required = false;
-
+    document.getElementsByClassName("panne-input").required = false;
+    document.getElementsByClassName("product-input").required = false;
 
 </script>
 {% endblock %}

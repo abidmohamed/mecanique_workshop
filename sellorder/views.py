@@ -74,6 +74,7 @@ def confirm_order(request, pk):
                     )
         sellorder.debt = sellorder.get_total_item_panne()
         sellorder.total_price = sellorder.get_total_item_panne()
+        sellorder.confirmed = True
         sellorder.save()
         # customer debt
         customer.debt += sellorder.get_total_item_panne()
@@ -108,11 +109,12 @@ def sellorder_list(request):
 def sellorder_delete(request, pk):
     order = Order.objects.get(id=pk)
     if request.method == 'POST':
-        if order.items.all():
-            for item in order.items.all():
-                stockitem = StockProduct.objects.get(id=item.stockproduct.id)
-                stockitem.quantity += int(item.quantity)
-                stockitem.save()
+        if order.confirmed:
+            if order.items.all():
+                for item in order.items.all():
+                    stockitem = StockProduct.objects.get(id=item.stockproduct.id)
+                    stockitem.quantity += int(item.quantity)
+                    stockitem.save()
         customer = Customer.objects.get(id=order.customer.id)
         customer.debt -= order.debt
         customer.save()
