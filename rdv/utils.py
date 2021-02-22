@@ -16,25 +16,25 @@ class Calendar(HTMLCalendar):
         d = '<ul class="list-group">'
 
         for rdv in rdvs_per_day:
-            d += f'<li class="list-group-item list-group-item-info"> {rdv.get_absolute_url()}_{rdv.rdv_time} </li>'
+            d += f'<li class="list-group-item list-group-item-success"> {rdv.get_absolute_url()}_{rdv.rdv_time} </li>'
         d += '</ul>'
         if day != 0:
-            return f"<td><span class='date'>{day}</span><ul class='list-group'> {d} </ul></td>"
-        return '<td></td>'
+            return f"<td class='bg-gradient-info'><span class='date'>{day}</span><ul class='list-group'> {d} </ul></td>"
+        return '<td class="bg-gradient-info"></td>'
 
     # formats a week as a tr
     def formatweek(self, theweek, rdvs):
         week = ''
         for d, weekday in theweek:
             week += self.formatday(d, rdvs)
-        return f'<tr> {week} </tr>'
+        return f'<tr class="bg-gradient-info"> {week} </tr>'
 
     # formats a month as a table
     # filter events by year and month
     def formatmonth(self, withyear=True):
         events = Rdv.objects.filter(rdv_date__year=self.year, rdv_date__month=self.month)
 
-        cal = f'<br><table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
+        cal = f'<br><table border="0" cellpadding="0" cellspacing="0" class="calendar bg-gradient-info">\n'
         cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
         cal += f'{self.formatweekheader()}\n'
 
