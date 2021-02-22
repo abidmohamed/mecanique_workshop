@@ -11,6 +11,7 @@ from customer.models import Customer
 from product.models import Product
 from rdv.models import Rdv
 
+
 # Calendar Views & functions
 from rdv.utils import Calendar
 from sellorder.models import Order
@@ -42,11 +43,17 @@ def next_month(d):
 
 # Dashboard
 def home(request):
+    # now time
+    now = datetime.now()
+    # Calendar
     calendar_date = get_date(request.GET.get('month', None))
     none_html_calendar = Calendar(calendar_date.year, calendar_date.month)
     html_calendar = none_html_calendar.formatmonth(withyear=True)
+
     sellorders = Order.objects.all()  # .filter(created__year=now.year, created__month=now.month)
     buyorders = BuyOrder.objects.all()  # can be filtred by year & month
+    # Today order
+    today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day)
     # customers + suppliers all objects
     allcustomers = Customer.objects.all()
     allsuppliers = Supplier.objects.all()
@@ -74,10 +81,17 @@ def home(request):
     totalsellorders = 0
     totalbuyorders = 0
     for order in sellorders:
-        totalsellorders += order.get_total_cost()
+        totalsellorders += order.get_total_item_panne()
     # Buy orders total
     for order in buyorders:
         totalbuyorders += order.get_total_cost()
+
+    # Sell Orders today total
+    totaltodaypanne=0
+    totaltodaypiece=0
+    for order in today_sellorders:
+        totaltodaypanne += order.get_total_panne()
+        totaltodaypiece += order.get_total_cost()
 
     # Stock Qt Alert
     stockproductsalertcount=0
@@ -97,5 +111,6 @@ def home(request):
         'totalsellorders': totalsellorders, 'totalbuyorders': totalbuyorders,
         'stockproductsalertcount': stockproductsalertcount, 'suppliers': suppliers,
         'totaldebt': totaldebt, 'totalcredit': totalcredit,
+        'totaltodaypanne': totaltodaypanne, 'totaltodaypiece': totaltodaypiece,
     }
     return render(request, 'dashboard.html', context)
