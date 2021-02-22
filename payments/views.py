@@ -90,8 +90,8 @@ def create_supplier_payment(request, pk):
             order.debt -= supplierpayment.amount
             order.supplier.credit -= supplierpayment.amount
             caisse = Caisse.objects.all().filter()[:1].get()
-            caisse.save()
             caisse.caisse_value -= supplierpayment.amount
+            caisse.save()
             if order.debt == 0:
                 order.paid = True
             order.supplier.save()
