@@ -148,7 +148,7 @@ def order_stockproduct_list(request):
         # get submitted orders
         chosenproducts = request.POST.getlist("products")
         chosencustomer = request.POST.getlist("customers")
-        chosenvehicule = request.POST.getlist("vehicle")
+        # chosenvehicule = request.POST.getlist("vehicle")
         chosenpannes = request.POST.getlist("pannes")
         # print(chosencustomer)
         # print(chosenvehicule)
@@ -158,12 +158,12 @@ def order_stockproduct_list(request):
             # print(customer)
             # vehicles = Vehicle.objects.all().filter(customer=customer)
             # print(vehicles)
-
-            vehicle = Vehicle.objects.get(id=chosenvehicule[int(chosencustomer[0]) - 1])
-            print(vehicle)
+            #
+            # vehicle = Vehicle.objects.get(id=chosenvehicule[int(chosencustomer[0]) - 1])
+            # print(vehicle)
 
             sellorder.customer = customer
-            sellorder.vehicle = vehicle
+            # sellorder.vehicle = vehicle
             sellorder.save()
             if len(chosenproducts) != 0:
                 for product in chosenproducts:
@@ -185,7 +185,7 @@ def order_stockproduct_list(request):
                         panne=currentpanne,
                         price=currentpanne.price
                     )
-            return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
+            return redirect('stock:order_vehicle', sellorder.pk)
 
     context = {
         'customers': customers,
@@ -193,6 +193,27 @@ def order_stockproduct_list(request):
         'pannes': pannes,
     }
     return render(request, 'stockproduct/order_list_stockproduct.html', context)
+
+
+def order_vehicle(request, pk):
+    sellorder = Order.objects.get(id=pk)
+    customer = Customer.objects.get(id=sellorder.customer.pk)
+    vehicles = Vehicle.objects.all().filter(customer=customer)
+    if request.method == 'POST':
+        chosenvehicule = request.POST.get("vehicle")
+        if chosenvehicule:
+            print(chosenvehicule)
+            vehicle = Vehicle.objects.get(id=chosenvehicule)
+            print(vehicle)
+            sellorder.vehicle = vehicle
+            sellorder.save()
+            return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
+
+    context = {
+        'vehicles': vehicles,
+    }
+    return render(request, 'stockproduct/order_vehicle.html', context)
+
 
 
 def stockproduct_detail(request, id):
