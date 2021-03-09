@@ -137,7 +137,9 @@
                         {{payment.pay_date}}
                     </td>
                    <td>
+                       {% if payment.order.id %}
                       <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' payment.order.id %}">Details</a>
+                       {% endif %}
                    </td>
                 </tr>
 
