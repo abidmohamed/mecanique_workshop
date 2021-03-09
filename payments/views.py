@@ -83,6 +83,7 @@ def create_supplier_payment(request, pk):
         if supplierpaymentform.is_valid():
             supplierpayment = supplierpaymentform.save(commit=False)
             print(supplierpayment.amount)
+            supplierpayment.order = order
             supplierpayment.supplier = order.supplier
             supplierpayment.save()
             if order.debt == 0 or order.debt is None:

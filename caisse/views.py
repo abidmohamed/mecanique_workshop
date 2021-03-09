@@ -1,8 +1,11 @@
+from datetime import date
+
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from caisse.forms import TransactionForm, DateForm
+from caisse.forms import TransactionForm, DateForm, PeriodForm
 from caisse.models import Caisse, CaisseHistory, Transaction
+from payments.models import SellOrderPayment, BuyOrderPayment
 
 
 def create_transaction(request):
@@ -33,25 +36,64 @@ def create_transaction(request):
 
 def transaction_list(request):
     dateform = DateForm()
+    periodform = PeriodForm()
     transactions = Transaction.objects.all()
+
+    customerpayments = SellOrderPayment.objects.all()
+    supplierpayments = BuyOrderPayment.objects.all()
+    total_per_period = 0
     # Search request by date===>
     if request.method == 'POST':
         # dateform = request.POST
         print('POST applied')
         alldata = request.POST
         print(alldata)
-        chosen_date = alldata.get("date")
-        month = chosen_date.split("-", 2)
-        year = chosen_date.split("-", 1)
-        print(chosen_date.split("-", 1))
-        print(chosen_date.split("-", 2))
-        print(year[0])
-        print(month[1])
-        transactions = Transaction.objects.all().filter(date_created__year=year[0],
-                                                        date_created__month=month[1])
+        chosen_start_date = alldata.get("start_date")
+        chosen_end_date = alldata.get("end_date")
+        start_month = chosen_start_date.split("-", 2)
+        start_year = chosen_start_date.split("-", 1)
+        start_day = chosen_start_date.split("-", 2)
+
+        end_month = chosen_end_date.split("-", 2)
+        end_year = chosen_end_date.split("-", 1)
+        end_day = chosen_end_date.split("-", 2)
+        # print(chosen_date.split("-", 1))
+        # print(chosen_date.split("-", 3))
+        # print(year[0])
+        # print(day[2])
+        # Date Submit ----------date_created
+        transactions = Transaction.objects.all().filter(
+            date_created__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
+            date_created__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
+        )
+        customerpayments = SellOrderPayment.objects.all().filter(
+            created__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
+            created__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
+        )
+        supplierpayments = BuyOrderPayment.objects.all().filter(
+            created__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
+            created__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
+        )
+
+        for transaction in transactions:
+            if transaction.Transaction_type == "Income":
+                total_per_period += transaction.amount
+            else:
+                total_per_period -= transaction.amount
+
+        for customerpayment in customerpayments:
+            total_per_period += customerpayment.amount
+
+        for supplierpayment in supplierpayments:
+            total_per_period -= supplierpayment.amount
+
     context = {
         "transactions": transactions,
         "dateform": dateform,
+        "periodform": periodform,
+        "customerpayments": customerpayments,
+        "supplierpayments": supplierpayments,
+        "total_per_period": total_per_period,
     }
 
     return render(request, "caisse/transaction_list.html", context)
