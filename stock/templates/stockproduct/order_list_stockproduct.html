@@ -9,7 +9,7 @@
                 <h5>Sell Order</h5>
             </div>
             <div class="card card-body">
-                <form action="" method="post">
+                <form id="order-form" action="" method="post">
                     {% csrf_token %}
                     <h2>Choose Products</h2>
                     <table id="table_id" class=" table display text-center">
@@ -165,15 +165,71 @@
 
 <script type='text/javascript'>
 
-
     //Data Table init
     $(document).ready( function () {
     $('#table_id').DataTable();
     $('#table_customer').DataTable();
     $('#table_panne').DataTable();
-} );
+    } );
   document.getElementsByClassName("panne-input").required = false;
-   document.getElementsByClassName("product-input").required = false;
+  document.getElementsByClassName("product-input").required = false;
+    // Form Submition order-form
+    $('#order-form').on('submit', function(e){
+        var form = this;
+        // Iterate over all checkboxes in the table
+        // product table
+        var table = $('#table_id').DataTable();
+        table.$('input[type="checkbox"]').each(function(){
+             // If checkbox doesn't exist in DOM
+             if(!$.contains(document, this)){
+             if(this.checked){
+             // Create a hidden element
+             $(form).append(
+             $('<input>')
+             .attr('type', 'hidden')
+             .attr('prod.id', this.name)
+             .val(this.value)
+             );
+             }
+            }
+        });
+        // Iterate over all checkboxes in the table
+        // customer table
+        var table = $('#table_customer').DataTable();
+        table.$('input[type="radio"]').each(function(){
+        // If checkbox doesn't exist in DOM
+        if(!$.contains(document, this)){
+        if(this.checked){
+        // Create a hidden element
+        $(form).append(
+        $('<input>')
+        .attr('type', 'hidden')
+        .attr('prod.id', this.name)
+        .val(this.value)
+        );
+        }
+        }
+        });
+
+        // Iterate over all checkboxes in the table
+        // panne table
+        var table = $('#table_panne').DataTable();
+        table.$('input[type="checkbox"]').each(function(){
+        // If checkbox doesn't exist in DOM
+        if(!$.contains(document, this)){
+        if(this.checked){
+        // Create a hidden element
+        $(form).append(
+        $('<input>')
+        .attr('type', 'hidden')
+        .attr('prod.id', this.name)
+        .val(this.value)
+        );
+        }
+        }
+        });
+
+    });
 
 </script>
 {% endblock %}

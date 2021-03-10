@@ -215,7 +215,6 @@ def order_vehicle(request, pk):
     return render(request, 'stockproduct/order_vehicle.html', context)
 
 
-
 def stockproduct_detail(request, id):
     stockproduct = get_object_or_404(StockProduct, id=id)
 

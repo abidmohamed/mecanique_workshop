@@ -23,7 +23,7 @@ def create_buyorder(request):
     products = Product.objects.all()
 
     if request.method == 'POST':
-        # print(request.POST)
+        print(request.POST)
         # fix the form to be validated
         # get the list of the chosen products
         products_list = request.POST.getlist('products')
