@@ -37,7 +37,7 @@
                 <table id="table_id" class="display text-center">
                     <thead>
                     <tr>
-                        <th><label class="form-check-label" for="{{product.id}}"/></th>
+                        <th><label class="form-check-label" for="{{product.id}}"></th>
                         <th>Brand</th>
                         <th>Name</th>
                         <th>Ref</th>
@@ -139,6 +139,55 @@
     $(document).ready( function () {
     $('#table_id').DataTable();
 } );
+
+
+// Form Submition buyorderform
+    $('#buyorderform').on('submit', function(e){
+         var form = this;
+         //var form = document.getElementById('buyorderform');
+         console.log(form)
+         var table = $('#table_id').DataTable();
+         // console.log(form);
+         // Iterate over all checkboxes in the table
+         table.$('input[type="checkbox"]').each(function(){
+         // If checkbox doesn't exist in DOM
+         if(!$.contains(document, this)){
+         if(this.checked){
+         // Create a hidden element
+         console.log(this)
+         $(form).append(
+         $('<input>')
+         .attr('type', 'hidden')
+         .attr('name', this.name)
+         .val(this.value)
+         );
+         }
+         }
+});
+    });
+
+    function submittion(){
+    // var form = this;
+     var form = document.getElementById('buyorderform');
+     console.log(form)
+     var table = $('#table_id').DataTable();
+        // console.log(form);
+        // Iterate over all checkboxes in the table
+        table.$('input[type="checkbox"]').each(function(){
+             // If checkbox doesn't exist in DOM
+             if(!$.contains(document, this)){
+             if(this.checked){
+             // Create a hidden element
+             console.log(this)
+             $(form).append(
+             $('<input>')
+             .attr('name', this.name)
+             .val(this.value)
+             );
+             }
+            }
+        });
+    }
 
     maxnum = 0
 

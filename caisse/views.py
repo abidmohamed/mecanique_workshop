@@ -63,16 +63,16 @@ def transaction_list(request):
         # print(day[2])
         # Date Submit ----------date_created
         transactions = Transaction.objects.all().filter(
-            date_created__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
-            date_created__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
+            trans_date__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
+            trans_date__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
         )
         customerpayments = SellOrderPayment.objects.all().filter(
-            created__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
-            created__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
+            pay_date__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
+            pay_date__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
         )
         supplierpayments = BuyOrderPayment.objects.all().filter(
-            created__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
-            created__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
+            pay_date__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
+            pay_date__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
         )
 
         for transaction in transactions:
