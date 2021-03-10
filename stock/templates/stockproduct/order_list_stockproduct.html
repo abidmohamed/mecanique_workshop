@@ -15,7 +15,7 @@
                     <table id="table_id" class=" table display text-center">
                         <thead>
                         <tr>
-                            <th></th>
+                            <th><label class="form-check-label" for="{{prod.id}}"></label></th>
                             <th>Brand</th>
                             <th>Name</th>
                             <th>Ref</th>
@@ -27,10 +27,9 @@
                         </thead>
                         <tbody>
                         {% for prod in stockproducts %}
-                        <tr>
+                        <tr class="row{% cycle '1' '2' %}">
                             <td>
-                                <input class="form-check-input product-input" type="checkbox" value="{{prod.id}}" id="{{prod.id}}"
-                                       name="products">
+                                <input class="form-check-input product-input" type="checkbox" value="{{prod.id}}" id="{{prod.id}}" name="products">
                             </td>
                             <td>
                                 {{prod.product.brand}}
@@ -124,7 +123,7 @@
 
                         <tbody>
                         {% for panne in pannes %}
-                        <tr>
+                        <tr class="row{% cycle '1' '2' %}">
                             <td>
                                 <input class="form-check-input panne-input" type="checkbox" value="{{panne.id}}" id="{{panne.id}}"
                                        name="pannes">
@@ -187,28 +186,11 @@
              $(form).append(
              $('<input>')
              .attr('type', 'hidden')
-             .attr('prod.id', this.name)
+             .attr('name', this.name)
              .val(this.value)
              );
              }
             }
-        });
-        // Iterate over all checkboxes in the table
-        // customer table
-        var table = $('#table_customer').DataTable();
-        table.$('input[type="radio"]').each(function(){
-        // If checkbox doesn't exist in DOM
-        if(!$.contains(document, this)){
-        if(this.checked){
-        // Create a hidden element
-        $(form).append(
-        $('<input>')
-        .attr('type', 'hidden')
-        .attr('prod.id', this.name)
-        .val(this.value)
-        );
-        }
-        }
         });
 
         // Iterate over all checkboxes in the table
@@ -222,7 +204,7 @@
         $(form).append(
         $('<input>')
         .attr('type', 'hidden')
-        .attr('prod.id', this.name)
+        .attr('name', this.name)
         .val(this.value)
         );
         }
@@ -230,6 +212,48 @@
         });
 
     });
+
+    // Testing Function
+    function submittion(){
+
+    //var form = this;
+         var form = document.getElementById('order-form');
+        console.log(form)
+        // Iterate over all checkboxes in the table
+        // product table
+        var table = $('#table_id').DataTable();
+        table.$('input[type="checkbox"]').each(function(){
+             // If checkbox doesn't exist in DOM
+             if(this.checked){
+             // Create a hidden element
+             $(form).append(
+             $('<input>')
+             .attr('type', 'hidden')
+             .attr('name', this.name)
+             .val(this.value)
+             );
+             }
+            
+        });
+
+        // Iterate over all checkboxes in the table
+        // product table
+        var table = $('#table_panne').DataTable();
+        table.$('input[type="checkbox"]').each(function(){
+        // If checkbox doesn't exist in DOM
+        if(this.checked){
+        // Create a hidden element
+        $(form).append(
+        $('<input>')
+        .attr('type', 'hidden')
+        .attr('name', this.name)
+        .val(this.value)
+        );
+        }
+
+        });
+    
+    }
 
 </script>
 {% endblock %}
