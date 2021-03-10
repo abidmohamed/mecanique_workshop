@@ -165,6 +165,7 @@ def order_stockproduct_list(request):
             sellorder.customer = customer
             # sellorder.vehicle = vehicle
             sellorder.save()
+            print(chosenproducts)
             if len(chosenproducts) != 0:
                 for product in chosenproducts:
                     currentproduct = StockProduct.objects.get(id=product)
@@ -202,9 +203,9 @@ def order_vehicle(request, pk):
     if request.method == 'POST':
         chosenvehicule = request.POST.get("vehicle")
         if chosenvehicule:
-            print(chosenvehicule)
+            # print(chosenvehicule)
             vehicle = Vehicle.objects.get(id=chosenvehicule)
-            print(vehicle)
+            # print(vehicle)
             sellorder.vehicle = vehicle
             sellorder.save()
             return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
