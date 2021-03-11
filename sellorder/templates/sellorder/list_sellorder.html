@@ -16,7 +16,9 @@
                     <th>Address</th>
                     <th>Total Piece</th>
                     <th>Total Panne</th>
-                    <th>Total</th>
+                    <th>HT</th>
+                    <th>TVA</th>
+                    <th>TTC</th>
                     <th>Debt</th>
                     <th></th>
                     <th></th>
@@ -33,6 +35,8 @@
                     <td>{{order.get_total_cost}} DZD</td>
                     <td>{{order.get_total_panne}} DZD</td>
                     <td>{{order.get_total_item_panne}} DZD</td>
+                    <td>{{order.get_tva}} DZD</td>
+                    <td>{{order.get_ttc}} DZD</td>
                     <td>{{order.debt}} DZD</td>
                     <td>
                         {% if order.debt > 0%}

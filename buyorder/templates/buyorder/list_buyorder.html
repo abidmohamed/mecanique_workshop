@@ -16,7 +16,9 @@
                     <th>Supplier</th>
                     <th>Phone</th>
                     <th>Paid</th>
-                    <th>Total Price</th>
+                    <th>HT</th>
+                    <th>TVA</th>
+                    <th>TTC</th>
                     <th>Debt</th>
                     <th></th>
                     <th></th>
@@ -31,6 +33,8 @@
                     <td>{{order.supplier.phone}}</td>
                     <td>{{order.paid}}</td>
                     <td>{{order.get_total_cost}} DZD</td>
+                    <td>{{order.get_tva}} DZD</td>
+                    <td>{{order.get_ttc}} DZD</td>
                     <td>{{order.debt}} DZD</td>
                     <td>
                         {% if order.debt > 0%}

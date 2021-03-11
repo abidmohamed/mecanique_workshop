@@ -27,6 +27,7 @@ def confirm_order(request, pk):
     if request.method == 'POST':
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
+        tva = request.POST.get('tva')
         if sellorder.items.all():
             for index, item in enumerate(sellorder.items.all()):
                 # get the price and value of each element
@@ -72,12 +73,14 @@ def confirm_order(request, pk):
                             # category=item.stockproduct.product.category,
                             stock=item.stockproduct.product.stock
                         )
-        sellorder.debt = sellorder.get_total_item_panne()
+
         sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.confirmed = True
+        sellorder.order_tva = int(tva)
+        sellorder.debt = sellorder.get_ttc()
         sellorder.save()
         # customer debt
-        customer.debt += sellorder.get_total_item_panne()
+        customer.debt += sellorder.get_ttc()
         customer.save()
         return redirect('sellorder:sellorder_list')
     context = {

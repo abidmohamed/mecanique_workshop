@@ -72,7 +72,7 @@ def buyorder_confirmation(request, pk):
             # get modified items
             prices = request.POST.getlist('prices')
             quantities = request.POST.getlist('quantities')
-
+            tva = request.POST.get('tva')
             for index, item in enumerate(buyorder.items.all()):
                 # print(index, item)
                 print(prices[index], quantities[index])
@@ -117,10 +117,11 @@ def buyorder_confirmation(request, pk):
                             # category=item.product.category,
                             stock=item.product.stock
                         )
-            print(buyorder.get_total_cost())
-            print(supplier)
-            buyorder.debt = buyorder.get_total_cost()
-            supplier.credit += buyorder.get_total_cost()
+            # print(buyorder.get_total_cost())
+            # print(supplier)
+            buyorder.order_tva = int(tva)
+            buyorder.debt = buyorder.get_ttc()
+            supplier.credit += buyorder.get_ttc()
             supplier.save()
             buyorder.confirmed = True
             buyorder.save()
