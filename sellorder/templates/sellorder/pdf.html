@@ -239,8 +239,17 @@
         <td colspan="3">Total HT</td>
         <td class="num">DZD {{ order.get_total_item_panne }}</td>
     </tr>
-    </tbody>
+    <tr class="total">
 
+        <td colspan="3">TVA</td>
+        <td class="num">DZD {{ order.get_tva }}</td>
+    </tr>
+    <tr class="total">
+
+        <td colspan="3">TTC</td>
+        <td class="num">DZD {{ order.get_ttc }}</td>
+    </tr>
+    </tbody>
 </table>
 </body>
 </html>

@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from product.models import Product
 from supplier.models import Supplier
@@ -11,6 +13,7 @@ class BuyOrder(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
+    order_tva = models.PositiveIntegerField(default=0)
     debt = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     confirmed = models.BooleanField(default=False)
 
@@ -22,6 +25,12 @@ class BuyOrder(models.Model):
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
+
+    def get_tva(self):
+        return round(self.get_total_cost() * Decimal(self.order_tva/100), 2)
+
+    def get_ttc(self):
+        return round(self.get_total_cost() + self.get_tva(), 2)
 
 
 class BuyOrderItem(models.Model):

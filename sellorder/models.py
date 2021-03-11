@@ -1,3 +1,6 @@
+from decimal import Decimal
+from unicodedata import decimal
+
 from django.db import models
 
 # Create your models here.
@@ -15,6 +18,7 @@ class Order(models.Model):
     debt = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     paid = models.BooleanField(default=False)
+    order_tva = models.PositiveIntegerField(default=0)
     confirmed = models.BooleanField(default=False)
 
     class Meta:
@@ -31,6 +35,12 @@ class Order(models.Model):
 
     def get_total_item_panne(self):
         return sum(item.get_cost() for item in self.pannes.all()) + sum(item.get_cost() for item in self.items.all())
+
+    def get_tva(self):
+        return round(self.get_total_item_panne() * Decimal(self.order_tva/100), 2)
+
+    def get_ttc(self):
+        return round(self.get_total_item_panne() + self.get_tva(), 2)
 
 
 class OrderItem(models.Model):
