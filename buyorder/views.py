@@ -122,6 +122,7 @@ def buyorder_confirmation(request, pk):
             buyorder.debt = buyorder.get_total_cost()
             supplier.credit += buyorder.get_total_cost()
             supplier.save()
+            buyorder.confirmed = True
             buyorder.save()
             return redirect('buyorder:buyorder_list')
     context = {
@@ -243,15 +244,18 @@ def buyorder_pdf(request, pk):
 def buyorder_delete(request, pk):
     order = get_object_or_404(BuyOrder, id=pk)
     if request.method == 'POST':
-        if order.items.all():
-            for item in order.items.all():
-                stockitems = StockProduct.objects.all().filter(product__id=item.product.id)
-                if len(stockitems) > 0:
-                    for stockitem in stockitems:
-                        if stockitem.product.id == item.product.id:
-                            if stockitem.quantity > 0:
-                                stockitem.quantity -= int(item.quantity)
-                                stockitem.save()
+        if order.confirmed:
+            if order.items.all():
+                for item in order.items.all():
+                    stockitem = StockProduct.objects.get(product__id=item.product.id)
+                    print(stockitem)
+                    print(stockitem.quantity)
+                    print(item.quantity)
+                    if stockitem.quantity > 0:
+                        stockitem.quantity -= int(item.quantity)
+                        stockitem.save()
+                        print("After subtraction")
+                        print(stockitem.quantity)
         supplier = Supplier.objects.get(id=order.supplier.id)
         supplier.credit -= order.debt
         supplier.save()
@@ -267,4 +271,3 @@ def buyorder_delete(request, pk):
         'order': order
     }
     return render(request, 'buyorder/buyorder_delete.html', context)
-
