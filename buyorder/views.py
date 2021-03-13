@@ -65,7 +65,81 @@ def buyorder_confirmation(request, pk):
         buyorderform = BuyOrderForm(request.POST, instance=buyorder)
         if buyorderform.is_valid():
             print(request.POST)
+            buyorder = buyorderform.save()
+            # to add credit
+            supplier = Supplier.objects.get(id=request.POST['supplier'])
+            # get modified items
+            prices = request.POST.getlist('prices')
+            quantities = request.POST.getlist('quantities')
+            tva = request.POST.get('tva')
+            for index, item in enumerate(buyorder.items.all()):
+                # print(index, item)
+                print(prices[index], quantities[index])
+                # get the price and value of each element
+                # Saving the orderitem
+                item.price = prices[index]
+                item.quantity = quantities[index]
+                item.save()
+                # adding the bought products to stock
+                stockitems = StockProduct.objects.all().filter(stock=item.product.stock)
+                itemexist = 1
+                # check if stock doesn't have the product
+                if len(stockitems) > 0:
+                    # stock has products check if product exist
+                    for stockitem in stockitems:
+                        # the same product exist
+                        if stockitem.product.id == item.product.id:
+                            stockitem.quantity += int(item.quantity)
+                            stockitem.save()
+                            itemexist = 2
+                            # operation done same product plus the new quantity
 
+                    if itemexist == 1:
+                        #             # stock not empty product doesn't exist in it
+                        #             # create new stockproduct
+                        StockProduct.objects.create(
+                            product=item.product,
+                            quantity=int(item.quantity),
+                            # category=item.product.category,
+                            stock=item.product.stock
+                        )
+                else:
+                    #         # stock is empty
+                    itemexist = 0
+                    if itemexist == 0:
+                        # create new stockproduct
+                        StockProduct.objects.create(
+                            product=item.product,
+                            quantity=int(item.quantity),
+                            # type=item.type,
+                            # color=item.color,
+                            # category=item.product.category,
+                            stock=item.product.stock
+                        )
+            # print(buyorder.get_total_cost())
+            # print(supplier)
+            buyorder.order_tva = int(tva)
+            buyorder.debt = buyorder.get_ttc()
+            supplier.credit += buyorder.get_ttc()
+            supplier.save()
+            buyorder.confirmed = True
+            buyorder.save()
+            return redirect('buyorder:buyorder_list')
+    context = {
+        'buyorderform': buyorderform,
+        'buyorder': buyorder,
+    }
+    return render(request, 'buyorder/buyorder_confirmation.html', context)
+
+
+def update_order(request, pk):
+    buyorder = BuyOrder.objects.get(id=pk)
+
+    buyorderform = BuyOrderForm(instance=buyorder)
+    if request.method == 'POST':
+        buyorderform = BuyOrderForm(request.POST, instance=buyorder)
+        if buyorderform.is_valid():
+            print(request.POST)
             buyorder = buyorderform.save()
             # to add credit
             supplier = Supplier.objects.get(id=request.POST['supplier'])
