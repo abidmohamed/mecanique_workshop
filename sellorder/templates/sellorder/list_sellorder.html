@@ -23,6 +23,7 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,6 +39,14 @@
                     <td>{{order.get_tva}} DZD</td>
                     <td>{{order.get_ttc}} DZD</td>
                     <td>{{order.debt}} DZD</td>
+
+                    <td>
+                        {% if order.confirmed %}
+                             <a class="btn btn-info " href="{% url 'sellorder:update_order' order.id %}">Update</a>
+                        {% else %}
+                             <a class="btn btn-success " href="{% url 'sellorder:confirm_order' order.id %}">Confirm</a>
+                        {% endif %}
+                    </td>
                     <td>
                         {% if order.debt > 0%}
                             <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">PayDebt</a>

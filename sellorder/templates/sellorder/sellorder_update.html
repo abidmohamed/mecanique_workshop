@@ -1,0 +1,151 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Order Confirmation</h5>
+        </div>
+        <div class="card card-body">
+            <h2>Customer: <span>{{customer}}</span></h2>
+                <label for="total-price">Total :</label>
+
+            <input id="total-price" type="text" class="form-control" value="{{sellorder.get_ttc}}" disabled>
+            <h2>{{get_total_item_panne}}</h2>
+            <br>
+            <hr>
+            <div class="row">
+                    <div class="col-12">
+                        <div class="">
+                            <!-- Button Add New Product -->
+                            <a class="btn btn btn-primary form-control" href="{% url 'stock:modal_order_stockproduct_list' sellorder.id %}">New Product</a>
+
+                        </div>
+                    </div>
+                </div>
+            <br>
+            <hr>
+            <form action="" method="post">
+                {% csrf_token %}
+                <input onkeyup="calc()" id="discount-value" name="discount-value" type="number" class="form-control" value="0">
+                <select onchange="calc()" class="form-control" name="discount-status" id="discount-status">
+                    <option value="1"> Percentage</option>
+                    <option value="2"> Amount</option>
+                </select>
+                <hr>
+                <br>
+                <hr>
+                <h3>TVA</h3>
+                <input class="form-control" type="number" value="0" name="tva">
+                <br>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Vehicle</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{sellorder.id}}</td>
+                        <td>{{sellorder.customer}}</td>
+                        <td>{{sellorder.vehicle}}</td>
+                    </tr>
+                    <thead class="thead-light">
+                    <tr>
+
+                        <th>Product Brand</th>
+                        <th>Product Name</th>
+                        <th>Sell Price DZD</th>
+                        <th>Buy Price DZD</th>
+                        <th>Quantity</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    {% for item in sellorder.items.all %}
+                    <tr>
+                        <td class="table-light">
+                            <input class="form-control" type="text" value="{{ item.stockproduct.product.brand }}" disabled>
+                        </td>
+                        <td class="table-light">
+                            <input class="form-control" type="text" value="{{ item.stockproduct.product.name }}" name="names"
+                                   disabled>
+                        </td>
+                        <td class="table-light ">
+                            <input onkeyup="calc()" class="form-control" type="number" name="prices" value="{{ item.price }}">{{ item.price }}
+
+                        </td>
+                        <td class="table-light ">
+                            {{ item.stockproduct.product.buyprice }}
+
+                        </td>
+                        <td class="table-light ">
+                            <input onkeyup="calc()" class="form-control" type="number" name="quantities" value="{{ item.quantity }}">
+                        </td>
+                        <td>
+                           <a class="btn btn-danger " href="{% url 'sellorder:order_item_delete' sellorder.id item.id %}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <table class="thead-light">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Mo</th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in sellorder.pannes.all %}
+                    <tr>
+                        <td>{{item.panne.desc}}</td>
+                        <td>{{item.price}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tr>
+                    </tr>
+                    <tr class="text-center">
+                        <td class="text-center">
+                            <input class="btn btn-primary" type="submit" name="submit">
+
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    
+   function calc(){
+    var prices = document.getElementsByName("prices");
+    var quantities = document.getElementsByName("quantities");
+    var discount_status = document.getElementById("discount-status");
+    var discount_value = document.getElementById("discount-value");
+    var total_price = 0;
+    // console.log(prices);
+    for (var i = 0; i<prices.length; i++)
+    {
+    console.log(prices[i].value);
+    if (i == 0){
+        document.getElementById("total-price").value = prices[i].value * quantities[i].value;
+
+    }else {
+          // var total_price =  parseFloat(document.getElementById("total-price").value);
+          // total_price += parseDouble(prices[i].value * quantities[i].value);
+           document.getElementById("total-price").value = total_price;
+           console.log(total_price);
+
+    }
+    }
+     console.log(discount_status.value);
+     console.log(discount_value.value);
+    }
+
+</script>
+{% endblock %}

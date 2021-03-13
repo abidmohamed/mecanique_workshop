@@ -76,6 +76,96 @@ def confirm_order(request, pk):
 
         sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.confirmed = True
+
+        sellorder.order_tva = int(tva)
+        sellorder.debt = sellorder.get_ttc()
+        sellorder.save()
+        print(sellorder.confirmed)
+        # customer debt
+        customer.debt += sellorder.get_ttc()
+        customer.save()
+        return redirect('sellorder:sellorder_list')
+    context = {
+        'customer': customer,
+        'sellorder': sellorder,
+        'discountform': discountform,
+        'stockproducts': stockproducts,
+    }
+    return render(request, 'sellorder/sellorder_confirmation.html', context)
+
+
+def update_order(request, pk):
+    stockproducts = StockProduct.objects.all()
+    sellorder = Order.objects.get(id=pk)
+    # get customer to add debt
+    customer = Customer.objects.get(id=sellorder.customer.pk)
+    # Get Discount
+    discountform = DiscountForm()
+
+    if request.method == 'POST':
+        # delete customer debt until modification over
+        customer.debt -= sellorder.get_ttc()
+        # Delete all order elements to be modified
+        if sellorder.items.all():
+            for item in sellorder.items.all():
+                stockitem = StockProduct.objects.get(id=item.stockproduct.id)
+                stockitem.quantity += int(item.quantity)
+                stockitem.save()
+        prices = request.POST.getlist('prices')
+        print("-------------------------------------")
+        print(prices)
+        quantities = request.POST.getlist('quantities')
+        tva = request.POST.get('tva')
+        if sellorder.items.all():
+            for index, item in enumerate(sellorder.items.all()):
+                # get the price and value of each element
+                # Saving the orderitem
+                print(index)
+                print(item.stockproduct)
+                item.price = prices[index]
+                item.quantity = quantities[index]
+                item.save()
+                # Reducing the sold products from stock
+                stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.product.stock)
+                itemexist = 1
+                #     # check if stock doesn't have the product
+                if len(stockitems) > 0:
+                    # stock has products check if product exist
+                    for stockitem in stockitems:
+                        # the same product exist
+                        if stockitem.product.id == item.stockproduct.product.id:
+                            stockitem.quantity -= int(item.quantity)
+                            stockitem.save()
+                            itemexist = 2
+                            #                 # operation done same product plus the new quantity
+
+                    if itemexist == 1:
+                        #             # stock not empty product doesn't exist in it
+                        #             # create new stockproduct
+                        StockProduct.objects.create(
+                            product=item.stockproduct.product,
+                            quantity=int(item.quantity),
+                            # type=item.type,
+                            # color=item.color,
+                            # category=item.stockproduct.product.category,
+                            stock=item.stockproduct.product.stock
+                        )
+                else:
+                    #         # stock is empty
+                    itemexist = 0
+                    if itemexist == 0:
+                        # create new stockproduct
+                        StockProduct.objects.create(
+                            product=item.stockproduct.product,
+                            quantity=int(item.quantity),
+                            # type=item.type,
+                            # color=item.color,
+                            # category=item.stockproduct.product.category,
+                            stock=item.stockproduct.product.stock
+                        )
+
+        sellorder.total_price = sellorder.get_total_item_panne()
+        sellorder.confirmed = True
         sellorder.order_tva = int(tva)
         sellorder.debt = sellorder.get_ttc()
         sellorder.save()
@@ -89,7 +179,23 @@ def confirm_order(request, pk):
         'discountform': discountform,
         'stockproducts': stockproducts,
     }
-    return render(request, 'sellorder/sellorder_confirmation.html', context)
+    return render(request, 'sellorder/sellorder_update.html', context)
+
+
+def order_item_delete(request, orderpk, itempk):
+    sellorder = Order.objects.get(id=orderpk)
+    item = sellorder.items.get(id=itempk)
+    print(item)
+    if request.method == 'POST':
+        item = sellorder.items.get(id=itempk)
+        item.delete()
+        return redirect('sellorder:update_order', sellorder.id)
+
+    context = {
+        'sellorder': sellorder,
+        'item': item
+    }
+    return render(request, 'sellorder/delete_item.html', context)
 
 
 def sellorder_details(request, pk):
