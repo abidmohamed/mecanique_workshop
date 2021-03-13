@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<div class="container">
+    <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+        <div class="card card-body">
+            <P>ARE YOU SURE YOU WANT TO DELETE {{sellorder}} _ {{item.stockproduct}} _ {{item.quantity}}</P>
+            <form action="{% url 'sellorder:order_item_delete' sellorder.id item.id%}" method="post">
+
+                {% csrf_token %}
+                <a class="btn btn-warning" href="{% url 'sellorder:update_order' sellorder.id %}">Cancel</a>
+                <input class="btn btn-danger" type="submit" name="Confirm">
+            </form>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+</div>
+
+{% endblock %}
