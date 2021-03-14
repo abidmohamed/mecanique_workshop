@@ -207,6 +207,10 @@ def update_order(request, pk):
     return render(request, 'buyorder/buyorder_confirmation.html', context)
 
 
+def update_order(request, pk):
+    pass
+
+
 def buyorder_details(request, pk):
     order = BuyOrder.objects.get(id=pk)
     context = {
