@@ -41,7 +41,7 @@
                         {% if order.confirmed %}
                              <a class="btn btn-info " href="{% url 'buyorder:update_order' order.id %}">Update</a>
                         {% else %}
-                             <a class="btn btn-success " href="{% url 'buyorder:buyorder_confirmation ' order.id %}">Confirm</a>
+                             <a class="btn btn-success " href="{% url 'buyorder:buyorder_confirmation' order.id %}">Confirm</a>
                         {% endif %}
                     </td>
                     <td>
