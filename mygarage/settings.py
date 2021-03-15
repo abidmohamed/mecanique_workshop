@@ -121,8 +121,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
 USE_THOUSAND_SEPARATOR = True
 THOUSAND_SEPARATOR = ' '
+
 
 # how the translation is done
 # 1- django-admin makemessages -l fr or ar or any other language

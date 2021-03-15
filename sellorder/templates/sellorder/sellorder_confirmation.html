@@ -12,7 +12,7 @@
             <h2>Customer: <span>{{customer}}</span></h2>
                 <label for="total-price">Total :</label>
 
-            <input id="total-price" type="number" class="form-control" value="{{sellorder.get_total_item_panne}}" disabled>
+            <input id="total-price" type="text" class="form-control" value="{{sellorder.get_total_item_panne}}" disabled>
             <h2>{{get_total_item_panne}}</h2>
             <br>
             <hr>
@@ -38,7 +38,7 @@
                 <br>
                 <hr>
                 <h3>TVA</h3>
-                <input class="form-control" type="number" value="0" name="tva">
+                <input onkeyup="calc()" class="form-control" type="number" value="0" id="tva" name="tva">
                 <br>
                 <table class="table">
                     <thead>
@@ -74,7 +74,7 @@
                                    disabled>
                         </td>
                         <td class="table-light ">
-                            <input onkeyup="calc()" class="form-control" type="number" name="prices" value="{{ item.price }}">{{ item.price }}
+                            <input onkeyup="calc()" class="form-control" type="text" name="prices" value="{{ item.price }}">{{ item.price }}
 
                         </td>
                         <td class="table-light ">
@@ -99,7 +99,8 @@
                     {% for item in sellorder.pannes.all %}
                     <tr>
                         <td>{{item.panne.desc}}</td>
-                        <td>{{item.price}}</td>
+                        <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
+                        </td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -117,30 +118,58 @@
     </div>
 </div>
 <script>
-    
    function calc(){
     var prices = document.getElementsByName("prices");
+    var panne_prices = document.getElementsByName("panne-prices");
     var quantities = document.getElementsByName("quantities");
     var discount_status = document.getElementById("discount-status");
     var discount_value = document.getElementById("discount-value");
+    var tva_value = document.getElementById("tva");
     var total_price = 0;
     // console.log(prices);
     for (var i = 0; i<prices.length; i++)
     {
+    prices[i].value = prices[i].value.replace(/\s/g, "");
+    prices[i].value = prices[i].value.replace(",", ".");
     console.log(prices[i].value);
     if (i == 0){
-        document.getElementById("total-price").value = prices[i].value * quantities[i].value;
+        total_price = prices[i].value * quantities[i].value;
 
+        document.getElementById("total-price").value = total_price;
     }else {
-          // var total_price =  parseFloat(document.getElementById("total-price").value);
-          // total_price += parseDouble(prices[i].value * quantities[i].value);
-           document.getElementById("total-price").value = total_price;
-           console.log(total_price);
+           total_price =  parseFloat(document.getElementById("total-price").value);
+           total_price += parseFloat(prices[i].value * quantities[i].value);
 
+           console.log("Total Price");
+           console.log(total_price);
+           
+        document.getElementById("total-price").value = total_price;
     }
     }
+    // Adding Panne Prices
+    for (var i = 0; i<panne_prices.length; i++){
+        panne_prices[i].value = panne_prices[i].value.replace(/\s/g, "");
+        panne_prices[i].value = panne_prices[i].value.replace(",", ".");
+        total_price += parseFloat(panne_prices[i].value);
+    }
+    // Applying Tva
+    total_price += (total_price * (tva_value.value/100));
+
      console.log(discount_status.value);
      console.log(discount_value.value);
+     // Applying Discount
+    if (discount_status.value == 1){
+        total_price -= (total_price * (discount_value.value/100));
+        console.log("Total Price");
+           console.log(total_price);
+           document.getElementById("total-price").value = total_price;
+     }else{
+        total_price -= discount_value.value;
+            console.log("Total Price");
+           console.log(total_price);
+           document.getElementById("total-price").value = total_price;
+     }
+
     }
 
 </script>
