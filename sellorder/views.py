@@ -1,3 +1,5 @@
+import decimal
+
 from django.shortcuts import render, redirect, get_object_or_404
 from xhtml2pdf import pisa
 from django.template.loader import render_to_string
@@ -8,6 +10,7 @@ from billing.models import OrderBilling, BillOrderItem
 from caisse.models import Caisse
 from customer.models import Customer
 from discount.forms import DiscountForm
+from discount.models import Discount
 from payments.forms import CustomerPaymentForm
 from payments.models import SellOrderPayment
 from sellorder.apps import SellorderConfig
@@ -19,6 +22,9 @@ from stock.models import StockProduct
 def confirm_order(request, pk):
     stockproducts = StockProduct.objects.all()
     sellorder = Order.objects.get(id=pk)
+    discount = Discount()
+    discount_value = 0
+    discount_status = "Percentage"
     # get customer to add debt
     customer = Customer.objects.get(id=sellorder.customer.pk)
     # Get Discount
@@ -32,7 +38,12 @@ def confirm_order(request, pk):
             for index, item in enumerate(sellorder.items.all()):
                 # get the price and value of each element
                 # Saving the orderitem
-                item.price = prices[index]
+                str_price = prices[index]
+                str_price = str_price.replace(",", ".")
+                # str_price = str_price.replace(' ', '')
+                # Remove white spaces
+                str_price = ''.join(str_price.split())
+                item.price = str_price
                 item.quantity = quantities[index]
                 item.save()
                 # Reducing the sold products from stock
@@ -76,9 +87,18 @@ def confirm_order(request, pk):
 
         sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.confirmed = True
-
         sellorder.order_tva = int(tva)
-        sellorder.debt = sellorder.get_ttc()
+        print(request.POST)
+        discount.order = sellorder
+        discount.value = request.POST.get('discount-value')
+        discount.discount_status = request.POST.get('discount-status')
+        discount.save()
+        print(discount.discount_status)
+        if discount.discount_status == '1':
+            sellorder.debt = sellorder.get_ttc() - (sellorder.get_ttc() * decimal.Decimal(decimal.Decimal(discount.value)/100))
+        else:
+            sellorder.debt = sellorder.get_ttc() - decimal.Decimal(discount.value)
+
         sellorder.save()
         print(sellorder.confirmed)
         # customer debt
@@ -120,9 +140,14 @@ def update_order(request, pk):
             for index, item in enumerate(sellorder.items.all()):
                 # get the price and value of each element
                 # Saving the orderitem
-                print(index)
-                print(item.stockproduct)
-                item.price = prices[index]
+                # print(index)
+                # print(item.stockproduct)
+                str_price = prices[index]
+                str_price = str_price.replace(",", ".")
+                # str_price = str_price.replace(' ', '')
+                # Remove white spaces
+                str_price = ''.join(str_price.split())
+                item.price = str_price
                 item.quantity = quantities[index]
                 item.save()
                 # Reducing the sold products from stock

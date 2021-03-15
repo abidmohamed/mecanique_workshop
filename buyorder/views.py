@@ -1,3 +1,5 @@
+import decimal
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 
@@ -77,7 +79,15 @@ def buyorder_confirmation(request, pk):
                 print(prices[index], quantities[index])
                 # get the price and value of each element
                 # Saving the orderitem
-                item.price = prices[index]
+                # print("----------------------------------------------")
+                # print(prices[index])
+                str_price = prices[index]
+                str_price = str_price.replace(",", ".")
+                # str_price = str_price.replace(' ', '')
+                # Remove white spaces
+                str_price = ''.join(str_price.split())
+                # print("----------------------------------------------")
+                item.price = str_price
                 item.quantity = quantities[index]
                 item.save()
                 # adding the bought products to stock
@@ -134,7 +144,6 @@ def buyorder_confirmation(request, pk):
 
 def update_order(request, pk):
     buyorder = BuyOrder.objects.get(id=pk)
-
     buyorderform = BuyOrderForm(instance=buyorder)
     if request.method == 'POST':
         buyorderform = BuyOrderForm(request.POST, instance=buyorder)
@@ -152,9 +161,16 @@ def update_order(request, pk):
                 print(prices[index], quantities[index])
                 # get the price and value of each element
                 # Saving the orderitem
-                item.price = prices[index]
+                str_price = prices[index]
+                str_price = str_price.replace(",", ".")
+                # str_price = str_price.replace(' ', '')
+                # Remove white spaces
+                str_price = ''.join(str_price.split())
+                # print("----------------------------------------------")
+                item.price = str_price
                 item.quantity = quantities[index]
                 item.save()
+                print("-----------Not me 3")
                 # adding the bought products to stock
                 stockitems = StockProduct.objects.all().filter(stock=item.product.stock)
                 itemexist = 1
