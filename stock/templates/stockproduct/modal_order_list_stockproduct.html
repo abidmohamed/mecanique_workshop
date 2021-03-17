@@ -9,7 +9,7 @@
                 <h5>Sell Order</h5>
             </div>
             <div class="card card-body">
-                <form action="" method="post">
+                <form id="stockproduct_form" action="" method="post">
                     {% csrf_token %}
                     <h2>Choose Products</h2>
                     <table id="table_id" class=" table display text-center">
@@ -88,6 +88,30 @@
 
 } );
 
+// Form Submition stockproduct_form
+    $('#stockproduct_form').on('submit', function(e){
+         var form = this;
+         //var form = document.getElementById('stockproduct_form');
+         console.log(form)
+         var table = $('#table_id').DataTable();
+         // console.log(form);
+         // Iterate over all checkboxes in the table
+         table.$('input[type="checkbox"]').each(function(){
+         // If checkbox doesn't exist in DOM
+         if(!$.contains(document, this)){
+         if(this.checked){
+         // Create a hidden element
+         console.log(this)
+         $(form).append(
+         $('<input>')
+         .attr('type', 'hidden')
+         .attr('name', this.name)
+         .val(this.value)
+         );
+         }
+         }
+});
+    });
 
 
 

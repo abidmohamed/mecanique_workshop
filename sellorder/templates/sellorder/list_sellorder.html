@@ -18,6 +18,7 @@
                     <th>Total Panne</th>
                     <th>HT</th>
                     <th>TVA</th>
+                    <th>Discount</th>
                     <th>TTC</th>
                     <th>Debt</th>
                     <th></th>
@@ -37,8 +38,10 @@
                     <td>{{order.get_total_panne}} DZD</td>
                     <td>{{order.get_total_item_panne}} DZD</td>
                     <td>{{order.get_tva}} DZD</td>
+                    <td>{{order.discount_amount}} DZD</td>
                     <td>{{order.get_ttc}} DZD</td>
                     <td>{{order.debt}} DZD</td>
+
 
                     <td>
                         {% if order.confirmed %}

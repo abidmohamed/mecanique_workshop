@@ -138,6 +138,32 @@ def modal_order_stockproduct_list(request, pk):
     return render(request, 'stockproduct/modal_order_list_stockproduct.html', context)
 
 
+# Modal Add Stock Product To Sell Order update
+def modal_update_order_stockproduct_list(request, pk):
+    sellorder = Order.objects.get(id=pk)
+    stockproducts = StockProduct.objects.all()
+    if request.method == 'POST':
+        # get submitted orders
+        chosenproducts = request.POST.getlist("products")
+        if len(chosenproducts) != 0:
+            for product in chosenproducts:
+                currentproduct = StockProduct.objects.get(id=product)
+                # print(currentproduct)
+                OrderItem.objects.create(
+                    order=sellorder,
+                    stockproduct=currentproduct,
+                    price=currentproduct.product.sellprice,
+                    # weight=currentproduct.product.weight,
+                    quantity=0,
+                )
+
+        return redirect('sellorder:update_order', sellorder.id)
+    context = {
+        'stockproducts': stockproducts,
+    }
+    return render(request, 'stockproduct/modal_order_list_stockproduct.html', context)
+
+
 # Normal
 def order_stockproduct_list(request):
     stockproducts = StockProduct.objects.all().filter(quantity__gt=0)

@@ -9,6 +9,7 @@ from xhtml2pdf import pisa
 from customer.models import Customer
 from rdv.forms import RdvFrom, PanneForm
 from rdv.models import Panne, RdvItem, Rdv
+from sellorder.models import Order, PanneItem
 from vehicule.models import Vehicle
 import calendar
 
@@ -110,6 +111,29 @@ def create_panne(request):
         'panneform': panneform,
     }
     return render(request, 'panne/add_panne.html', context)
+
+
+# Add Panne To update order
+def update_order_panne_list(request, pk):
+    sellorder = Order.objects.get(id=pk)
+    pannes = Panne.objects.all()
+    if request.method == 'POST':
+        # get submitted order
+        chosenpannes = request.POST.getlist("pannes")
+        if len(chosenpannes) != 0:
+            for panne in chosenpannes:
+                currentpanne = Panne.objects.get(id=panne)
+
+                PanneItem.objects.create(
+                    order=sellorder,
+                    panne=currentpanne,
+                    price=currentpanne.price,
+                )
+        return redirect('sellorder:update_order', sellorder.id)
+    context = {
+        'pannes': pannes,
+    }
+    return render(request, 'panne/modal_order_list_panne.html', context)
 
 
 def panne_list(request):
