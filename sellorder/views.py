@@ -23,8 +23,6 @@ def confirm_order(request, pk):
     stockproducts = StockProduct.objects.all()
     sellorder = Order.objects.get(id=pk)
     discount = Discount()
-    discount_value = 0
-    discount_status = "Percentage"
     # get customer to add debt
     customer = Customer.objects.get(id=sellorder.customer.pk)
     # Get Discount
@@ -48,46 +46,18 @@ def confirm_order(request, pk):
                 item.save()
                 # Reducing the sold products from stock
                 stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.product.stock)
-                itemexist = 1
-                #     # check if stock doesn't have the product
+                # check if stock doesn't have the product
                 if len(stockitems) > 0:
                     # stock has products check if product exist
                     for stockitem in stockitems:
                         # the same product exist
                         if stockitem.product.id == item.stockproduct.product.id:
-                            stockitem.quantity -= int(item.quantity)
-                            stockitem.save()
+                            if stockitem.quantity > 0 and stockitem.quantity - int(item.quantity) >= 0:
+                                stockitem.quantity -= int(item.quantity)
+                                stockitem.save()
                             itemexist = 2
                             #                 # operation done same product plus the new quantity
 
-                    if itemexist == 1:
-                        #             # stock not empty product doesn't exist in it
-                        #             # create new stockproduct
-                        StockProduct.objects.create(
-                            product=item.stockproduct.product,
-                            quantity=int(item.quantity),
-                            # type=item.type,
-                            # color=item.color,
-                            # category=item.stockproduct.product.category,
-                            stock=item.stockproduct.product.stock
-                        )
-                else:
-                    #         # stock is empty
-                    itemexist = 0
-                    if itemexist == 0:
-                        # create new stockproduct
-                        StockProduct.objects.create(
-                            product=item.stockproduct.product,
-                            quantity=int(item.quantity),
-                            # type=item.type,
-                            # color=item.color,
-                            # category=item.stockproduct.product.category,
-                            stock=item.stockproduct.product.stock
-                        )
-
-        sellorder.total_price = sellorder.get_total_item_panne()
-        sellorder.confirmed = True
-        sellorder.order_tva = int(tva)
         print(request.POST)
         discount.order = sellorder
         discount.value = request.POST.get('discount-value')
@@ -95,10 +65,14 @@ def confirm_order(request, pk):
         discount.save()
         print(discount.discount_status)
         if discount.discount_status == '1':
-            sellorder.debt = sellorder.get_ttc() - (sellorder.get_ttc() * decimal.Decimal(decimal.Decimal(discount.value)/100))
+            sellorder.discount_amount = (sellorder.get_ttc() * decimal.Decimal(decimal.Decimal(discount.value) / 100))
         else:
-            sellorder.debt = sellorder.get_ttc() - decimal.Decimal(discount.value)
+            sellorder.discount_amount = decimal.Decimal(discount.value)
 
+        sellorder.total_price = sellorder.get_total_item_panne()
+        sellorder.order_tva = int(tva)
+        sellorder.debt = sellorder.get_ttc()
+        sellorder.confirmed = True
         sellorder.save()
         print(sellorder.confirmed)
         # customer debt
@@ -117,14 +91,23 @@ def confirm_order(request, pk):
 def update_order(request, pk):
     stockproducts = StockProduct.objects.all()
     sellorder = Order.objects.get(id=pk)
+    if Discount.objects.all().filter(order=sellorder):
+        print("################## Exist")
+        discount = Discount.objects.all().filter(order=sellorder)[:1].get()
+    else:
+        print("################# Don't Exist")
+        discount = Discount()
+
     # get customer to add debt
     customer = Customer.objects.get(id=sellorder.customer.pk)
     # Get Discount
-    discountform = DiscountForm()
-
+    discountform = DiscountForm(instance=discount)
+    old_ttc = round(sellorder.total_price + (sellorder.total_price * decimal.Decimal(sellorder.order_tva/100)) - sellorder.discount_amount, 2)
+    new_ttc = 0
+    ttc_difference = 0
     if request.method == 'POST':
         # delete customer debt until modification over
-        customer.debt -= sellorder.get_ttc()
+        # customer.debt -= sellorder.get_ttc()
         # Delete all order elements to be modified
         if sellorder.items.all():
             for item in sellorder.items.all():
@@ -149,53 +132,49 @@ def update_order(request, pk):
                 str_price = ''.join(str_price.split())
                 item.price = str_price
                 item.quantity = quantities[index]
+                print(item.quantity)
+                print(item.stockproduct)
                 item.save()
                 # Reducing the sold products from stock
                 stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.product.stock)
-                itemexist = 1
-                #     # check if stock doesn't have the product
+                # check if stock doesn't have the product
                 if len(stockitems) > 0:
                     # stock has products check if product exist
                     for stockitem in stockitems:
                         # the same product exist
                         if stockitem.product.id == item.stockproduct.product.id:
-                            stockitem.quantity -= int(item.quantity)
-                            stockitem.save()
-                            itemexist = 2
-                            #                 # operation done same product plus the new quantity
-
-                    if itemexist == 1:
-                        #             # stock not empty product doesn't exist in it
-                        #             # create new stockproduct
-                        StockProduct.objects.create(
-                            product=item.stockproduct.product,
-                            quantity=int(item.quantity),
-                            # type=item.type,
-                            # color=item.color,
-                            # category=item.stockproduct.product.category,
-                            stock=item.stockproduct.product.stock
-                        )
-                else:
-                    #         # stock is empty
-                    itemexist = 0
-                    if itemexist == 0:
-                        # create new stockproduct
-                        StockProduct.objects.create(
-                            product=item.stockproduct.product,
-                            quantity=int(item.quantity),
-                            # type=item.type,
-                            # color=item.color,
-                            # category=item.stockproduct.product.category,
-                            stock=item.stockproduct.product.stock
-                        )
+                            if stockitem.quantity > 0 and stockitem.quantity - int(item.quantity) >= 0:
+                                print("----------------------------------")
+                                print(stockitem.quantity - int(item.quantity))
+                                stockitem.quantity -= int(item.quantity)
+                                print(item.stockproduct)
+                                print(item.quantity)
+                                stockitem.save()
+        print(DiscountForm(request.POST, instance=discount))
+        discount.order = sellorder
+        discount.value = request.POST.get('discount-value')
+        discount.discount_status = request.POST.get('discount-status')
+        discount.save()
+        if discount.discount_status == '1':
+            sellorder.discount_amount = (sellorder.get_ttc() * decimal.Decimal(decimal.Decimal(discount.value) / 100))
+        else:
+            sellorder.discount_amount = decimal.Decimal(discount.value)
 
         sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.confirmed = True
         sellorder.order_tva = int(tva)
-        sellorder.debt = sellorder.get_ttc()
+        # get money additiion
+        print(old_ttc)
+        new_ttc = sellorder.get_ttc()
+        print(new_ttc)
+        ttc_difference = new_ttc - old_ttc
+        print(ttc_difference)
+        # sellorder.debt = sellorder.get_ttc()
+        sellorder.debt += ttc_difference
         sellorder.save()
         # customer debt
-        customer.debt += sellorder.get_ttc()
+        # customer.debt += sellorder.get_ttc()
+        customer.debt += ttc_difference
         customer.save()
         return redirect('sellorder:sellorder_list')
     context = {
@@ -203,6 +182,7 @@ def update_order(request, pk):
         'sellorder': sellorder,
         'discountform': discountform,
         'stockproducts': stockproducts,
+        'tva': sellorder.order_tva,
     }
     return render(request, 'sellorder/sellorder_update.html', context)
 

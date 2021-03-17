@@ -20,7 +20,11 @@
                     <div class="col-12">
                         <div class="">
                             <!-- Button Add New Product -->
-                            <a class="btn btn btn-primary form-control" href="{% url 'stock:modal_order_stockproduct_list' sellorder.id %}">New Product</a>
+                            <a class="btn btn btn-primary form-control" href="{% url 'stock:modal_update_order_stockproduct_list' sellorder.id %}">New Product</a>
+                            <br>
+                            <br>
+                            <!-- Button Add New Panne -->
+                            <a class="btn btn btn-success form-control" href="{% url 'rdv:update_order_panne_list' sellorder.id %}">New Panne</a>
 
                         </div>
                     </div>
@@ -38,7 +42,7 @@
                 <br>
                 <hr>
                 <h3>TVA</h3>
-                <input class="form-control" type="number" value="0" name="tva">
+                <input onkeyup="calc()" class="form-control" type="number" value="{{tva}}" name="tva" id="tva">
                 <br>
                 <table class="table">
                     <thead>
@@ -103,19 +107,16 @@
                     {% for item in sellorder.pannes.all %}
                     <tr>
                         <td>{{item.panne.desc}}</td>
-                        <td>{{item.price}}</td>
+                        <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
                     </tr>
                     {% endfor %}
                     </tbody>
-                    <tr>
-                    </tr>
-                    <tr class="text-center">
-                        <td class="text-center">
-                            <input class="btn btn-primary" type="submit" name="submit">
 
-                        </td>
-                    </tr>
+
                 </table>
+                <br>
+                <input class="form-control btn btn-primary" type="submit" name="submit">
+
             </form>
         </div>
     </div>
@@ -124,28 +125,58 @@
     
    function calc(){
     var prices = document.getElementsByName("prices");
+    var panne_prices = document.getElementsByName("panne-prices");
     var quantities = document.getElementsByName("quantities");
     var discount_status = document.getElementById("discount-status");
     var discount_value = document.getElementById("discount-value");
+    var tva_value = document.getElementById("tva");
     var total_price = 0;
     // console.log(prices);
     for (var i = 0; i<prices.length; i++)
     {
+    prices[i].value = prices[i].value.replace(/\s/g, "");
+    prices[i].value = prices[i].value.replace(",", ".");
     console.log(prices[i].value);
     if (i == 0){
-        document.getElementById("total-price").value = prices[i].value * quantities[i].value;
+        total_price = prices[i].value * quantities[i].value;
 
+        document.getElementById("total-price").value = total_price;
     }else {
-          // var total_price =  parseFloat(document.getElementById("total-price").value);
-          // total_price += parseDouble(prices[i].value * quantities[i].value);
-           document.getElementById("total-price").value = total_price;
+           total_price =  parseFloat(document.getElementById("total-price").value);
+           total_price += parseFloat(prices[i].value * quantities[i].value);
+
+           console.log("Total Price");
            console.log(total_price);
 
+        document.getElementById("total-price").value = total_price;
     }
     }
+    // Adding Panne Prices
+    for (var i = 0; i<panne_prices.length; i++){
+        panne_prices[i].value = panne_prices[i].value.replace(/\s/g, "");
+        panne_prices[i].value = panne_prices[i].value.replace(",", ".");
+        total_price += parseFloat(panne_prices[i].value);
+    }
+    // Applying Tva
+    total_price += (total_price * (tva_value.value/100));
+
      console.log(discount_status.value);
      console.log(discount_value.value);
+     // Applying Discount
+    if (discount_status.value == 1){
+        total_price -= (total_price * (discount_value.value/100));
+        console.log("Total Price");
+           console.log(total_price);
+           document.getElementById("total-price").value = total_price;
+     }else{
+        total_price -= discount_value.value;
+            console.log("Total Price");
+           console.log(total_price);
+           document.getElementById("total-price").value = total_price;
+     }
+
     }
+
 
 </script>
 {% endblock %}

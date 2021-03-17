@@ -17,6 +17,7 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     debt = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     paid = models.BooleanField(default=False)
     order_tva = models.PositiveIntegerField(default=0)
     confirmed = models.BooleanField(default=False)
@@ -40,7 +41,7 @@ class Order(models.Model):
         return round(self.get_total_item_panne() * Decimal(self.order_tva/100), 2)
 
     def get_ttc(self):
-        return round(self.get_total_item_panne() + self.get_tva(), 2)
+        return round(self.get_total_item_panne() + self.get_tva() - self.discount_amount, 2)
 
 
 class OrderItem(models.Model):
