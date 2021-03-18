@@ -13,7 +13,7 @@
                 <tr>
                     <th>Order ID</th>
                     <th>Customer</th>
-                    <th>Address</th>
+                    <th>Date</th>
                     <th>Total Piece</th>
                     <th>Total Panne</th>
                     <th>HT</th>
@@ -33,7 +33,7 @@
                 <tr>
                     <td>{{order.id}}</td>
                     <td>{{order.customer}}</td>
-                    <td>{{order.customer.address}}</td>
+                    <td>{{order.order_date}}</td>
                     <td>{{order.get_total_cost}} DZD</td>
                     <td>{{order.get_total_panne}} DZD</td>
                     <td>{{order.get_total_item_panne}} DZD</td>

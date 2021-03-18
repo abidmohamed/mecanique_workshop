@@ -10,30 +10,35 @@
         </div>
         <div class="card card-body">
             <h2>Customer: <span>{{customer}}</span></h2>
-                <label for="total-price">Total :</label>
+            <label for="total-price">Total :</label>
 
             <input id="total-price" type="text" class="form-control" value="{{sellorder.get_ttc}}" disabled>
             <h2>{{get_total_item_panne}}</h2>
             <br>
             <hr>
             <div class="row">
-                    <div class="col-12">
-                        <div class="">
-                            <!-- Button Add New Product -->
-                            <a class="btn btn btn-primary form-control" href="{% url 'stock:modal_update_order_stockproduct_list' sellorder.id %}">New Product</a>
-                            <br>
-                            <br>
-                            <!-- Button Add New Panne -->
-                            <a class="btn btn btn-success form-control" href="{% url 'rdv:update_order_panne_list' sellorder.id %}">New Panne</a>
-
-                        </div>
+                <div class="col-12">
+                    <div class="">
+                        <!-- Button Add New Product -->
+                        <a class="btn btn btn-primary form-control"
+                           href="{% url 'stock:modal_update_order_stockproduct_list' sellorder.id %}">New Product</a>
+                        <br>
+                        <br>
+                        <!-- Button Add New Panne -->
+                        <a class="btn btn btn-success form-control"
+                           href="{% url 'rdv:update_order_panne_list' sellorder.id %}">New Panne</a>
+                        <br>
                     </div>
                 </div>
+            </div>
             <br>
             <hr>
             <form action="" method="post">
                 {% csrf_token %}
-                <input onkeyup="calc()" id="discount-value" name="discount-value" type="number" class="form-control" value="0">
+                <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date">
+                <br>
+                <input onkeyup="calc()" id="discount-value" name="discount-value" type="number" class="form-control"
+                       value="0">
                 <select onchange="calc()" class="form-control" name="discount-status" id="discount-status">
                     <option value="1"> Percentage</option>
                     <option value="2"> Amount</option>
@@ -72,14 +77,17 @@
                     {% for item in sellorder.items.all %}
                     <tr>
                         <td class="table-light">
-                            <input class="form-control" type="text" value="{{ item.stockproduct.product.brand }}" disabled>
+                            <input class="form-control" type="text" value="{{ item.stockproduct.product.brand }}"
+                                   disabled>
                         </td>
                         <td class="table-light">
-                            <input class="form-control" type="text" value="{{ item.stockproduct.product.name }}" name="names"
+                            <input class="form-control" type="text" value="{{ item.stockproduct.product.name }}"
+                                   name="names"
                                    disabled>
                         </td>
                         <td class="table-light ">
-                            <input onkeyup="calc()" class="form-control" type="text" name="prices" value="{{ item.price }}">{{ item.price }}
+                            <input onkeyup="calc()" class="form-control" type="text" name="prices"
+                                   value="{{ item.price }}">{{ item.price }}
 
                         </td>
                         <td class="table-light ">
@@ -87,10 +95,12 @@
 
                         </td>
                         <td class="table-light ">
-                            <input onkeyup="calc()" class="form-control" type="number" name="quantities" value="{{ item.quantity }}">
+                            <input onkeyup="calc()" class="form-control" type="number" name="quantities"
+                                   value="{{ item.quantity }}">
                         </td>
                         <td>
-                           <a class="btn btn-danger " href="{% url 'sellorder:order_item_delete' sellorder.id item.id %}">Delete</a>
+                            <a class="btn btn-danger "
+                               href="{% url 'sellorder:order_item_delete' sellorder.id item.id %}">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -176,6 +186,7 @@
      }
 
     }
+
 
 
 </script>

@@ -21,6 +21,7 @@
                         <div class="">
                             <!-- Button Add New Product -->
                             <a class="btn btn btn-primary form-control" href="{% url 'stock:modal_order_stockproduct_list' sellorder.id %}">New Product</a>
+                            <br>
 
                         </div>
                     </div>
@@ -29,6 +30,8 @@
             <hr>
             <form action="" method="post">
                 {% csrf_token %}
+                                            <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date">
+                <br>
                 <input onkeyup="calc()" id="discount-value" name="discount-value" type="number" class="form-control" value="0">
                 <select onchange="calc()" class="form-control" name="discount-status" id="discount-status">
                     <option value="1"> Percentage</option>
@@ -104,15 +107,10 @@
                     </tr>
                     {% endfor %}
                     </tbody>
-                    <tr>
-                    </tr>
-                    <tr class="text-center">
-                        <td class="text-center">
-                            <input class="btn btn-primary" type="submit" name="submit">
 
-                        </td>
-                    </tr>
                 </table>
+                <br>
+                <input class="form-control btn btn-primary" type="submit" name="submit">
             </form>
         </div>
     </div>
