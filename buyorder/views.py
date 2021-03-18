@@ -1,4 +1,5 @@
 import decimal
+from datetime import date
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
@@ -67,6 +68,12 @@ def buyorder_confirmation(request, pk):
         buyorderform = BuyOrderForm(request.POST, instance=buyorder)
         if buyorderform.is_valid():
             print(request.POST)
+            if buyorder.items.all():
+                for item in buyorder.items.all():
+                    stockitem = StockProduct.objects.get(product=item.product)
+                    if stockitem.quantity - int(item.quantity) > 0:
+                        stockitem.quantity -= int(item.quantity)
+                        stockitem.save()
             buyorder = buyorderform.save()
             # to add credit
             supplier = Supplier.objects.get(id=request.POST['supplier'])
@@ -74,6 +81,11 @@ def buyorder_confirmation(request, pk):
             prices = request.POST.getlist('prices')
             quantities = request.POST.getlist('quantities')
             tva = request.POST.get('tva')
+            chosen_date = request.POST.get('order_date')
+            # get year month day
+            chosen_year = chosen_date.split("-", 1)
+            chosen_month = chosen_date.split("-", 2)
+            chosen_day = chosen_date.split("-", 2)
             for index, item in enumerate(buyorder.items.all()):
                 # print(index, item)
                 print(prices[index], quantities[index])
@@ -132,6 +144,8 @@ def buyorder_confirmation(request, pk):
             buyorder.debt = buyorder.get_ttc()
             supplier.credit += buyorder.get_ttc()
             supplier.save()
+            buyorder.total_price = buyorder.get_total_cost()
+            buyorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
             buyorder.confirmed = True
             buyorder.save()
             return redirect('buyorder:buyorder_list')
@@ -145,17 +159,33 @@ def buyorder_confirmation(request, pk):
 def update_order(request, pk):
     buyorder = BuyOrder.objects.get(id=pk)
     buyorderform = BuyOrderForm(instance=buyorder)
+    old_ttc = round(buyorder.total_price + (buyorder.total_price * decimal.Decimal(buyorder.order_tva/100)), 2)
+    new_ttc = 0
+    ttc_difference = 0
     if request.method == 'POST':
         buyorderform = BuyOrderForm(request.POST, instance=buyorder)
         if buyorderform.is_valid():
+            # Reset Stock Quantity to update the quantities
+            if buyorder.items.all():
+                for item in buyorder.items.all():
+                    stockitem = StockProduct.objects.get(product=item.product)
+                    if stockitem.quantity - int(item.quantity) > 0:
+                        stockitem.quantity -= int(item.quantity)
+                        stockitem.save()
             print(request.POST)
             buyorder = buyorderform.save()
+
             # to add credit
             supplier = Supplier.objects.get(id=request.POST['supplier'])
             # get modified items
             prices = request.POST.getlist('prices')
             quantities = request.POST.getlist('quantities')
             tva = request.POST.get('tva')
+            chosen_date = request.POST.get('order_date')
+            # get year month day
+            chosen_year = chosen_date.split("-", 1)
+            chosen_month = chosen_date.split("-", 2)
+            chosen_day = chosen_date.split("-", 2)
             for index, item in enumerate(buyorder.items.all()):
                 # print(index, item)
                 print(prices[index], quantities[index])
@@ -210,10 +240,18 @@ def update_order(request, pk):
             # print(buyorder.get_total_cost())
             # print(supplier)
             buyorder.order_tva = int(tva)
-            buyorder.debt = buyorder.get_ttc()
-            supplier.credit += buyorder.get_ttc()
+            # get money additiion
+            print(old_ttc)
+            new_ttc = buyorder.get_ttc()
+            print(new_ttc)
+            ttc_difference = new_ttc - old_ttc
+            print(ttc_difference)
+            buyorder.debt += ttc_difference
+            supplier.credit += ttc_difference
             supplier.save()
+            buyorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
             buyorder.confirmed = True
+            buyorder.total_price = buyorder.get_total_cost()
             buyorder.save()
             return redirect('buyorder:buyorder_list')
     context = {
@@ -221,10 +259,6 @@ def update_order(request, pk):
         'buyorder': buyorder,
     }
     return render(request, 'buyorder/buyorder_confirmation.html', context)
-
-
-def update_order(request, pk):
-    pass
 
 
 def buyorder_details(request, pk):

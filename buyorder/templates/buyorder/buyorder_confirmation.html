@@ -13,7 +13,7 @@
                 {% csrf_token %}
                 {{buyorderform|crispy}}
                 <hr>
-                <br>
+                <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date">
                 <hr>
                 <h3>TVA</h3>
                 <input class="form-control" type="number" value="0" name="tva">
@@ -50,9 +50,10 @@
                     {% for item in buyorder.items.all %}
                     <tr>
 
-                        <td class="table-light" >
-                            <input class="form-control" type="text" value="{{ item.product.name }}" name="names" disabled>
-                            </td>
+                        <td class="table-light">
+                            <input class="form-control" type="text" value="{{ item.product.name }}" name="names"
+                                   disabled>
+                        </td>
                         <td class="table-light ">
                             <input class="form-control" type="text" name="prices" value="{{ item.price }}">
                             <h2>{{ item.price }}</h2>
@@ -60,28 +61,16 @@
                         </td>
                         <td class="table-light ">
                             <input class="form-control" type="number" name="quantities" value="{{ item.quantity }}">
-                            </td>
+                        </td>
 
                     </tr>
                     {% endfor %}
 
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
                     </tbody>
 
-                    <tr class="text-center">
-                        <td class="text-center">
-                                                    <input class="btn btn-primary" type="submit" name="submit">
-
-                        </td>
-                    </tr>
                 </table>
+                <br>
+                <input class="form-control btn btn-primary" type="submit" name="submit">
             </form>
         </div>
     </div>

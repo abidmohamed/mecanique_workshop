@@ -17,6 +17,7 @@ class BuyOrder(models.Model):
     debt = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     confirmed = models.BooleanField(default=False)
     order_date = models.DateField(null=True, blank=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
 
     class Meta:
         ordering = ('-created',)
