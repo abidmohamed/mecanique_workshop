@@ -1,4 +1,5 @@
 import decimal
+from datetime import date
 
 from django.shortcuts import render, redirect, get_object_or_404
 from xhtml2pdf import pisa
@@ -32,6 +33,11 @@ def confirm_order(request, pk):
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
         tva = request.POST.get('tva')
+        chosen_date = request.POST.get('order_date')
+        # get year month day
+        chosen_year=chosen_date.split("-", 1)
+        chosen_month=chosen_date.split("-", 2)
+        chosen_day=chosen_date.split("-", 2)
         if sellorder.items.all():
             for index, item in enumerate(sellorder.items.all()):
                 # get the price and value of each element
@@ -72,6 +78,7 @@ def confirm_order(request, pk):
         sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.order_tva = int(tva)
         sellorder.debt = sellorder.get_ttc()
+        sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
         sellorder.confirmed = True
         sellorder.save()
         print(sellorder.confirmed)
@@ -119,6 +126,11 @@ def update_order(request, pk):
         print(prices)
         quantities = request.POST.getlist('quantities')
         tva = request.POST.get('tva')
+        chosen_date = request.POST.get('order_date')
+        # get year month day
+        chosen_year = chosen_date.split("-", 1)
+        chosen_month = chosen_date.split("-", 2)
+        chosen_day = chosen_date.split("-", 2)
         if sellorder.items.all():
             for index, item in enumerate(sellorder.items.all()):
                 # get the price and value of each element
@@ -150,7 +162,6 @@ def update_order(request, pk):
                                 print(item.stockproduct)
                                 print(item.quantity)
                                 stockitem.save()
-        print(DiscountForm(request.POST, instance=discount))
         discount.order = sellorder
         discount.value = request.POST.get('discount-value')
         discount.discount_status = request.POST.get('discount-status')
@@ -161,6 +172,7 @@ def update_order(request, pk):
             sellorder.discount_amount = decimal.Decimal(discount.value)
 
         sellorder.total_price = sellorder.get_total_item_panne()
+        sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
         sellorder.confirmed = True
         sellorder.order_tva = int(tva)
         # get money additiion

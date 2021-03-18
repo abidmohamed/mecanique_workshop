@@ -16,6 +16,7 @@ class BuyOrder(models.Model):
     order_tva = models.PositiveIntegerField(default=0)
     debt = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     confirmed = models.BooleanField(default=False)
+    order_date = models.DateField(null=True, blank=True)
 
     class Meta:
         ordering = ('-created',)
