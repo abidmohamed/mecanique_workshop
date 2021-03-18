@@ -244,11 +244,12 @@ def sellorder_delete(request, pk):
         customer.debt -= order.debt
         customer.save()
         if SellOrderPayment.objects.all().filter(order=order):
-            customerpayment = SellOrderPayment.objects.get(order=order)
-            caisse = Caisse.objects.all().filter()[:1].get()
-            caisse.caisse_value -= customerpayment.amount
-            caisse.save()
-            customerpayment.delete()
+            customerpayments = SellOrderPayment.objects.all().filter(order=order)
+            for customerpayment in customerpayments:
+                caisse = Caisse.objects.all().filter()[:1].get()
+                caisse.caisse_value -= customerpayment.amount
+                caisse.save()
+                customerpayment.delete()
         order.delete()
         return redirect('sellorder:sellorder_list')
     context = {
