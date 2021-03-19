@@ -30,7 +30,7 @@
             <hr>
             <form action="" method="post">
                 {% csrf_token %}
-                                            <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date">
+                <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date" required>
                 <br>
                 <input onkeyup="calc()" id="discount-value" name="discount-value" type="number" class="form-control" value="0">
                 <select onchange="calc()" class="form-control" name="discount-status" id="discount-status">

@@ -13,7 +13,7 @@
                 {% csrf_token %}
                 {{buyorderform|crispy}}
                 <hr>
-                <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date">
+                <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date" required>
                 <hr>
                 <h3>TVA</h3>
                 <input class="form-control" type="number" value="0" name="tva">
