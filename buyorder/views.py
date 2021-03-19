@@ -68,12 +68,6 @@ def buyorder_confirmation(request, pk):
         buyorderform = BuyOrderForm(request.POST, instance=buyorder)
         if buyorderform.is_valid():
             print(request.POST)
-            if buyorder.items.all():
-                for item in buyorder.items.all():
-                    stockitem = StockProduct.objects.get(product=item.product)
-                    if stockitem.quantity - int(item.quantity) > 0:
-                        stockitem.quantity -= int(item.quantity)
-                        stockitem.save()
             buyorder = buyorderform.save()
             # to add credit
             supplier = Supplier.objects.get(id=request.POST['supplier'])
