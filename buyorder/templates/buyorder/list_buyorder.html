@@ -7,6 +7,8 @@
         <div class="card card-body">
             <h5>Buy Orders</h5>
         </div>
+         <a class="btn btn-info " href="{% url 'buyorder:confirm_all' %}">Confirm All</a>
+        <br>
         <div class="card card-body">
             <table id="table_id" class="table display text-center">
 
@@ -33,7 +35,7 @@
                     <td>{{order.supplier}}</td>
                     <td>{{order.supplier.phone}}</td>
                     <td>{{order.paid}}</td>
-                    <td>{{order.get_total_cost}} DZD</td>
+                    <td>{{order.total_price}} DZD</td>
                     <td>{{order.get_tva}} DZD</td>
                     <td>{{order.get_ttc}} DZD</td>
                     <td>{{order.debt}} DZD</td>
