@@ -174,10 +174,11 @@ def update_order(request, pk):
             # Reset Stock Quantity to update the quantities
             if buyorder.items.all():
                 for item in buyorder.items.all():
-                    stockitem = StockProduct.objects.get(product=item.product)
-                    if stockitem.quantity - int(item.quantity) > 0:
-                        stockitem.quantity -= int(item.quantity)
-                        stockitem.save()
+                    if StockProduct.objects.all().filter(product=item.product):
+                        stockitem = StockProduct.objects.get(product=item.product)
+                        if stockitem.quantity - int(item.quantity) > 0:
+                            stockitem.quantity -= int(item.quantity)
+                            stockitem.save()
             print(request.POST)
             buyorder = buyorderform.save()
 
@@ -206,7 +207,6 @@ def update_order(request, pk):
                 item.price = str_price
                 item.quantity = quantities[index]
                 item.save()
-                print("-----------Not me 3")
                 # adding the bought products to stock
                 stockitems = StockProduct.objects.all().filter(stock=item.product.stock)
                 itemexist = 1
