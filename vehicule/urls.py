@@ -15,6 +15,7 @@ urlpatterns = [
     path('all_type_list/', views.all_type_list, name='all_type_list'),
     path('type_list/<str:pk>', views.type_list, name='type_list'),
     path('add_type', views.add_type, name='add_type'),
+    path('add_type_rdv/<str:pk>', views.add_type_rdv, name='add_type_rdv'),
     path('update_type/<str:pk>', views.update_type, name='update_type'),
     path('delete_type/<str:pk>', views.delete_type, name='delete_type'),
 

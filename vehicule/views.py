@@ -65,6 +65,22 @@ def add_type(request):
     return render(request, 'type/add_type.html', context)
 
 
+def add_type_rdv(request, pk):
+    customer = Customer.objects.get(id=pk)
+    if request.method == 'GET':
+        typeform = TypeForm()
+    elif request.method == 'POST':
+        typeform = TypeForm(request.POST, request.FILES)
+        if typeform.is_valid():
+            typeform.save()
+            return redirect('rdv:rdv_vehicle_list', customer.pk)
+
+    context = {
+        'typeform': typeform
+    }
+    return render(request, 'type/add_type.html', context)
+
+
 def type_list(request, pk):
     brand = Brand.objects.get(id=pk)
     brands = Brand.objects.all()

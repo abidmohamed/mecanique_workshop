@@ -6,6 +6,7 @@ app_name = 'sellorder'
 urlpatterns = [
 
     path('sellorder_list', views.sellorder_list, name='sellorder_list'),
+    path('facture_all', views.facture_all, name='facture_all'),
     path('performa_sellorder_list', views.performa_sellorder_list, name='performa_sellorder_list'),
     path('factured_sellorder_list', views.factured_sellorder_list, name='factured_sellorder_list'),
     path('confirm_order_performa/<str:pk>', views.confirm_order_performa, name='confirm_order_performa'),
