@@ -40,7 +40,7 @@ class Order(models.Model):
         return sum(item.get_cost() for item in self.pannes.all()) + sum(item.get_cost() for item in self.items.all())
 
     def get_tva(self):
-        return round(self.get_total_item_panne() * Decimal(self.order_tva/100), 2)
+        return round(self.get_total_item_panne() * Decimal(self.order_tva / 100), 2)
 
     def get_ttc(self):
         return round(self.get_total_item_panne() + self.get_tva() - self.discount_amount, 2)
@@ -76,3 +76,10 @@ class PanneItem(models.Model):
 
     def get_cost(self):
         return self.price
+
+
+# Facture
+class SellOrderFacture(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
