@@ -13,5 +13,6 @@ urlpatterns = [
     path('buyorderorder_list_by_supplier/<str:pk>', views.buyorderorder_list_by_supplier, name='buyorderorder_list_by_supplier'),
     path('buyorder_delete/<str:pk>', views.buyorder_delete, name='buyorder_delete'),
     path('update_order/<str:pk>', views.update_order, name='update_order'),
+    path('confirm_all', views.confirm_all, name='confirm_all'),
 
 ]

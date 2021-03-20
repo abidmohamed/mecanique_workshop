@@ -60,6 +60,18 @@ def create_buyorder(request):
     return render(request, 'buyorder/add_buyorder.html', context)
 
 
+def confirm_all(request):
+    buyorders = BuyOrder.objects.all()
+    for order in buyorders:
+        order.total_price = order.get_total_cost()
+        order.confirmed = True
+        order.save()
+    context = {
+            'buyorders': buyorders,
+        }
+    return render(request, 'buyorder/list_buyorder.html', context)
+
+
 def buyorder_confirmation(request, pk):
     buyorder = BuyOrder.objects.get(id=pk)
 
