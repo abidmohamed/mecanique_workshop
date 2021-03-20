@@ -15,6 +15,7 @@ urlpatterns = [
     path('stockproduct_list/<str:pk>', views.stockproduct_list, name='stockproduct_list'),
     path('all_stockproduct_list', views.all_stockproduct_list, name='all_stockproduct_list'),
     path('order_stockproduct_list', views.order_stockproduct_list, name='order_stockproduct_list'),
+    path('performa_order_stockproduct_list', views.performa_order_stockproduct_list, name='performa_order_stockproduct_list'),
     path('modal_order_stockproduct_list/<str:pk>', views.modal_order_stockproduct_list,
          name='modal_order_stockproduct_list'),
     path('modal_update_order_stockproduct_list/<str:pk>', views.modal_update_order_stockproduct_list,

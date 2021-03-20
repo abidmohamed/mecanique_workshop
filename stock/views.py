@@ -222,6 +222,64 @@ def order_stockproduct_list(request):
     return render(request, 'stockproduct/order_list_stockproduct.html', context)
 
 
+#Performa order
+def performa_order_stockproduct_list(request):
+    stockproducts = StockProduct.objects.all().filter(quantity__gt=0)
+    customers = Customer.objects.all()
+    pannes = Panne.objects.all()
+
+    if request.method == 'POST':
+        # get submitted orders
+        chosenproducts = request.POST.getlist("products")
+        chosencustomer = request.POST.getlist("customers")
+        # chosenvehicule = request.POST.getlist("vehicle")
+        chosenpannes = request.POST.getlist("pannes")
+        # print(chosencustomer)
+        # print(chosenvehicule)
+        if len(chosencustomer) != 0:
+            sellorder = Order()
+            customer = Customer.objects.get(id=chosencustomer[0])
+            # print(customer)
+            # vehicles = Vehicle.objects.all().filter(customer=customer)
+            # print(vehicles)
+            #
+            # vehicle = Vehicle.objects.get(id=chosenvehicule[int(chosencustomer[0]) - 1])
+            # print(vehicle)
+
+            sellorder.customer = customer
+            # sellorder.vehicle = vehicle
+            sellorder.save()
+            print(chosenproducts)
+            if len(chosenproducts) != 0:
+                for product in chosenproducts:
+                    currentproduct = StockProduct.objects.get(id=product)
+                    # print(currentproduct)
+                    OrderItem.objects.create(
+                        order=sellorder,
+                        stockproduct=currentproduct,
+                        price=currentproduct.product.sellprice,
+                        # weight=currentproduct.product.weight,
+                        quantity=1,
+                    )
+            if len(chosenpannes) != 0:
+                for panne in chosenpannes:
+                    currentpanne = Panne.objects.get(id=panne)
+                    # print(currentpanne)
+                    PanneItem.objects.create(
+                        order=sellorder,
+                        panne=currentpanne,
+                        price=currentpanne.price
+                    )
+            return redirect('stock:order_vehicle', sellorder.pk)
+
+    context = {
+        'customers': customers,
+        'stockproducts': stockproducts,
+        'pannes': pannes,
+    }
+    return render(request, 'stockproduct/order_list_stockproduct.html', context)
+
+
 def order_vehicle(request, pk):
     sellorder = Order.objects.get(id=pk)
     customer = Customer.objects.get(id=sellorder.customer.pk)
