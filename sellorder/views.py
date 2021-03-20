@@ -15,7 +15,7 @@ from discount.models import Discount
 from payments.forms import CustomerPaymentForm
 from payments.models import SellOrderPayment
 from sellorder.apps import SellorderConfig
-from sellorder.models import Order
+from sellorder.models import Order, SellOrderFacture
 from stock.models import StockProduct
 
 
@@ -291,6 +291,9 @@ def sellorder_facture(request, pk):
     if request.method == 'POST':
         order.factured = True
         order.save()
+        sellorderfacture = SellOrderFacture()
+        sellorderfacture.order = order
+        sellorderfacture.save()
         return redirect('sellorder:factured_sellorder_list')
     return render(request, 'sellorder/sellorder_facture.html', context={'order': order})
 
@@ -304,11 +307,11 @@ def sellorder_list(request):
 
 
 def factured_sellorder_list(request):
-    sellorders = Order.objects.all().filter(factured=True)
+    sellorders = SellOrderFacture.objects.all()
     context = {
         'sellorders': sellorders
     }
-    return render(request, 'sellorder/list_sellorder.html', context)
+    return render(request, 'sellorder/list_sellorder_facture.html', context)
 
 
 def performa_sellorder_list(request):
