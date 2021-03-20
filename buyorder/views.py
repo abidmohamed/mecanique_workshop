@@ -175,8 +175,9 @@ def update_order(request, pk):
             if buyorder.items.all():
                 for item in buyorder.items.all():
                     if StockProduct.objects.all().filter(product=item.product):
+                        print("############# OKAY Update minus")
                         stockitem = StockProduct.objects.get(product=item.product)
-                        if stockitem.quantity - int(item.quantity) > 0:
+                        if stockitem.quantity - int(item.quantity) >= 0:
                             stockitem.quantity -= int(item.quantity)
                             stockitem.save()
             print(request.POST)
