@@ -20,6 +20,7 @@ urlpatterns = [
 
     # Vehicle urls
     path('add_vehicule', views.add_vehicule, name='add_vehicule'),
+    path('add_vehicule_rdv/<str:pk>', views.add_vehicule_rdv, name='add_vehicule_rdv'),
     path('all_vehicule_list/', views.all_vehicule_list, name='all_vehicule_list'),
     path('update_vehicule/<str:pk>', views.update_vehicule, name='update_vehicule'),
     path('delete_vehicule/<str:pk>', views.delete_vehicule, name='delete_vehicule'),

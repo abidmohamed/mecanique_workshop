@@ -129,6 +129,26 @@ def add_vehicule(request):
     return render(request, 'vehicule/add_vehicule.html', context)
 
 
+def add_vehicule_rdv(request, pk):
+    types = Type.objects.all()
+    customer = Customer.objects.get(id=pk)
+    vehiculeform = VehiculeFrom()
+    if request.method == 'POST':
+        vehiculeform = VehiculeFrom(request.POST)
+        if vehiculeform.is_valid():
+            vehicle = vehiculeform.save(commit=False)
+            vehicle.customer = customer
+            vehicle.vehicle_type = Type.objects.get(id=request.POST.get("type"))
+            # print(request.POST.get("customer"))
+            # print(request.POST.get("type"))
+            vehicle.save()
+            return redirect("rdv:rdv_vehicle_list", customer.pk)
+    context = {
+        'types': types, 'vehiculeform': vehiculeform,
+    }
+    return render(request, 'vehicule/add_vehicule.html', context)
+
+
 def all_vehicule_list(request):
     vehicles = Vehicle.objects.all()
     context = {

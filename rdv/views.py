@@ -6,15 +6,18 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 # Create your views here.
+from customer.forms import CustomerForm
 from customer.models import Customer
 from rdv.forms import RdvFrom, PanneForm
 from rdv.models import Panne, RdvItem, Rdv
 from sellorder.models import Order, PanneItem
-from vehicule.models import Vehicle
+from vehicule.forms import VehiculeFrom
+from vehicule.models import Vehicle, Type
 import calendar
 
 
 def create_rdv_customer(request):
+    customer_form = CustomerForm()
     customers = Customer.objects.all()
     if request.method == 'POST':
         customer_id = request.POST.get("customer")
@@ -22,19 +25,27 @@ def create_rdv_customer(request):
         customer = Customer.objects.get(id=customer_id)
         return redirect('rdv:rdv_vehicle_list', customer.id)
 
-    context = {'customers': customers, }
+    context = {'customers': customers,
+               'customer_form': customer_form,
+               }
     return render(request, 'rdv/customer_list.html', context)
 
 
 def rdv_vehicle_list(request, pk):
     customer = Customer.objects.get(id=pk)
     vehicles = Vehicle.objects.all().filter(customer=customer)
+    types = Type.objects.all()
+    vehiculeform = VehiculeFrom()
     if request.method == 'POST':
         vehicle_id = request.POST.get("vehicle")
         print(vehicle_id)
         return redirect('rdv:create_rdv', vehicle_id)
 
-    context = {'vehicles': vehicles, }
+    context = {'vehicles': vehicles,
+               'customer': customer,
+               'types': types,
+               'vehiculeform': vehiculeform,
+               }
     return render(request, 'rdv/vehicle_list.html', context)
 
 
