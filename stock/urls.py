@@ -24,7 +24,9 @@ urlpatterns = [
     path('delete_stockproduct/<str:pk>', views.delete_stockproduct, name='delete_stockproduct'),
     path('stockproductcategory_list/<str:pk>', views.stockproductcategory_list, name='stockproductcategory_list'),
     path('stockproduct_detail/<str:id>', views.stockproduct_detail, name='stockproduct_detail'),
+
     path('order_vehicle/<str:pk>', views.order_vehicle, name='order_vehicle'),
+    path('performa_order_vehicle/<str:pk>', views.performa_order_vehicle, name='performa_order_vehicle'),
     path('stockproduct_stockalert', views.stockproduct_quantityalert, name='stockproduct_stockalert'),
 
 ]
