@@ -286,8 +286,25 @@ def sellorder_details(request, pk):
     return render(request, 'sellorder/sellorder_details.html', context)
 
 
+def sellorder_facture(request, pk):
+    order = Order.objects.get(id=pk)
+    if request.method == 'POST':
+        order.factured = True
+        order.save()
+        return redirect('sellorder:factured_sellorder_list')
+    return render(request, 'sellorder/sellorder_facture.html', context={'order': order})
+
+
 def sellorder_list(request):
-    sellorders = Order.objects.all().filter(confirmed=True)
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False)
+    context = {
+        'sellorders': sellorders
+    }
+    return render(request, 'sellorder/list_sellorder.html', context)
+
+
+def factured_sellorder_list(request):
+    sellorders = Order.objects.all().filter(factured=True)
     context = {
         'sellorders': sellorders
     }

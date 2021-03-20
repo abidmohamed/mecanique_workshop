@@ -25,6 +25,7 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,12 @@
                     <td>{{order.debt}} DZD</td>
 
 
+                    <td>
+                        {% if order.factured %}
+                        {% else %}
+                             <a class="btn btn-primary " href="{% url 'sellorder:sellorder_facture' order.id %}">Facture</a>
+                        {% endif %}
+                    </td>
                     <td>
                         {% if order.confirmed %}
                              <a class="btn btn-info " href="{% url 'sellorder:update_order' order.id %}">Update</a>

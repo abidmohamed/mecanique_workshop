@@ -21,6 +21,7 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
     order_tva = models.PositiveIntegerField(default=0)
     confirmed = models.BooleanField(default=False)
+    factured = models.BooleanField(default=False)
     order_date = models.DateField(null=True, blank=True)
 
     class Meta:
