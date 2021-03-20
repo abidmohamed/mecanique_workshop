@@ -222,7 +222,7 @@ def order_stockproduct_list(request):
     return render(request, 'stockproduct/order_list_stockproduct.html', context)
 
 
-#Performa order
+# Performa order
 def performa_order_stockproduct_list(request):
     stockproducts = StockProduct.objects.all().filter(quantity__gt=0)
     customers = Customer.objects.all()
@@ -270,7 +270,7 @@ def performa_order_stockproduct_list(request):
                         panne=currentpanne,
                         price=currentpanne.price
                     )
-            return redirect('stock:order_vehicle', sellorder.pk)
+            return redirect('stock:performa_order_vehicle', sellorder.pk)
 
     context = {
         'customers': customers,
@@ -279,7 +279,7 @@ def performa_order_stockproduct_list(request):
     }
     return render(request, 'stockproduct/order_list_stockproduct.html', context)
 
-
+# Real Order
 def order_vehicle(request, pk):
     sellorder = Order.objects.get(id=pk)
     customer = Customer.objects.get(id=sellorder.customer.pk)
@@ -293,6 +293,27 @@ def order_vehicle(request, pk):
             sellorder.vehicle = vehicle
             sellorder.save()
             return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
+
+    context = {
+        'vehicles': vehicles,
+    }
+    return render(request, 'stockproduct/order_vehicle.html', context)
+
+
+# PerformaS Order
+def performa_order_vehicle(request, pk):
+    sellorder = Order.objects.get(id=pk)
+    customer = Customer.objects.get(id=sellorder.customer.pk)
+    vehicles = Vehicle.objects.all().filter(customer=customer)
+    if request.method == 'POST':
+        chosenvehicule = request.POST.get("vehicle")
+        if chosenvehicule:
+            # print(chosenvehicule)
+            vehicle = Vehicle.objects.get(id=chosenvehicule)
+            # print(vehicle)
+            sellorder.vehicle = vehicle
+            sellorder.save()
+            return redirect('sellorder:confirm_order_performa', sellorder.pk)
 
     context = {
         'vehicles': vehicles,
