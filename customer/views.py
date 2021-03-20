@@ -106,11 +106,13 @@ def delete_customer(request, pk):
 
 def customer_detail(request, pk):
     customer = get_object_or_404(Customer, id=pk)
-    orders = Order.objects.all().filter(customer=customer)
+    orders = Order.objects.all().filter(customer=customer, confirmed=True)
+    proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False)
     rdvs = Rdv.objects.all().filter(customer=customer)
     context = {
         'customer': customer,
         'orders': orders,
+        'proforma_orders': proforma_orders,
         'rdvs': rdvs,
     }
     return render(request, 'customer/detail.html', context)
