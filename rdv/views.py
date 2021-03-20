@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -11,7 +10,7 @@ from customer.models import Customer
 from rdv.forms import RdvFrom, PanneForm
 from rdv.models import Panne, RdvItem, Rdv
 from sellorder.models import Order, PanneItem
-from vehicule.forms import VehiculeFrom
+from vehicule.forms import VehiculeFrom, TypeForm
 from vehicule.models import Vehicle, Type
 import calendar
 
@@ -36,6 +35,7 @@ def rdv_vehicle_list(request, pk):
     vehicles = Vehicle.objects.all().filter(customer=customer)
     types = Type.objects.all()
     vehiculeform = VehiculeFrom()
+    typeform = TypeForm()
     if request.method == 'POST':
         vehicle_id = request.POST.get("vehicle")
         print(vehicle_id)
@@ -45,6 +45,7 @@ def rdv_vehicle_list(request, pk):
                'customer': customer,
                'types': types,
                'vehiculeform': vehiculeform,
+               'typeform': typeform,
                }
     return render(request, 'rdv/vehicle_list.html', context)
 

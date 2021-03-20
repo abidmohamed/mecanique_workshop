@@ -68,7 +68,8 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -84,6 +85,14 @@
                           enctype="multipart/form-data">
                         {% csrf_token %}
                         <h4>Choose a Car Type</h4>
+                        <div class="">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="form-control btn btn btn-primary" data-toggle="modal"
+                                    data-target="#typeModal">
+                                New Type
+                            </button>
+                        </div>
+                        <br>
                         <table id="table_type" class="table">
                             <thead>
                             <tr>
@@ -144,6 +153,47 @@
         </div>
     </div>
 </div>
+<!--  Type Modal  -->
+<div class="modal fade" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="typeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="typeModalLabel">New Type</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card card-body">
+                    <form action="{% url 'vehicule:add_type_rdv' customer.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{typeform|crispy}}
+                        <input class="form-control btn btn-primary" type="submit" name="submit">
+                    </form>
+                </div>
+                {% if typeform.errors %}
+                {% for field in typeform %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{field.label}} {{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endfor %}
+                {% for error in typeform.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 {% block jsscript %}
@@ -164,6 +214,7 @@
     $('#table_id').DataTable();
     $('#table_type').DataTable();
 } );
+
 
 
 

@@ -35,9 +35,9 @@ def confirm_order(request, pk):
         tva = request.POST.get('tva')
         chosen_date = request.POST.get('order_date')
         # get year month day
-        chosen_year=chosen_date.split("-", 1)
-        chosen_month=chosen_date.split("-", 2)
-        chosen_day=chosen_date.split("-", 2)
+        chosen_year = chosen_date.split("-", 1)
+        chosen_month = chosen_date.split("-", 2)
+        chosen_day = chosen_date.split("-", 2)
         if sellorder.items.all():
             for index, item in enumerate(sellorder.items.all()):
                 # get the price and value of each element
@@ -111,9 +111,9 @@ def confirm_order_performa(request, pk):
         tva = request.POST.get('tva')
         chosen_date = request.POST.get('order_date')
         # get year month day
-        chosen_year=chosen_date.split("-", 1)
-        chosen_month=chosen_date.split("-", 2)
-        chosen_day=chosen_date.split("-", 2)
+        chosen_year = chosen_date.split("-", 1)
+        chosen_month = chosen_date.split("-", 2)
+        chosen_day = chosen_date.split("-", 2)
         if sellorder.items.all():
             for index, item in enumerate(sellorder.items.all()):
                 # get the price and value of each element
@@ -172,7 +172,8 @@ def update_order(request, pk):
     customer = Customer.objects.get(id=sellorder.customer.pk)
     # Get Discount
     discountform = DiscountForm(instance=discount)
-    old_ttc = round(sellorder.total_price + (sellorder.total_price * decimal.Decimal(sellorder.order_tva/100)) - sellorder.discount_amount, 2)
+    old_ttc = round(sellorder.total_price + (
+                sellorder.total_price * decimal.Decimal(sellorder.order_tva / 100)) - sellorder.discount_amount, 2)
     new_ttc = 0
     ttc_difference = 0
     if request.method == 'POST':
@@ -284,6 +285,17 @@ def sellorder_details(request, pk):
         'order': order
     }
     return render(request, 'sellorder/sellorder_details.html', context)
+
+
+def facture_all(request):
+    sellorders = Order.objects.all().filter(factured=True)
+    for order in sellorders:
+        sellorderfacture = SellOrderFacture()
+        sellorderfacture.order = order
+        sellorderfacture.save()
+        return redirect('sellorder:factured_sellorder_list')
+
+    return render(request, 'sellorder/list_sellorder.html', context={"sellorders": sellorders})
 
 
 def sellorder_facture(request, pk):
