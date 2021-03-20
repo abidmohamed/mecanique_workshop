@@ -11,6 +11,7 @@ urlpatterns = [
     path('create_rdv/<str:pk>', views.create_rdv, name='create_rdv'),
     path('rdv_pdf/<str:pk>', views.rdv_pdf, name='rdv_pdf'),
     path('rdv_details/<str:pk>', views.rdv_details, name='rdv_details'),
+    path('delete_rdv/<str:pk>', views.delete_rdv, name='delete_rdv'),
 
     # Panne
     path('create_panne', views.create_panne, name='create_panne'),

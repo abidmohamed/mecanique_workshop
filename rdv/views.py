@@ -109,6 +109,15 @@ def rdv_list(request):
     return render(request, 'rdv/rdv_list.html', context)
 
 
+def delete_rdv(request, pk):
+    rdv = Rdv.objects.get(id=pk)
+    context = {'rdv': rdv}
+    if request.method == 'POST':
+        rdv.delete()
+        return redirect('rdv:rdv_list')
+    return render(request, 'rdv/delete_rdv.html', context)
+
+
 # Panne
 def create_panne(request):
     panneform = PanneForm()
