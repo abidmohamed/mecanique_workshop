@@ -5,6 +5,7 @@ app_name = 'customer'
 
 urlpatterns = [
     path('add_customer', views.add_customer, name='add_customer'),
+    path('add_customer_rdv', views.add_customer_rdv, name='add_customer_rdv'),
     path('customer_list', views.customer_list, name='customer_list'),
     path('update_customer/<str:pk>', views.update_customer, name='update_customer'),
     path('customer_detail/<str:pk>', views.customer_detail, name='customer_detail'),

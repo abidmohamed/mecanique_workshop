@@ -37,6 +37,32 @@ def add_customer(request):
     return render(request, 'customer/add_customer.html', context)
 
 
+def add_customer_rdv(request):
+    # user_form = UserForm()
+    if request.method == 'GET':
+        customer_form = CustomerForm()
+    elif request.method == 'POST':
+        # user_form = UserForm(request.POST)
+        customer_form = CustomerForm(request.POST)
+        if customer_form.is_valid():
+            # user = user_form.save()
+            customer = customer_form.save()
+            # customer = customer_form.save(commit=False)
+            group = Group.objects.get(name='customer')
+            # user.groups.add(group)
+            # customer.user = user
+            # customer.firstname = user.first_name
+            # customer.lastname = user.last_name
+            # customer.email = user.email
+            # customer.save()
+            return redirect('rdv:create_rdv_customer')
+    context = {
+        # 'user_form': user_form,
+        'customer_form': customer_form
+    }
+    return render(request, 'customer/add_customer.html', context)
+
+
 def customer_list(request):
     customers = Customer.objects.all()
     context = {
