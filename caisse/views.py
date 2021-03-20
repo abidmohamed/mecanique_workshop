@@ -42,6 +42,8 @@ def transaction_list(request):
     customerpayments = SellOrderPayment.objects.all()
     supplierpayments = BuyOrderPayment.objects.all()
     total_per_period = 0
+    income_per_period = 0
+    expense_per_period = 0
     # Search request by date===>
     if request.method == 'POST':
         # dateform = request.POST
@@ -78,14 +80,18 @@ def transaction_list(request):
         for transaction in transactions:
             if transaction.Transaction_type == "Income":
                 total_per_period += transaction.amount
+                income_per_period += transaction.amount
             else:
                 total_per_period -= transaction.amount
+                expense_per_period += transaction.amount
 
         for customerpayment in customerpayments:
             total_per_period += customerpayment.amount
+            income_per_period += customerpayment.amount
 
         for supplierpayment in supplierpayments:
             total_per_period -= supplierpayment.amount
+            expense_per_period += supplierpayment.amount
 
     context = {
         "transactions": transactions,
@@ -94,6 +100,8 @@ def transaction_list(request):
         "customerpayments": customerpayments,
         "supplierpayments": supplierpayments,
         "total_per_period": total_per_period,
+        "income_per_period": income_per_period,
+        "expense_per_period": expense_per_period,
     }
 
     return render(request, "caisse/transaction_list.html", context)

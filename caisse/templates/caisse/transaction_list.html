@@ -19,7 +19,12 @@
             <h5 class="display-5 text-center"><i class="fas fa-exchange-alt"></i>Transactions</h5>
             <a class="btn btn-success " href="{% url 'caisse:create_transaction' %}">Add +</a>
             <br>
+            <h5 class="text-center text-success">Income : {{income_per_period}} DZD</h5>
+            <br>
+            <h5 class="text-center text-danger">Expense : {{expense_per_period}} DZD</h5>
+            <br>
             <h5 class="text-center text-primary">TOTAL : {{total_per_period}} DZD</h5>
+            <br>
             <form method="post" action="">
                 {% csrf_token %}
                 <div class="form-group">
@@ -136,11 +141,11 @@
                     <td>
                         {{payment.pay_date}}
                     </td>
-                   <td>
-                       {% if payment.order.id %}
-                      <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' payment.order.id %}">Details</a>
-                       {% endif %}
-                   </td>
+                    <td>
+                        {% if payment.order.id %}
+                        <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' payment.order.id %}">Details</a>
+                        {% endif %}
+                    </td>
                 </tr>
 
                 {% endfor %}
@@ -194,6 +199,7 @@
         ]
     });
     } );
+
 
 </script>
 {% endblock %}
