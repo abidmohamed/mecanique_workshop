@@ -111,6 +111,7 @@
                     <tr>
                         <th>Mo</th>
                         <th>Price</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -118,6 +119,10 @@
                     <tr>
                         <td>{{item.panne.desc}}</td>
                         <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
+                    <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'sellorder:order_panne_delete' sellorder.id item.id %}">Delete</a>
+                        </td>
                     </tr>
                     {% endfor %}
                     </tbody>

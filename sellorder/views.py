@@ -281,6 +281,22 @@ def order_item_delete(request, orderpk, itempk):
     return render(request, 'sellorder/delete_item.html', context)
 
 
+def order_panne_delete(request, orderpk, itempk):
+    sellorder = Order.objects.get(id=orderpk)
+    item = sellorder.pannes.get(id=itempk)
+    print(item)
+    if request.method == 'POST':
+        item = sellorder.pannes.get(id=itempk)
+        item.delete()
+        return redirect('sellorder:update_order', sellorder.id)
+
+    context = {
+        'sellorder': sellorder,
+        'item': item
+    }
+    return render(request, 'sellorder/delete_panne.html', context)
+
+
 def sellorder_details(request, pk):
     order = Order.objects.get(id=pk)
     context = {
