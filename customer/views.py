@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
 
 from rdv.models import Rdv
-from sellorder.models import Order
+from sellorder.models import Order, SellOrderFacture
 
 
 def add_customer(request):
@@ -106,13 +106,15 @@ def delete_customer(request, pk):
 
 def customer_detail(request, pk):
     customer = get_object_or_404(Customer, id=pk)
-    orders = Order.objects.all().filter(customer=customer, confirmed=True)
+    orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False)
     proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False)
+    factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer)
     rdvs = Rdv.objects.all().filter(customer=customer)
     context = {
         'customer': customer,
         'orders': orders,
         'proforma_orders': proforma_orders,
+        'factured_orders': factured_orders,
         'rdvs': rdvs,
     }
     return render(request, 'customer/detail.html', context)
