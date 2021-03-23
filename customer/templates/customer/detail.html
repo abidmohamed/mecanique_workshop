@@ -53,7 +53,7 @@
                     <td>{{order.customer.address}}</td>
                     <td>{{order.get_total_cost}} DZD</td>
                     <td>{{order.get_total_panne}} DZD</td>
-                    <td>{{order.get_total_item_panne}} DZD</td>
+                    <td>{{order.get_ttc}} DZD</td>
                     <td>{{order.debt}} DZD</td>
                     <td>
                         {% if order.debt > 0%}
@@ -94,13 +94,56 @@
                     <td>{{order.customer.address}}</td>
                     <td>{{order.get_total_cost}} DZD</td>
                     <td>{{order.get_total_panne}} DZD</td>
-                    <td>{{order.get_total_item_panne}} DZD</td>
+                    <td>{{order.get_ttc}} DZD</td>
                     <td>{{order.debt}} DZD</td>
                     <td>
                              <a class="btn btn-success " href="{% url 'sellorder:confirm_order' order.id %}">Confirm</a>
                     </td>
                     <td>
                            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">Details</a>
+                    </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        <br>
+        <h2>Billed Orders</h2>
+        <hr>
+        <table id="table_order_bill">
+            <thead class="thead-light">
+            <tr>
+                <th>Bill ID</th>
+                <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Address</th>
+                    <th>Total Piece</th>
+                    <th>Total Panne</th>
+                    <th>Total</th>
+                    <th>Debt</th>
+                    <th></th>
+                    <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in factured_orders %}
+            <tr>
+                <td>{{order.id}}</td>
+                <td>{{order.order.id}}</td>
+                    <td>{{order.order.customer}}</td>
+                    <td>{{order.order.customer.address}}</td>
+                    <td>{{order.order.get_total_cost}} DZD</td>
+                    <td>{{order.order.get_total_panne}} DZD</td>
+                    <td>{{order.order.get_ttc}} DZD</td>
+                    <td>{{order.order.debt}} DZD</td>
+                    <td>
+                        {% if order.order.debt > 0%}
+                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.order.id %}">PayDebt</a>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.order.id %}">Details</a>
                     </td>
             </tr>
             {% endfor %}
