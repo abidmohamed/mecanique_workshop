@@ -1,5 +1,5 @@
 import decimal
-from datetime import date
+from datetime import date, datetime
 
 from django.shortcuts import render, redirect, get_object_or_404
 from xhtml2pdf import pisa
@@ -14,8 +14,10 @@ from discount.forms import DiscountForm
 from discount.models import Discount
 from payments.forms import CustomerPaymentForm
 from payments.models import SellOrderPayment
+from rdv.models import Panne
 from sellorder.apps import SellorderConfig
-from sellorder.models import Order, SellOrderFacture
+from sellorder.forms import PeriodForm
+from sellorder.models import Order, SellOrderFacture, OrderItem
 from stock.models import StockProduct
 
 
@@ -414,3 +416,72 @@ def sellorder_pdf(request, pk):
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+
+# pannes per period date
+def get_orders_pannes(request):
+    # now time
+    now = datetime.now()
+    periodform = PeriodForm()
+    orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day)
+    pannes = Panne.objects.none()
+    totalpanne = 0
+    if request.method == 'POST':
+        # Get Date from request.POST
+        alldata = request.POST
+        chosen_start_date = alldata.get("start_date")
+        chosen_end_date = alldata.get("end_date")
+        start_month = chosen_start_date.split("-", 2)
+        start_year = chosen_start_date.split("-", 1)
+        start_day = chosen_start_date.split("-", 2)
+
+        end_month = chosen_end_date.split("-", 2)
+        end_year = chosen_end_date.split("-", 1)
+        end_day = chosen_end_date.split("-", 2)
+        orders = Order.objects.all().filter(created__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
+                                            created__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2])))
+    for order in orders:
+        pannes |= order.pannes.all()
+        totalpanne += order.get_total_panne()
+    print(pannes)
+
+    context = {
+        'pannes': pannes,
+        'periodform': periodform,
+        'totalpanne': totalpanne,
+    }
+    return render(request, 'sellorder/sellorders_pannes.html', context)
+
+
+# piece per period date
+def get_orders_pieces(request):
+    # now time
+    now = datetime.now()
+    periodform = PeriodForm()
+    orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day)
+    pieces = OrderItem.objects.none()
+    totalpiece = 0
+    if request.method == 'POST':
+        # Get Date from request.POST
+        alldata = request.POST
+        chosen_start_date = alldata.get("start_date")
+        chosen_end_date = alldata.get("end_date")
+        start_month = chosen_start_date.split("-", 2)
+        start_year = chosen_start_date.split("-", 1)
+        start_day = chosen_start_date.split("-", 2)
+
+        end_month = chosen_end_date.split("-", 2)
+        end_year = chosen_end_date.split("-", 1)
+        end_day = chosen_end_date.split("-", 2)
+        orders = Order.objects.all().filter(created__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
+                                            created__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2])))
+    for order in orders:
+        pieces |= order.items.all()
+        totalpiece += order.get_total_cost()
+
+    context = {
+        'pieces': pieces,
+        'periodform': periodform,
+        'totalpiece': totalpiece,
+    }
+    return render(request, 'sellorder/sellorders_pieces.html', context)
