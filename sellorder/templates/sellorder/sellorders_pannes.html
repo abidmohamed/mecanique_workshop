@@ -1,0 +1,50 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Today MO</h5>
+        </div>
+        <div class="card card-body">
+             <br>
+            <h5 class="text-center text-success">Total : {{totalpanne}} DZD</h5>
+            <br>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label> {% trans "Pick a Date" %}</label>
+                    <br>
+                    {{periodform}}
+                    <br>
+                    <input class="btn btn-primary" type="submit" value="Validate">
+                </div>
+            </form>
+            <br>
+            <hr>
+           <table id="table_panne" class="table display text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th>Panne</th>
+                    <th>Price</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in pannes %}
+                <tr>
+                    <td class="table-light">{{ item.panne.desc }}</td>
+                    <td class="table-light">{{ item.price }} DZD</td>
+                    <td class="table-light"></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
