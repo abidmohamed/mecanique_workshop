@@ -8,6 +8,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 from billing.models import OrderBilling, BillOrderItem
+from caisse.forms import DateForm
 from caisse.models import Caisse
 from customer.models import Customer
 from discount.forms import DiscountForm
@@ -175,7 +176,7 @@ def update_order(request, pk):
     # Get Discount
     discountform = DiscountForm(instance=discount)
     old_ttc = round(sellorder.total_price + (
-                sellorder.total_price * decimal.Decimal(sellorder.order_tva / 100)) - sellorder.discount_amount, 2)
+            sellorder.total_price * decimal.Decimal(sellorder.order_tva / 100)) - sellorder.discount_amount, 2)
     new_ttc = 0
     ttc_difference = 0
     if request.method == 'POST':
@@ -438,6 +439,7 @@ def sellorder_pdf(request, pk):
 def get_orders_pannes(request):
     # now time
     now = datetime.now()
+    dateform = DateForm()
     periodform = PeriodForm()
     orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day)
     pannes = Panne.objects.none()
@@ -445,17 +447,32 @@ def get_orders_pannes(request):
     if request.method == 'POST':
         # Get Date from request.POST
         alldata = request.POST
-        chosen_start_date = alldata.get("start_date")
-        chosen_end_date = alldata.get("end_date")
-        start_month = chosen_start_date.split("-", 2)
-        start_year = chosen_start_date.split("-", 1)
-        start_day = chosen_start_date.split("-", 2)
+        chosen_date = alldata.get("date")
+        chosen_date = chosen_date.split("-", 1)
+        chosen_start_date = chosen_date[0]
+        chosen_end_date = chosen_date[1]
 
-        end_month = chosen_end_date.split("-", 2)
-        end_year = chosen_end_date.split("-", 1)
-        end_day = chosen_end_date.split("-", 2)
-        orders = Order.objects.all().filter(created__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
-                                            created__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2])))
+        chosen_start_date = chosen_start_date.split("/", 2)
+        start_month = chosen_start_date[0]
+        start_year = chosen_start_date[2]
+        start_day = chosen_start_date[1]
+        # Remove white spaces
+        start_year = ''.join(start_year.split())
+        start_month = ''.join(start_month.split())
+        start_day = ''.join(start_day.split())
+
+        chosen_end_date = chosen_end_date.split("/", 2)
+        end_month = chosen_end_date[0]
+        end_year = chosen_end_date[2]
+        end_day = chosen_end_date[1]
+        # Remove white spaces
+        end_year = ''.join(end_year.split())
+        end_month = ''.join(end_month.split())
+        end_day = ''.join(end_day.split())
+
+        # Date Submit ----------date_created
+        orders = Order.objects.all().filter(created__gte=date(int(start_year), int(start_month), int(start_day)),
+                                            created__lte=date(int(end_year), int(end_month), int(end_day)))
     for order in orders:
         pannes |= order.pannes.all()
         totalpanne += order.get_total_panne()
@@ -465,6 +482,8 @@ def get_orders_pannes(request):
         'pannes': pannes,
         'periodform': periodform,
         'totalpanne': totalpanne,
+        "dateform": dateform,
+
     }
     return render(request, 'sellorder/sellorders_pannes.html', context)
 
@@ -473,6 +492,7 @@ def get_orders_pannes(request):
 def get_orders_pieces(request):
     # now time
     now = datetime.now()
+    dateform = DateForm()
     periodform = PeriodForm()
     orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day)
     pieces = OrderItem.objects.none()
@@ -480,17 +500,32 @@ def get_orders_pieces(request):
     if request.method == 'POST':
         # Get Date from request.POST
         alldata = request.POST
-        chosen_start_date = alldata.get("start_date")
-        chosen_end_date = alldata.get("end_date")
-        start_month = chosen_start_date.split("-", 2)
-        start_year = chosen_start_date.split("-", 1)
-        start_day = chosen_start_date.split("-", 2)
+        chosen_date = alldata.get("date")
+        chosen_date = chosen_date.split("-", 1)
+        chosen_start_date = chosen_date[0]
+        chosen_end_date = chosen_date[1]
 
-        end_month = chosen_end_date.split("-", 2)
-        end_year = chosen_end_date.split("-", 1)
-        end_day = chosen_end_date.split("-", 2)
-        orders = Order.objects.all().filter(created__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
-                                            created__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2])))
+        chosen_start_date = chosen_start_date.split("/", 2)
+        start_month = chosen_start_date[0]
+        start_year = chosen_start_date[2]
+        start_day = chosen_start_date[1]
+        # Remove white spaces
+        start_year = ''.join(start_year.split())
+        start_month = ''.join(start_month.split())
+        start_day = ''.join(start_day.split())
+
+        chosen_end_date = chosen_end_date.split("/", 2)
+        end_month = chosen_end_date[0]
+        end_year = chosen_end_date[2]
+        end_day = chosen_end_date[1]
+        # Remove white spaces
+        end_year = ''.join(end_year.split())
+        end_month = ''.join(end_month.split())
+        end_day = ''.join(end_day.split())
+
+        # Date Submit ----------date_created
+        orders = Order.objects.all().filter(created__gte=date(int(start_year), int(start_month), int(start_day)),
+                                            created__lte=date(int(end_year), int(end_month), int(end_day)))
     for order in orders:
         pieces |= order.items.all()
         totalpiece += order.get_total_cost()
@@ -499,5 +534,6 @@ def get_orders_pieces(request):
         'pieces': pieces,
         'periodform': periodform,
         'totalpiece': totalpiece,
+        "dateform": dateform,
     }
     return render(request, 'sellorder/sellorders_pieces.html', context)
