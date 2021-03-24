@@ -18,6 +18,7 @@
                     <th>Credit</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,6 +38,11 @@
                     </td>
                     <td>
                         {{supplier.credit}}
+                    </td>
+                    <td>
+                        {% if supplier.credit > 0%}
+                        <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment_by_supplier' supplier.id %}">PayDebt</a>
+                        {% endif %}
                     </td>
                     <td>
                         <a class="btn btn-success " href="{% url 'supplier:update_supplier' supplier.id %}">Update</a>

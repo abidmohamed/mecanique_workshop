@@ -10,6 +10,7 @@ urlpatterns = [
     path('customer_payment_list', views.customer_payment_list, name='customer_payment_list'),
 
     path('create_supplier_payment/<str:pk>', views.create_supplier_payment, name='create_supplier_payment'),
+    path('create_supplier_payment_by_supplier/<str:pk>', views.create_supplier_payment_by_supplier, name='create_supplier_payment_by_supplier'),
     path('create_supplier_cheque/<str:pk>', views.create_supplier_cheque, name='create_supplier_cheque'),
     path('supplier_payment_list', views.supplier_payment_list, name='supplier_payment_list'),
 

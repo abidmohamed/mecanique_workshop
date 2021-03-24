@@ -108,6 +108,65 @@ def create_supplier_payment(request, pk):
     return render(request, 'payments/supplier/create_payment.html', context)
 
 
+# Supplier Payment is BuyOrderPayment
+def create_supplier_payment_by_supplier(request, pk):
+    supplier = Supplier.objects.get(id=pk)
+    orders = BuyOrder.objects.all().filter(supplier=supplier)
+    supplierpaymentform = SupplierPaymentForm()
+    if request.method == "POST":
+        supplierpaymentform = SupplierPaymentForm(request.POST)
+        if supplierpaymentform.is_valid():
+            supplierpayment = supplierpaymentform.save(commit=False)
+            print(supplierpayment.amount)
+            # supplierpayment.order = order
+            supplierpayment.supplier = supplier
+            supplierpayment.save()
+            payed_amount = supplierpayment.amount
+            rest_amount = payed_amount
+            for order in orders:
+                # if order.debt == 0 or order.debt is None:
+                # order.debt = order.get_ttc()
+                if rest_amount > 0 and order.debt > 0:
+                    print("#### First Step")
+                    print(order)
+                    print(order.debt)
+                    print(payed_amount)
+                    print(rest_amount)
+                    print("#### Second Step")
+                    if payed_amount > order.debt:
+                        to_reach_zero = order.debt
+                    else:
+                        to_reach_zero = payed_amount
+
+                    rest_amount = payed_amount - order.debt
+                    print(to_reach_zero)
+                    order.debt -= to_reach_zero
+                    payed_amount = rest_amount
+                    print("#### Last Step")
+                    print(order.debt)
+                    print(payed_amount)
+                    print(rest_amount)
+                    if order.debt == 0:
+                        order.paid = True
+                    order.save()
+
+            supplier.credit -= supplierpayment.amount
+            caisse = Caisse.objects.all().filter()[:1].get()
+            caisse.caisse_value -= supplierpayment.amount
+            caisse.save()
+            supplier.save()
+
+            # TODO: Uncomment this one
+            # supplierpayment.user = request.user.id
+            if supplierpayment.pay_status == "Cheque":
+                return redirect(f'../create_supplier_cheque/{supplierpayment.pk}')
+            return redirect('supplier:supplier_list')
+    context = {
+        'supplierpaymentform': supplierpaymentform,
+    }
+    return render(request, 'payments/supplier/create_payment.html', context)
+
+
 def create_supplier_cheque(request, pk):
     supplierpayment = BuyOrderPayment.objects.get(id=pk)
     supplierchequeform = SupplierChequeForm()
