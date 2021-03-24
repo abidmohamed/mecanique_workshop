@@ -87,7 +87,7 @@
                         </td>
                         <td class="table-light ">
                             <input onkeyup="calc()" class="form-control" type="text" name="prices"
-                                   value="{{ item.price }}">{{ item.price }}
+                                   value="{{ item.price }}" required>{{ item.price }}
 
                         </td>
                         <td class="table-light ">
@@ -96,7 +96,7 @@
                         </td>
                         <td class="table-light ">
                             <input onkeyup="calc()" class="form-control" type="number" name="quantities"
-                                   value="{{ item.quantity }}">
+                                   value="{{ item.quantity }}" required>
                         </td>
                         <td>
                             <a class="btn btn-danger "
