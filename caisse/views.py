@@ -50,31 +50,41 @@ def transaction_list(request):
         print('POST applied')
         alldata = request.POST
         print(alldata)
-        chosen_start_date = alldata.get("start_date")
-        chosen_end_date = alldata.get("end_date")
-        start_month = chosen_start_date.split("-", 2)
-        start_year = chosen_start_date.split("-", 1)
-        start_day = chosen_start_date.split("-", 2)
+        chosen_date = alldata.get("date")
+        chosen_date = chosen_date.split("-", 1)
+        chosen_start_date = chosen_date[0]
+        chosen_end_date = chosen_date[1]
 
-        end_month = chosen_end_date.split("-", 2)
-        end_year = chosen_end_date.split("-", 1)
-        end_day = chosen_end_date.split("-", 2)
-        # print(chosen_date.split("-", 1))
-        # print(chosen_date.split("-", 3))
-        # print(year[0])
-        # print(day[2])
+        chosen_start_date = chosen_start_date.split("/", 2)
+        start_month = chosen_start_date[0]
+        start_year = chosen_start_date[2]
+        start_day = chosen_start_date[1]
+        # Remove white spaces
+        start_year = ''.join(start_year.split())
+        start_month = ''.join(start_month.split())
+        start_day = ''.join(start_day.split())
+
+        chosen_end_date = chosen_end_date.split("/", 2)
+        end_month = chosen_end_date[0]
+        end_year = chosen_end_date[2]
+        end_day = chosen_end_date[1]
+        # Remove white spaces
+        end_year = ''.join(end_year.split())
+        end_month = ''.join(end_month.split())
+        end_day = ''.join(end_day.split())
+
         # Date Submit ----------date_created
         transactions = Transaction.objects.all().filter(
-            trans_date__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
-            trans_date__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
+            trans_date__gte=date(int(start_year), int(start_month), int(start_day)),
+            trans_date__lte=date(int(end_year), int(end_month), int(end_day))
         )
         customerpayments = SellOrderPayment.objects.all().filter(
-            pay_date__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
-            pay_date__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
+            pay_date__gte=date(int(start_year), int(start_month), int(start_day)),
+            pay_date__lte=date(int(end_year), int(end_month), int(end_day))
         )
         supplierpayments = BuyOrderPayment.objects.all().filter(
-            pay_date__gte=date(int(start_year[0]), int(start_month[1]), int(start_day[2])),
-            pay_date__lte=date(int(end_year[0]), int(end_month[1]), int(end_day[2]))
+            pay_date__gte=date(int(start_year), int(start_month), int(start_day)),
+            pay_date__lte=date(int(end_year), int(end_month), int(end_day))
         )
 
         for transaction in transactions:
