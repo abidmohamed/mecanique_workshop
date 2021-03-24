@@ -77,7 +77,7 @@
                                    disabled>
                         </td>
                         <td class="table-light ">
-                            <input onkeyup="calc()" class="form-control" type="text" name="prices" value="{{ item.price }}">{{ item.price }}
+                            <input onkeyup="calc()" class="form-control" type="text" name="prices" value="{{ item.price }}" required>{{ item.price }}
 
                         </td>
                         <td class="table-light ">
@@ -85,7 +85,7 @@
 
                         </td>
                         <td class="table-light ">
-                            <input onkeyup="calc()" class="form-control" type="number" name="quantities" value="{{ item.quantity }}">
+                            <input onkeyup="calc()" class="form-control" type="number" name="quantities" value="{{ item.quantity }}" required>
                         </td>
                     </tr>
                     {% endfor %}
