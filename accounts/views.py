@@ -6,8 +6,9 @@ from datetime import timedelta
 from django.utils.safestring import mark_safe
 
 from buyorder.models import BuyOrder
-from caisse.models import Caisse
+from caisse.models import Caisse, Transaction
 from customer.models import Customer
+from payments.models import SellOrderPayment, BuyOrderPayment
 from product.models import Product
 from rdv.models import Rdv
 
@@ -50,7 +51,7 @@ def home(request):
     none_html_calendar = Calendar(calendar_date.year, calendar_date.month)
     html_calendar = none_html_calendar.formatmonth(withyear=True)
 
-    sellorders = Order.objects.all()  # .filter(created__year=now.year, created__month=now.month)
+    sellorders = Order.objects.all().filter(confirmed=True) # .filter(created__year=now.year, created__month=now.month)
     buyorders = BuyOrder.objects.all()  # can be filtred by year & month
     # Today order
     today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day)
@@ -58,7 +59,11 @@ def home(request):
     allcustomers = Customer.objects.all()
     allsuppliers = Supplier.objects.all()
     # Caisse
-    caisse = Caisse.objects.all().filter()[:1].get().caisse_value
+    transactions = Transaction.objects.all()
+    customerpayments = SellOrderPayment.objects.all()
+    supplierpayments = BuyOrderPayment.objects.all()
+    # caisse = Caisse.objects.all().filter()[:1].get().caisse_value
+    caisse = 0
     # Customer
     customers = Customer.objects.all().count()
     # Supplier
@@ -76,12 +81,12 @@ def home(request):
     # BuyOrder
     buyorder_number = BuyOrder.objects.all().count()
     # SellOrder
-    sellorder_number = Order.objects.all().count()
+    sellorder_number = Order.objects.all().filter(confirmed=True).count()
     # sell orders total
     totalsellorders = 0
     totalbuyorders = 0
     for order in sellorders:
-        totalsellorders += order.get_total_item_panne()
+        totalsellorders += order.get_ttc()
     # Buy orders total
     for order in buyorders:
         totalbuyorders += order.get_total_cost()
@@ -101,6 +106,21 @@ def home(request):
 
     if not stockproductsalertcount:
         stockproductsalertcount= 0
+
+    # Total Caisse Value
+    for transaction in transactions:
+        if transaction.Transaction_type == "Income":
+            caisse += transaction.amount
+            print(transaction.Transaction_type)
+        else:
+            caisse -= transaction.amount
+            print(transaction.Transaction_type)
+
+    for customerpayment in customerpayments:
+        caisse += customerpayment.amount
+
+    for supplierpayment in supplierpayments:
+        caisse -= supplierpayment.amount
 
     context = {
         'calendar': mark_safe(html_calendar),

@@ -87,21 +87,21 @@ def transaction_list(request):
             pay_date__lte=date(int(end_year), int(end_month), int(end_day))
         )
 
-        for transaction in transactions:
-            if transaction.Transaction_type == "Income":
-                total_per_period += transaction.amount
-                income_per_period += transaction.amount
-            else:
-                total_per_period -= transaction.amount
-                expense_per_period += transaction.amount
+    for transaction in transactions:
+        if transaction.Transaction_type == "Income":
+            total_per_period += transaction.amount
+            income_per_period += transaction.amount
+        else:
+            total_per_period -= transaction.amount
+            expense_per_period += transaction.amount
 
-        for customerpayment in customerpayments:
-            total_per_period += customerpayment.amount
-            income_per_period += customerpayment.amount
+    for customerpayment in customerpayments:
+        total_per_period += customerpayment.amount
+        income_per_period += customerpayment.amount
 
-        for supplierpayment in supplierpayments:
-            total_per_period -= supplierpayment.amount
-            expense_per_period += supplierpayment.amount
+    for supplierpayment in supplierpayments:
+        total_per_period -= supplierpayment.amount
+        expense_per_period += supplierpayment.amount
 
     context = {
         "transactions": transactions,
