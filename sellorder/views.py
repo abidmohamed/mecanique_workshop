@@ -36,6 +36,7 @@ def confirm_order(request, pk):
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
         tva = request.POST.get('tva')
+        timbre = request.POST.get('timbre')
         chosen_date = request.POST.get('order_date')
         # get year month day
         chosen_year = chosen_date.split("-", 1)
@@ -80,6 +81,7 @@ def confirm_order(request, pk):
 
         sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.order_tva = int(tva)
+        sellorder.timbre = decimal.Decimal(timbre)
         sellorder.debt = sellorder.get_ttc()
         sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
         sellorder.confirmed = True
@@ -112,6 +114,7 @@ def confirm_order_performa(request, pk):
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
         tva = request.POST.get('tva')
+        timbre = request.POST.get('timbre')
         chosen_date = request.POST.get('order_date')
         # get year month day
         chosen_year = chosen_date.split("-", 1)
@@ -143,6 +146,7 @@ def confirm_order_performa(request, pk):
 
         sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.order_tva = int(tva)
+        sellorder.timbre = decimal.Decimal(timbre)
         sellorder.debt = sellorder.get_ttc()
         sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
         sellorder.confirmed = False
@@ -176,7 +180,7 @@ def update_order(request, pk):
     # Get Discount
     discountform = DiscountForm(instance=discount)
     old_ttc = round(sellorder.total_price + (
-            sellorder.total_price * decimal.Decimal(sellorder.order_tva / 100)) - sellorder.discount_amount, 2)
+            sellorder.total_price * decimal.Decimal(sellorder.order_tva / 100)) - sellorder.discount_amount + sellorder.timbre, 2)
     new_ttc = 0
     ttc_difference = 0
     if request.method == 'POST':
@@ -193,6 +197,7 @@ def update_order(request, pk):
         print(prices)
         quantities = request.POST.getlist('quantities')
         tva = request.POST.get('tva')
+        timbre = request.POST.get('timbre')
         chosen_date = request.POST.get('order_date')
         # get year month day
         chosen_year = chosen_date.split("-", 1)
@@ -242,6 +247,7 @@ def update_order(request, pk):
         sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
         sellorder.confirmed = True
         sellorder.order_tva = int(tva)
+        sellorder.timbre = decimal.Decimal(timbre)
         # get money additiion
         print(old_ttc)
         new_ttc = sellorder.get_ttc()
@@ -262,6 +268,7 @@ def update_order(request, pk):
         'discountform': discountform,
         'stockproducts': stockproducts,
         'tva': sellorder.order_tva,
+        'timbre': sellorder.timbre,
     }
     return render(request, 'sellorder/sellorder_update.html', context)
 
