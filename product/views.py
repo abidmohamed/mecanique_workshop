@@ -75,7 +75,7 @@ def detail_product(request, pk):
     # Sell orders product count
     for order in all_sellorders:
         for item in order.items.all():
-            if item.stockproduct.product == product:
+            if item.stockproduct.product.id == product.id:
                 chosen_orders |= Order.objects.all().filter(id=order.id)
                 pieces |= order.items.all().filter(id=item.id)
                 sell_quantity += item.quantity
