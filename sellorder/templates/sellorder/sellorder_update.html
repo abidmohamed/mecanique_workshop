@@ -49,6 +49,10 @@
                 <h3>TVA</h3>
                 <input onkeyup="calc()" class="form-control" type="number" value="{{tva}}" name="tva" id="tva">
                 <br>
+                <hr>
+                <h3>Timbre</h3>
+                <input onkeyup="calc()" class="form-control" type="text" value="{{timbre}}" id="timbre" name="timbre">
+                <br>
                 <table class="table">
                     <thead>
                     <tr>
@@ -145,6 +149,7 @@
     var discount_status = document.getElementById("discount-status");
     var discount_value = document.getElementById("discount-value");
     var tva_value = document.getElementById("tva");
+    var timbre_value = document.getElementById("timbre");
     var total_price = 0;
     // console.log(prices);
     for (var i = 0; i<prices.length; i++)
@@ -174,7 +179,8 @@
     }
     // Applying Tva
     total_price += (total_price * (tva_value.value/100));
-
+    // applying timbre
+    total_price += parseFloat(timbre_value.value)
      console.log(discount_status.value);
      console.log(discount_value.value);
      // Applying Discount

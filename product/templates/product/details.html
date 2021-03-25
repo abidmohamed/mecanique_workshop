@@ -20,6 +20,7 @@
                     <th>Date</th>
                     <th>Bill</th>
                     <th>Quantity</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,6 +32,9 @@
                     <td>{{order.order_date}}</td>
                     <td>{{order.factured}}</td>
                     <td>{{item.quantity}}</td>
+                    <td>
+                         <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">Details</a>
+                    </td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -51,6 +55,7 @@
                     <th>Supplier</th>
                     <th>Date</th>
                     <th>Quantity</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,6 +66,9 @@
                     <td>{{order.supplier}}</td>
                     <td>{{order.order_date}}</td>
                     <td>{{item.quantity}}</td>
+                    <td>
+                        <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' order.id %}">Details</a>
+                    </td>
                 </tr>
                 {% endfor %}
                 </tbody>
