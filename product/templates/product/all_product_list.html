@@ -21,6 +21,7 @@
                     <th>Stock</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,6 +50,9 @@
                    </td>
                     <td>
                         <a class="btn btn-success " href="{% url 'product:update_product' prod.id %}">Update</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning " href="{% url 'product:detail_product' prod.id %}">Details</a>
                     </td>
                     <td>
                         <a class="btn btn-danger " href="{% url 'product:delete_product' prod.id %}">Delete</a>
