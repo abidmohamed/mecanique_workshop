@@ -71,6 +71,14 @@ def customer_list(request):
     return render(request, 'customer/list_customer.html', context)
 
 
+def customer_debt_list(request):
+    customers = Customer.objects.all().filter(debt__gt=0)
+    context = {
+        'customers': customers
+    }
+    return render(request, 'customer/list_customer.html', context)
+
+
 def sellorder_customer_list(request):
     customers = Customer.objects.all()
     context = {
