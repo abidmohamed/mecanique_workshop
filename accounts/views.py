@@ -111,10 +111,8 @@ def home(request):
     for transaction in transactions:
         if transaction.Transaction_type == "Income":
             caisse += transaction.amount
-            print(transaction.Transaction_type)
         else:
             caisse -= transaction.amount
-            print(transaction.Transaction_type)
 
     for customerpayment in customerpayments:
         caisse += customerpayment.amount

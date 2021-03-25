@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from category.models import Category
 from product.forms import ProductForm
 from product.models import Product
+from sellorder.models import Order
 
 
 def add_product(request):
@@ -59,6 +60,21 @@ def update_product(request, pk):
     context = {'productform': productform}
     return render(request, 'product/add_product.html', context)
 
+
+def detail_product(request, pk):
+    product = Product.objects.get(id=pk)
+    all_sellorders = Order.objects.all().filter(confirmed=True)
+    chosen_orders = Order.objects.none()
+    for order in all_sellorders:
+        for item in order.items.all():
+            if item.stockproduct.product == product:
+                chosen_orders |= Order.objects.all().filter(id=order.id)
+
+    context = {
+        'product': product,
+        'chosen_orders': chosen_orders,
+    }
+    return render(request, 'product/details.html', context)
 
 def delete_product(request, pk):
     product = Product.objects.get(id=pk)
