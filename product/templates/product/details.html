@@ -8,6 +8,9 @@
         <div class="card card-body">
             <h5>Sell Orders</h5>
         </div>
+        <div class="card card-body bg-primary">
+            <h5 class=" text-center text-white">{{product}} : {{sell_quantity}}</h5>
+        </div>
         <div class="card card-body">
             <table id="table_id" class="table display text-center">
                 <thead>
@@ -15,63 +18,50 @@
                     <th>Order ID</th>
                     <th>Customer</th>
                     <th>Date</th>
-                    <th>Total Piece</th>
-                    <th>Total Panne</th>
-                    <th>HT</th>
-                    <th>TVA</th>
-                    <th>Discount</th>
-                    <th>TTC</th>
-                    <th>Debt</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th>Bill</th>
+                    <th>Quantity</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for order in chosen_orders %}
+                {% for order, item in final_list %}
 
                 <tr>
                     <td>{{order.id}}</td>
                     <td>{{order.customer}}</td>
                     <td>{{order.order_date}}</td>
-                    <td>{{order.get_total_cost}} DZD</td>
-                    <td>{{order.get_total_panne}} DZD</td>
-                    <td>{{order.get_total_item_panne}} DZD</td>
-                    <td>{{order.get_tva}} DZD</td>
-                    <td>{{order.discount_amount}} DZD</td>
-                    <td>{{order.get_ttc}} DZD</td>
-                    <td>{{order.debt}} DZD</td>
-
-
-                    <td>
-                        {% if order.factured %}
-                        {% else %}
-                             <a class="btn btn-primary " href="{% url 'sellorder:sellorder_facture' order.id %}">Facture</a>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if order.confirmed %}
-                             <a class="btn btn-info " href="{% url 'sellorder:update_order' order.id %}">Update</a>
-                        {% else %}
-                             <a class="btn btn-success " href="{% url 'sellorder:confirm_order' order.id %}">Confirm</a>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if order.debt > 0 and order.confirmed %}
-                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">PayDebt</a>
-                        {% endif %}
-                    </td>
-
-                    <td>
-                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">Details</a>
-                    </td>
-                    <td>
-                           <a class="btn btn-danger " href="{% url 'sellorder:sellorder_delete' order.id %}">Delete</a>
-                    </td>
+                    <td>{{order.factured}}</td>
+                    <td>{{item.quantity}}</td>
                 </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div class="card card-body">
+            <h5>Buy Orders</h5>
+        </div>
+        <div class="card card-body bg-danger">
+            <h5 class=" text-center text-white">{{product}} : {{buy_quantity}}</h5>
+        </div>
+        <div class="card card-body">
+            <table id="table_buyorder" class="table display text-center">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Supplier</th>
+                    <th>Date</th>
+                    <th>Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order, item in final_buylist %}
 
+                <tr>
+                    <td>{{order.id}}</td>
+                    <td>{{order.supplier}}</td>
+                    <td>{{order.order_date}}</td>
+                    <td>{{item.quantity}}</td>
+                </tr>
                 {% endfor %}
                 </tbody>
             </table>
@@ -96,7 +86,9 @@
     //Data Table init
     $(document).ready( function () {
     $('#table_id').DataTable();
+    $('#table_buyorder').DataTable();
 } );
+
 
 
 </script>
