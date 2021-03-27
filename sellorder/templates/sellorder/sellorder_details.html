@@ -11,7 +11,11 @@
                         <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">PayDebt</a>
             {% endif %}
             <br>
+            {% if order.factured %}
+            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_pdf' order.id %}">Print </a>
+            {% else %}
             <a class="btn btn-warning " href="{% url 'sellorder:sellorder_pdf' order.id %}">Print </a>
+            {% endif %}
 
         </div>
         <div class="card card-body">
@@ -28,13 +32,36 @@
                     <h6>Phone: </h6>
                     <td>{{order.customer.phone}}</td>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <h6>Paid: </h6>
                     <td>{{order.paid}}</td>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <h6>Confirmed: </h6>
                     <td>{{order.confirmed}}</td>
+                </div>
+                <div class="col-md-2">
+                    <h6>Billed: </h6>
+                    <td>{{order.factured}}</td>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2">
+                    <h6>HT: </h6>
+                    <td>{{order.total_price}} DZD</td>
+                </div>
+                <div class="col-md-2">
+                    <h6>Tva: </h6>
+                    <td>{{order.get_tva}} DZD</td>
+                </div>
+                <div class="col-md-2">
+                    <h6>Discount: </h6>
+                    <td>{{order.discount_amount}} DZD</td>
+                </div>
+                <div class="col-md-2">
+                    <h6>Timbre: </h6>
+                    <td>{{order.timbre}} DZD</td>
                 </div>
                 <div class="col-md-2">
                     <h6>Total Price: </h6>

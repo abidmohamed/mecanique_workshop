@@ -81,6 +81,8 @@ def confirm_order(request, pk):
 
         sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.order_tva = int(tva)
+        timbre = timbre.replace(",", ".")
+        timbre = ''.join(timbre.split())
         sellorder.timbre = decimal.Decimal(timbre)
         sellorder.debt = sellorder.get_ttc()
         sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
@@ -146,6 +148,8 @@ def confirm_order_performa(request, pk):
 
         sellorder.total_price = sellorder.get_total_item_panne()
         sellorder.order_tva = int(tva)
+        timbre = timbre.replace(",", ".")
+        timbre = ''.join(timbre.split())
         sellorder.timbre = decimal.Decimal(timbre)
         sellorder.debt = sellorder.get_ttc()
         sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
@@ -247,6 +251,8 @@ def update_order(request, pk):
         sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
         sellorder.confirmed = True
         sellorder.order_tva = int(tva)
+        timbre = timbre.replace(",", ".")
+        timbre = ''.join(timbre.split())
         sellorder.timbre = decimal.Decimal(timbre)
         # get money additiion
         print(old_ttc)
@@ -432,6 +438,21 @@ def sellorder_pdf(request, pk):
     html = render_to_string('sellorder/pdf.html', {'order': sellorder})
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+def sellorder_facture_pdf(request, pk):
+    sellorder = get_object_or_404(SellOrderFacture, id=pk)
+    html = render_to_string('sellorder/facture_pdf.html', {'order': sellorder})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{sellorder.id}_{sellorder.order.customer}.pdf'
 
     # create a pdf
     pisa_status = pisa.CreatePDF(
