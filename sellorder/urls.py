@@ -12,6 +12,7 @@ urlpatterns = [
     path('confirm_order_performa/<str:pk>', views.confirm_order_performa, name='confirm_order_performa'),
     path('confirm_order/<str:pk>', views.confirm_order, name='confirm_order'),
     path('sellorder_facture/<str:pk>', views.sellorder_facture, name='sellorder_facture'),
+    path('sellorder_facture_pdf/<str:pk>', views.sellorder_facture_pdf, name='sellorder_facture_pdf'),
     path('sellorder_list_by_customer/<str:pk>', views.sellorder_list_by_customer,
          name='sellorder_list_by_customer'),
     path('sellorder_pdf/<str:pk>', views.sellorder_pdf, name='sellorder_pdf'),
