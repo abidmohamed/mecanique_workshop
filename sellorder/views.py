@@ -295,6 +295,7 @@ def order_item_delete(request, orderpk, itempk):
     return render(request, 'sellorder/delete_item.html', context)
 
 
+# delete panne from orderS
 def order_panne_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
     item = sellorder.pannes.get(id=itempk)
@@ -311,6 +312,7 @@ def order_panne_delete(request, orderpk, itempk):
     return render(request, 'sellorder/delete_panne.html', context)
 
 
+# order details
 def sellorder_details(request, pk):
     order = Order.objects.get(id=pk)
     context = {
