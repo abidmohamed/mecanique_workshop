@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
+    'crispy_forms', 'inflect', 'num2words',
     'customer', 'accounts', 'supplier', 'payments',
     'family', 'category', 'stock', 'product', 'buyorder',
     'billing', 'sellorder', 'vehicule', 'rdv', 'caisse',

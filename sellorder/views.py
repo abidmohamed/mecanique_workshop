@@ -20,7 +20,7 @@ from sellorder.apps import SellorderConfig
 from sellorder.forms import PeriodForm
 from sellorder.models import Order, SellOrderFacture, OrderItem
 from stock.models import StockProduct
-
+from num2words import num2words
 
 # confirmation get order object from the stock view Of a Real Order
 def confirm_order(request, pk):
@@ -451,8 +451,10 @@ def sellorder_pdf(request, pk):
 
 
 def sellorder_facture_pdf(request, pk):
-    sellorder = get_object_or_404(SellOrderFacture, id=pk)
-    html = render_to_string('sellorder/facture_pdf.html', {'order': sellorder})
+    order = get_object_or_404(Order, id=pk)
+    sellorder = get_object_or_404(SellOrderFacture, order=order)
+    total_in_letters = num2words(order.get_ttc(), lang='fr_DZ', to='currency')
+    html = render_to_string('sellorder/facture_pdf.html', {'order': sellorder, 'total_in_letters': total_in_letters})
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}_{sellorder.order.customer}.pdf'
 
