@@ -1,256 +1,426 @@
 {% load  static %}
 {% load i18n %}
 <html>
+
 <head>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
-
         /*
         Normilizing the css 
         */
-        *, body, button, input, textarea, select {
-        text-rendering: optimizeLegibility;
-        -moz-osx-font-smoothing: grayscale;
+        *,
+        body,
+        button,
+        input,
+        textarea,
+        select {
+            text-rendering: optimizeLegibility;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         table {
-        border-collapse: separate !important;
+            border-collapse: separate !important;
         }
-       
-       
+
+
         /*My styling*/
-        h1{
+        h1 {
             font-size: 24px;
             margin: auto;
         }
 
-        h3{
+        h3 {
             font-size: 16px;
         }
 
-        h4{
+        h4 {
             font-size: 14px;
         }
 
         .text-center {
             text-align: center;
         }
-        .font-weight-bold{
+
+        .text-left {
+            text-align: left;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .font-weight-bold {
             font-weight: bold;
         }
 
-        .font-14{
+        .font-14 {
             font-size: 14px;
         }
 
-        .customer_table{
-            border: 1px solid #000;
-            padding: 5px;
-            border-radius: 26px;
-            -moz-border-radius: 26px;
-            -webkit-border-radius: 26px;
-        }
-
-        .customer_table tr{
-            border: 0px ;
-            border-radius: 26px;
-            -moz-border-radius: 26px;
-            -webkit-border-radius: 26px;
-            border-style: hidden;
-            background: #222;
-        }
-
-        .customer_table td{
-            border: 0px ;
-            border-radius: 26px;
-            -moz-border-radius: 26px;
-            -webkit-border-radius: 26px;
-            border-style: hidden;
-        }
-
-        .vehicle_table{
+        .customer_table {
             border: 0px solid #000;
             padding: 5px;
             border-radius: 26px;
             -moz-border-radius: 26px;
             -webkit-border-radius: 26px;
-             border-style: hidden;
-
         }
 
-        .vehicle_table tr{
-            border: 1px solid #000;
-            border-radius: 26px;
-            -moz-border-radius: 26px;
-            -webkit-border-radius: 26px;
-        }
 
-        .vehicle_table td{
-            border: 0px ;
+
+        .customer_table tr {
+            border: 0px;
             border-radius: 26px;
             -moz-border-radius: 26px;
             -webkit-border-radius: 26px;
             border-style: hidden;
         }
 
-        .items-table{
-            width:100%;
-            height: 200px;
-            border-spacing:0;
+        .customer_table th {
+            border: 0px;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            border-style: hidden;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .customer_table td {
+            border: 0px;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            border-style: hidden;
+            background-color: #eee;
+        }
+
+        .vehicle_table {
+            border: 0px solid #000;
+            padding: 5px;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            border-style: hidden;
+
+        }
+
+        .vehicle_table tr {
+            border: 0px solid #000;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+        }
+
+        .vehicle_table th {
+            border: 0px solid #000;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .vehicle_table td {
+            border: 0px;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            border-style: hidden;
+            background-color: #eee;
+        }
+
+        .items-table {
+            width: 100%;
+            height: 100px;
+            border-spacing: 0;
             border-collapse: collapse;
-            margin:20px 0;
-            border-width: 1px;
-            border-color: #000;
+            margin: 0px 0;
         }
 
-        .items-table th{
-        text-align:left;
-        font-size:14px;
-        font-weight: bold;
-        padding:3px;
-        margin:0;
-        border-style: solid;
-        border-width: 1px;
-        border-color: #000;
-        height: 50px;
+        .items-table th {
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 3px;
+            margin: 0;
+            height: 30px;
+            background-color: #222;
+            color: #fff;
         }
 
-        .items-table td{
-            text-align:left;
-            font-size:14px;
-            padding:5px;
-            margin:0;
-            border-style: solid;
-            border-width: 1px;
-            border-color: #000;
-            height: 50px;
+        .items-table td {
+            text-align: left;
+            font-size: 14px;
+            padding: 5px;
+            margin: 0;
+            height: 30px;
+            background-color: #eee;
         }
 
         tbody td.num {
-        text-align:right;
+            text-align: right;
         }
 
-        thead th, tbody tr.total {
-    background:#5993bb;
-    color:#000;
-    font-weight:bold;
-}
+        .footer{
+        clear: both;
+        position: relative;
+        height: 200px;
+        margin-top: -200px;
+        }
 
+        thead th,
+        tbody tr.total {
+            background: #5993bb;
+            color: #000;
+            font-weight: bold;
+        }
 
-
+    
     </style>
 </head>
+
 <body>
-<h1 class="text-center">SARL My Garage</h1>
-<h2 class="text-center">Cite El moudjahidine sud local n03 el oyed 39000 el oued</h2>
-<table>
-    <tr>
-        <td><span class="font-weight-bold ">Phone: </span>032114757</td>
-        <td><span class="font-weight-bold ">Mobile: </span>0671678202</td>
-        <td><span class="font-weight-bold ">Mail: info@my-garage.pro</span></td>
-        <td><span class="font-weight-bold ">Web Site: www.my-garage.pro</span></td>
-    </tr>
-</table>
-<hr>
-<br>
-<h1 class="text-center">
-    P.Order no. {{ order.id }}/{{order.created|date:"Y"}}
-</h1>
+    <table>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <h1 class="text-center">Facture </h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h2 class="text-left">SARL My Garage</h2>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                <h2 class="text-center">BEA: 002000940942202279</h2>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%;">
+                <h6 class="text-left">Réparation et diagnostique d'automobile</h6>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>NIF</td>
+            <td class="text-left">2.039.054.460.387</td>
+                        <td></td>
+                                    <td></td>
 
-<h3>Bill to</h3>
-<h4>Customer</h4>
-<table class="customer_table">
-    <tr>
-        <td class="font-14"><span class="font-weight-bold">Mr:</span> {{ order.customer.firstname }}
-            {{ order.customer.lastname }}
-        </td>
-        <td class="font-14"><span class="font-weight-bold">Address:</span>
-            {{ order.customer.address }}
+        </tr>
+        <tr>
+            <td>ART</td>
+            <td class="text-left">2.039.054.460.387</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>RC</td>
+            <td class="text-left">2.039.054.460.387</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>NIS</td>
+            <td class="text-left">2.039.054.460.387</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td style="width: 75%;">
+                <h6 class="text-left">CITE ELMOUDJAHIDIN SUD LOCAL N°03 EL-OUED</h6>
+            </td>
+            <td class="text-centre">N° DE F {{ order.id }}/{{order.created|date:"Y"}}</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                <h6 class="text-left"> 39000.EL-OUED</h6>
+            </td>
+            <td></td>
+            <td></td>
+            <td>DATE {{ order.order.created|date:"d M Y" }}</td>
+        </tr>
+        <tr>
+            <td>
+                <h6 class="text-left"> 032 11 47 57</h6>
+            </td>
+            <td></td>
+            <td></td>
+            <td>REF CLIENT</td>
+        </tr>
+        <tr>
+            <td>
+                <h6 class="text-left"> info@my-garage.pro</h6>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <!--Customer Info -->
+    <!--<h3>Bill to</h3>-->
+    <!--<h4>Customer</h4>-->
+    <table>
+        <tr>
+            <td>
+                <h6>POUR</h6>
+            </td>
+            <td class="text-left"><span class="font-weight-bold"></span>
+                {{ order.order.customer.firstname }}
+                {{ order.order.customer.lastname }}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>IMM</td>
+            <td class="text-left">2.039.054.460.387</td>
+            <td></td>
+            <td></td>
 
-        </td>
-        <td class="font-14"><span class="font-weight-bold">Phone:</span> {{ order.customer.phone }}</td>
-        <td class="font-14"><span class="font-weight-bold">Date:</span> {{ order.created|date:"M d, Y" }}</td>
-    </tr>
+        </tr>
+        <tr>
+            <td>ART</td>
+            <td class="text-left">2.039.054.460.387</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>MF</td>
+            <td class="text-left">2.039.054.460.387</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>RC</td>
+            <td class="text-left">2.039.054.460.387</td>
+            <td></td>
+            <td></td>
+        </tr>
+                    
+    </table>
+    <br>
+    <table class="customer_table">
+        <thead>
+            <tr>
+                <th>VENDEUR</th>
+                <th>CONDITIONS DE PAIEMENT</th>
+                <th>DATE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td class="text-center">..</td>
+            <td class="text-center">Du a la reception de la facture</td>
+            <td class="text-center">..</td>
+            </tr>
+        </tbody>
 
-</table>
-<br>
-<h4>Vehicle</h4>
+    </table>
+    <br>
+    <!--<h4>Vehicle</h4>-->
 
+  <!--
 <table class="vehicle_table">
-    <tr>
-        <td class="font-14"><span class="font-weight-bold">Type:</span> {{ order.vehicle.vehicle_type }}</td>
-        <td class="font-14"><span class="font-weight-bold">Mat:</span> {{ order.vehicle.vehicle_mat }}</td>
-        <td class="font-14"><span class="font-weight-bold">Grey Card:</span> {{ order.vehicle.vehicle_cart_gris }}</td>
-    </tr>
-</table>
-<h3>Item bought</h3>
-<table class="items-table">
     <thead>
-    <tr>
-        <th>Ref</th>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Cost</th>
-    </tr>
+        <tr>
+            <th>TYPE</th>
+            <th>MATT</th>
+            <th>CARD</th>
+        </tr>
     </thead>
     <tbody>
-    {% for item in order.items.all %}
-    <tr class="row{% cycle '1' '2' %} ">
-        <td>{{ item.stockproduct.product.ref }}</td>
-        <td>{{ item.stockproduct.product.name }}</td>
-        <td class="num">DZD {{ item.price }}</td>
-        <td class="num">{{ item.quantity }}</td>
-        <td class="num">DZD {{ item.get_cost }}</td>
-    </tr>
-    {% endfor %}
-
+        <tr>
+            <td class="font-14 text-center"><span class="font-weight-bold"></span>
+                {{ order.order.vehicle.vehicle_type }}</td>
+            <td class="font-14 text-center"><span class="font-weight-bold"></span>
+                {{ order.order.vehicle.vehicle_mat }}</td>
+            <td class="font-14 text-center"><span class="font-weight-bold"></span>
+                {{ order.order.vehicle.vehicle_cart_gris }}</td>
+        </tr>
     </tbody>
+
 </table>
-<table class="items-table">
-    <thead>
-    <tr>
-        <th>main d’œuvre</th>
-        <th>Price</th>
+  -->  
+  <!--<h3>Item bought</h3>-->
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Prix Unitaire</th>
+                <th>Quantity</th>
+                <th>Prix total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.order.items.all %}
+            <tr class="row{% cycle '1' '2' %} ">
+                <td>{{ item.stockproduct.product.name }}</td>
+                <td class="num">DZD {{ item.price }}</td>
+                <td class="num">{{ item.quantity }}</td>
+                <td class="num">DZD {{ item.get_cost }}</td>
+            </tr>
+            {% endfor %}
 
-    </tr>
-    </thead>
-    <tbody>
-    {% for item in order.pannes.all %}
-    <tr class="row{% cycle '1' '2' %} ">
-        <td>{{ item.panne.desc }}</td>
-        <td class="num"> DZD {{ item.get_cost }}</td>
+        </tbody>
+    </table>
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th>main d’œuvre</th>
+                <th>Prix Unitaire</th>
+                <th>Quantity</th>
+                <th>Prix total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.order.pannes.all %}
+            <tr class="row{% cycle '1' '2' %} ">
+                <td>{{ item.panne.desc }}</td>
+                <td class="num">DZD {{ item.get_cost }}</td>
+                <td class="num">1</td>
+                <td class="num">DZD {{ item.get_cost }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table class="items-table">
+        <tbody>
+            <tr class="total">
+                <td style="background-color: inherit;" colspan="3"></td>
 
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<table class="items-table">
-    <tbody>
-    <tr class="total">
-        <td colspan="3">Total Piece</td>
-        <td class="num">DZD {{ order.get_total_cost }}</td>
-    </tr>
-    <tr class="total">
-        <td colspan="3">Total main d’œuvre</td>
-        <td class="num">DZD {{ order.get_total_panne }}</td>
-    </tr>
-    <tr class="total">
+                <td>Total HT</td>
+                <td class="num">DZD {{ order.order.get_total_item_panne }}</td>
+            </tr>
+            <tr class="total">
+                <td style="background-color: inherit;" colspan="3"></td>
+                <td>TVA 19%</td>
+                <td class="num">DZD {{ order.order.get_tva }}</td>
+            </tr>
+            <tr class="total">
+                <td style="background-color: inherit;" colspan="3">ARRETEE LA PRESENTE FACTURE A LA SOMME DE :</td>
+                <td>Timbre</td>
+                <td class="num">DZD {{ order.order.timbre }}</td>
+            </tr>
+            <tr class="total">
+                <td style="background-color: inherit; font-size: 16px;" colspan="3">
+                    {{total_in_letters}}</td>
+                <td>TTC</td>
+                <td class="num">DZD {{ order.order.get_ttc }}</td>
+            </tr>
+        </tbody>
+    </table>
 
-        <td colspan="3">Total HT</td>
-        <td class="num">DZD {{ order.get_total_item_panne }}</td>
-    </tr>
-    <tr class="total">
-
-        <td colspan="3">TVA</td>
-        <td class="num">DZD {{ order.get_tva }}</td>
-    </tr>
-    <tr class="total">
-
-        <td colspan="3">TTC</td>
-        <td class="num">DZD {{ order.get_ttc }}</td>
-    </tr>
-    </tbody>
-</table>
 </body>
+
 </html>
