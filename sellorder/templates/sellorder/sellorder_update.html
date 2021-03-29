@@ -155,7 +155,7 @@
     for (var i = 0; i<prices.length; i++)
     {
     //prices[i].value = prices[i].value.replace(/\s/g, "");
-    //prices[i].value = prices[i].value.replace(",", ".");
+    prices[i].value = prices[i].value.replace(",", "");
     console.log(prices[i].value);
     if (i == 0){
 
@@ -175,7 +175,7 @@
     // Adding Panne Prices
     for (var i = 0; i<panne_prices.length; i++){
         //panne_prices[i].value = panne_prices[i].value.replace(/\s/g, "");
-        //panne_prices[i].value = panne_prices[i].value.replace(",", ".");
+        panne_prices[i].value = panne_prices[i].value.replace(",", "");
         total_price += parseFloat(panne_prices[i].value);
     }
     // Applying Tva

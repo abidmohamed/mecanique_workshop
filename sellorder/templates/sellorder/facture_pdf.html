@@ -150,10 +150,10 @@
 
         .items-table td {
             text-align: left;
-            font-size: 14px;
+            font-size: 18px;
             padding: 5px;
             margin: 0;
-            height: 30px;
+            height: 35px;
             background-color: #eee;
         }
 
@@ -366,9 +366,9 @@
             {% for item in order.order.items.all %}
             <tr class="row{% cycle '1' '2' %} ">
                 <td>{{ item.stockproduct.product.name }}</td>
-                <td class="num">DZD {{ item.price }}</td>
+                <td class="num"> {{ item.price }}</td>
                 <td class="num">{{ item.quantity }}</td>
-                <td class="num">DZD {{ item.get_cost }}</td>
+                <td class="num"> {{ item.get_cost }}</td>
             </tr>
             {% endfor %}
 
@@ -387,9 +387,9 @@
             {% for item in order.order.pannes.all %}
             <tr class="row{% cycle '1' '2' %} ">
                 <td>{{ item.panne.desc }}</td>
-                <td class="num">DZD {{ item.get_cost }}</td>
+                <td class="num"> {{ item.get_cost }}</td>
                 <td class="num">1</td>
-                <td class="num">DZD {{ item.get_cost }}</td>
+                <td class="num"> {{ item.get_cost }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -408,12 +408,13 @@
                 <td class="num">DZD {{ order.order.get_tva }}</td>
             </tr>
             <tr class="total">
-                <td style="background-color: inherit;" colspan="3">ARRETEE LA PRESENTE FACTURE A LA SOMME DE :</td>
+                <td style="background-color: inherit; font-size: 30px;" colspan="3">ARRETEE LA PRESENTE FACTURE A LA
+                    SOMME DE :</td>
                 <td>Timbre</td>
                 <td class="num">DZD {{ order.order.timbre }}</td>
             </tr>
             <tr class="total">
-                <td style="background-color: inherit; font-size: 16px;" colspan="3">
+                <td style="background-color: inherit; font-size: 20px;" colspan="3">
                     {{total_in_letters}}</td>
                 <td>TTC</td>
                 <td class="num">DZD {{ order.order.get_ttc }}</td>
