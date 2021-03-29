@@ -455,7 +455,7 @@ def sellorder_facture_pdf(request, pk):
     order = get_object_or_404(Order, id=pk)
     sellorder = get_object_or_404(SellOrderFacture, order=order)
     total_in_letters = num2words(order.get_ttc(), lang='fr_DZ', to='currency')
-    html = render_to_string('sellorder/facture_pdf.html', {'order': sellorder, 'total_in_letters': total_in_letters})
+    html = render_to_string('sellorder/facture_pdf.html', {'order': sellorder, 'total_in_letters': total_in_letters.capitalize()})
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}_{sellorder.order.customer}.pdf'
 
