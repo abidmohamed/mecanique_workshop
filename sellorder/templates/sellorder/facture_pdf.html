@@ -149,7 +149,7 @@
 
         .items-table td {
             text-align: left;
-            font-size: 20px;
+            font-size: 18px;
             padding: 5px;
             margin: 0;
             height: 35px;
@@ -344,19 +344,19 @@ font-weight: bold;
     <table class="items-table">
         <thead>
             <tr>
-                <th>Product</th>
-                <th>Prix Unitaire</th>
-                <th>Quantity</th>
-                <th>Prix total</th>
+                <th colspan="3">Product</th>
+                <th colspan="1">Prix Unitaire</th>
+                <th colspan="1">Quantity</th>
+                <th colspan="1">Prix total</th>
             </tr>
         </thead>
         <tbody>
             {% for item in order.order.items.all %}
             <tr class="row{% cycle '1' '2' %} ">
-                <td>{{ item.stockproduct.product.name }}</td>
-                <td class="num"> {{ item.price }}</td>
-                <td class="num">{{ item.quantity }}</td>
-                <td class="num"> {{ item.get_cost }}</td>
+                <td colspan="3">{{ item.stockproduct.product.name }}</td>
+                <td colspan="1" class="num"> {{ item.price }}</td>
+                <td colspan="1" class="num">{{ item.quantity }}</td>
+                <td colspan="1" class="num"> {{ item.get_cost }}</td>
             </tr>
             {% endfor %}
 
@@ -365,19 +365,19 @@ font-weight: bold;
     <table class="items-table">
         <thead>
             <tr>
-                <th>main d’œuvre</th>
-                <th>Prix Unitaire</th>
-                <th>Quantity</th>
-                <th>Prix total</th>
+                <th colspan="3">main d’œuvre</th>
+                <th colspan="1">Prix Unitaire</th>
+                <th colspan="1">Quantity</th>
+                <th colspan="1">Prix total</th>
             </tr>
         </thead>
         <tbody>
             {% for item in order.order.pannes.all %}
             <tr class="row{% cycle '1' '2' %} ">
-                <td>{{ item.panne.desc }}</td>
-                <td class="num"> {{ item.get_cost }}</td>
-                <td class="num">1</td>
-                <td class="num"> {{ item.get_cost }}</td>
+                <td colspan="3">{{ item.panne.desc }}</td>
+                <td colspan="1" class="num"> {{ item.get_cost }}</td>
+                <td colspan="1" class="num">1</td>
+                <td colspan="1" class="num"> {{ item.get_cost }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -387,27 +387,38 @@ font-weight: bold;
             <tr class="total">
                 <td style="background-color: inherit;" colspan="3"></td>
 
-                <td>Total HT</td>
-                <td class="num">DZD {{ order.order.get_total_item_panne }}</td>
+                <td colspan="1">Total HT</td>
+                <td colspan="1" class="num">DZD {{ order.order.get_total_item_panne }}</td>
             </tr>
             <tr class="total">
                 <td style="background-color: inherit;" colspan="3"></td>
-                <td>TVA 19%</td>
-                <td class="num">DZD {{ order.order.get_tva }}</td>
+                <td colspan="1">TVA 19%</td>
+                <td colspan="1" class="num">DZD {{ order.order.get_tva }}</td>
             </tr>
             <tr class="total">
-                <td style="background-color: inherit; font-size: 30px;" colspan="3"></td>
-                <td>Timbre</td>
-                <td class="num">DZD {{ order.order.timbre }}</td>
+                <td style="background-color: inherit;" colspan="3"></td>
+                <td colspan="1">Timbre</td>
+                <td colspan="1" class="num">DZD {{ order.order.timbre }}</td>
             </tr>
             <tr class="total">
-                <td style="background-color: inherit; font-size: 30px;" colspan="3">
-                   ARRETEE LA PRESENTE FACTURE A LA
-                   SOMME DE : {{total_in_letters}}</td>
-                <td>TTC</td>
-                <td class="num">DZD {{ order.order.get_ttc }}</td>
+                <td style="background-color: inherit;" colspan="3">
+                   </td>
+                <td colspan="1">TTC</td>
+                <td colspan="1" class="num">DZD {{ order.order.get_ttc }}</td>
             </tr>
+            
         </tbody>
+        
+    </table>
+    <br>
+    <table>
+<tr>
+    <td colspan="5" style="width: 100%; background-color: inherit; font-size: 18px !important;">
+        <h2 class="text-center">ARRETEE LA
+            PRESENTE FACTURE A LA
+            SOMME DE : {{total_in_letters}}</h2>
+    </td>
+</tr>
     </table>
 
 </body>
