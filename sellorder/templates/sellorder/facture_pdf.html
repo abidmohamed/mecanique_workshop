@@ -80,8 +80,8 @@
             -moz-border-radius: 26px;
             -webkit-border-radius: 26px;
             border-style: hidden;
-            background-color: #222;
-            color: #fff;
+            background-color: silver;
+            color: #000;
         }
 
         .customer_table td {
@@ -143,13 +143,13 @@
             padding: 3px;
             margin: 0;
             height: 30px;
-            background-color: #222;
-            color: #fff;
+            background-color: silver;
+            color: #000;
         }
 
         .items-table td {
             text-align: left;
-            font-size: 18px;
+            font-size: 16px;
             padding: 5px;
             margin: 0;
             height: 35px;
@@ -178,7 +178,7 @@ font-weight: bold;
       bottom: 1cm;
       margin-left: 1cm;
       margin-right: 1cm;
-      height: 2.3cm;
+      height: 2.5cm;
 
       }
       }
@@ -286,7 +286,7 @@ font-weight: bold;
             </td>
             <td></td>
             <td></td>
-            <td></td>
+            <td><span class="font-weight-bold">Devise:</span> Dinars Algerian</td>
         </tr>
         <tr>
             <td>
@@ -385,26 +385,26 @@ font-weight: bold;
     <table class="items-table">
         <tbody>
             <tr class="total">
-                <td style="background-color: inherit;" colspan="3"></td>
+                <td style="background-color: inherit;" colspan="2"></td>
 
                 <td colspan="1">Total HT</td>
-                <td colspan="1" class="num">DZD {{ order.order.get_total_item_panne }}</td>
+                <td colspan="2" class="num"> {{ order.order.get_total_item_panne }}</td>
             </tr>
             <tr class="total">
-                <td style="background-color: inherit;" colspan="3"></td>
+                <td style="background-color: inherit;" colspan="2"></td>
                 <td colspan="1">TVA 19%</td>
-                <td colspan="1" class="num">DZD {{ order.order.get_tva }}</td>
+                <td colspan="2" class="num"> {{ order.order.get_tva }}</td>
             </tr>
             <tr class="total">
-                <td style="background-color: inherit;" colspan="3"></td>
+                <td style="background-color: inherit;" colspan="2"></td>
                 <td colspan="1">Timbre</td>
-                <td colspan="1" class="num">DZD {{ order.order.timbre }}</td>
+                <td colspan="2" class="num"> {{ order.order.timbre }}</td>
             </tr>
             <tr class="total">
-                <td style="background-color: inherit;" colspan="3">
+                <td style="background-color: inherit;" colspan="2">
                    </td>
                 <td colspan="1">TTC</td>
-                <td colspan="1" class="num">DZD {{ order.order.get_ttc }}</td>
+                <td colspan="2" class="num"> {{ order.order.get_ttc }}</td>
             </tr>
             
         </tbody>
@@ -424,6 +424,7 @@ font-weight: bold;
 </body>
 
 <div id="footerContent">
+    <hr>
 <table>
     <tr>
         <td class="text-center font-14" colspan="5" >Veuillez, s'il vous plait, effectuer les paiement par
@@ -431,9 +432,13 @@ font-weight: bold;
             
             <h2>BEA: 002000940942202279</h2>
         </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            </td>
         <td class="text-center font-weight-bold">
-                <pdf:pagenumber></pdf:pagenumber>
-                / <pdf:pagecount></pdf:pagecount>
+            <pdf:pagenumber></pdf:pagenumber>
+            / <pdf:pagecount></pdf:pagecount>
         </td>
     </tr>
 </table>
