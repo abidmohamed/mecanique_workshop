@@ -149,7 +149,7 @@
 
         .items-table td {
             text-align: left;
-            font-size: 18px;
+            font-size: 20px;
             padding: 5px;
             margin: 0;
             height: 35px;
@@ -396,14 +396,14 @@ font-weight: bold;
                 <td class="num">DZD {{ order.order.get_tva }}</td>
             </tr>
             <tr class="total">
-                <td style="background-color: inherit; font-size: 30px;" colspan="3">ARRETEE LA PRESENTE FACTURE A LA
-                    SOMME DE :</td>
+                <td style="background-color: inherit; font-size: 30px;" colspan="3"></td>
                 <td>Timbre</td>
                 <td class="num">DZD {{ order.order.timbre }}</td>
             </tr>
             <tr class="total">
-                <td style="background-color: inherit; font-size: 20px;" colspan="3">
-                    {{total_in_letters}}</td>
+                <td style="background-color: inherit; font-size: 30px;" colspan="3">
+                   ARRETEE LA PRESENTE FACTURE A LA
+                   SOMME DE : {{total_in_letters}}</td>
                 <td>TTC</td>
                 <td class="num">DZD {{ order.order.get_ttc }}</td>
             </tr>
