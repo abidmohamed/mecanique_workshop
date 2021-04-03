@@ -286,6 +286,9 @@ def order_item_delete(request, orderpk, itempk):
     print(item)
     if request.method == 'POST':
         item = sellorder.items.get(id=itempk)
+        stockproduct = StockProduct.objects.get(id=item.stockproduct.id)
+        stockproduct.quantity += item.quantity
+        stockproduct.save()
         item.delete()
         return redirect('sellorder:update_order', sellorder.id)
 
