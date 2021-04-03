@@ -66,21 +66,33 @@ def detail_product(request, pk):
     product = Product.objects.get(id=pk)
     all_sellorders = Order.objects.all().filter(confirmed=True)
     all_buyorders = BuyOrder.objects.all()
+
     chosen_orders = Order.objects.none()
     chosen_buyorders = BuyOrder.objects.none()
+
     pieces = OrderItem.objects.none()
     buy_pieces = OrderItem.objects.none()
+
+    quantities = []
+    buy_quantities = []
+
     sell_quantity = 0
     buy_quantity = 0
     # Sell orders product count
     for order in all_sellorders:
+        print("###### ORDER")
         for item in order.items.all():
+
             if item.stockproduct.product.id == product.id:
+                print("####### ITEM FOUND")
+                print(item.stockproduct.product)
+                print(product)
                 chosen_orders |= Order.objects.all().filter(id=order.id)
                 pieces |= order.items.all().filter(id=item.id)
                 sell_quantity += item.quantity
-                print(order.items.all())
-    final_list = zip(chosen_orders, pieces)
+                quantities.append(item.quantity)
+                # print(order.items.all().filter(id=item.id))
+    final_list = zip(chosen_orders, pieces, quantities)
 
     # Buy orders product count
     for order in all_buyorders:
@@ -89,7 +101,8 @@ def detail_product(request, pk):
                 chosen_buyorders |= BuyOrder.objects.all().filter(id=order.id)
                 buy_pieces |= order.items.all().filter(id=item.id)
                 buy_quantity += item.quantity
-    final_buylist = zip(chosen_buyorders, buy_pieces)
+                buy_quantities.append(item.quantity)
+    final_buylist = zip(chosen_buyorders, buy_pieces, buy_quantities)
     context = {
         'product': product,
         'pieces': pieces,
