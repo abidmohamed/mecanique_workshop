@@ -24,14 +24,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for order, item in final_list %}
+                {% for order, item, quantity in final_list %}
 
                 <tr>
                     <td>{{order.id}}</td>
                     <td>{{order.customer}}</td>
                     <td>{{order.order_date}}</td>
                     <td>{{order.factured}}</td>
-                    <td>{{item.quantity}}</td>
+                    <td>{{quantity}}</td>
                     <td>
                          <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">Details</a>
                     </td>
@@ -59,13 +59,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for order, item in final_buylist %}
+                {% for order, item, quantity in final_buylist %}
 
                 <tr>
                     <td>{{order.id}}</td>
                     <td>{{order.supplier}}</td>
                     <td>{{order.order_date}}</td>
-                    <td>{{item.quantity}}</td>
+                    <td>{{quantity}}</td>
                     <td>
                         <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' order.id %}">Details</a>
                     </td>
