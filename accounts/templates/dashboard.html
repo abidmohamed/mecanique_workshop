@@ -247,12 +247,12 @@
 <!-- Second row Starts Here Calendar -->
 <div class="row">
     <div class="clearfix">
-        <a class="btn btn-info right mr-2" href="{% url 'accounts:home' %}?{{ next_month }} "> Next Month >> </a>
-        <a class="btn btn-info right mr-2" href="{% url 'accounts:home' %}?{{ prev_month }}"> << Previous Month </a>
-        <a class="btn btn-info right mr-2" href="{% url 'rdv:create_rdv_customer' %}"> + New RDV </a>
+        <a class="btn btn-dark right mr-2" href="{% url 'accounts:home' %}?{{ next_month }} "> Next Month >> </a>
+        <a class="btn btn-dark right mr-2" href="{% url 'accounts:home' %}?{{ prev_month }}"> << Previous Month </a>
+        <a class="btn btn-dark right mr-2" href="{% url 'rdv:create_rdv_customer' %}"> + New RDV </a>
 
     </div>
-    <div class="bg-gradient-info text-gray-100">
+    <div class="text-dark">
         {{ calendar }}
     </div>
     <br>
