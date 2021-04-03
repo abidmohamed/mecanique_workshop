@@ -19,4 +19,6 @@ urlpatterns = [
     path('update_city/<str:pk>', views.update_city, name='update_city'),
     path('delete_city/<str:pk>', views.delete_city, name='delete_city'),
 
+    path('add_enterprise/<str:pk>', views.add_enterprise, name='add_enterprise'),
+
 ]

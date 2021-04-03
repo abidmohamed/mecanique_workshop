@@ -90,7 +90,7 @@
             -moz-border-radius: 26px;
             -webkit-border-radius: 26px;
             border-style: hidden;
-            background-color: #eee;
+            background-color: #fff;
         }
 
         .vehicle_table {
@@ -153,7 +153,7 @@
             padding: 5px;
             margin: 0;
             height: 35px;
-            background-color: #eee;
+            background-color: #fff;
         }
 
         tbody td.num {
@@ -193,12 +193,7 @@ font-weight: bold;
             </td>
         </tr>
         
-        <tr>
-            <td style="width: 50%;">
-                <h6 class="text-left">Réparation et diagnostique d'automobile</h6>
-            </td>
-            <td></td>
-        </tr>
+        
     </table>
 
     <table>
@@ -223,41 +218,65 @@ font-weight: bold;
                      {{ order.order.customer.lastname }}</h2>
              </td>
          </tr>
-         <tr></tr>
+        <tr></tr>
+         <tr>
+             <td colspan="2" class="text-left">
+                 <h6 class="text-left">Réparation et diagnostique d'automobile</h6>
+             </td>
+             
+             <td></td>
+             <td></td>
+         </tr>
         <tr>
             <td class="text-left" >NIF</td>
             <td class="text-right">2.039.054.460.387</td>
             <td></td>
             <!--Customer-->
             <td class="text-left">NIF</td>
-            <td class="text-right">2.039.054.460.387</td>
+            {% if order.order.customer.enterprise %}
+            <td class="text-right">{{enterprise.nif}}</td>
+            {% else %}
+            <td class="text-right">X.XXX.XXX.XXX.XXX</td>
+            {% endif %}
 
         </tr>
         <tr>
             <td class="text-left">ART</td>
-            <td class="text-right">2.039.054.460.387</td>
+            <td class="text-right">39012000644</td>
             <td></td>
             <!--Customer-->
             <td class="text-left">ART</td>
-            <td class="text-right">2.039.054.460.387</td>
+            {% if order.order.customer.enterprise %}
+            <td class="text-right">{{enterprise.art}}</td>
+            {% else %}
+            <td class="text-right">XXXXXXXXXXX</td>
+            {% endif %}
 
         </tr>
          <tr>
              <td class="text-left">RC</td>
-             <td class="text-right">2.039.054.460.387</td>
+             <td class="text-right">39/00-0544603B20</td>
              <td></td>
              <!--Customer-->
              <td class="text-left">RC</td>
-             <td class="text-right">2.039.054.460.387</td>
+             {% if order.order.customer.enterprise %}
+             <td class="text-right">{{enterprise.rc}}</td>
+             {% else %}
+             <td class="text-right">XX/XX-XXXXXXXXXX</td>
+             {% endif %}
 
          </tr>
          <tr>
              <td class="text-left">NIS</td>
-             <td class="text-right">2.039.054.460.387</td>
+             <td class="text-right">2039010013858</td>
              <td></td>
              <!--Customer-->
-             <td class="text-left">RC</td>
-             <td class="text-right">2.039.054.460.387</td>
+             <td class="text-left">NIS</td>
+             {% if order.order.customer.enterprise %}
+             <td class="text-right">{{enterprise.nis}}</td>
+             {% else %}
+             <td class="text-right">XXXXXXXXXXXXX</td>
+             {% endif %}
 
          </tr>
     </table>

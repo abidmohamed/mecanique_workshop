@@ -19,7 +19,7 @@ class Customer(models.Model):
     # email = models.EmailField(null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_joined = models.DateField(null=True)
-
+    enterprise = models.BooleanField(default=False)
     debt = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
 
     def __str__(self):
@@ -27,3 +27,11 @@ class Customer(models.Model):
 
     def get_vehicles(self):
         return self.vehicles.all().filter(customer=self)
+
+
+class Enterprise(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='owner')
+    rc = models.CharField(max_length=250, null=True)
+    nif = models.CharField(max_length=250, null=True)
+    nis = models.CharField(max_length=250, null=True)
+    art = models.CharField(max_length=250, null=True)
