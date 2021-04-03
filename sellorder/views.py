@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from billing.models import OrderBilling, BillOrderItem
 from caisse.forms import DateForm
 from caisse.models import Caisse
-from customer.models import Customer
+from customer.models import Customer, Enterprise
 from discount.forms import DiscountForm
 from discount.models import Discount
 from payments.forms import CustomerPaymentForm
@@ -457,8 +457,18 @@ def sellorder_pdf(request, pk):
 def sellorder_facture_pdf(request, pk):
     order = get_object_or_404(Order, id=pk)
     sellorder = get_object_or_404(SellOrderFacture, order=order)
+    customer = Customer.objects.get(id=sellorder.order.customer.id)
+    if customer.enterprise:
+        enterprise = Enterprise.objects.get(customer=customer)
+    else:
+        enterprise = Enterprise.objects.none()
     total_in_letters = num2words(order.get_ttc(), lang='fr_DZ', to='currency')
-    html = render_to_string('sellorder/facture_pdf.html', {'order': sellorder, 'total_in_letters': total_in_letters.capitalize()})
+    context ={
+        'order': sellorder,
+        'total_in_letters': total_in_letters.capitalize(),
+        'enterprise': enterprise
+    }
+    html = render_to_string('sellorder/facture_pdf.html', context)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}_{sellorder.order.customer}.pdf'
 

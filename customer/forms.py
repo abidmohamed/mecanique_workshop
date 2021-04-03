@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
-from customer.models import Customer, City
+from customer.models import Customer, City, Enterprise
 
 
 class CityForm(ModelForm):
@@ -25,4 +25,11 @@ class CustomerForm(ModelForm):
 
         }
 
-        fields = ('firstname', 'lastname', 'address', 'phone', 'debt')
+        fields = ('firstname', 'lastname', 'address', 'phone', 'debt', 'enterprise')
+
+
+class EnterpriseForm(ModelForm):
+    class Meta:
+        model = Enterprise
+
+        fields = ('nif', 'nis', 'art', 'rc')

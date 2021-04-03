@@ -1,4 +1,4 @@
-from customer.forms import UserForm, CustomerForm, CityForm
+from customer.forms import UserForm, CustomerForm, CityForm, EnterpriseForm
 from customer.models import Customer, City
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
@@ -27,14 +27,34 @@ def add_customer(request):
             # customer.lastname = user.last_name
             # customer.email = user.email
             customer.save()
-
-            return redirect('customer:customer_list')
+            if customer.enterprise:
+                return redirect('customer:add_enterprise', customer.id)
+            else:
+                return redirect('customer:customer_list')
 
     context = {
         # 'user_form': user_form,
         'customer_form': customer_form
     }
     return render(request, 'customer/add_customer.html', context)
+
+
+def add_enterprise(request, pk):
+    customer = Customer.objects.get(id=pk)
+    # Enterprise form
+    enter_form = EnterpriseForm()
+    if request.method == 'POST':
+        enter_form = EnterpriseForm(request.POST)
+        if enter_form.is_valid():
+            enterprise = enter_form.save(commit=False)
+            enterprise.customer = customer
+            enterprise.save()
+            return redirect('customer:customer_list')
+
+    context = {
+        'enter_form': enter_form
+    }
+    return render(request, 'customer/add_enterprise.html', context)
 
 
 def add_customer_rdv(request):
@@ -94,7 +114,10 @@ def update_customer(request, pk):
         customer_form = CustomerForm(request.POST, instance=customer)
         if customer_form.is_valid():
             customer_form.save()
-            return redirect('customer:customer_list')
+            if customer.enterprise:
+                return redirect('customer:add_enterprise', customer.id)
+            else:
+                return redirect('customer:customer_list')
     context = {
         'customer_form': customer_form
     }
