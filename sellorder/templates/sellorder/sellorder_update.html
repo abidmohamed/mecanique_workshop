@@ -141,7 +141,12 @@
     </div>
 </div>
 <script>
-    
+
+    // treat numbers from final ","
+    String.prototype.replaceAt = function(index, replacement) {
+    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+    }
+
    function calc(){
     var prices = document.getElementsByName("prices");
     var panne_prices = document.getElementsByName("panne-prices");
@@ -151,24 +156,43 @@
     var tva_value = document.getElementById("tva");
     var timbre_value = document.getElementById("timbre");
     var total_price = 0;
+    var white_space = /\s/g
     // console.log(prices);
     for (var i = 0; i<prices.length; i++)
     {
-    //prices[i].value = prices[i].value.replace(/\s/g, "");
-    // made for server live
-    prices[i].value = prices[i].value.replace(",", "");
-    console.log(prices[i].value);
-    if (i == 0){
 
+        // made for server live
+        // Removing Spaces
+        if (/\s/g.test(prices[i].value)){
+        prices[i].value = prices[i].value.replace(/\s/g, "");
+        }else{
+         str = prices[i].value
+        str = str.split(',');
+        str = str.join('');
+        prices[i].value = str;
+        }
+        // Removing Comma
+         var comma_index = prices[i].value.length - 3
+        prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+        // any rest commas
+        prices[i].value = prices[i].value.replace(",", "");
+        /*
+        var str_value = prices[i].value;
+        for (var j = 0; j < prices[i].value.length; j++){
+        console.log(prices[i].value[j]);
+        }
+        */
+
+    // console.log(prices[i].value);
+    if (i == 0){
         total_price = prices[i].value * quantities[i].value;
         document.getElementById("total-price").value = total_price;
-
     }else {
            total_price =  parseFloat(document.getElementById("total-price").value);
            total_price += parseFloat(prices[i].value * quantities[i].value);
 
-           console.log("Total Price");
-           console.log(total_price);
+           // console.log("Total Price");
+           // console.log(total_price);
 
         document.getElementById("total-price").value = total_price;
     }
@@ -184,18 +208,18 @@
     total_price += (total_price * (tva_value.value/100));
     // applying timbre
     total_price += parseFloat(timbre_value.value)
-     console.log(discount_status.value);
-     console.log(discount_value.value);
+     //console.log(discount_status.value);
+     //console.log(discount_value.value);
      // Applying Discount
     if (discount_status.value == 1){
         total_price -= (total_price * (discount_value.value/100));
-        console.log("Total Price");
-           console.log(total_price);
+       // console.log("Total Price");
+        //   console.log(total_price);
            document.getElementById("total-price").value = total_price;
      }else{
         total_price -= discount_value.value;
-            console.log("Total Price");
-           console.log(total_price);
+          //  console.log("Total Price");
+          // console.log(total_price);
            document.getElementById("total-price").value = total_price;
      }
 
