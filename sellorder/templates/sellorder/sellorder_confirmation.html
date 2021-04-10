@@ -120,6 +120,11 @@
     </div>
 </div>
 <script>
+// treat numbers from final ","
+    String.prototype.replaceAt = function(index, replacement) {
+    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+    }
+
    function calc(){
     var prices = document.getElementsByName("prices");
     var panne_prices = document.getElementsByName("panne-prices");
@@ -132,10 +137,23 @@
     // console.log(prices);
     for (var i = 0; i<prices.length; i++)
     {
-    // prices[i].value = prices[i].value.replace(/\s/g, "");
-    // For live Server Only
-    prices[i].value = prices[i].value.replace(",", "");
-    console.log(prices[i].value);
+
+        // made for server live
+        // Removing Spaces
+        if (/\s/g.test(prices[i].value)){
+        prices[i].value = prices[i].value.replace(/\s/g, "");
+        }else{
+         str = prices[i].value
+        str = str.split(',');
+        str = str.join('');
+        prices[i].value = str;
+        }
+        // Removing Comma
+         var comma_index = prices[i].value.length - 3
+        prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+        // any rest commas
+        prices[i].value = prices[i].value.replace(",", "");
+
     if (i == 0){
         total_price = prices[i].value * quantities[i].value;
 
