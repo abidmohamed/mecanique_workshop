@@ -148,11 +148,15 @@
         str = str.join('');
         prices[i].value = str;
         }
-        // Removing Comma
+         // Removing Comma
          var comma_index = prices[i].value.length - 3
-        prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+         if(prices[i].value.indexOf(',') > -1){
+            prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            prices[i].value = prices[i].value.replace(",", "");
+        }
         // any rest commas
-        prices[i].value = prices[i].value.replace(",", "");
+      //  prices[i].value = prices[i].value.replace(",", "");
 
     if (i == 0){
         total_price = prices[i].value * quantities[i].value;
