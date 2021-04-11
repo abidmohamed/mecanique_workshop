@@ -173,9 +173,13 @@
         }
         // Removing Comma
          var comma_index = prices[i].value.length - 3
-        prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+         if(prices[i].value.indexOf(',') > -1){
+            prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            prices[i].value = prices[i].value.replace(",", "");
+        }
         // any rest commas
-        prices[i].value = prices[i].value.replace(",", "");
+      //  prices[i].value = prices[i].value.replace(",", "");
         /*
         var str_value = prices[i].value;
         for (var j = 0; j < prices[i].value.length; j++){
