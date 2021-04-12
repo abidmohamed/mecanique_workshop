@@ -218,6 +218,13 @@
             panne_prices[i].value = panne_prices[i].value.replace(",", "");
         }
         }
+        // Removing Comma
+         var comma_index = panne_prices[i].value.length - 3
+         if(panne_prices[i].value.indexOf(',') > -1){
+            panne_prices[i].value = panne_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            panne_prices[i].value = panne_prices[i].value.replace(",", "");
+        }
         total_price += parseFloat(panne_prices[i].value);
     }
     // Applying Tva
