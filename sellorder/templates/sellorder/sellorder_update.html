@@ -206,9 +206,18 @@
     }
     // Adding Panne Prices
     for (var i = 0; i<panne_prices.length; i++){
-        //panne_prices[i].value = panne_prices[i].value.replace(/\s/g, "");
-        // made for server live
-        panne_prices[i].value = panne_prices[i].value.replace(",", "");
+        // Fixing numbers to calculate
+        if (/\s/g.test(panne_prices[i].value)){
+        panne_prices[i].value = panne_prices[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = panne_prices[i].value.length - 3
+         if(panne_prices[i].value.indexOf(',') > -1){
+            panne_prices[i].value = panne_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            panne_prices[i].value = panne_prices[i].value.replace(",", "");
+        }
+        }
         total_price += parseFloat(panne_prices[i].value);
     }
     // Applying Tva
