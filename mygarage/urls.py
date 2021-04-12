@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # the main ressource
     path('', include('accounts.urls', namespace='accounts')),
+    # offline connection
+    # path('', include('pwa.urls')),
     path('customer/', include('customer.urls', namespace='customer')),
     path('supplier/', include('supplier.urls', namespace='supplier')),
     path('payments/', include('payments.urls', namespace='payments')),
