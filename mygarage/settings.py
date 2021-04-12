@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'customer', 'accounts', 'supplier', 'payments',
     'family', 'category', 'stock', 'product', 'buyorder',
     'billing', 'sellorder', 'vehicule', 'rdv', 'caisse',
-    'discount', 'pwa',
+    'discount',
 ]
 
 MIDDLEWARE = [
