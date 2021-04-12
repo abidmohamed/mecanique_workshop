@@ -14,7 +14,8 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# offline setup
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js', 'serviceworker.js')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'customer', 'accounts', 'supplier', 'payments',
     'family', 'category', 'stock', 'product', 'buyorder',
     'billing', 'sellorder', 'vehicule', 'rdv', 'caisse',
-    'discount',
+    'discount', 'pwa',
 ]
 
 MIDDLEWARE = [
@@ -124,7 +125,6 @@ USE_TZ = True
 
 USE_THOUSAND_SEPARATOR = True
 THOUSAND_SEPARATOR = ' '
-
 
 # how the translation is done
 # 1- django-admin makemessages -l fr or ar or any other language
