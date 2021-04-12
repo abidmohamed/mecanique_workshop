@@ -137,7 +137,6 @@
     // console.log(prices);
     for (var i = 0; i<prices.length; i++)
     {
-
         // made for server live
         // Removing Spaces
         if (/\s/g.test(prices[i].value)){
@@ -145,11 +144,11 @@
         }else{
          // Removing Comma
          var comma_index = prices[i].value.length - 3
-         if(prices[i].value.indexOf(',') > -1){
-            prices[i].value = prices[i].value.replaceAt(comma_index , ".");
-            // any rest commas
-            prices[i].value = prices[i].value.replace(",", "");
-        }
+            if(prices[i].value.indexOf(',') > -1){
+                prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+                // any rest commas
+                prices[i].value = prices[i].value.replace(",", "");
+            }
         }
          // Removing Comma
          var comma_index = prices[i].value.length - 3
