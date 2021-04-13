@@ -1,6 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block content %}
 <br>
 <br>
@@ -10,13 +10,13 @@
     </div>
     <div class="col-md-6">
         <div class="card card-body">
-            <P>ARE YOU SURE YOU WANT TO FACTURE {{order}} {{order.customer}} {{order.vehicle}} {{order.get_ttc}} DZD</P>
+            <P>{% trans "ARE YOU SURE YOU WANT TO FACTURE" %} {{order}} {{order.customer}} {{order.vehicle}} {{order.get_ttc}} DZD</P>
             <br>
             <hr>
             <form action="{% url 'sellorder:sellorder_facture' order.id %}" method="post">
 
                 {% csrf_token %}
-                <a class="btn btn-warning" href="{% url 'sellorder:sellorder_list' %}">Cancel</a>
+                <a class="btn btn-warning" href="{% url 'sellorder:sellorder_list' %}">{% trans "Cancel" %}</a>
                 <input class="btn btn-danger" type="submit" name="Confirm">
             </form>
         </div>

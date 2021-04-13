@@ -1,11 +1,12 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Buy Orders</h5>
+            <h5>{% trans "Buy Orders" %}</h5>
         </div>
         <br>
         <div class="card card-body">
@@ -13,14 +14,14 @@
 
                 <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Supplier</th>
-                    <th>Phone</th>
-                    <th>Paid</th>
-                    <th>HT</th>
-                    <th>TVA</th>
-                    <th>TTC</th>
-                    <th>Debt</th>
+                    <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Supplier" %}</th>
+                    <th>{% trans "Phone" %}</th>
+                    <th>{% trans "Paid" %}</th>
+                    <th>{% trans "HT" %}</th>
+                    <th>{% trans "TVA" %}</th>
+                    <th>{% trans "TTC" %}</th>
+                    <th>{% trans "Debt" %}</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -34,27 +35,27 @@
                     <td>{{order.supplier}}</td>
                     <td>{{order.supplier.phone}}</td>
                     <td>{{order.paid}}</td>
-                    <td>{{order.total_price}} DZD</td>
-                    <td>{{order.get_tva}} DZD</td>
-                    <td>{{order.get_ttc}} DZD</td>
-                    <td>{{order.debt}} DZD</td>
+                    <td>{{order.total_price}} {% trans "DZD" %}</td>
+                    <td>{{order.get_tva}} {% trans "DZD" %}</td>
+                    <td>{{order.get_ttc}} {% trans "DZD" %}</td>
+                    <td>{{order.debt}} {% trans "DZD" %}</td>
                     <td>
                         {% if order.confirmed %}
-                             <a class="btn btn-info " href="{% url 'buyorder:update_order' order.id %}">Update</a>
+                             <a class="btn btn-info " href="{% url 'buyorder:update_order' order.id %}">{% trans "Update" %}</a>
                         {% else %}
-                             <a class="btn btn-success " href="{% url 'buyorder:buyorder_confirmation' order.id %}">Confirm</a>
+                             <a class="btn btn-success " href="{% url 'buyorder:buyorder_confirmation' order.id %}">{% trans "Confirm" %}</a>
                         {% endif %}
                     </td>
                     <td>
                         {% if order.debt > 0%}
-                        <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment' order.id %}">PayDebt</a>
+                        <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment' order.id %}">{% trans "PayDebt" %}</a>
                         {% endif %}
                     </td>
                     <td>
-                        <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' order.id %}">Details</a>
+                        <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' order.id %}">{% trans "Details" %}</a>
                     </td>
                     <td>
-                        <a class="btn btn-danger " href="{% url 'buyorder:buyorder_delete' order.id %}">Delete</a>
+                        <a class="btn btn-danger " href="{% url 'buyorder:buyorder_delete' order.id %}">{% trans "Delete" %}</a>
                     </td>
                 </tr>
                 {% endfor %}

@@ -1,5 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 <head>
     <style>
  /*Calendar CSS*/
@@ -46,7 +47,7 @@
             <div class="card-header bg-primary">
                 <div class="row">
                     <div class="col-9">
-                        <h1 class="bg-primary text-white">Caisse</h1>
+                        <h1 class="bg-primary text-white">{% trans "Caisse" %}</h1>
                     </div>
                     <div class="col-3">
                         <a class="mr-3" href="{% url 'caisse:create_transaction' %}"><i
@@ -61,8 +62,8 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Caisse</div>
-                        <div class="h3 mb-0 font-weight-bold text-white">{{caisse}} DZD</div>
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{% trans "Caisse" %}</div>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{caisse}} {% trans "DZD" %}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-coins fa-5x text-white"></i>
@@ -75,8 +76,8 @@
         <div class="card bg-gradient-success shadow h-100 py-2">
             <a href="{% url 'sellorder:get_orders_pannes' %}">
                 <div class="card-body text-center">
-             <h2 class=" font-weight-bold text-white text-uppercase mb-2">MO</h2>
-                        <div class="h3 mb-0 font-weight-bold text-white">{{totaltodaypanne}} DZD</div>
+             <h2 class=" font-weight-bold text-white text-uppercase mb-2">{% trans "MO" %}</h2>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{totaltodaypanne}} {% trans " DZD" %}</div>
 
             </div>
             </a>
@@ -87,8 +88,8 @@
         <div class="card bg-gradient-info shadow h-100 py-2">
          <a href="{% url 'sellorder:get_orders_pieces' %}">
             <div class="card-body text-center">
-                             <h2 class=" font-weight-bold text-white text-uppercase ">Piece</h2>
-                        <div class="h3 mb-0 font-weight-bold text-white">{{totaltodaypiece}} DZD</div>
+                             <h2 class=" font-weight-bold text-white text-uppercase ">{% trans "Piece" %}</h2>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{totaltodaypiece}} {% trans "DZD" %}</div>
 
             </div>
          </a>
@@ -104,8 +105,8 @@
                 <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Customers</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{% if totaldebt %}{{totaldebt}}{% else %} 0 DZD {% endif %}</div>
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{% trans "Customers" %}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{% if totaldebt %}{{totaldebt}}{% else %} 0 {% trans "DZD"%} {% endif %}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-user-tie fa-2x text-primary"></i>
@@ -120,7 +121,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Sell Orders</div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{% trans "Sell Orders" %}</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">{% if sellorder_number %}{{sellorder_number}}{% else %} 0 {% endif %}</div>
                     </div>
                     <div class="col-auto">
@@ -135,7 +136,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Buy Orders</div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{% trans "Buy Orders" %}</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">{% if buyorder_number %}{{buyorder_number}} {% else %} 0 {% endif %}</div>
                     </div>
                     <div class="col-auto">
@@ -150,7 +151,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Suppliers</div>
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{% trans "Suppliers" %}</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">{% if suppliers %}{{suppliers}}{% else %} 0 {% endif %}</div>
                     </div>
                     <div class="col-auto">
@@ -173,7 +174,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Stock Alert</div>
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">{% trans "Stock Alert" %}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"> {% if stockproductsalertcount %}{{stockproductsalertcount}}{% else %} 0 {% endif %}</div>
 
                         </div>
@@ -191,8 +192,8 @@
                 <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Sell Order</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalsellorders}} DZD</div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{% trans "Total Sell Order" %}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalsellorders}} {% trans "DZD" %}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-success"></i>
@@ -209,8 +210,8 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Buy Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalbuyorders}} DZD</div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{% trans "Total Buy Orders" %}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalbuyorders}} {% trans "DZD" %}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-info"></i>
@@ -225,8 +226,8 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Suppliers Credit</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{totalcredit}} DZD</div>
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{% trans "Suppliers Credit" %}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{totalcredit}} {% trans "DZD" %}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-truck fa-2x text-warning"></i>
@@ -247,9 +248,9 @@
 <!-- Second row Starts Here Calendar -->
 <div class="row">
     <div class="clearfix">
-        <a class="btn btn-dark right mr-2" href="{% url 'accounts:home' %}?{{ next_month }} "> Next Month >> </a>
-        <a class="btn btn-dark right mr-2" href="{% url 'accounts:home' %}?{{ prev_month }}"> << Previous Month </a>
-        <a class="btn btn-dark right mr-2" href="{% url 'rdv:create_rdv_customer' %}"> + New RDV </a>
+        <a class="btn btn-dark right mr-2" href="{% url 'accounts:home' %}?{{ next_month }} "> {% trans "Next Month " %} >></a>
+        <a class="btn btn-dark right mr-2" href="{% url 'accounts:home' %}?{{ prev_month }}"> << {% trans " Previous Month" %} </a>
+        <a class="btn btn-dark right mr-2" href="{% url 'rdv:create_rdv_customer' %}"> + {% trans "New RDV" %} </a>
 
     </div>
     <div class="text-dark">

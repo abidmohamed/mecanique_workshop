@@ -1,6 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block content %}
 <br>
 <br>
@@ -10,11 +10,11 @@
     </div>
     <div class="col-md-6">
         <div class="card card-body">
-            <P>ARE YOU SURE YOU WANT TO DELETE {{sellorder}} _ {{item.panne.desc}} _ {{item.price}}</P>
+            <P>{% trans "ARE YOU SURE YOU WANT TO DELETE" %} {{sellorder}} _ {{item.panne.desc}} _ {{item.price}}</P>
             <form action="{% url 'sellorder:order_panne_delete' sellorder.id item.id%}" method="post">
 
                 {% csrf_token %}
-                <a class="btn btn-warning" href="{% url 'sellorder:update_order' sellorder.id %}">Cancel</a>
+                <a class="btn btn-warning" href="{% url 'sellorder:update_order' sellorder.id %}">{% trans "Cancel" %}</a>
                 <input class="btn btn-danger" type="submit" name="Confirm">
             </form>
         </div>

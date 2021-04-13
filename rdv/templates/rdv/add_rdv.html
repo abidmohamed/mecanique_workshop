@@ -1,5 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% block content %}
 
@@ -9,7 +10,7 @@
     <div class="col-md-2 col-sm-1"></div>
     <div class="col-md-10 col-sm-12">
         <div class="card card-body">
-            <h5 class="text-center">Create Appointment</h5>
+            <h5 class="text-center">{% trans "Create Appointment" %}</h5>
             <form id="rdvform" action="" method="post">
                 {% csrf_token %}
                 <div class="row">
@@ -26,8 +27,8 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>Desc</th>
-                        <th>Price DZD</th>
+                        <th>{% trans "Desc" %}</th>
+                        <th>{% trans "Price DZD" %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,7 +63,7 @@
     </div>
     <div class="col-md-2 col-sm-1"></div>
 </div>
-
+*
 {% endblock %}
 {% block jsscript %}
 <!-- custom javascript -->

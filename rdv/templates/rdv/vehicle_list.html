@@ -1,5 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% block content %}
 <br>
@@ -7,14 +8,14 @@
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>Vehicles</h5>
+                <h5>{% trans "Vehicles" %}</h5>
             </div>
             <div class="card card-body">
                 <div class="">
                     <!-- Button trigger modal -->
                     <button type="button" class="form-control btn btn btn-primary" data-toggle="modal"
                             data-target="#exampleModal">
-                        New Vehicle
+                            {% trans "New Vehicle" %}
                     </button>
                 </div>
                 <br>
@@ -24,11 +25,11 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th>Name</th>
-                            <th>Customer</th>
-                            <th>Type</th>
-                            <th>Matriculation</th>
-                            <th>Cart Gris</th>
+                            <th> {% trans "Name" %}</th>
+                            <th>{% trans "Customer" %}</th>
+                            <th>{% trans "Type" %}</th>
+                            <th>{% trans "Matriculation" %}</th>
+                            <th>{% trans "Cart Gris" %}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -74,7 +75,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Vehicle</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{% trans "New Vehicle" %}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -84,12 +85,12 @@
                     <form action="{% url 'vehicule:add_vehicule_rdv' customer.id %}" method="post"
                           enctype="multipart/form-data">
                         {% csrf_token %}
-                        <h4>Choose a Car Type</h4>
+                        <h4>{% trans "Choose a Car Type" %}</h4>
                         <div class="">
                             <!-- Button trigger modal -->
                             <button type="button" class="form-control btn btn btn-primary" data-toggle="modal"
                                     data-target="#typeModal">
-                                New Type
+                                    {% trans "New Type" %}
                             </button>
                         </div>
                         <br>
@@ -97,9 +98,9 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Brand</th>
+                                <th>{% trans "Image" %}</th>
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Brand" %}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -147,8 +148,8 @@
                 {% endif %}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
+                <button type="button" class="btn btn-primary">{% trans "Save changes" %}</button>
             </div>
         </div>
     </div>
@@ -159,7 +160,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="typeModalLabel">New Type</h5>
+                <h5 class="modal-title" id="typeModalLabel">{% trans "New Type" %}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -188,8 +189,8 @@
                 {% endif %}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
+                <button type="button" class="btn btn-primary">{% trans "Save changes" %}</button>
             </div>
         </div>
     </div>

@@ -1,26 +1,27 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Sell Orders Facture</h5>
+            <h5>{% trans "Sell Orders Facture" %}</h5>
         </div>
         <div class="card card-body">
             <table id="table_id" class="table display text-center">
                 <thead>
                 <tr>
-                    <th>Facture ID</th>
-                    <th>Customer</th>
-                    <th>Date</th>
-                    <th>Total Piece</th>
-                    <th>Total Panne</th>
-                    <th>HT</th>
-                    <th>TVA</th>
-                    <th>Discount</th>
-                    <th>TTC</th>
-                    <th>Debt</th>
+                    <th>{% trans "Facture ID" %}</th>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "Total Piece" %}</th>
+                    <th>{% trans "Total Panne" %}</th>
+                    <th>{% trans "HT" %}</th>
+                    <th>{% trans "TVA" %}</th>
+                    <th>{% trans "Discount" %}</th>
+                    <th>{% trans "TTC" %}</th>
+                    <th>{% trans "Debt" %}</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -35,28 +36,28 @@
                     <td>{{order.id}}</td>
                     <td>{{order.order.customer}}</td>
                     <td>{{order.order.order_date}}</td>
-                    <td>{{order.order.get_total_cost}} DZD</td>
-                    <td>{{order.order.get_total_panne}} DZD</td>
-                    <td>{{order.order.get_total_item_panne}} DZD</td>
-                    <td>{{order.order.get_tva}} DZD</td>
-                    <td>{{order.order.discount_amount}} DZD</td>
-                    <td>{{order.order.get_ttc}} DZD</td>
-                    <td>{{order.order.debt}} DZD</td>
+                    <td>{{order.order.get_total_cost}} {% trans "DZD" %}</td>
+                    <td>{{order.order.get_total_panne}} {% trans "DZD" %}</td>
+                    <td>{{order.order.get_total_item_panne}} {% trans "DZD" %}</td>
+                    <td>{{order.order.get_tva}} {% trans "DZD" %}</td>
+                    <td>{{order.order.discount_amount}} {% trans "DZD" %}</td>
+                    <td>{{order.order.get_ttc}} {% trans "DZD" %}</td>
+                    <td>{{order.order.debt}} {% trans "DZD" %}</td>
 
                     <td>
                         {% if order.order.debt > 0 %}
-                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.order.id %}">PayDebt</a>
+                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.order.id %}">{% trans "PayDebt" %}</a>
                         {% endif %}
                     </td>
 
                     <td>
-                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.order.id %}">Details</a>
+                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.order.id %}">{% trans "Details" %}</a>
                     </td>
                     <td>
-                           <a class="btn btn-danger " href="{% url 'sellorder:sellorder_delete' order.order.id %}">Delete</a>
+                           <a class="btn btn-danger " href="{% url 'sellorder:sellorder_delete' order.order.id %}">{% trans "Delete" %}</a>
                     </td>
                     <td>
-                            <a class="btn btn-info " href="{% url 'sellorder:update_order' order.order.id %}">Update</a>
+                            <a class="btn btn-info " href="{% url 'sellorder:update_order' order.order.id %}">{% trans "Update" %}</a>
                     </td>
                 </tr>
 

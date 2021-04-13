@@ -1,27 +1,28 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <br>
 <div class="container">
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>Vehicle</h5>
+                <h5>{% trans "Vehicle" %}</h5>
             </div>
             <div class="card card-body">
                 <form action="" method="post">
                     {% csrf_token %}
-                    <h2>Choose Customers</h2>
+                    <h2>{% trans "Choose Customers" %}</h2>
                     <!-- Customers Table -->
                     <table id="table_vehicle" class="display text-center">
                         <thead>
                         <tr>
                             <th></th>
-                            <th>Name</th>
-                            <th>Customer</th>
-                            <th>Type</th>
-                            <th>Matriculation</th>
-                            <th>Cart Gris</th>
+                            <th>{% trans "Name" %}</th>
+                            <th>{% trans "Customer" %}</th>
+                            <th>{% trans "Type" %}</th>
+                            <th>{% trans "Matriculation" %}</th>
+                            <th>{% trans "Cart Gris" %}</th>
 
 
                         </tr>

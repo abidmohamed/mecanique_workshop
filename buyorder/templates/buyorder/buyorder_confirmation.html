@@ -1,12 +1,13 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Orders</h5>
+            <h5>{% trans "Orders" %}</h5>
         </div>
         <div class="card card-body">
             <form action="" method="post">
@@ -15,17 +16,17 @@
                 <hr>
                 <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date" required>
                 <hr>
-                <h3>TVA</h3>
+                <h3>{% trans "TVA" %}</h3>
                 <input class="form-control" type="number" value="0" name="tva">
                 <br>
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Supplier</th>
-                        <th>City</th>
-                        <th>Paid</th>
-                        <th>Total Price</th>
+                        <th>{% trans "Order ID" %}</th>
+                        <th>{% trans "Supplier" %}</th>
+                        <th>{% trans "City" %}</th>
+                        <th>{% trans "Paid" %}</th>
+                        <th>{% trans "Total Price" %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -34,15 +35,15 @@
                         <td>{{buyorder.supplier}}</td>
                         <td>{{buyorder.supplier.city}}</td>
                         <td>{{buyorder.paid}}</td>
-                        <td>DZD {{buyorder.get_total_cost}}</td>
+                        <td>{% trans "DZD" %} {{buyorder.get_total_cost}}</td>
                     </tr>
 
                     <thead class="thead-light">
                     <tr>
 
-                        <th>Product Name</th>
-                        <th>Price DZD</th>
-                        <th>Quantity</th>
+                        <th>{% trans "Product Name" %}</th>
+                        <th>{% trans "Price DZD" %}</th>
+                        <th>{% trans "Quantity" %}</th>
 
                     </tr>
                     </thead>

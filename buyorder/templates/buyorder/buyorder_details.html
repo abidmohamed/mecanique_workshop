@@ -1,54 +1,55 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Order Details</h5>
+            <h5>{% trans "Order Details" %}</h5>
             {% if order.debt > 0 %}
                         <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment' order.id %}">PayDebt</a>
             {% endif %}
             <br>
-            <a class="btn btn-warning " href="{% url 'buyorder:buyorder_pdf' order.id %}">Print </a>
+            <a class="btn btn-warning " href="{% url 'buyorder:buyorder_pdf' order.id %}">{% trans "Print" %} </a>
 
         </div>
         <div class="card card-body">
             <div class="row">
                 <div class="col-md-2">
-                    <h6>Order ID: </h6>
+                    <h6>{% trans "Order ID" %}: </h6>
                     <td>{{order.id}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Supplier: </h6>
+                    <h6>{% trans "Supplier" %}: </h6>
                     <td>{{order.supplier}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Phone: </h6>
+                    <h6>{% trans "Phone" %}: </h6>
                     <td>{{order.supplier.phone}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Paid: </h6>
+                    <h6>{% trans "Paid" %}: </h6>
                     <td>{{order.paid}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Total Price: </h6>
-                    <td>{{order.get_ttc}} DZD</td>
+                    <h6>{% trans "Total Price" %}: </h6>
+                    <td>{{order.get_ttc}} {% trans "DZD" %}</td>
                 </div>
                 <div class="col-md-2">
                     <h6>Debt: </h6>
-                    <td>{{order.debt}} DZD</td>
+                    <td>{{order.debt}} {% trans "DZD" %}</td>
                 </div>
             </div>
             <table id="table_id" class="table display text-center">
                 <thead class="thead-light">
                 <tr>
-                    <th>Product Brand</th>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total Price</th>
+                    <th>{% trans "Product Brand" %}</th>
+                    <th>{% trans "Product Name" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Total Price" %}</th>
                     <th></th>
                 </tr>
                 </thead>

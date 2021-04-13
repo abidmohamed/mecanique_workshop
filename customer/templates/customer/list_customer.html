@@ -1,22 +1,23 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <br>
 <div class="container">
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>Customers</h5>
+                <h5>{% trans "Customers" %}</h5>
             </div>
             <div class="card card-body">
                 <table id="table_id" class="display text-center">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Email</th>
-                        <th>Debt</th>
+                        <th>{% trans "Name" %}</th>
+                        <th>{% trans "Phone" %}</th>
+                        <th>{% trans "Address" %}</th>
+                        <th>{% trans "Email" %}</th>
+                        <th>{% trans "Debt" %}</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -42,11 +43,11 @@
                         </td>
                         <td>
                             <a class="btn btn-success "
-                               href="{% url 'customer:update_customer' customer.id %}">Update</a>
+                               href="{% url 'customer:update_customer' customer.id %}">{% trans "Update" %}</a>
                         </td>
                         <td>
                             <a class="btn btn-warning "
-                               href="{% url 'customer:customer_detail' customer.id %}">Details</a>
+                               href="{% url 'customer:customer_detail' customer.id %}">{% trans "Details" %}</a>
                         </td>
 
 

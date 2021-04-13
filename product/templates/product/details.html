@@ -1,12 +1,13 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Sell Orders</h5>
+            <h5>{% trans "Sell Orders" %}</h5>
         </div>
         <div class="card card-body bg-primary">
             <h5 class=" text-center text-white">{{product}} : {{sell_quantity}}</h5>
@@ -15,11 +16,11 @@
             <table id="table_id" class="table display text-center">
                 <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Date</th>
-                    <th>Bill</th>
-                    <th>Quantity</th>
+                    <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "Bill" %}</th>
+                    <th>{% trans "Quantity" %}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -33,7 +34,7 @@
                     <td>{{order.factured}}</td>
                     <td>{{quantity}}</td>
                     <td>
-                         <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">Details</a>
+                         <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">{% trans "Details" %}</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -42,7 +43,7 @@
         </div>
         <br>
         <div class="card card-body">
-            <h5>Buy Orders</h5>
+            <h5>{% trans "Buy Orders" %}</h5>
         </div>
         <div class="card card-body bg-danger">
             <h5 class=" text-center text-white">{{product}} : {{buy_quantity}}</h5>
@@ -51,10 +52,10 @@
             <table id="table_buyorder" class="table display text-center">
                 <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Supplier</th>
-                    <th>Date</th>
-                    <th>Quantity</th>
+                    <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Supplier" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "Quantity" %}</th>
                     <th></th>
                 </tr>
                 </thead>

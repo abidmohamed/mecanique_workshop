@@ -1,21 +1,22 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col">
         <div class="card card-body">
-            <h5>Customers</h5>
+            <h5>{% trans "Customers" %}</h5>
         </div>
         <div class="card card-body">
             <table id="table_id" class="display text-center">
                 <thead>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                    <th>Credit</th>
+                    <th>{% trans "First Name" %}</th>
+                    <th>{% trans "Last Name" %}</th>
+                    <th>{% trans "Phone" %}</th>
+                    <th>{% trans "Address" %}</th>
+                    <th>{% trans "Credit" %}</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -41,14 +42,14 @@
                     </td>
                     <td>
                         {% if supplier.credit > 0%}
-                        <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment_by_supplier' supplier.id %}">PayDebt</a>
+                        <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment_by_supplier' supplier.id %}">{% trans "PayDebt" %}</a>
                         {% endif %}
                     </td>
                     <td>
-                        <a class="btn btn-success " href="{% url 'supplier:update_supplier' supplier.id %}">Update</a>
+                        <a class="btn btn-success " href="{% url 'supplier:update_supplier' supplier.id %}">{% trans "Update" %}</a>
                     </td>
                     <td>
-                        <a class="btn btn-danger " href="{% url 'supplier:delete_supplier' supplier.id %}">Delete</a>
+                        <a class="btn btn-danger " href="{% url 'supplier:delete_supplier' supplier.id %}">{% trans "Delete" %}</a>
                     </td>
 
                 </tr>

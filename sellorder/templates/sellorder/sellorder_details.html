@@ -1,89 +1,90 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Order Details</h5>
+            <h5>{% trans "Order Details" %}</h5>
             {% if order.debt > 0%}
-                        <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">PayDebt</a>
+                        <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">{% trans "PayDebt" %}</a>
             {% endif %}
             <br>
             {% if order.factured %}
-            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_pdf' order.id %}">Print </a>
+            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_pdf' order.id %}">{% trans "Print" %} </a>
             {% else %}
-            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_pdf' order.id %}">Print </a>
+            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_pdf' order.id %}">{% trans "Print" %} </a>
             {% endif %}
 
         </div>
         <div class="card card-body">
             <div class="row">
                 <div class="col-md-2">
-                    <h6>Order ID: </h6>
+                    <h6>{% trans "Order ID" %}: </h6>
                     <td>{{order.id}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Customer: </h6>
+                    <h6>{% trans "Customer" %}: </h6>
                     <td>{{order.customer}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Phone: </h6>
+                    <h6>{% trans "Phone" %}: </h6>
                     <td>{{order.customer.phone}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Paid: </h6>
+                    <h6>{% trans "Paid" %}: </h6>
                     <td>{{order.paid}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Confirmed: </h6>
+                    <h6>{% trans "Confirmed" %}: </h6>
                     <td>{{order.confirmed}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Billed: </h6>
+                    <h6>{% trans "Billed" %}: </h6>
                     <td>{{order.factured}}</td>
                 </div>
             </div>
             <br>
             <div class="row">
                 <div class="col-md-2">
-                    <h6>HT: </h6>
-                    <td>{{order.total_price}} DZD</td>
+                    <h6>{% trans "HT" %}: </h6>
+                    <td>{{order.total_price}} {% trans "DZD" %}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Tva: </h6>
-                    <td>{{order.get_tva}} DZD</td>
+                    <h6>{% trans "Tva" %}: </h6>
+                    <td>{{order.get_tva}} {% trans "DZD" %}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Discount: </h6>
-                    <td>{{order.discount_amount}} DZD</td>
+                    <h6>{% trans "Discount" %}: </h6>
+                    <td>{{order.discount_amount}} {% trans "DZD" %}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Timbre: </h6>
-                    <td>{{order.timbre}} DZD</td>
+                    <h6>{% trans "Timbre" %}: </h6>
+                    <td>{{order.timbre}} {% trans "DZD" %}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Total Price: </h6>
-                    <td>{{order.get_ttc}} DZD</td>
+                    <h6>{% trans "Total Price" %}: </h6>
+                    <td>{{order.get_ttc}} {% trans "DZD" %}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Debt: </h6>
-                    <td>{{order.debt}} DZD</td>
+                    <h6>{% trans "Debt" %}: </h6>
+                    <td>{{order.debt}} {% trans "DZD" %}</td>
                 </div>
             </div>
             <hr>
             <br>
-            <h2> Products : {{order.get_total_cost}}</h2>
+            <h2> {% trans "Products" %} : {{order.get_total_cost}}</h2>
             <hr>
             <table id="table_id" class="table display text-center">
                 <thead class="thead-light">
                 <tr>
-                    <th>Product Brand</th>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total Price</th>
+                    <th>{% trans "Product Brand" %}</th>
+                    <th>{% trans "Product Name" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Total Price" %}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -92,22 +93,22 @@
                 <tr>
                     <td class="table-light">{{ item.stockproduct.product.brand }}</td>
                     <td class="table-light">{{ item.stockproduct.product.name }}</td>
-                    <td class="table-light ">DZD{{ item.price }}</td>
+                    <td class="table-light ">{% trans "DZD" %}{{ item.price }}</td>
                     <td class="table-light ">{{ item.quantity }}</td>
-                    <td class="table-light">DZD{{ item.get_cost }}</td>
+                    <td class="table-light">{% trans "DZD" %}{{ item.get_cost }}</td>
                     <td class="table-light"></td>
                 </tr>
                 {% endfor %}
                 </tbody>
             </table>
             <br>
-            <h2>Pannes : {{order.get_total_panne}}</h2>
+            <h2>{% trans "Pannes" %} : {{order.get_total_panne}}</h2>
             <hr>
             <table id="table_panne" class="table display text-center">
                 <thead class="thead-light">
                 <tr>
-                    <th>Panne</th>
-                    <th>Price</th>
+                    <th>{% trans "Panne" %}</th>
+                    <th>{% trans "Price" %}</th>
 
                     <th></th>
                 </tr>
@@ -116,7 +117,7 @@
                 {% for item in order.pannes.all %}
                 <tr>
                     <td class="table-light">{{ item.panne.desc }}</td>
-                    <td class="table-light">{{ item.price }} DZD</td>
+                    <td class="table-light">{{ item.price }} {% trans "DZD" %}</td>
                     <td class="table-light"></td>
                 </tr>
                 {% endfor %}

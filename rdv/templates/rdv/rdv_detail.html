@@ -1,37 +1,38 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Appointments Details</h5>
+            <h5>{% trans "Appointments Details" %}</h5>
         </div>
         <div class="card card-body">
             <div class="row">
                 <div class="col-md-2">
-                    <h6>RDV ID: </h6>
+                    <h6>{% trans "RDV ID" %}: </h6>
                     <td>{{rdv.id}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Customer: </h6>
+                    <h6>{% trans "Customer" %}: </h6>
                     <td>{{rdv.customer}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Vehicle: </h6>
+                    <h6>{% trans "Vehicle" %}: </h6>
                     <td>{{rdv.vehicle}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Date: </h6>
+                    <h6>{% trans "Date" %}: </h6>
                     <td>{{rdv.rdv_date}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Time: </h6>
+                    <h6>{% trans "Time" %}: </h6>
                     <td>{{rdv.rdv_time}}</td>
                 </div>
                 <div class="col-md-2">
-                    <h6>Total Price: </h6>
+                    <h6>{% trans "Total Price" %}: </h6>
                     <td>{{rdv.get_total_cost}}</td>
                 </div>
             </div>
@@ -40,8 +41,8 @@
                 <thead class="thead-light">
                 <tr>
                     <th></th>
-                    <th>Description</th>
-                    <th>Price</th>
+                    <th>{% trans "Description" %}</th>
+                    <th>{% trans "Price" %}</th>
 
                     <th></th>
                 </tr>
@@ -51,7 +52,7 @@
                 <tr>
                     <td class="table-light"></td>
                     <td class="table-light">{{ item.panne.desc }}</td>
-                    <td class="table-light ">DZD{{ item.price }}</td>
+                    <td class="table-light ">{% trans "DZD" %}{{ item.price }}</td>
                     <td class="table-light"></td>
                 </tr>
 
@@ -59,7 +60,7 @@
                 {% endfor %}
             </table>
             {% else %}
-                <h1>No Elements Found</h1>
+                <h1>{% trans "No Elements Found" %}</h1>
             {% endif %}
         </div>
     </div>

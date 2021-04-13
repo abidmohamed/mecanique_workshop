@@ -1,46 +1,46 @@
 {% extends "home.html" %}
 {% load static %}
-
+{% load i18n %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Order Details</h5>
+            <h5>{% trans "Order Details" %}</h5>
         </div>
     <div class="card card-body">
         <div class="row">
             <div class="col-md-3">
-                    <h6>Customer: </h6>
+                    <h6>{% trans "Customer" %}: </h6>
                     <td>{{ customer.firstname }} {{ customer.lastname }}</td>
             </div>
             <div class="col-md-3">
-                    <h6>Address: </h6>
+                    <h6>{% trans "Address" %}: </h6>
                     <td>{{ customer.address }}</td>
             </div>
             <div class="col-md-3">
-                    <h6>Phone: </h6>
+                    <h6>{% trans "Phone" %}: </h6>
                     <td>{{ customer.phone }}</td>
             </div>
             <div class="col-md-3">
-                    <h6>Debt: </h6>
+                    <h6>{% trans "Debt" %}: </h6>
                     <td>{{ customer.debt }}</td>
             </div>
         </div>
         <hr>
         <br>
-        <h2>Orders</h2>
+        <h2>{% trans "Orders" %}</h2>
         <hr>
         <table id="table_order">
             <thead class="thead-light">
             <tr>
-                <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Address</th>
-                    <th>Total Piece</th>
-                    <th>Total Panne</th>
-                    <th>Total</th>
-                    <th>Debt</th>
+                <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Address" %}</th>
+                    <th>{% trans "Total Piece" %}</th>
+                    <th>{% trans "Total Panne" %}</th>
+                    <th>{% trans "Total" %}</th>
+                    <th>{% trans "Debt" %}</th>
                     <th></th>
                     <th></th>
             </tr>
@@ -51,18 +51,18 @@
                 <td>{{order.id}}</td>
                     <td>{{order.customer}}</td>
                     <td>{{order.customer.address}}</td>
-                    <td>{{order.get_total_cost}} DZD</td>
-                    <td>{{order.get_total_panne}} DZD</td>
-                    <td>{{order.get_ttc}} DZD</td>
-                    <td>{{order.debt}} DZD</td>
+                    <td>{{order.get_total_cost}} {% trans "DZD" %}</td>
+                    <td>{{order.get_total_panne}} {% trans "DZD" %}</td>
+                    <td>{{order.get_ttc}} {% trans "DZD" %}</td>
+                    <td>{{order.debt}} {% trans "DZD" %}</td>
                     <td>
                         {% if order.debt > 0%}
-                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">PayDebt</a>
+                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">{% trans "PayDebt" %}</a>
                         {% endif %}
                     </td>
 
                     <td>
-                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">Details</a>
+                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">{% trans "Details" %}</a>
                     </td>
             </tr>
             {% endfor %}
@@ -70,18 +70,18 @@
         </table>
         <hr>
         <br>
-        <h2>Proforma Orders</h2>
+        <h2>{% trans "Proforma Orders" %}</h2>
         <hr>
         <table id="table_order_proforma">
             <thead class="thead-light">
             <tr>
-                <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Address</th>
-                    <th>Total Piece</th>
-                    <th>Total Panne</th>
-                    <th>Total</th>
-                    <th>Debt</th>
+                <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Address" %}</th>
+                    <th>{% trans "Total Piece" %}</th>
+                    <th>{% trans "Total Panne" %}</th>
+                    <th>{% trans "Total" %}</th>
+                    <th>{% trans "Debt" %}</th>
                     <th></th>
                     <th></th>
             </tr>
@@ -92,15 +92,15 @@
                 <td>{{order.id}}</td>
                     <td>{{order.customer}}</td>
                     <td>{{order.customer.address}}</td>
-                    <td>{{order.get_total_cost}} DZD</td>
-                    <td>{{order.get_total_panne}} DZD</td>
-                    <td>{{order.get_ttc}} DZD</td>
-                    <td>{{order.debt}} DZD</td>
+                    <td>{{order.get_total_cost}} {% trans "DZD" %}</td>
+                    <td>{{order.get_total_panne}} {% trans "DZD" %}</td>
+                    <td>{{order.get_ttc}} {% trans "DZD" %}</td>
+                    <td>{{order.debt}} {% trans "DZD" %}</td>
                     <td>
-                             <a class="btn btn-success " href="{% url 'sellorder:confirm_order' order.id %}">Confirm</a>
+                             <a class="btn btn-success " href="{% url 'sellorder:confirm_order' order.id %}">{% trans "Confirm" %}</a>
                     </td>
                     <td>
-                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">Details</a>
+                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">{% trans "Details" %}</a>
                     </td>
             </tr>
             {% endfor %}
@@ -108,19 +108,19 @@
         </table>
         <hr>
         <br>
-        <h2>Billed Orders</h2>
+        <h2>{% trans "Billed Orders" %}</h2>
         <hr>
         <table id="table_order_bill">
             <thead class="thead-light">
             <tr>
-                <th>Bill ID</th>
-                <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Address</th>
-                    <th>Total Piece</th>
-                    <th>Total Panne</th>
-                    <th>Total</th>
-                    <th>Debt</th>
+                <th>{% trans "Bill ID" %}</th>
+                <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Address" %}</th>
+                    <th>{% trans "Total Piece" %}</th>
+                    <th>{% trans "Total Panne" %}</th>
+                    <th>{% trans "Total" %}</th>
+                    <th>{% trans "Debt" %}</th>
                     <th></th>
                     <th></th>
             </tr>
@@ -132,18 +132,18 @@
                 <td>{{order.order.id}}</td>
                     <td>{{order.order.customer}}</td>
                     <td>{{order.order.customer.address}}</td>
-                    <td>{{order.order.get_total_cost}} DZD</td>
-                    <td>{{order.order.get_total_panne}} DZD</td>
-                    <td>{{order.order.get_ttc}} DZD</td>
-                    <td>{{order.order.debt}} DZD</td>
+                    <td>{{order.order.get_total_cost}} {% trans "DZD" %}</td>
+                    <td>{{order.order.get_total_panne}} {% trans "DZD" %}</td>
+                    <td>{{order.order.get_ttc}} {% trans "DZD" %}</td>
+                    <td>{{order.order.debt}} {% trans "DZD" %}</td>
                     <td>
                         {% if order.order.debt > 0%}
-                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.order.id %}">PayDebt</a>
+                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.order.id %}">{% trans "PayDebt" %}</a>
                         {% endif %}
                     </td>
 
                     <td>
-                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.order.id %}">Details</a>
+                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.order.id %}">{% trans "Details" %}</a>
                     </td>
             </tr>
             {% endfor %}
@@ -151,16 +151,16 @@
         </table>
         <hr>
         <br>
-        <h2>RDVs</h2>
+        <h2>{% trans "RDVs" %}</h2>
         <hr>
         <table id="table_rdv">
             <thead class="thead-light">
             <tr>
-                <th>RDV ID</th>
-                    <th>Vehicle</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Total Price</th>
+                <th>{% trans "RDV ID" %}</th>
+                    <th>{% trans "Vehicle" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "Time" %}</th>
+                    <th>{% trans "Total Price" %}</th>
                     <th></th>
             </tr>
             </thead>
@@ -173,7 +173,7 @@
                     <td>{{rdv.rdv_time}} </td>
                     <td>{{rdv.get_total_cost}} </td>
                     <td>
-                        <a class="btn btn-success " href="{% url 'rdv:rdv_details' rdv.id %}">Details</a>
+                        <a class="btn btn-success " href="{% url 'rdv:rdv_details' rdv.id %}">{% trans "Details" %}</a>
                     </td>
                 </tr>
 
