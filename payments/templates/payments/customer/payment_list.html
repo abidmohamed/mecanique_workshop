@@ -1,23 +1,24 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <br>
 <div class="container">
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>Payments</h5>
+                <h5>{% trans "Payments" %}</h5>
             </div>
             <div class="card card-body">
                 <table id="table_id" class="display text-center">
                     <thead>
                     <tr>
-                        <th>Order</th>
-                        <th>Customer</th>
-                        <th>Pay Status</th>
-                        <th>Amount</th>
-                        <th>Created</th>
-                        <th>Payed</th>
+                        <th>{% trans "Order" %}</th>
+                        <th>{% trans "Customer" %}</th>
+                        <th>{% trans "Pay Status" %}</th>
+                        <th>{% trans "Amount" %}</th>
+                        <th>{% trans "Created" %}</th>
+                        <th>{% trans "Payed" %}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -44,7 +45,7 @@
                             {{payment.pay_date}}
                         </td>
                         <td>
-                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' payment.order.id %}">Details</a>
+                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' payment.order.id %}">{% trans "Details" %}</a>
                         </td>
                     </tr>
 

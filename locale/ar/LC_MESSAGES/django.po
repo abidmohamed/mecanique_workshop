@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-13 16:24+0100\n"
+"POT-Creation-Date: 2021-04-13 16:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,13 +16,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: .\accounts\templates\dashboard.html:50
 #: .\accounts\templates\dashboard.html:65
 #: .\accounts\templates\sidenavbar.html:41
 msgid "Caisse"
-msgstr "Caisse"
+msgstr "صندوق الدفع"
 
 #: .\accounts\templates\dashboard.html:66
 #: .\accounts\templates\dashboard.html:92
@@ -98,19 +99,21 @@ msgstr "Caisse"
 #: .\stock\templates\stockproduct\list_stockproduct.html:42
 #: .\stock\templates\stockproduct\list_stockproduct.html:44
 msgid "DZD"
-msgstr ""
+msgstr "د.ج"
 
 #: .\accounts\templates\dashboard.html:79
 msgid "MO"
 msgstr ""
 
 #: .\accounts\templates\dashboard.html:80
+#, fuzzy
+#| msgid "Price DZD"
 msgid " DZD"
-msgstr ""
+msgstr "الثمن د.ج"
 
 #: .\accounts\templates\dashboard.html:91
 msgid "Piece"
-msgstr "Pièce"
+msgstr "قطع الغيار"
 
 #: .\accounts\templates\dashboard.html:108
 #: .\customer\templates\customer\list_customer.html:10
@@ -120,90 +123,98 @@ msgstr "Pièce"
 #: .\rdv\templates\rdv\customer_list.html:10
 #: .\supplier\templates\supplier\list_supplier.html:9
 msgid "Customers"
-msgstr "Client"
+msgstr "الزبائن"
 
 #: .\accounts\templates\dashboard.html:124
 #: .\product\templates\product\details.html:10
 #: .\sellorder\templates\sellorder\list_sellorder.html:9
 msgid "Sell Orders"
-msgstr "Ordres de vente"
+msgstr "أمر البيع"
 
 #: .\accounts\templates\dashboard.html:139
 #: .\buyorder\templates\buyorder\list_buyorder.html:9
 #: .\product\templates\product\details.html:46
 msgid "Buy Orders"
-msgstr "Ordres d'achat"
+msgstr "أوامر البيع"
 
 #: .\accounts\templates\dashboard.html:154
 #: .\supplier\templates\supplier\buyorder_list_supplier.html:10
 msgid "Suppliers"
-msgstr "Fournisseurs"
+msgstr "الموردين"
 
 #: .\accounts\templates\dashboard.html:177
 msgid "Stock Alert"
-msgstr "Alert Stock"
+msgstr "إنذار المخزن"
 
 #: .\accounts\templates\dashboard.html:195
 msgid "Total Sell Order"
-msgstr "Total Ordres de vente"
+msgstr "مجموع أمر البيع"
 
 #: .\accounts\templates\dashboard.html:213
 msgid "Total Buy Orders"
-msgstr "Total Ordres d'achat"
+msgstr "مجموع أمر الشراء"
 
 #: .\accounts\templates\dashboard.html:229
 msgid "Suppliers Credit"
-msgstr "Crédit fournisseurs"
+msgstr "ائتمان الموردين"
 
 #: .\accounts\templates\dashboard.html:251
 
 msgid "Next Month "
-msgstr "Mois prochain"
+msgstr "الشهر المقبل"
 
 #: .\accounts\templates\dashboard.html:252
+
 msgid " Previous Month"
-msgstr "Mois précédent"
+msgstr "الشهر السابق"
 
 #: .\accounts\templates\dashboard.html:253
 msgid "New RDV"
-msgstr "Nouveau RDV"
+msgstr "موعد جديد"
 
 #: .\accounts\templates\login\login.html:6
 msgid "Login"
-msgstr "Connexion"
+msgstr "تسجيل الدخول"
 
 #: .\accounts\templates\login\login.html:86
 msgid "LOGIN"
-msgstr "Connexion"
+msgstr "تسجيل الدخول"
 
 #: .\accounts\templates\login\login.html:115
 msgid "Don't have an account?"
-msgstr "Vous n'avez pas un compte?"
+msgstr "ليس لديك حساب؟"
 
 #: .\accounts\templates\navbar.html:57
+#, fuzzy
+#| msgid "Message Center"
 msgid "Alerts Center"
-msgstr "Centre d'alerte"
+msgstr "مركز الرسائل"
 
 #: .\accounts\templates\navbar.html:67
 msgid "A new monthly report is ready to download!"
-msgstr "Un nouveau rapport du mois est disponible!"
+msgstr "تقرير الشهر الجديد جاهز للتحميل"
 
 #: .\accounts\templates\navbar.html:78
+#, fuzzy
+#| msgid "has been deposited into your account!"
 msgid " $290.29 has been deposited into your account!"
-msgstr ""
+msgstr "تم إيداعه في حسابك!"
 
 #: .\accounts\templates\navbar.html:89
+#, fuzzy
+#| msgid ""
+#| "Spending Alert: We've noticed unusually high spending for your account."
 msgid ""
 " Spending Alert: We've noticed unusually high spending for your account."
-msgstr ""
+msgstr "تنبيه الإنفاق: لقد لاحظنا إنفاقًا مرتفعًا بشكل غير عادي لحسابك"
 
 #: .\accounts\templates\navbar.html:92
 msgid "Show All Alerts"
-msgstr "Voir toutes les alertes"
+msgstr "إظهار كل التنبيهات"
 
 #: .\accounts\templates\navbar.html:106
 msgid "Message Center"
-msgstr "Centre de messages"
+msgstr "مركز الرسائل"
 
 #: .\accounts\templates\navbar.html:114
 msgid ""
@@ -234,31 +245,33 @@ msgstr ""
 
 #: .\accounts\templates\navbar.html:148
 msgid "Read More Messages"
-msgstr "Lire plus de messages"
+msgstr "قراءة رسائل أكثر"
 
 #: .\accounts\templates\navbar.html:164
 msgid "Profile"
-msgstr ""
+msgstr "الملف الشخصي"
 
 #: .\accounts\templates\navbar.html:168
 msgid "Settings"
-msgstr "Paramètres"
+msgstr "إعدادات"
 
 #: .\accounts\templates\navbar.html:172
 msgid "Activity Log"
-msgstr "Journal d'activité"
+msgstr "سجل النشاطات"
 
 #: .\accounts\templates\navbar.html:177
+#, fuzzy
+#| msgid "Logout"
 msgid " Logout"
-msgstr "Déconnexion"
+msgstr "تسجيل الخروج"
 
 #: .\accounts\templates\sidenavbar.html:25
 msgid "Dashboard"
-msgstr "Table de Board"
+msgstr "لوحة القيادة"
 
 #: .\accounts\templates\sidenavbar.html:33
 msgid "Interface"
-msgstr ""
+msgstr "واجهه المستخدم"
 
 #: .\accounts\templates\sidenavbar.html:45
 #: .\accounts\templates\sidenavbar.html:61
@@ -273,7 +286,7 @@ msgstr ""
 #: .\accounts\templates\sidenavbar.html:212
 #: .\accounts\templates\sidenavbar.html:228
 msgid "Operations"
-msgstr "Opérations"
+msgstr "العمليات"
 
 #: .\accounts\templates\sidenavbar.html:46
 #: .\accounts\templates\sidenavbar.html:85
@@ -287,11 +300,11 @@ msgstr "Opérations"
 #: .\accounts\templates\sidenavbar.html:229
 #: .\caisse\templates\caisse\transaction_list.html:20
 msgid "Add"
-msgstr "Ajouter"
+msgstr "إضافة"
 
 #: .\accounts\templates\sidenavbar.html:47
 msgid "List"
-msgstr "Liste"
+msgstr "قائمة"
 
 #: .\accounts\templates\sidenavbar.html:57
 #: .\customer\templates\customer\detail.html:160
@@ -300,31 +313,31 @@ msgstr "Liste"
 #: .\sellorder\templates\sellorder\sellorder_update.html:62
 #: .\stock\templates\stockproduct\order_vehicle.html:10
 msgid "Vehicle"
-msgstr "Véhicle"
+msgstr "سيارة"
 
 #: .\accounts\templates\sidenavbar.html:62
 msgid "Add Brand"
-msgstr "Ajouter une marque"
+msgstr "إضافة ماركة"
 
 #: .\accounts\templates\sidenavbar.html:63
 msgid "Brand List"
-msgstr "Liste des marques"
+msgstr "قائمة الماركات"
 
 #: .\accounts\templates\sidenavbar.html:65
 msgid "Add Type"
-msgstr "Ajouter un type"
+msgstr "إضافة صنف"
 
 #: .\accounts\templates\sidenavbar.html:66
 msgid "Type List"
-msgstr "Liste des types"
+msgstr "قائمة الأصناف"
 
 #: .\accounts\templates\sidenavbar.html:68
 msgid "Add Vehicle"
-msgstr "Ajouter un véhicle"
+msgstr "إضافة سيارة"
 
 #: .\accounts\templates\sidenavbar.html:69
 msgid "Vehicle List"
-msgstr "Liste des véhicles"
+msgstr "قائمة السيارات"
 
 #: .\accounts\templates\sidenavbar.html:80
 #: .\billing\templates\billingsellorder\list_bill.html:16
@@ -349,17 +362,17 @@ msgstr "Liste des véhicles"
 #: .\stock\templates\stockproduct\order_vehicle.html:22
 #: .\vehicule\templates\vehicule\all_list_vehicule.html:17
 msgid "Customer"
-msgstr "Client"
+msgstr "الزبون"
 
 #: .\accounts\templates\sidenavbar.html:96
 msgid "Rdv"
-msgstr ""
+msgstr "موعد"
 
 #: .\accounts\templates\sidenavbar.html:112
 #: .\sellorder\templates\sellorder\sellorder_details.html:110
 #: .\sellorder\templates\sellorder\sellorders_pannes.html:32
 msgid "Panne"
-msgstr ""
+msgstr "عطل"
 
 #: .\accounts\templates\sidenavbar.html:128
 #: .\billing\templates\billingbuyorder\list_bill.html:16
@@ -371,7 +384,7 @@ msgstr ""
 #: .\payments\templates\payments\supplier_pay_list.html:14
 #: .\product\templates\product\details.html:56
 msgid "Supplier"
-msgstr "Fournisseur"
+msgstr "مورد"
 
 #: .\accounts\templates\sidenavbar.html:144
 #: .\buyorder\templates\buyorder\buyorder_confirmation.html:27
@@ -379,7 +392,7 @@ msgstr "Fournisseur"
 #: .\customer\templates\city\order_city_list.html:15
 #: .\supplier\templates\supplier\buyorder_list_supplier.html:15
 msgid "City"
-msgstr "Cité"
+msgstr "حي"
 
 #: .\accounts\templates\sidenavbar.html:160
 #: .\product\templates\product\all_product_list.html:22
@@ -389,51 +402,53 @@ msgstr "Cité"
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:25
 #: .\stock\templates\stockproduct\stock_alert_list.html:19
 msgid "Stock"
-msgstr ""
+msgstr "مخزن"
 
 #: .\accounts\templates\sidenavbar.html:176
 msgid "Product"
-msgstr "Produit"
+msgstr "منتج"
 
 #: .\accounts\templates\sidenavbar.html:192
 #: .\stock\templates\stockproduct\all_list_stockproduct.html:10
 msgid "Stock Products"
-msgstr "Produits du stock"
+msgstr "مخزن المنتوجات"
 
 #: .\accounts\templates\sidenavbar.html:208
 msgid "Buyorder"
-msgstr "Ordre d'achat"
+msgstr "أمر الشراء"
 
 #: .\accounts\templates\sidenavbar.html:224
 #: .\rdv\templates\panne\modal_order_list_panne.html:10
 #: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:10
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:10
 msgid "Sell Order"
-msgstr "Ordre de vente"
+msgstr "أمر البيع"
 
 #: .\accounts\templates\sidenavbar.html:232
 msgid "Add Proforma"
-msgstr "Ajout Proforma"
+msgstr "إضافة بروفورما"
 
 #: .\accounts\templates\sidenavbar.html:233
+#, fuzzy
+#| msgid "Brand List"
 msgid "Proforma List"
-msgstr "Liste des Proforma"
+msgstr "قائمة الماركات"
 
 #: .\accounts\templates\sidenavbar.html:235
 msgid "Facture List"
-msgstr "Liste des Factures"
+msgstr "قائمة الفواتير"
 
 #: .\accounts\templates\sidenavbar.html:247
 msgid "More Info"
-msgstr "Plus d'info"
+msgstr "معلومات أكثر"
 
 #: .\accounts\templates\sidenavbar.html:253
 msgid "Customers Payments"
-msgstr "Payement des Clients"
+msgstr "مدفوعات العملاء"
 
 #: .\accounts\templates\sidenavbar.html:260
 msgid "Suppliers Payments"
-msgstr "Payement des fournisseurs"
+msgstr "مدفوعات الموردين"
 
 #: .\billing\templates\billingbuyorder\list_bill.html:17
 #: .\billing\templates\billingsellorder\list_bill.html:17
@@ -448,7 +463,7 @@ msgstr "Payement des fournisseurs"
 #: .\sellorder\templates\sellorder\sellorder_details.html:87
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:36
 msgid "Total Price"
-msgstr "Prix total"
+msgstr "مجموع الثمن"
 
 #: .\billing\templates\billingbuyorder\list_bill.html:18
 #: .\billing\templates\billingsellorder\list_bill.html:18
@@ -457,7 +472,7 @@ msgstr "Prix total"
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:24
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:48
 msgid "Total Weight"
-msgstr "Total du poids"
+msgstr "مجموع الوزن"
 
 #: .\billing\templates\billingbuyorder\list_bill.html:33
 #: .\billing\templates\billingsellorder\list_bill.html:33
@@ -466,7 +481,7 @@ msgstr "Total du poids"
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:34
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:61
 msgid "KG"
-msgstr ""
+msgstr "كغ"
 
 #: .\billing\templates\billingbuyorder\list_bill.html:36
 #: .\buyorder\templates\buyorder\buyorder_details.html:15
@@ -474,21 +489,21 @@ msgstr ""
 #: .\sellorder\templates\sellorder\sellorder_details.html:16
 #: .\sellorder\templates\sellorder\sellorder_details.html:18
 msgid "Print"
-msgstr "Imprimer"
+msgstr "الطباعة"
 
 #: .\billing\templates\billingsellorder\list_bill.html:10
 msgid "Bills"
-msgstr "Factures"
+msgstr "الفواتير"
 
 #: .\buyorder\templates\buyorder\add_buyorder.html:13
 msgid "Create Order"
-msgstr "Créer un Ordre"
+msgstr "إنشاء أمر"
 
 #: .\buyorder\templates\buyorder\add_buyorder.html:31
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:24
 #: .\sellorder\templates\sellorder\sellorder_update.html:25
 msgid "New Product"
-msgstr "Nouveau Produit"
+msgstr "منتوج جديد"
 
 #: .\buyorder\templates\buyorder\add_buyorder.html:41
 #: .\product\templates\product\all_product_list.html:17
@@ -500,7 +515,7 @@ msgstr "Nouveau Produit"
 #: .\vehicule\templates\type\all_list_type.html:18
 #: .\vehicule\templates\vehicule\add_vehicule.html:58
 msgid "Brand"
-msgstr "Marque"
+msgstr "ماركة"
 
 #: .\buyorder\templates\buyorder\add_buyorder.html:42
 #: .\caisse\templates\caisse\transaction_list.html:43
@@ -527,7 +542,7 @@ msgstr "Marque"
 #: .\vehicule\templates\vehicule\add_vehicule.html:57
 #: .\vehicule\templates\vehicule\all_list_vehicule.html:16
 msgid "Name"
-msgstr "Nom"
+msgstr "الاسم"
 
 #: .\buyorder\templates\buyorder\add_buyorder.html:43
 #: .\product\templates\product\all_product_list.html:19
@@ -536,34 +551,34 @@ msgstr "Nom"
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:22
 #: .\stock\templates\stockproduct\stock_alert_list.html:17
 msgid "Ref"
-msgstr ""
+msgstr "رقم المرجعي"
 
 #: .\buyorder\templates\buyorder\add_buyorder.html:44
 #: .\buyorder\templates\buyorder\buyorder_confirmation.html:45
 #: .\rdv\templates\rdv\add_rdv.html:31
 msgid "Price DZD"
-msgstr "Prix en DZD"
+msgstr "الثمن د.ج"
 
 #: .\buyorder\templates\buyorder\add_buyorder.html:114
 #: .\rdv\templates\rdv\customer_list.html:99
 #: .\rdv\templates\rdv\vehicle_list.html:151
 #: .\rdv\templates\rdv\vehicle_list.html:192
 msgid "Close"
-msgstr "Fermer"
+msgstr "الاغلاق"
 
 #: .\buyorder\templates\buyorder\add_buyorder.html:115
 #: .\rdv\templates\rdv\customer_list.html:100
 #: .\rdv\templates\rdv\vehicle_list.html:152
 #: .\rdv\templates\rdv\vehicle_list.html:193
 msgid "Save changes"
-msgstr "Sauvegrder les changements"
+msgstr "حفظ التغيرات"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:9
 #: .\buyorder\templates\buyorder\buyorder_confirmation.html:10
 #: .\customer\templates\customer\detail.html:32
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:9
 msgid "Orders"
-msgstr "Ordres"
+msgstr "أوامر"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:22
 #: .\buyorder\templates\buyorder\buyorder_confirmation.html:25
@@ -580,7 +595,7 @@ msgstr "Ordres"
 #: .\sellorder\templates\sellorder\sellorder_details.html:25
 #: .\sellorder\templates\sellorder\sellorder_update.html:60
 msgid "Order ID"
-msgstr "Numéro d'ordre"
+msgstr "رقم الامر"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:43
 #: .\buyorder\templates\buyorder\buyorder_confirmation.html:44
@@ -591,7 +606,7 @@ msgstr "Numéro d'ordre"
 #: .\sellorder\templates\sellorder\sellorder_update.html:75
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:33
 msgid "Product Name"
-msgstr "Nom du produit"
+msgstr "إسم المنتوج"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:44
 #: .\buyorder\templates\buyorder\buyorder_details.html:50
@@ -607,7 +622,7 @@ msgstr "Nom du produit"
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:34
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:121
 msgid "Price"
-msgstr "Prix"
+msgstr "الثمن"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:45
 #: .\buyorder\templates\buyorder\buyorder_confirmation.html:46
@@ -624,12 +639,12 @@ msgstr "Prix"
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:26
 #: .\stock\templates\stockproduct\stock_alert_list.html:20
 msgid "Quantity"
-msgstr "Quantité"
+msgstr "الكمية"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:46
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:47
 msgid "Total Cost"
-msgstr "Cout total"
+msgstr "مجموع الكلفة"
 
 #: .\buyorder\templates\buyorder\buyorder_confirmation.html:19
 #: .\buyorder\templates\buyorder\list_buyorder.html:22
@@ -638,14 +653,14 @@ msgstr "Cout total"
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:44
 #: .\sellorder\templates\sellorder\sellorder_update.html:50
 msgid "TVA"
-msgstr ""
+msgstr "الضريبة"
 
 #: .\buyorder\templates\buyorder\buyorder_confirmation.html:28
 #: .\buyorder\templates\buyorder\buyorder_details.html:33
 #: .\buyorder\templates\buyorder\list_buyorder.html:20
 #: .\sellorder\templates\sellorder\sellorder_details.html:37
 msgid "Paid"
-msgstr "Payé"
+msgstr "مدفوع"
 
 #: .\buyorder\templates\buyorder\buyorder_delete.html:13
 #: .\caisse\templates\caisse\transaction_delete.html:13
@@ -666,7 +681,7 @@ msgstr "Payé"
 #: .\vehicule\templates\type\delete_type.html:13
 #: .\vehicule\templates\vehicule\delete_vehicule.html:13
 msgid "ARE YOU SURE YOU WANT TO DELETE"
-msgstr "Voulez-vous vraiment supprimer "
+msgstr "هل تريد حقا الحذف؟"
 
 #: .\buyorder\templates\buyorder\buyorder_delete.html:17
 #: .\category\templates\category\delete_category.html:18
@@ -685,13 +700,13 @@ msgstr "Voulez-vous vraiment supprimer "
 #: .\vehicule\templates\type\delete_type.html:17
 #: .\vehicule\templates\vehicule\delete_vehicule.html:17
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "إلغاء"
 
 #: .\buyorder\templates\buyorder\buyorder_details.html:10
 #: .\customer\templates\customer\detail.html:9
 #: .\sellorder\templates\sellorder\sellorder_details.html:10
 msgid "Order Details"
-msgstr "Détails de l'ordre"
+msgstr "تفاصيل الأمر"
 
 #: .\buyorder\templates\buyorder\buyorder_details.html:29
 #: .\buyorder\templates\buyorder\list_buyorder.html:19
@@ -703,7 +718,7 @@ msgstr "Détails de l'ordre"
 #: .\supplier\templates\supplier\list_supplier.html:17
 #: .\vehicule\templates\vehicule\add_vehicule.html:22
 msgid "Phone"
-msgstr "Téléphone"
+msgstr "الهاتف"
 
 #: .\buyorder\templates\buyorder\buyorder_details.html:48
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:68
@@ -711,7 +726,7 @@ msgstr "Téléphone"
 #: .\sellorder\templates\sellorder\sellorder_update.html:74
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:32
 msgid "Product Brand"
-msgstr "Marque du produit"
+msgstr "اسم الماركة"
 
 #: .\buyorder\templates\buyorder\list_buyorder.html:21
 #: .\sellorder\templates\sellorder\list_sellorder.html:20
@@ -736,7 +751,7 @@ msgstr ""
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:24
 #: .\sellorder\templates\sellorder\sellorder_details.html:72
 msgid "Debt"
-msgstr "Dette"
+msgstr "الديون"
 
 #: .\buyorder\templates\buyorder\list_buyorder.html:44
 #: .\customer\templates\city\list_city.html:25
@@ -754,13 +769,13 @@ msgstr "Dette"
 #: .\vehicule\templates\type\list_type.html:44
 #: .\vehicule\templates\vehicule\all_list_vehicule.html:45
 msgid "Update"
-msgstr "Mis à jour"
+msgstr "تحديثات"
 
 #: .\buyorder\templates\buyorder\list_buyorder.html:46
 #: .\customer\templates\customer\detail.html:100
 #: .\sellorder\templates\sellorder\list_sellorder.html:58
 msgid "Confirm"
-msgstr "Confirmer"
+msgstr "التأكيد"
 
 #: .\buyorder\templates\buyorder\list_buyorder.html:51
 #: .\customer\templates\customer\detail.html:60
@@ -769,8 +784,10 @@ msgstr "Confirmer"
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:49
 #: .\sellorder\templates\sellorder\sellorder_details.html:12
 #: .\supplier\templates\supplier\list_supplier.html:45
+#, fuzzy
+#| msgid "Debt"
 msgid "PayDebt"
-msgstr "Dette payé"
+msgstr "الديون"
 
 #: .\buyorder\templates\buyorder\list_buyorder.html:55
 #: .\caisse\templates\caisse\transaction_list.html:107
@@ -788,7 +805,7 @@ msgstr "Dette payé"
 #: .\sellorder\templates\sellorder\list_sellorder.html:68
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:54
 msgid "Details"
-msgstr "Détails"
+msgstr "التفاصيل"
 
 #: .\buyorder\templates\buyorder\list_buyorder.html:58
 #: .\caisse\templates\caisse\transaction_list.html:62
@@ -809,29 +826,29 @@ msgstr "Détails"
 #: .\vehicule\templates\vehicule\all_list_vehicule.html:48
 #: .\venv\Lib\site-packages\django\forms\formsets.py:391
 msgid "Delete"
-msgstr "Supprimer"
+msgstr "حذف"
 
 #: .\caisse\templates\caisse\transaction_list.html:19
 msgid "Transactions"
-msgstr ""
+msgstr "التحويل"
 
 #: .\caisse\templates\caisse\transaction_list.html:22
 msgid "Income"
-msgstr "Revenu"
+msgstr "المخرجات"
 
 #: .\caisse\templates\caisse\transaction_list.html:24
 msgid "Expense"
-msgstr "Dépense"
+msgstr "المصاريف"
 
 #: .\caisse\templates\caisse\transaction_list.html:26
 msgid "TOTAL"
-msgstr ""
+msgstr "المجموع"
 
 #: .\caisse\templates\caisse\transaction_list.html:31
 #: .\sellorder\templates\sellorder\sellorders_pannes.html:20
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:20
 msgid "Pick a Date"
-msgstr "Choisis une date"
+msgstr "إختيار التاريخ"
 
 #: .\caisse\templates\caisse\transaction_list.html:44
 #: .\caisse\templates\caisse\transaction_list.html:78
@@ -843,14 +860,14 @@ msgstr "Choisis une date"
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:39
 #: .\sellorder\templates\sellorder\sellorder_update.html:45
 msgid "Amount"
-msgstr "Montant"
+msgstr "الملبغ"
 
 #: .\caisse\templates\caisse\transaction_list.html:45
 #: .\rdv\templates\rdv\vehicle_list.html:30
 #: .\stock\templates\stockproduct\order_vehicle.html:23
 #: .\vehicule\templates\vehicule\all_list_vehicule.html:18
 msgid "Type"
-msgstr ""
+msgstr "النوع"
 
 #: .\caisse\templates\caisse\transaction_list.html:46
 #: .\customer\templates\customer\detail.html:161
@@ -862,15 +879,17 @@ msgstr ""
 #: .\sellorder\templates\sellorder\list_sellorder.html:17
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:17
 msgid "Date"
-msgstr ""
+msgstr "التاريخ"
 
 #: .\caisse\templates\caisse\transaction_list.html:47
 msgid "Date Created"
-msgstr "Date crée"
+msgstr "تاريخ الإنشاء"
 
 #: .\caisse\templates\caisse\transaction_list.html:67
+#, fuzzy
+#| msgid "No Elements Found"
 msgid "No Elements"
-msgstr "Aucun éléments"
+msgstr "لا يوجد أي عنصر"
 
 #: .\caisse\templates\caisse\transaction_list.html:75
 #: .\payments\templates\payments\customer\payment_list.html:16
@@ -878,44 +897,46 @@ msgstr "Aucun éléments"
 #: .\venv\Lib\site-packages\django\forms\formsets.py:379
 #: .\venv\Lib\site-packages\django\forms\formsets.py:386
 msgid "Order"
-msgstr "Ordre"
+msgstr "طلب"
 
 #: .\caisse\templates\caisse\transaction_list.html:77
 #: .\caisse\templates\caisse\transaction_list.html:118
 #: .\payments\templates\payments\customer\payment_list.html:18
 #: .\payments\templates\payments\supplier\payment_list.html:17
 msgid "Pay Status"
-msgstr "Status des payments"
+msgstr "حالة الدفع"
 
 #: .\caisse\templates\caisse\transaction_list.html:79
 #: .\caisse\templates\caisse\transaction_list.html:120
 #: .\payments\templates\payments\customer\payment_list.html:20
 #: .\payments\templates\payments\supplier\payment_list.html:19
 msgid "Created"
-msgstr "Crée"
+msgstr "أنشئت"
 
 #: .\caisse\templates\caisse\transaction_list.html:80
 #: .\caisse\templates\caisse\transaction_list.html:121
 #: .\payments\templates\payments\customer\payment_list.html:21
 #: .\payments\templates\payments\supplier\payment_list.html:20
 msgid "Payed"
-msgstr "Payé"
+msgstr "دفعت"
 
 #: .\category\templates\category\list_category.html:11
 msgid "Families"
-msgstr "Familles"
+msgstr "العائلات"
 
 #: .\customer\templates\city\list_city.html:10
 #: .\customer\templates\city\order_city_list.html:10
 msgid "Cities"
-msgstr "Cités"
+msgstr "الأحياء"
 
 #: .\customer\templates\city\order_city_list.html:25
 #: .\customer\templates\customer\sellorder_list_customer.html:29
 #: .\product\templates\product\details.html:22
 #: .\supplier\templates\supplier\buyorder_list_supplier.html:26
+#, fuzzy
+#| msgid "Bills"
 msgid "Bill"
-msgstr "Facture"
+msgstr "الفواتير"
 
 #: .\customer\templates\customer\detail.html:18
 #: .\customer\templates\customer\detail.html:39
@@ -926,23 +947,27 @@ msgstr "Facture"
 #: .\supplier\templates\supplier\list_supplier.html:18
 #: .\vehicule\templates\vehicule\add_vehicule.html:23
 msgid "Address"
-msgstr "Adresse"
+msgstr "العنوان"
 
 #: .\customer\templates\customer\detail.html:40
 #: .\customer\templates\customer\detail.html:81
 #: .\customer\templates\customer\detail.html:120
 #: .\sellorder\templates\sellorder\list_sellorder.html:18
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:18
+#, fuzzy
+#| msgid "Total Price"
 msgid "Total Piece"
-msgstr "Total des pièces"
+msgstr "مجموع الثمن"
 
 #: .\customer\templates\customer\detail.html:41
 #: .\customer\templates\customer\detail.html:82
 #: .\customer\templates\customer\detail.html:121
 #: .\sellorder\templates\sellorder\list_sellorder.html:19
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:19
+#, fuzzy
+#| msgid "Total Price"
 msgid "Total Panne"
-msgstr "Total des pannes"
+msgstr "مجموع الثمن"
 
 #: .\customer\templates\customer\detail.html:42
 #: .\customer\templates\customer\detail.html:83
@@ -952,63 +977,67 @@ msgstr "Total des pannes"
 #: .\sellorder\templates\sellorder\sellorders_pannes.html:15
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:15
 msgid "Total"
-msgstr ""
+msgstr "المجموع"
 
 #: .\customer\templates\customer\detail.html:73
 msgid "Proforma Orders"
-msgstr "Ordres Proforma"
+msgstr ""
 
 #: .\customer\templates\customer\detail.html:111
+#, fuzzy
+#| msgid "Sell Orders"
 msgid "Billed Orders"
-msgstr "Ordres facturés"
+msgstr "أمر البيع"
 
 #: .\customer\templates\customer\detail.html:116
+#, fuzzy
+#| msgid "Bills"
 msgid "Bill ID"
-msgstr "Numéro de Facture"
+msgstr "الفواتير"
 
 #: .\customer\templates\customer\detail.html:154
 msgid "RDVs"
-msgstr "Les RDV"
+msgstr "مواعيد"
 
 #: .\customer\templates\customer\detail.html:159
 #: .\rdv\templates\rdv\rdv_detail.html:15 .\rdv\templates\rdv\rdv_list.html:15
 msgid "RDV ID"
-msgstr "Numéro de RDV"
+msgstr "رقم الموعد"
 
 #: .\customer\templates\customer\detail.html:162
 #: .\rdv\templates\rdv\rdv_detail.html:31 .\rdv\templates\rdv\rdv_list.html:19
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2088
 msgid "Time"
-msgstr "temps"
+msgstr "التوقيت"
 
 #: .\customer\templates\customer\list_customer.html:19
 #: .\rdv\templates\rdv\customer_list.html:31
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:73
 #: .\vehicule\templates\vehicule\add_vehicule.html:24
 msgid "Email"
-msgstr ""
+msgstr "البريد الالكتروني"
 
 #: .\payments\templates\payments\customer\create_payment.html:12
 msgid "Customer Payment"
-msgstr "Payement du Client"
+msgstr "دفع الزبون"
 
 #: .\payments\templates\payments\customer\payment_list.html:10
 #: .\payments\templates\payments\supplier\payment_list.html:10
 msgid "Payments"
-msgstr "Payements"
+msgstr "المدفوعات"
 
 #: .\payments\templates\payments\supplier\create_cheque.html:12
 msgid "Payment Form"
-msgstr "Form du payment"
+msgstr "نوع الدفع"
 
 #: .\payments\templates\payments\supplier\create_payment.html:12
 msgid "Supplier Payment"
-msgstr "Payement du fournisseur"
+msgstr "دفع المورد"
 
 #: .\product\templates\product\all_product_list.html:10
 #: .\sellorder\templates\sellorder\sellorder_details.html:78
 msgid "Products"
-msgstr "Produits"
+msgstr "منتوجات"
 
 #: .\product\templates\product\all_product_list.html:16
 #: .\product\templates\product\list_product.html:15
@@ -1019,39 +1048,41 @@ msgstr "Produits"
 #: .\vehicule\templates\vehicule\add_vehicule.html:56
 #: .\venv\Lib\site-packages\django\db\models\fields\files.py:379
 msgid "Image"
-msgstr ""
+msgstr "صورة"
 
 #: .\product\templates\product\all_product_list.html:20
 #: .\product\templates\product\list_product.html:18
 #: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:23
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:23
 msgid "Sell Price"
-msgstr "Prix de vente"
+msgstr "ثمن الشراء"
 
 #: .\product\templates\product\all_product_list.html:21
 #: .\product\templates\product\list_product.html:19
 #: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:24
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:24
 msgid "Buy Price"
-msgstr "Prix d'achat"
+msgstr "ثمن البيع"
 
 #: .\product\templates\product\list_product.html:17
 msgid "Category"
-msgstr "Catégorie"
+msgstr "صنف"
 
 #: .\rdv\templates\panne\modal_order_list_panne.html:15
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:114
+#, fuzzy
+#| msgid "Choose Products"
 msgid "Choose Pannes"
-msgstr "Choisis les pannes"
+msgstr "اختيار المنتجات"
 
 #: .\rdv\templates\panne\panne_list.html:10
 #: .\sellorder\templates\sellorder\sellorder_details.html:105
 msgid "Pannes"
-msgstr ""
+msgstr "أعطال"
 
 #: .\rdv\templates\rdv\add_rdv.html:13
 msgid "Create Appointment"
-msgstr "Créer un RDV"
+msgstr "إنشاء موعد"
 
 #: .\rdv\templates\rdv\add_rdv.html:30
 msgid "Desc"
@@ -1059,131 +1090,151 @@ msgstr ""
 
 #: .\rdv\templates\rdv\customer_list.html:18
 #: .\rdv\templates\rdv\customer_list.html:70
+#, fuzzy
+#| msgid "Customer"
 msgid "New Customer"
-msgstr "Nouveau Client"
+msgstr "الزبون"
 
 #: .\rdv\templates\rdv\customer_list.html:23
 #: .\vehicule\templates\vehicule\add_vehicule.html:16
 msgid "Choose a Customer"
-msgstr "Choisis un Client"
+msgstr "إختيار الزبون"
 
 #: .\rdv\templates\rdv\rdv_detail.html:10
 msgid "Appointments Details"
-msgstr "Détails du RDV"
+msgstr "تفاصيل المواعيد"
 
 #: .\rdv\templates\rdv\rdv_detail.html:44
 msgid "Description"
-msgstr "Déscription"
+msgstr "تفاصيل"
 
 #: .\rdv\templates\rdv\rdv_detail.html:63
 msgid "No Elements Found"
-msgstr "Aucun éléments trouvé"
+msgstr "لا يوجد أي عنصر"
 
 #: .\rdv\templates\rdv\rdv_list.html:9
 msgid "Appointments"
-msgstr "Les RDV"
+msgstr "المواعيد"
 
 #: .\rdv\templates\rdv\vehicle_list.html:11
 #: .\vehicule\templates\vehicule\add_vehicule.html:10
 #: .\vehicule\templates\vehicule\all_list_vehicule.html:10
 msgid "Vehicles"
-msgstr "Véhicles"
+msgstr "سيارات"
 
 #: .\rdv\templates\rdv\vehicle_list.html:18
 #: .\rdv\templates\rdv\vehicle_list.html:78
+#, fuzzy
+#| msgid "Vehicle"
 msgid "New Vehicle"
-msgstr "Nouveau véhicle"
+msgstr "سيارة"
 
 #: .\rdv\templates\rdv\vehicle_list.html:31
 #: .\stock\templates\stockproduct\order_vehicle.html:24
 #: .\vehicule\templates\vehicule\all_list_vehicule.html:19
 msgid "Matriculation"
-msgstr ""
+msgstr "الرقم التسلسلي"
 
 #: .\rdv\templates\rdv\vehicle_list.html:32
 #: .\stock\templates\stockproduct\order_vehicle.html:25
 #: .\vehicule\templates\vehicule\all_list_vehicule.html:20
 msgid "Cart Gris"
-msgstr "Carte grise"
+msgstr "البطاقة الرمادية"
 
 #: .\rdv\templates\rdv\vehicle_list.html:88
 #: .\vehicule\templates\vehicule\add_vehicule.html:51
 msgid "Choose a Car Type"
-msgstr "Choisis le type de voiture"
+msgstr "اختار نوع السيارة"
 
 #: .\rdv\templates\rdv\vehicle_list.html:93
 #: .\rdv\templates\rdv\vehicle_list.html:163
+#, fuzzy
+#| msgid "Type"
 msgid "New Type"
-msgstr "Nouveau type"
+msgstr "النوع"
 
 #: .\sellorder\templates\sellorder\list_sellorder.html:22
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:22
 #: .\sellorder\templates\sellorder\sellorder_details.html:60
 msgid "Discount"
-msgstr "Remise"
+msgstr "تخفيض"
 
 #: .\sellorder\templates\sellorder\list_sellorder.html:51
 msgid "Facture"
-msgstr ""
+msgstr "فاتورة"
 
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:9
+#, fuzzy
+#| msgid "Sell Orders"
 msgid "Sell Orders Facture"
-msgstr "Facture des ordres de vente"
+msgstr "أمر البيع"
 
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:15
 msgid "Facture ID"
-msgstr "Numéro de la facture"
+msgstr "رقم الفاتورة"
 
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:10
 #: .\sellorder\templates\sellorder\sellorder_update.html:10
 msgid "Order Confirmation"
-msgstr "Confirmation d'ordre"
+msgstr "تأكيد الأمر"
 
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:38
 #: .\sellorder\templates\sellorder\sellorder_update.html:44
 msgid "Percentage"
-msgstr "Poursentage"
+msgstr "النسبة المئوية"
 
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:48
 #: .\sellorder\templates\sellorder\sellorder_details.html:64
 #: .\sellorder\templates\sellorder\sellorder_update.html:54
 msgid "Timbre"
-msgstr ""
+msgstr "الطابع"
 
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:70
 #: .\sellorder\templates\sellorder\sellorder_update.html:76
+#, fuzzy
+#| msgid "Sell Price"
 msgid "Sell Price DZD"
-msgstr "Prix de vente en DZD"
+msgstr "ثمن الشراء"
 
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:71
 #: .\sellorder\templates\sellorder\sellorder_update.html:77
+#, fuzzy
+#| msgid "Price DZD"
 msgid "Buy Price DZD"
-msgstr "Prix d'achat en DZD "
+msgstr "الثمن د.ج"
 
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:102
 #: .\sellorder\templates\sellorder\sellorder_update.html:117
+#, fuzzy
+#| msgid "Mon"
 msgid "Mo"
-msgstr ""
+msgstr "الإثـ"
 
 #: .\sellorder\templates\sellorder\sellorder_details.html:41
 msgid "Confirmed"
-msgstr "Confirmer"
+msgstr "مثبتة"
 
 #: .\sellorder\templates\sellorder\sellorder_details.html:45
+#, fuzzy
+#| msgid "Bills"
 msgid "Billed"
-msgstr "facturé"
+msgstr "الفواتير"
 
 #: .\sellorder\templates\sellorder\sellorder_details.html:56
 msgid "Tva"
-msgstr ""
+msgstr "الضريبة"
 
 #: .\sellorder\templates\sellorder\sellorder_facture.html:13
+#, fuzzy
+#| msgid "ARE YOU SURE YOU WANT TO DELETE"
 msgid "ARE YOU SURE YOU WANT TO FACTURE"
-msgstr "Etes vous sure de la facturtion"
+msgstr "هل تريد حقا الحذف؟"
 
 #: .\sellorder\templates\sellorder\sellorder_update.html:30
+#, fuzzy
+#| msgid "Panne"
 msgid "New Panne"
-msgstr "Nouveau panne"
+msgstr "عطل"
 
 #: .\sellorder\templates\sellorder\sellorders_pannes.html:11
 msgid "Today MO"
@@ -1191,68 +1242,68 @@ msgstr ""
 
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:11
 msgid "Today Pieces"
-msgstr "Les pièces d'aujourd'hui"
+msgstr "قطع غيار اليوم"
 
 #: .\stock\templates\stock\list_stock.html:10
 msgid "Stocks"
-msgstr "Stocks"
+msgstr "المخازن"
 
 #: .\stock\templates\stockproduct\list_stockproduct.html:10
 msgid "Categories"
-msgstr "Categories"
+msgstr "الأصناف"
 
 #: .\stock\templates\stockproduct\list_stockproduct.html:51
 msgid "Add to cart"
-msgstr "Ajouter au panier"
+msgstr "الاضافة الى السلة"
 
 #: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:15
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:15
 msgid "Choose Products"
-msgstr "Choisis les produits"
+msgstr "اختيار المنتجات"
 
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:65
 #: .\stock\templates\stockproduct\order_vehicle.html:15
 msgid "Choose Customers"
-msgstr "Choisis des Clients"
+msgstr "اختيار الزبائن"
 
 #: .\stock\templates\stockproduct\order_list_stockproduct.html:72
 msgid "Adress"
-msgstr "Adresse"
+msgstr "العنوان"
 
 #: .\stock\templates\stockproduct\stock_alert_list.html:10
 msgid "Stock Products Alert"
-msgstr "Alerte des produits en stock"
+msgstr "تنبيه منتجات المخزن"
 
 #: .\supplier\templates\supplier\list_supplier.html:15
 msgid "First Name"
-msgstr "Prénom"
+msgstr "اللقب"
 
 #: .\supplier\templates\supplier\list_supplier.html:16
 msgid "Last Name"
-msgstr "Nom de famille"
+msgstr "الاسم"
 
 #: .\supplier\templates\supplier\list_supplier.html:19
 msgid "Credit"
-msgstr "Crédit"
+msgstr "الدين"
 
 #: .\vehicule\templates\brand\list_brand.html:10
 #: .\vehicule\templates\type\list_type.html:9
 msgid "Brands"
-msgstr "Marques"
+msgstr "الماركات"
 
 #: .\vehicule\templates\type\all_list_type.html:10
 msgid "Types"
-msgstr ""
+msgstr "الانواع"
 
 #: .\vehicule\templates\vehicule\add_vehicule.html:86
 msgid "Fill The Info"
-msgstr ""
+msgstr "إملاء المعلومات"
 
 #: .\venv\Lib\site-packages\crispy_forms\tests\test_form_helper.py:129
 #: .\venv\Lib\site-packages\crispy_forms\tests\test_form_helper.py:139
 #: .\venv\Lib\site-packages\django\forms\fields.py:54
 msgid "This field is required."
-msgstr "Le champ est obligatoire"
+msgstr "هذا الحقل إجباري"
 
 #: .\venv\Lib\site-packages\crispy_forms\tests\test_layout.py:389
 msgid "i18n text"
@@ -1265,94 +1316,94 @@ msgstr ""
 #: .\venv\Lib\site-packages\crispy_forms\tests\test_layout_objects.py:132
 #: .\venv\Lib\site-packages\django\core\validators.py:20
 msgid "Enter a valid value."
-msgstr "Inserer une valeur valide"
+msgstr "إعط قيمة صحيحة"
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:7
 msgid "Messages"
-msgstr ""
+msgstr "الرسائل"
 
 #: .\venv\Lib\site-packages\django\contrib\sitemaps\apps.py:7
 msgid "Site Maps"
-msgstr ""
+msgstr "موقع الخرائط"
 
 #: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
 msgid "Static Files"
-msgstr "Les statistiques des fichiers"
+msgstr "ملفات ثابتة"
 
 #: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
 msgid "Syndication"
-msgstr ""
+msgstr "خلاصات"
 
 #: .\venv\Lib\site-packages\django\core\paginator.py:48
 msgid "That page number is not an integer"
-msgstr "Le Numéro n'est pas un entier"
+msgstr "الرقم المدرج ليس قيمة صحيحة"
 
 #: .\venv\Lib\site-packages\django\core\paginator.py:50
 msgid "That page number is less than 1"
-msgstr "Le nombre est inférieur à 1"
+msgstr "رقم الصفحة أقل من 1"
 
 #: .\venv\Lib\site-packages\django\core\paginator.py:55
 msgid "That page contains no results"
-msgstr "Aucun résultat sur la page"
+msgstr "لا توجد نتائج في هذه الصفحة"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:91
 #: .\venv\Lib\site-packages\django\forms\fields.py:671
 msgid "Enter a valid URL."
-msgstr "Donner un url valide"
+msgstr "أدخل رابط صحيح"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:145
 msgid "Enter a valid integer."
-msgstr ""
+msgstr "أدخل قيمة صحيحة"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:156
 msgid "Enter a valid email address."
-msgstr ""
+msgstr "أدخل بريد إلكتروني صحيح"
 
 #. Translators: "letters" means latin letters: a-z and A-Z.
 #: .\venv\Lib\site-packages\django\core\validators.py:230
 msgid ""
 "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
-msgstr ""
+msgstr "أدخل قيمة صحيحة"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:237
 msgid ""
 "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
 "hyphens."
-msgstr ""
+msgstr "أدخل قيمة صحيحة"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:246
 #: .\venv\Lib\site-packages\django\core\validators.py:266
 msgid "Enter a valid IPv4 address."
-msgstr ""
+msgstr " أدخل IPv4 صحيح "
 
 #: .\venv\Lib\site-packages\django\core\validators.py:251
 #: .\venv\Lib\site-packages\django\core\validators.py:267
 msgid "Enter a valid IPv6 address."
-msgstr ""
+msgstr "أدخل قيمة IPv6 صحيحة"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:261
 #: .\venv\Lib\site-packages\django\core\validators.py:265
 msgid "Enter a valid IPv4 or IPv6 address."
-msgstr ""
+msgstr "أدخل قيمة IPv6 صحيحة "
 
 #: .\venv\Lib\site-packages\django\core\validators.py:295
 msgid "Enter only digits separated by commas."
-msgstr ""
+msgstr "أدخل أرقام مفصولة بفاصلة"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:301
 #, python-format
 msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-msgstr ""
+msgstr "تأكد من القيمة"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:334
 #, python-format
 msgid "Ensure this value is less than or equal to %(limit_value)s."
-msgstr ""
+msgstr "تأكد من أن القيمة %(limit_value) أقل أو يساوي "
 
 #: .\venv\Lib\site-packages\django\core\validators.py:343
 #, python-format
 msgid "Ensure this value is greater than or equal to %(limit_value)s."
-msgstr ""
+msgstr "تأكد من أن القيمة %(limit_value) أكبر أو يساوي"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:353
 #, python-format
@@ -1380,7 +1431,7 @@ msgstr[1] ""
 #: .\venv\Lib\site-packages\django\forms\fields.py:292
 #: .\venv\Lib\site-packages\django\forms\fields.py:327
 msgid "Enter a number."
-msgstr ""
+msgstr "أدخل رقم"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:389
 #, python-format
@@ -1410,39 +1461,39 @@ msgstr[1] ""
 msgid ""
 "File extension “%(extension)s” is not allowed. Allowed extensions are: "
 "%(allowed_extensions)s."
-msgstr ""
+msgstr "الملف ليس مسموح بالتحميل"
 
 #: .\venv\Lib\site-packages\django\core\validators.py:513
 msgid "Null characters are not allowed."
-msgstr ""
+msgstr "الرمز المدرج غير مسموح به "
 
 #: .\venv\Lib\site-packages\django\db\models\base.py:1190
 #: .\venv\Lib\site-packages\django\forms\models.py:760
 msgid "and"
-msgstr ""
+msgstr "و"
 
 #: .\venv\Lib\site-packages\django\db\models\base.py:1192
 #, python-format
 msgid "%(model_name)s with this %(field_labels)s already exists."
-msgstr ""
+msgstr " موجود سابقا"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:100
 #, python-format
 msgid "Value %(value)r is not a valid choice."
-msgstr ""
+msgstr "الاختيار ليس صحيح"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:101
 msgid "This field cannot be null."
-msgstr ""
+msgstr " لا يجب ان تكون الخانة فارغة أو غير معرفة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:102
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "هذه الخانة لا يجب ان تكون فارغة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:103
 #, python-format
 msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
+msgstr "موجود سابقا"
 
 #. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
 #. Eg: "Title must be unique for pub_date year"
@@ -1450,7 +1501,7 @@ msgstr ""
 #, python-format
 msgid ""
 "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
+msgstr " يجب ان يكون الرمز وحيد"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:126
 #, python-format
@@ -1460,16 +1511,16 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:939
 #, python-format
 msgid "“%(value)s” value must be either True or False."
-msgstr ""
+msgstr " “%(value)s” يجب ان تكون صح أو خطأ"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:940
 #, python-format
 msgid "“%(value)s” value must be either True, False, or None."
-msgstr ""
+msgstr "“%(value)s” يجب ان تكون صح أو خطأ"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:942
 msgid "Boolean (Either True or False)"
-msgstr ""
+msgstr "قيمة منطقية (صح أو خطأ)"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:983
 #, python-format
@@ -1478,14 +1529,14 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1047
 msgid "Comma-separated integers"
-msgstr ""
+msgstr "فاصلة بين الارقام"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1096
 #, python-format
 msgid ""
 "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
 "format."
-msgstr ""
+msgstr "قيمة التاريخ غير معرفة, يجب ان تكون من الشكل ي ي-ش ش - السنة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1098
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1241
@@ -1493,62 +1544,62 @@ msgstr ""
 msgid ""
 "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
 "date."
-msgstr ""
+msgstr "تاكد من صحة التاريخ"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1101
 msgid "Date (without time)"
-msgstr ""
+msgstr "التاريخ بدون وقت"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1239
 #, python-format
 msgid ""
 "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
 "uuuuuu]][TZ] format."
-msgstr ""
+msgstr "القيمة خاطئة, يجب أن تكون YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] "
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1243
 #, python-format
 msgid ""
 "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
 "[TZ]) but it is an invalid date/time."
-msgstr ""
+msgstr "القيمة خاطئة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1247
 msgid "Date (with time)"
-msgstr ""
+msgstr "التاريخ مع التوقيت"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1395
 #, python-format
 msgid "“%(value)s” value must be a decimal number."
-msgstr ""
+msgstr "“%(value)s” يجب ان يكون الرقم عشري"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1397
 msgid "Decimal number"
-msgstr ""
+msgstr "رقم عشري"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1536
 #, python-format
 msgid ""
 "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
 "uuuuuu] format."
-msgstr ""
+msgstr " [DD] [[HH:]MM:]ss[.uuuuuu]القيمة خاطئة. يجب ان تكون "
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1539
 msgid "Duration"
-msgstr ""
+msgstr "المدة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1589
 msgid "Email address"
-msgstr ""
+msgstr "البريد الالكتروني"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1612
 msgid "File path"
-msgstr ""
+msgstr "طريق الملف"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1678
 #, python-format
 msgid "“%(value)s” value must be a float."
-msgstr ""
+msgstr "“%(value)s” القيمة يجب ان تكون حقيقية"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1680
 msgid "Floating point number"
@@ -1557,11 +1608,11 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1718
 #, python-format
 msgid "“%(value)s” value must be an integer."
-msgstr ""
+msgstr "“%(value)s” يجب ان يكون طبيعي"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1720
 msgid "Integer"
-msgstr ""
+msgstr "طبيعي"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1803
 msgid "Big (8 byte) integer"
@@ -1573,29 +1624,29 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1850
 msgid "IP address"
-msgstr ""
+msgstr "عنوان IP"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1930
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1931
 #, python-format
 msgid "“%(value)s” value must be either None, True or False."
-msgstr ""
+msgstr "قيمة منطقية"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1933
 msgid "Boolean (Either True, False or None)"
-msgstr ""
+msgstr "قيمة منطقية"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1976
 msgid "Positive big integer"
-msgstr ""
+msgstr " قيمة إيجابية كبيرة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1989
 msgid "Positive integer"
-msgstr ""
+msgstr "قيمة ايجابية"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2002
 msgid "Positive small integer"
-msgstr ""
+msgstr "قيمة إيجابية صغيرة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2016
 #, python-format
@@ -1604,29 +1655,29 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2048
 msgid "Small integer"
-msgstr ""
+msgstr "رقم صغيرة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2055
 msgid "Text"
-msgstr ""
+msgstr "نص"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2083
 #, python-format
 msgid ""
 "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
 "format."
-msgstr ""
+msgstr "الصيغة غير صحيحة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2085
 #, python-format
 msgid ""
 "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
 "invalid time."
-msgstr ""
+msgstr "التوقيت غير صحيح"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2214
 msgid "URL"
-msgstr ""
+msgstr "رابط"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2236
 msgid "Raw binary data"
@@ -1635,15 +1686,15 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2301
 #, python-format
 msgid "“%(value)s” is not a valid UUID."
-msgstr ""
+msgstr "غير معرفة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2303
 msgid "Universally unique identifier"
-msgstr ""
+msgstr "رقم وحيد"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\files.py:231
 msgid "File"
-msgstr ""
+msgstr "ملف"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\json.py:18
 msgid "A JSON object"
@@ -1651,20 +1702,20 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\json.py:20
 msgid "Value must be valid JSON."
-msgstr ""
+msgstr "القيمة يجب ان تكون JSON"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\related.py:790
 #, python-format
 msgid "%(model)s instance with %(field)s %(value)r does not exist."
-msgstr ""
+msgstr "القيمة غير موجودة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\related.py:792
 msgid "Foreign Key (type determined by related field)"
-msgstr ""
+msgstr "المفتاح غريب"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\related.py:1045
 msgid "One-to-one relationship"
-msgstr ""
+msgstr "علاقة نقطة لنقطة"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\related.py:1099
 #, python-format
@@ -1678,7 +1729,7 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\related.py:1142
 msgid "Many-to-many relationship"
-msgstr ""
+msgstr "العديد من العلاقات"
 
 #. Translators: If found as last label character, these punctuation
 #. characters will prevent the default label_suffix to be appended to the label
@@ -1688,42 +1739,42 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:247
 msgid "Enter a whole number."
-msgstr "Inserer utout le nombre"
+msgstr "ادخل القيمة ككل"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:398
 #: .\venv\Lib\site-packages\django\forms\fields.py:1139
 msgid "Enter a valid date."
-msgstr "Inserer une date valide"
+msgstr "ادخل تاريخ صحيح"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:422
 #: .\venv\Lib\site-packages\django\forms\fields.py:1140
 msgid "Enter a valid time."
-msgstr "Inserer une temps valide"
+msgstr "ادخل توقيت صحيح"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:450
 msgid "Enter a valid date/time."
-msgstr "Inserer une duré/horaire valide"
+msgstr "ادخل تاريخ و توقيت صحيح"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:484
 msgid "Enter a valid duration."
-msgstr "Inserer une duré valide"
+msgstr "ادخل مدة صحيحة"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:485
 #, python-brace-format
 msgid "The number of days must be between {min_days} and {max_days}."
-msgstr "Vérifier le nombre de jours"
+msgstr "التاريخ يجب ان يكون بين {min_days} و {max_days}"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:545
 msgid "No file was submitted. Check the encoding type on the form."
-msgstr "Auncun fichier n'est soumi"
+msgstr "لا يوجد ملف محمل"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:546
 msgid "No file was submitted."
-msgstr "Pas de fichier soumi"
+msgstr "لا يوجد ملف محمل"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:547
 msgid "The submitted file is empty."
-msgstr "Le fichier soumi est vide"
+msgstr "الملف المحمل فارغ"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:549
 #, python-format
@@ -1735,34 +1786,34 @@ msgstr[1] ""
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:552
 msgid "Please either submit a file or check the clear checkbox, not both."
-msgstr "Veuillez soumettre un fichier ou cocher la case décocher, pas les deux"
+msgstr "الرجاء ادخال الملف المحمل او تحقق من نظافة الصندوق"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:613
 msgid ""
 "Upload a valid image. The file you uploaded was either not an image or a "
 "corrupted image."
-msgstr "Uploader une image valide"
+msgstr "الرجاء تحميل صورة جيدة"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:775
 #: .\venv\Lib\site-packages\django\forms\fields.py:865
 #: .\venv\Lib\site-packages\django\forms\models.py:1296
 #, python-format
 msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr "Séléctionner un choix"
+msgstr "قم بإختيار جيد, القيمة المختارة غير صحيحة"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:866
 #: .\venv\Lib\site-packages\django\forms\fields.py:981
 #: .\venv\Lib\site-packages\django\forms\models.py:1295
 msgid "Enter a list of values."
-msgstr "Inserer une liste de valeurs"
+msgstr "أدخل قائمة القيم"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:982
 msgid "Enter a complete value."
-msgstr ""
+msgstr "أدخل قيمة كاملة"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:1198
 msgid "Enter a valid UUID."
-msgstr ""
+msgstr "تفقد قيمة UUID"
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:1228
 msgid "Enter a valid JSON."
@@ -1799,12 +1850,12 @@ msgstr[1] ""
 #: .\venv\Lib\site-packages\django\forms\models.py:755
 #, python-format
 msgid "Please correct the duplicate data for %(field)s."
-msgstr ""
+msgstr "القيمة %(field) معادة "
 
 #: .\venv\Lib\site-packages\django\forms\models.py:759
 #, python-format
 msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr ""
+msgstr "الرجاء تصحيح القيمة المعادة %(field)"
 
 #: .\venv\Lib\site-packages\django\forms\models.py:765
 #, python-format
@@ -1815,7 +1866,7 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\models.py:774
 msgid "Please correct the duplicate values below."
-msgstr ""
+msgstr "قم بتصحيح القيمة المعادة في الاسفل"
 
 #: .\venv\Lib\site-packages\django\forms\models.py:1096
 msgid "The inline value did not match the parent instance."
@@ -1823,7 +1874,7 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\models.py:1180
 msgid "Select a valid choice. That choice is not one of the available choices."
-msgstr ""
+msgstr "قم بإختيار قيمة صحيحة"
 
 #: .\venv\Lib\site-packages\django\forms\models.py:1298
 #, python-format
@@ -1839,32 +1890,32 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\widgets.py:398
 msgid "Clear"
-msgstr "Effacer"
+msgstr "مسح"
 
 #: .\venv\Lib\site-packages\django\forms\widgets.py:399
 msgid "Currently"
-msgstr "Actuellement"
+msgstr "حاليا"
 
 #: .\venv\Lib\site-packages\django\forms\widgets.py:400
 msgid "Change"
-msgstr ""
+msgstr "غير"
 
 #: .\venv\Lib\site-packages\django\forms\widgets.py:709
 msgid "Unknown"
-msgstr "Inconnu"
+msgstr "غير معرفة"
 
 #: .\venv\Lib\site-packages\django\forms\widgets.py:710
 msgid "Yes"
-msgstr "Oui"
+msgstr "نعم"
 
 #: .\venv\Lib\site-packages\django\forms\widgets.py:711
 msgid "No"
-msgstr "Non"
+msgstr "لا"
 
 #. Translators: Please do not add spaces around commas.
 #: .\venv\Lib\site-packages\django\template\defaultfilters.py:790
 msgid "yes,no,maybe"
-msgstr ""
+msgstr "نعم, لا, ممكن"
 
 #: .\venv\Lib\site-packages\django\template\defaultfilters.py:819
 #: .\venv\Lib\site-packages\django\template\defaultfilters.py:836
@@ -1901,305 +1952,303 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:65
 msgid "p.m."
-msgstr "Aprés midi"
+msgstr "مساءا"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:66
 msgid "a.m."
-msgstr "Matin"
+msgstr "صباحا"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:71
 msgid "PM"
-msgstr "Aprés midi"
+msgstr "مساءا"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:72
 msgid "AM"
-msgstr "Matin"
+msgstr "صباحا"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:149
 msgid "midnight"
-msgstr "Minuit"
+msgstr "منتصف الليل"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:151
 msgid "noon"
-msgstr "Midi"
+msgstr "لا شيئ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:6
 msgid "Monday"
-msgstr "Lundi"
+msgstr "الاثنين"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:6
 msgid "Tuesday"
-msgstr "Mardi"
+msgstr "الثلاثاء"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:6
 msgid "Wednesday"
-msgstr "Mercredi"
+msgstr "الاربعاء"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:6
 msgid "Thursday"
-msgstr "Jeudi"
+msgstr "الخميس"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:6
 msgid "Friday"
-msgstr "Vendredi"
+msgstr "الجمعة"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:7
 msgid "Saturday"
-msgstr "Samedi"
+msgstr "السبت"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:7
 msgid "Sunday"
-msgstr "Dimanche"
+msgstr "الأحد"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Mon"
-msgstr "Lun"
+msgstr "الإثـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Tue"
-msgstr "Mar"
+msgstr "الث"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Wed"
-msgstr "Mer"
+msgstr "الإربـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Thu"
-msgstr "Jeu"
+msgstr "الخمـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Fri"
-msgstr "Ven"
+msgstr "الجمـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:11
 msgid "Sat"
-msgstr "Sam"
+msgstr "السبـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:11
 msgid "Sun"
-msgstr "Dim"
+msgstr "الأحـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:14
 msgid "January"
-msgstr "Janvier"
+msgstr "جانفي"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:14
 msgid "February"
-msgstr "Février"
+msgstr "فيفري"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:14
 msgid "March"
-msgstr "Mars"
+msgstr "مارس"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:14
 msgid "April"
-msgstr "Avril"
+msgstr "أفريل"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:14
 msgid "May"
-msgstr "Mai"
+msgstr "ماي"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:14
 msgid "June"
-msgstr "Juin"
+msgstr "جوان"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:15
 msgid "July"
-msgstr "Juillet"
+msgstr "جويلية"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:15
 msgid "August"
-msgstr "Aout"
+msgstr "أوت"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:15
 msgid "September"
-msgstr "Septembre"
+msgstr "سبتمبر"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:15
 msgid "October"
-msgstr "Octobre"
+msgstr "أكتوبر"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:15
 msgid "November"
-msgstr "Novembre"
+msgstr "نوفمبر"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:16
 msgid "December"
-msgstr "Decembre"
+msgstr "ديسمبر"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "jan"
-msgstr ""
+msgstr "جانـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "feb"
-msgstr "fev"
+msgstr "فيف"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "mar"
-msgstr ""
+msgstr "مار"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "apr"
-msgstr "avr"
+msgstr "أفر"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
-#, fuzzy
-#| msgid "May"
 msgid "may"
-msgstr "Mai"
+msgstr "ماي"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "jun"
-msgstr ""
+msgstr "جو"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "jul"
-msgstr ""
+msgstr "جويلـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "aug"
-msgstr ""
+msgstr "أوت"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "sep"
-msgstr ""
+msgstr "سبتـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "oct"
-msgstr ""
+msgstr "أكتـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "nov"
-msgstr ""
+msgstr "نوفـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "dec"
-msgstr ""
+msgstr "ديسـ"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:23
 msgctxt "abbrev. month"
 msgid "Jan."
-msgstr ""
+msgstr "جانـ."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:24
 msgctxt "abbrev. month"
 msgid "Feb."
-msgstr "Fév"
+msgstr "فيفـ."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:25
 msgctxt "abbrev. month"
 msgid "March"
-msgstr "Mars"
+msgstr "مار."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:26
 msgctxt "abbrev. month"
 msgid "April"
-msgstr "avr"
+msgstr "افريـ."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:27
 msgctxt "abbrev. month"
 msgid "May"
-msgstr "Mai"
+msgstr "ماي."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:28
 msgctxt "abbrev. month"
 msgid "June"
-msgstr "Juin"
+msgstr "جوا."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:29
 msgctxt "abbrev. month"
 msgid "July"
-msgstr "Jui"
+msgstr "جويلـ."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:30
 msgctxt "abbrev. month"
 msgid "Aug."
-msgstr "Aou"
+msgstr "اوت."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:31
 msgctxt "abbrev. month"
 msgid "Sept."
-msgstr ""
+msgstr "سبتـ."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:32
 msgctxt "abbrev. month"
 msgid "Oct."
-msgstr ""
+msgstr "اكتـ."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:33
 msgctxt "abbrev. month"
 msgid "Nov."
-msgstr ""
+msgstr "نوفمـ."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:34
 msgctxt "abbrev. month"
 msgid "Dec."
-msgstr ""
+msgstr "ديسمبـ."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:37
 msgctxt "alt. month"
 msgid "January"
-msgstr "Janvier"
+msgstr "جانفي"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:38
 msgctxt "alt. month"
 msgid "February"
-msgstr "Février"
+msgstr "فيفري"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:39
 msgctxt "alt. month"
 msgid "March"
-msgstr "Mars"
+msgstr "مارس"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:40
 msgctxt "alt. month"
 msgid "April"
-msgstr "Avril"
+msgstr "أفريل"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:41
 msgctxt "alt. month"
 msgid "May"
-msgstr "Mai"
+msgstr "ماي"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:42
 msgctxt "alt. month"
 msgid "June"
-msgstr "Juin"
+msgstr "جوان"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:43
 msgctxt "alt. month"
 msgid "July"
-msgstr "Juillet"
+msgstr "جويلية"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:44
 msgctxt "alt. month"
 msgid "August"
-msgstr "Aout"
+msgstr "أوت"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:45
 msgctxt "alt. month"
 msgid "September"
-msgstr "Septembre"
+msgstr "سبتمبر"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:46
 msgctxt "alt. month"
 msgid "October"
-msgstr "Octobre"
+msgstr "أكتوبر"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:47
 msgctxt "alt. month"
 msgid "November"
-msgstr "Novembre"
+msgstr "نوفمبر"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:48
 msgctxt "alt. month"
 msgid "December"
-msgstr "Décembre"
+msgstr "ديسمبر"
 
 #: .\venv\Lib\site-packages\django\utils\ipv6.py:8
 msgid "This is not a valid IPv6 address."
-msgstr ""
+msgstr "العنوان غير معرف IPv6"
 
 #: .\venv\Lib\site-packages\django\utils\text.py:70
 #, python-format
@@ -2209,7 +2258,7 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\text.py:236
 msgid "or"
-msgstr ""
+msgstr "أو"
 
 #. Translators: This string is used as a separator between list elements
 #: .\venv\Lib\site-packages\django\utils\text.py:255
@@ -2261,7 +2310,7 @@ msgstr[1] ""
 
 #: .\venv\Lib\site-packages\django\views\csrf.py:110
 msgid "Forbidden"
-msgstr ""
+msgstr "ممنوع"
 
 #: .\venv\Lib\site-packages\django\views\csrf.py:111
 msgid "CSRF verification failed. Request aborted."
@@ -2310,25 +2359,25 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\views\generic\dates.py:41
 msgid "No year specified"
-msgstr ""
+msgstr "السنة غير معرفة"
 
 #: .\venv\Lib\site-packages\django\views\generic\dates.py:61
 #: .\venv\Lib\site-packages\django\views\generic\dates.py:111
 #: .\venv\Lib\site-packages\django\views\generic\dates.py:208
 msgid "Date out of range"
-msgstr ""
+msgstr "التاريخ"
 
 #: .\venv\Lib\site-packages\django\views\generic\dates.py:90
 msgid "No month specified"
-msgstr ""
+msgstr "الشهر غير معرف"
 
 #: .\venv\Lib\site-packages\django\views\generic\dates.py:142
 msgid "No day specified"
-msgstr ""
+msgstr "اليوم غير معرف"
 
 #: .\venv\Lib\site-packages\django\views\generic\dates.py:188
 msgid "No week specified"
-msgstr ""
+msgstr "الاسبوع غير معرف"
 
 #: .\venv\Lib\site-packages\django\views\generic\dates.py:338
 #: .\venv\Lib\site-packages\django\views\generic\dates.py:367
@@ -2428,3 +2477,9 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:409
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#~ msgid "Product Name "
+#~ msgstr "إسم المنتوج"
+
+#~ msgid "Nationa N°"
+#~ msgstr "الرقم الوطني"

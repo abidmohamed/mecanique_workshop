@@ -1,18 +1,19 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col">
         <div class="card card-body">
-            <h5>Customers</h5>
+            <h5>{% trans "Customers" %}</h5>
         </div>
         <div class="card card-body">
             <table id="table_id" class="display text-center">
                 <thead>
-                <th>Supplier</th>
-                <th>Amount</th>
-                <th>Date</th>
+                <th>{% trans "Supplier" %}</th>
+                <th>{% trans "Amount" %}</th>
+                <th>{% trans "Date" %}</th>
                 </thead>
                 <tbody>
                 {% for pay in supplierspayments %}

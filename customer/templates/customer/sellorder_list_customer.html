@@ -1,18 +1,19 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <br>
 <div class="container">
     <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Customers</h5>
+            <h5>{% trans "Customers" %}</h5>
         </div>
         <div class="card card-body">
             <table id="table_id" class=" table display text-center">
                 <thead>
                 <tr>
-                    <th>Customer</th>
+                    <th>{% trans "Customer" %}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -25,7 +26,7 @@
                        {{customer.lastname}}
                    </td>
                     <td>
-                        <a class="btn btn-info " href="{% url 'sellorder:sellorder_list_by_customer' customer.id %}">Bill</a>
+                        <a class="btn btn-info " href="{% url 'sellorder:sellorder_list_by_customer' customer.id %}">{% trans "Bill" %}</a>
                     </td>
 
                 </tr>

@@ -1,22 +1,23 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <br>
 <div class="container">
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>Payments</h5>
+                <h5>{% trans "Payments" %}</h5>
             </div>
             <div class="card card-body">
                 <table id="table_id" class="display text-center">
                     <thead>
                     <tr>
-                        <th>Supplier</th>
-                        <th>Pay Status</th>
-                        <th>Amount</th>
-                        <th>Created</th>
-                        <th>Payed</th>
+                        <th>{% trans "Supplier" %}</th>
+                        <th>{% trans "Pay Status" %}</th>
+                        <th>{% trans "Amount" %}</th>
+                        <th>{% trans "Created" %}</th>
+                        <th>{% trans "Payed" %}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -41,7 +42,7 @@
                         </td>
                         <td>
                             {% if payment.order.id %}
-                            <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' payment.order.id %}">Details</a>
+                            <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' payment.order.id %}">{% trans "Details" %}</a>
                             {% endif %}
                         </td>
                     </tr>

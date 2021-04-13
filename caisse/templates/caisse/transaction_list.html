@@ -16,14 +16,14 @@
     <div class="col-md-10 col-sm-12">
         <hr>
         <div class="card card-body">
-            <h5 class="display-5 text-center"><i class="fas fa-exchange-alt"></i>Transactions</h5>
-            <a class="btn btn-success " href="{% url 'caisse:create_transaction' %}">Add +</a>
+            <h5 class="display-5 text-center"><i class="fas fa-exchange-alt"></i>{% trans "Transactions" %}</h5>
+            <a class="btn btn-success " href="{% url 'caisse:create_transaction' %}">{% trans "Add" %} +</a>
             <br>
-            <h5 class="text-center text-success">Income : {{income_per_period}} DZD</h5>
+            <h5 class="text-center text-success">{% trans "Income" %} : {{income_per_period}} {% trans "DZD" %}</h5>
             <br>
-            <h5 class="text-center text-danger">Expense : {{expense_per_period}} DZD</h5>
+            <h5 class="text-center text-danger">{% trans "Expense" %} : {{expense_per_period}} {% trans "DZD" %}</h5>
             <br>
-            <h5 class="text-center text-primary">TOTAL : {{total_per_period}} DZD</h5>
+            <h5 class="text-center text-primary">{% trans "TOTAL" %} : {{total_per_period}} {% trans "DZD" %}</h5>
             <br>
             <form method="post" action="">
                 {% csrf_token %}
@@ -40,11 +40,11 @@
             <table id="table_id" class="table table-sm">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                    <th>Date Created</th>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Amount" %}</th>
+                    <th>{% trans "Type" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "Date Created" %}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -59,12 +59,12 @@
                     <td>{{transaction.date_created}}</td>
                     <td>
                         <a class="btn btn-danger "
-                           href="{% url 'caisse:delete_transaction' transaction.id %}">Delete</a>
+                           href="{% url 'caisse:delete_transaction' transaction.id %}">{% trans "Delete" %}</a>
                     </td>
                 </tr>
                 {% endfor %}
                 {% else %}
-                <h2>No Elements</h2>
+                <h2>{% trans "No Elements" %}</h2>
                 {% endif %}
                 </tbody>
 
@@ -72,12 +72,12 @@
             <table id="customer_table_id" class="display text-center">
                 <thead>
                 <tr>
-                    <th>Order</th>
-                    <th>Customer</th>
-                    <th>Pay Status</th>
-                    <th>Amount</th>
-                    <th>Created</th>
-                    <th>Payed</th>
+                    <th>{% trans "Order" %}</th>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Pay Status" %}</th>
+                    <th>{% trans "Amount" %}</th>
+                    <th>{% trans "Created" %}</th>
+                    <th>{% trans "Payed" %}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -104,7 +104,7 @@
                         {{payment.pay_date}}
                     </td>
                     <td>
-                        <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' payment.order.id %}">Details</a>
+                        <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' payment.order.id %}">{% trans "Details" %}</a>
                     </td>
                 </tr>
 
@@ -114,11 +114,11 @@
             <table id="supplier_table_id" class="display text-center">
                 <thead>
                 <tr>
-                    <th>Supplier</th>
-                    <th>Pay Status</th>
-                    <th>Amount</th>
-                    <th>Created</th>
-                    <th>Payed</th>
+                    <th>{% trans "Supplier" %}</th>
+                    <th>{% trans "Pay Status" %}</th>
+                    <th>{% trans "Amount" %}</th>
+                    <th>{% trans "Created" %}</th>
+                    <th>{% trans "Payed" %}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -143,7 +143,7 @@
                     </td>
                     <td>
                         {% if payment.order.id %}
-                        <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' payment.order.id %}">Details</a>
+                        <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' payment.order.id %}">{% trans "Details" %}</a>
                         {% endif %}
                     </td>
                 </tr>

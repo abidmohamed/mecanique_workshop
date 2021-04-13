@@ -1,22 +1,23 @@
 {% extends 'home.html' %}
 {% load static %}
-{% block content %}
+{% load i18n %}
+{% block content %} 
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Appointments</h5>
+            <h5>{% trans "Appointments" %}</h5>
         </div>
         <div class="card card-body">
             <table id="table_id" class="table display text-center">
                 <thead>
                 <tr>
-                    <th>RDV ID</th>
-                    <th>Customer</th>
-                    <th>Vehicle</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Total Price</th>
+                    <th>{% trans "RDV ID" %}</th>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Vehicle" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "Time" %}</th>
+                    <th>{% trans "Total Price" %}</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -31,10 +32,10 @@
                     <td>{{rdv.rdv_time}} </td>
                     <td>{{rdv.get_total_cost}} </td>
                     <td>
-                        <a class="btn btn-warning " href="{% url 'rdv:rdv_details' rdv.id %}">Details</a>
+                        <a class="btn btn-warning " href="{% url 'rdv:rdv_details' rdv.id %}">{% trans "Details" %}</a>
                     </td>
                     <td>
-                        <a class="btn btn-danger " href="{% url 'rdv:delete_rdv' rdv.id %}">Delete</a>
+                        <a class="btn btn-danger " href="{% url 'rdv:delete_rdv' rdv.id %}">{% trans "Delete" %}</a>
                     </td>
                 </tr>
 

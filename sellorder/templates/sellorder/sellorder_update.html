@@ -1,16 +1,17 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% block content %}
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Order Confirmation</h5>
+            <h5>{% trans "Order Confirmation" %}</h5>
         </div>
         <div class="card card-body">
-            <h2>Customer: <span>{{customer}}</span></h2>
-            <label for="total-price">Total :</label>
+            <h2>{% trans "Customer" %}: <span>{{customer}}</span></h2>
+            <label for="total-price">{% trans "Total" %} :</label>
 
             <input id="total-price" type="text" class="form-control" value="{{sellorder.get_ttc}}" disabled>
             <h2>{{get_total_item_panne}}</h2>
@@ -21,12 +22,12 @@
                     <div class="">
                         <!-- Button Add New Product -->
                         <a class="btn btn btn-primary form-control"
-                           href="{% url 'stock:modal_update_order_stockproduct_list' sellorder.id %}">New Product</a>
+                           href="{% url 'stock:modal_update_order_stockproduct_list' sellorder.id %}">{% trans "New Product" %}</a>
                         <br>
                         <br>
                         <!-- Button Add New Panne -->
                         <a class="btn btn btn-success form-control"
-                           href="{% url 'rdv:update_order_panne_list' sellorder.id %}">New Panne</a>
+                           href="{% url 'rdv:update_order_panne_list' sellorder.id %}">{% trans "New Panne" %}</a>
                         <br>
                     </div>
                 </div>
@@ -40,25 +41,25 @@
                 <input onkeyup="calc()" id="discount-value" name="discount-value" type="number" class="form-control"
                        value="0">
                 <select onchange="calc()" class="form-control" name="discount-status" id="discount-status">
-                    <option value="1"> Percentage</option>
-                    <option value="2"> Amount</option>
+                    <option value="1"> {% trans "Percentage" %}</option>
+                    <option value="2"> {% trans "Amount" %}</option>
                 </select>
                 <hr>
                 <br>
                 <hr>
-                <h3>TVA</h3>
+                <h3>{% trans "TVA" %}</h3>
                 <input onkeyup="calc()" class="form-control" type="number" value="{{tva}}" name="tva" id="tva">
                 <br>
                 <hr>
-                <h3>Timbre</h3>
+                <h3>{% trans "Timbre" %}</h3>
                 <input onkeyup="calc()" class="form-control" type="text" value="{{timbre}}" id="timbre" name="timbre">
                 <br>
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
-                        <th>Vehicle</th>
+                        <th>{% trans "Order ID" %}</th>
+                        <th>{% trans "Customer" %}</th>
+                        <th>{% trans "Vehicle" %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -70,11 +71,11 @@
                     <thead class="thead-light">
                     <tr>
 
-                        <th>Product Brand</th>
-                        <th>Product Name</th>
-                        <th>Sell Price DZD</th>
-                        <th>Buy Price DZD</th>
-                        <th>Quantity</th>
+                        <th>{% trans "Product Brand" %}</th>
+                        <th>{% trans "Product Name" %}</th>
+                        <th>{% trans "Sell Price DZD" %}</th>
+                        <th>{% trans "Buy Price DZD" %}</th>
+                        <th>{% trans "Quantity" %}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -113,8 +114,8 @@
                 <table class="thead-light">
                     <thead class="thead-light">
                     <tr>
-                        <th>Mo</th>
-                        <th>Price</th>
+                        <th>{% trans "Mo" %}</th>
+                        <th>{% trans "Price" %}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -125,7 +126,7 @@
                         <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
                     <td>
                             <a class="btn btn-danger "
-                               href="{% url 'sellorder:order_panne_delete' sellorder.id item.id %}">Delete</a>
+                               href="{% url 'sellorder:order_panne_delete' sellorder.id item.id %}">{% trans "Delete" %}</a>
                         </td>
                     </tr>
                     {% endfor %}

@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block content %}
 
 <br>
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-3 col-lg-3">
-            <h3>Categories</h3>
+            <h3>{% trans "Categories" %}</h3>
             <div class="list-group">
                 {% for c in categories %}
                     <a
@@ -35,20 +35,20 @@
                         <p class="mb-2 text-muted text-uppercase small">{{stockproduct.product.category}}</p>
                         <hr>
                         {% if customertype == 'Grou'%}
-                        <h6 class="mb-3">{{stockproduct.product.sellpricegrou}} DZD </h6>
+                        <h6 class="mb-3">{{stockproduct.product.sellpricegrou}} {% trans "DZD" %} </h6>
                         {% elif customertype == 'Semi-Grou'%}
-                        <h6 class="mb-3">{{stockproduct.product.sellpricesemi_grou}} DZD</h6>
+                        <h6 class="mb-3">{{stockproduct.product.sellpricesemi_grou}} {% trans "DZD" %}</h6>
                         {% elif customertype == 'Detaille'%}
-                        <h6 class="mb-3">{{stockproduct.product.sellpricenormal}} DZD</h6>
+                        <h6 class="mb-3">{{stockproduct.product.sellpricenormal}} {% trans "DZD" %}</h6>
                         {% elif customertype == 'Special'%}
-                        <h6 class="mb-3">{{stockproduct.product.sellspecialprice}} DZD</h6>
+                        <h6 class="mb-3">{{stockproduct.product.sellspecialprice}} {% trans "DZD" %}</h6>
                         {% else %}
                         <h6 class="mb-3">0</h6>
                         {% endif %}
                         <a class="btn btn-primary btn-sm mr-1 mb-2"
                            href=" {% url 'stock:stockproduct_detail' stockproduct.id %}">
                             <i
-                                    class="fas fa-shopping-cart pr-2"></i>Add to cart
+                                    class="fas fa-shopping-cart pr-2"></i>{% trans "Add to cart" %}
                         </a>
 
                     </div>

@@ -1,5 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% block content %}
@@ -7,11 +8,11 @@
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Today Pieces</h5>
+            <h5>{% trans "Today Pieces" %}</h5>
         </div>
         <div class="card card-body">
              <br>
-            <h5 class="text-center text-success">Total : {{totalpiece}} DZD</h5>
+            <h5 class="text-center text-success">{% trans "Total" %} : {{totalpiece}} {% trans "DZD" %}</h5>
             <br>
             <form method="post" action="">
                 {% csrf_token %}
@@ -28,11 +29,11 @@
             <table id="table_id" class="table display text-center">
                 <thead class="thead-light">
                 <tr>
-                    <th>Product Brand</th>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total Price</th>
+                    <th>{% trans "Product Brand" %}</th>
+                    <th>{% trans "Product Name" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Total Price" %}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -41,9 +42,9 @@
                 <tr>
                     <td class="table-light">{{ item.stockproduct.product.brand }}</td>
                     <td class="table-light">{{ item.stockproduct.product.name }}</td>
-                    <td class="table-light ">DZD{{ item.price }}</td>
+                    <td class="table-light ">{% trans "DZD" %}{{ item.price }}</td>
                     <td class="table-light ">{{ item.quantity }}</td>
-                    <td class="table-light">DZD{{ item.get_cost }}</td>
+                    <td class="table-light">{% trans "DZD" %}{{ item.get_cost }}</td>
                     <td class="table-light"></td>
                 </tr>
                 {% endfor %}

@@ -1,17 +1,18 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <br>
 <div class="container">
     <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Cities</h5>
+            <h5>{% trans "Cities" %}</h5>
         </div>
         <div class="card card-body">
             <table class="table">
                 <tr>
-                    <th>City</th>
+                    <th>{% trans "City" %}</th>
 
                 </tr>
 
@@ -21,10 +22,10 @@
                        {{city.name}}
                    </td>
                     <td>
-                        <a class="btn btn-success " href="{% url 'customer:update_city' city.id %}">Update</a>
+                        <a class="btn btn-success " href="{% url 'customer:update_city' city.id %}">{% trans "Update" %}</a>
                     </td>
                     <td>
-                        <a class="btn btn-danger " href="{% url 'customer:delete_city' city.id %}">Delete</a>
+                        <a class="btn btn-danger " href="{% url 'customer:delete_city' city.id %}">{% trans "Delete" %}</a>
                     </td>
                 </tr>
 

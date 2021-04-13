@@ -1,6 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block content %}
 <br>
 
@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-6">
         <div class="card card-body">
-            <P>ARE YOU SURE YOU WANT TO DELETE {{transaction.Transaction_name}}
+            <P>{% trans "ARE YOU SURE YOU WANT TO DELETE" %} {{transaction.Transaction_name}}
                 <br>
             {{transaction.amount}}
             </P>
@@ -18,7 +18,7 @@
 
                 {% csrf_token %}
                 <input class="btn btn-danger" type="submit" name="Confirm">
-                <a class="btn btn-warning" href="{% url 'caisse:transaction_list' %}">Cancel</a>
+                <a class="btn btn-warning" href="{% url 'caisse:transaction_list' %}">{% "Cancel" %}</a>
             </form>
         </div>
     </div>
