@@ -1,1 +1,1 @@
-web: gunicorn mygarage.wsgi
+web: gunicorn mygarage.wsgi --timeout 45 --keep-alive 5 --log-level debug
