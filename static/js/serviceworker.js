@@ -11,7 +11,8 @@ self.addEventListener("install", event => {
     event.waitUntil(
         caches.open(staticCacheName)
             .then(cache => {
-                return cache.addAll(filesToCache);
+        return fetch('/offline')
+        .then(response => cache.put('/offline', new Response(response.body)));
             })
     )
 });
