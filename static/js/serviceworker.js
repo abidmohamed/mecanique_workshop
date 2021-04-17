@@ -11,11 +11,21 @@ self.addEventListener("install", event => {
     event.waitUntil(
         caches.open(staticCacheName)
             .then(cache => {
+                return cache.addAll(filesToCache);
+            })
+    )
+});
+
+/*self.addEventListener("install", event => {
+    this.skipWaiting();
+    event.waitUntil(
+        caches.open(staticCacheName)
+            .then(cache => {
         return fetch('/offline')
         .then(response => cache.put('/offline', new Response(response.body)));
             })
     )
-});
+});*/
 
 // Clear cache on activate
 self.addEventListener('activate', event => {
