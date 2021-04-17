@@ -14,7 +14,7 @@
             <form action="{% url 'sellorder:sellorder_delete' order.id %}" method="post">
 
                 {% csrf_token %}
-                <a class="btn btn-warning" href="{% url 'sellorder:sellorder_list' %}">{% trans "Cancel %}"</a>
+                <a class="btn btn-warning" href="{% url 'sellorder:sellorder_list' %}">{% trans "Cancel" %}</a>
                 <input class="btn btn-danger" type="submit" name="Confirm">
             </form>
         </div>
