@@ -24,7 +24,7 @@ def create_customer_payment(request, pk):
             customerpayment.customer = order.customer
             customerpayment.save()
             if order.debt == 0 or order.debt is None:
-                order.debt = order.get_total_cost()
+                order.debt = order.get_ttc()
             print(order.debt)
             order.debt -= customerpayment.amount
             # print(order.debt)
