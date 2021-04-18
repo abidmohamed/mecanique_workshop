@@ -452,6 +452,7 @@ def sellorder_pdf(request, pk):
                             {'order': sellorder,
                              'customer': customer,
                              'old_debt': old_debt,
+                             'new_debt': new_debt
                              })
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}.pdf'
