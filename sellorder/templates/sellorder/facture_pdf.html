@@ -37,15 +37,15 @@
         }
 
         .text-center {
-            text-align: center;
+            text-align: center !important;
         }
 
         .text-left {
-            text-align: left;
+            text-align: left !important;
         }
 
         .text-right {
-            text-align: right;
+            text-align: right !important;
         }
 
         .font-weight-bold {
@@ -148,7 +148,36 @@
         }
 
         .items-table td {
-            text-align: left;
+            text-align: center;
+            font-size: 16px;
+            padding: 5px;
+            margin: 0;
+            height: 35px;
+            background-color: #fff;
+        }
+
+
+        .total-table {
+            width: 100%;
+            height: 100px;
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin: 0px 0;
+        }
+
+        .total-table th {
+            text-align: right;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 3px;
+            margin: 0;
+            height: 30px;
+            background-color: silver;
+            color: #000;
+        }
+
+        .total-table td {
+            text-align: right;
             font-size: 16px;
             padding: 5px;
             margin: 0;
@@ -164,6 +193,7 @@ tbody tr.total {
 background: #5993bb;
 color: #000;
 font-weight: bold;
+text-align: right !important;
 }
 
       /* Page margins are defined using CSS */
@@ -359,6 +389,7 @@ font-weight: bold;
 </table>
   -->  
   <!--<h3>Item bought</h3>-->
+    {% if order.order.items.all %}
     <table class="items-table">
         <thead>
             <tr>
@@ -380,6 +411,9 @@ font-weight: bold;
 
         </tbody>
     </table>
+    {% endif %}
+
+    {% if order.order.pannes.all %}
     <table class="items-table">
         <thead>
             <tr>
@@ -400,29 +434,31 @@ font-weight: bold;
             {% endfor %}
         </tbody>
     </table>
-    <table class="items-table">
+    {% endif %}
+
+    <hr>
+    <table class="total-table">
         <tbody>
             <tr class="total">
                 <td style="background-color: inherit;" colspan="2"></td>
-
-                <td colspan="1">Total HT</td>
-                <td colspan="2" class="num"> {{ order.order.get_total_item_panne }}</td>
+                <td class="">Total HT</td>
+                <td  class="num"> {{ order.order.get_total_item_panne }}</td>
             </tr>
             <tr class="total">
                 <td style="background-color: inherit;" colspan="2"></td>
-                <td colspan="1">TVA 19%</td>
-                <td colspan="2" class="num"> {{ order.order.get_tva }}</td>
+                <td >TVA 19%</td>
+                <td class="num"> {{ order.order.get_tva }}</td>
             </tr>
             <tr class="total">
                 <td style="background-color: inherit;" colspan="2"></td>
-                <td colspan="1">Timbre</td>
-                <td colspan="2" class="num"> {{ order.order.timbre }}</td>
+                <td >Timbre</td>
+                <td class="num"> {{ order.order.timbre }}</td>
             </tr>
             <tr class="total">
                 <td style="background-color: inherit;" colspan="2">
                    </td>
-                <td colspan="1">TTC</td>
-                <td colspan="2" class="num"> {{ order.order.get_ttc }}</td>
+                <td >TTC</td>
+                <td class="num"> {{ order.order.get_ttc }}</td>
             </tr>
             
         </tbody>
