@@ -11,7 +11,7 @@ urlpatterns = [
 
     path('', views.home, name='home'),
     path('serviceworker', (TemplateView.as_view(
-        template_name="browsepages/serviceworker.js",
+        template_name="serviceworker.js",
         content_type='application/javascript', )),
          name='serviceworker'),
 
