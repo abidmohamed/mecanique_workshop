@@ -1,0 +1,31 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<br>
+
+<div class="container">
+    <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+        <div class="card card-body">
+            <P>{% trans "ARE YOU SURE YOU WANT TO DELETE" %} {{sellorder_payment}} {% trans "OF THE ORDER" %}  {{order}} </P>
+            <form action="{% url 'payments:delete_customer_payment' sellorder_payment.id %}" method="post">
+
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" name="Confirm">
+                <a class="btn btn-warning" href="{% url 'payments:customer_payment_list' %}">{% trans "Cancel" %}</a>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+</div>
+
+
+<script>
+
+</script>
+{% endblock %}
