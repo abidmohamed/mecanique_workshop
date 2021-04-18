@@ -445,7 +445,13 @@ def sellorder_list_by_customer(request, pk):
 
 def sellorder_pdf(request, pk):
     sellorder = get_object_or_404(Order, id=pk)
-    html = render_to_string('sellorder/pdf.html', {'order': sellorder})
+    customer = get_object_or_404(Customer, id= sellorder.customer.id)
+    old_debt = customer.debt - sellorder.debt
+    html = render_to_string('sellorder/pdf.html',
+                            {'order': sellorder,
+                             'customer': customer,
+                             'old_debt': old_debt,
+                             })
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}.pdf'
 

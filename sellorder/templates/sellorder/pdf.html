@@ -94,7 +94,7 @@
 
         .items-table{
             width:100%;
-            height: 200px;
+            height: 100px;
             border-spacing:0;
             border-collapse: collapse;
             margin:20px 0;
@@ -103,7 +103,7 @@
         }
 
         .items-table th{
-        text-align:left;
+        text-align:center;
         font-size:14px;
         font-weight: bold;
         padding:3px;
@@ -111,18 +111,18 @@
         border-style: solid;
         border-width: 1px;
         border-color: #000;
-        height: 50px;
+        height: 30px;
         }
 
         .items-table td{
             text-align:left;
-            font-size:14px;
+            font-size:16px;
             padding:5px;
             margin:0;
             border-style: solid;
             border-width: 1px;
             border-color: #000;
-            height: 50px;
+            height: 35px;
         }
 
         tbody td.num {
@@ -151,7 +151,6 @@
     </tr>
 </table>
 <hr>
-<br>
 <h1 class="text-center">
     P.Order no. {{ order.id }}/{{order.created|date:"Y"}}
 </h1>
@@ -172,7 +171,6 @@
     </tr>
 
 </table>
-<br>
 <h4>Vehicle</h4>
 
 <table class="vehicle_table">
@@ -182,6 +180,7 @@
         <td class="font-14"><span class="font-weight-bold">Grey Card:</span> {{ order.vehicle.vehicle_cart_gris }}</td>
     </tr>
 </table>
+{% if order.items.all %}
 <h3>Item bought</h3>
 <table class="items-table">
     <thead>
@@ -206,10 +205,14 @@
 
     </tbody>
 </table>
+{% endif %}
+
+{% if order.pannes.all %}
+<h3>Pannes</h3>
 <table class="items-table">
     <thead>
     <tr>
-        <th>main d’œuvre</th>
+        <th colspan="3">main d’œuvre</th>
         <th>Price</th>
 
     </tr>
@@ -217,39 +220,44 @@
     <tbody>
     {% for item in order.pannes.all %}
     <tr class="row{% cycle '1' '2' %} ">
-        <td>{{ item.panne.desc }}</td>
+        <td colspan="3">{{ item.panne.desc }}</td>
         <td class="num"> DZD {{ item.get_cost }}</td>
 
     </tr>
     {% endfor %}
     </tbody>
 </table>
+{% endif %}
 <table class="items-table">
     <tbody>
     <tr class="total">
-        <td colspan="3">Total Piece</td>
+                <td colspan="2" style="border-width:0px;"></td>
+
+        <td >Total Piece</td>
         <td class="num">DZD {{ order.get_total_cost }}</td>
     </tr>
     <tr class="total">
-        <td colspan="3">Total main d’œuvre</td>
+                <td colspan="2" style="border-width:0px;"></td>
+        <td >Total main d’œuvre</td>
         <td class="num">DZD {{ order.get_total_panne }}</td>
     </tr>
     <tr class="total">
-
-        <td colspan="3">Total HT</td>
+        <td colspan="2" style="border-width:0px; border-radius: 26px;"></td>
+        <td>Total HT</td>
         <td class="num">DZD {{ order.get_total_item_panne }}</td>
     </tr>
-    <tr class="total">
-
-        <td colspan="3">TVA</td>
-        <td class="num">DZD {{ order.get_tva }}</td>
+     <tr class="total">
+        <td colspan="2" style="border-width:0px;"></td>
+        <td>Old Debt</td>
+        <td class="num"> DZD {{old_debt}}</td>
     </tr>
-    <tr class="total">
-
-        <td colspan="3">TTC</td>
-        <td class="num">DZD {{ order.get_ttc }}</td>
+        <tr class="total">
+        <td colspan="2" style="border-width:0px;"></td>
+        <td>New Debt</td>
+        <td class="num"> DZD {{customer.debt}}</td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>
