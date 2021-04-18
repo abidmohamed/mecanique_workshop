@@ -5,7 +5,7 @@ from buyorder.models import BuyOrder
 from caisse.models import Caisse
 from customer.models import Customer
 from payments.forms import CustomerChequeForm, SupplierPaymentForm, SupplierChequeForm, CustomerPaymentForm
-from payments.models import SellOrderPayment, BuyOrderPayment
+from payments.models import SellOrderPayment, BuyOrderPayment, CustomerCheque
 from sellorder.models import Order
 from supplier.models import Supplier
 
@@ -45,6 +45,32 @@ def create_customer_payment(request, pk):
         'customerpaymentform': customerpaymentform,
     }
     return render(request, 'payments/customer/create_payment.html', context)
+
+
+def delete_customer_payment(request, pk):
+    sellorder_payment = SellOrderPayment.objects.get(id=pk)
+    order = Order.objects.get(id=sellorder_payment.order.id)
+    if request.method == "POST":
+        # fix order values before deleting
+        order.debt += sellorder_payment.amount
+        order.customer.debt += sellorder_payment.amount
+        order.save()
+        order.customer.save()
+        # fix caisse value before deleting
+        caisse = Caisse.objects.all().filter()[:1].get()
+        caisse.caisse_value -= sellorder_payment.amount
+        caisse.save()
+        # delete payment cheque is automatic
+        # delete payment
+        sellorder_payment.delete()
+
+        return redirect("payments:customer_payment_list")
+
+    context = {
+        'sellorder_payment': sellorder_payment,
+        'order': order,
+    }
+    return render(request, 'payments/customer/delete_payment.html', context)
 
 
 def create_customer_cheque(request, pk):

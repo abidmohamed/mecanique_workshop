@@ -4,14 +4,12 @@ var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
     '/offline',
     '/static/css/main.css',
-    '/static/css/sb-admin-2.min.css',
-    '/static/js/sb-admin-2.min.js',
-    '/static/js/serviceworker.js',
-]
+
+];
 // Cache on install
 self.addEventListener("install", event => {
-    console.log("Service Worker Installed")
-   this.skipWaiting();
+    this.skipWaiting();
+    console.log("Service Worker Installed 2")
     event.waitUntil(
         caches.open(staticCacheName)
             .then(cache => {
@@ -19,6 +17,17 @@ self.addEventListener("install", event => {
             })
     )
 });
+
+/*self.addEventListener("install", event => {
+    this.skipWaiting();
+    event.waitUntil(
+        caches.open(staticCacheName)
+            .then(cache => {
+        return fetch('/offline')
+        .then(response => cache.put('/offline', new Response(response.body)));
+            })
+    )
+});*/
 
 // Clear cache on activate
 self.addEventListener('activate', event => {

@@ -319,8 +319,10 @@ def order_panne_delete(request, orderpk, itempk):
 # order details
 def sellorder_details(request, pk):
     order = Order.objects.get(id=pk)
+    sellorder_payments = SellOrderPayment.objects.all().filter(order=order)
     context = {
-        'order': order
+        'order': order,
+        'sellorder_payments': sellorder_payments,
     }
     return render(request, 'sellorder/sellorder_details.html', context)
 
