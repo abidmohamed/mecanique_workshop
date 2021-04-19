@@ -447,7 +447,7 @@ def sellorder_pdf(request, pk):
     sellorder = get_object_or_404(Order, id=pk)
     customer = get_object_or_404(Customer, id= sellorder.customer.id)
     if customer.debt - sellorder.get_total_item_panne() == 0 or customer.debt - sellorder.get_total_item_panne() < 0:
-        old_debt = 0.00
+        old_debt = 0
     else:
         old_debt = customer.debt - sellorder.get_total_item_panne()
     new_debt = old_debt + sellorder.get_total_item_panne()
