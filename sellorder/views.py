@@ -446,8 +446,11 @@ def sellorder_list_by_customer(request, pk):
 def sellorder_pdf(request, pk):
     sellorder = get_object_or_404(Order, id=pk)
     customer = get_object_or_404(Customer, id= sellorder.customer.id)
-    old_debt = customer.debt - sellorder.get_total_item_panne()
-    new_debt = customer.debt + sellorder.get_total_item_panne()
+    if customer.debt - sellorder.get_total_item_panne() == 0 or customer.debt - sellorder.get_total_item_panne() < 0:
+        old_debt = 0.00
+    else:
+        old_debt = customer.debt - sellorder.get_total_item_panne()
+    new_debt = old_debt + sellorder.get_total_item_panne()
     html = render_to_string('sellorder/pdf.html',
                             {'order': sellorder,
                              'customer': customer,

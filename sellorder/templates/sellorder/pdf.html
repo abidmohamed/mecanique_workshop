@@ -152,11 +152,10 @@
 </table>
 <hr>
 <h1 class="text-center">
-    P.Order no. {{ order.id }}/{{order.created|date:"Y"}}
+    Bon Commande no. {{ order.id }}/{{order.created|date:"Y"}}
 </h1>
 
-<h3>Bill to</h3>
-<h4>Customer</h4>
+<h3>Pour</h3>
 <table class="customer_table">
     <tr>
         <td class="font-14"><span class="font-weight-bold">Mr:</span> {{ order.customer.firstname }}
@@ -164,32 +163,30 @@
         </td>
         <td class="font-14"><span class="font-weight-bold">Address:</span>
             {{ order.customer.address }}
-
         </td>
         <td class="font-14"><span class="font-weight-bold">Phone:</span> {{ order.customer.phone }}</td>
         <td class="font-14"><span class="font-weight-bold">Date:</span> {{ order.created|date:"M d, Y" }}</td>
     </tr>
 
 </table>
-<h4>Vehicle</h4>
-
+<h4>Véhicule</h4>
 <table class="vehicle_table">
     <tr>
         <td class="font-14"><span class="font-weight-bold">Type:</span> {{ order.vehicle.vehicle_type }}</td>
         <td class="font-14"><span class="font-weight-bold">Mat:</span> {{ order.vehicle.vehicle_mat }}</td>
-        <td class="font-14"><span class="font-weight-bold">Grey Card:</span> {{ order.vehicle.vehicle_cart_gris }}</td>
+        <td class="font-14"><span class="font-weight-bold">Carte grise:</span> {{ order.vehicle.vehicle_cart_gris }}</td>
     </tr>
 </table>
 {% if order.items.all %}
-<h3>Item bought</h3>
+<h3>Article</h3>
 <table class="items-table">
     <thead>
     <tr>
         <th>Ref</th>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Cost</th>
+        <th>Produit</th>
+        <th>Prix</th>
+        <th>Quantité</th>
+        <th>Coût</th>
     </tr>
     </thead>
     <tbody>
@@ -208,13 +205,12 @@
 {% endif %}
 
 {% if order.pannes.all %}
-<h3>Pannes</h3>
+<h3>MO</h3>
 <table class="items-table">
     <thead>
     <tr>
         <th colspan="3">main d’œuvre</th>
-        <th>Price</th>
-
+        <th>Prix</th>
     </tr>
     </thead>
     <tbody>
@@ -222,7 +218,6 @@
     <tr class="row{% cycle '1' '2' %} ">
         <td colspan="3">{{ item.panne.desc }}</td>
         <td class="num"> DZD {{ item.get_cost }}</td>
-
     </tr>
     {% endfor %}
     </tbody>
@@ -233,7 +228,7 @@
     <tr class="total">
                 <td colspan="2" style="border-width:0px;"></td>
 
-        <td >Total Piece</td>
+        <td >Total Article</td>
         <td class="num">DZD {{ order.get_total_cost }}</td>
     </tr>
     <tr class="total">
@@ -248,12 +243,14 @@
     </tr>
      <tr class="total">
         <td colspan="2" style="border-width:0px;"></td>
-        <td>Old Debt</td>
-        <td class="num"> DZD {{customer.debt}}</td>
+        <td>Ancient Credit
+        </td>
+        <td class="num"> DZD {{old_debt}}
+        </td>
     </tr>
         <tr class="total">
         <td colspan="2" style="border-width:0px;"></td>
-        <td>New Debt</td>
+        <td>Reste a payer</td>
         <td class="num"> DZD {{new_debt}}</td>
     </tr>
     </tbody>
