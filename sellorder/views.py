@@ -22,6 +22,7 @@ from sellorder.models import Order, SellOrderFacture, OrderItem
 from stock.models import StockProduct
 from num2words import num2words
 
+
 # confirmation get order object from the stock view Of a Real Order
 def confirm_order(request, pk):
     stockproducts = StockProduct.objects.all()
@@ -184,7 +185,8 @@ def update_order(request, pk):
     # Get Discount
     discountform = DiscountForm(instance=discount)
     old_ttc = round(sellorder.total_price + (
-            sellorder.total_price * decimal.Decimal(sellorder.order_tva / 100)) - sellorder.discount_amount + sellorder.timbre, 2)
+            sellorder.total_price * decimal.Decimal(
+        sellorder.order_tva / 100)) - sellorder.discount_amount + sellorder.timbre, 2)
     new_ttc = 0
     ttc_difference = 0
     if request.method == 'POST':
@@ -445,12 +447,19 @@ def sellorder_list_by_customer(request, pk):
 
 def sellorder_pdf(request, pk):
     sellorder = get_object_or_404(Order, id=pk)
-    customer = get_object_or_404(Customer, id= sellorder.customer.id)
-    if customer.debt - sellorder.get_total_item_panne() == 0 or customer.debt - sellorder.get_total_item_panne() < 0:
+    customer = get_object_or_404(Customer, id=sellorder.customer.id)
+    if customer.debt - sellorder.get_ttc() == 0 or customer.debt - sellorder.get_ttc() < 0:
         old_debt = 0
     else:
-        old_debt = customer.debt - sellorder.get_total_item_panne()
-    new_debt = old_debt + sellorder.get_total_item_panne()
+        old_debt = customer.debt - sellorder.get_ttc()
+    new_debt = old_debt + sellorder.get_ttc()
+
+    # print("Customer Debt", customer.debt)
+    # print("Order Debt", sellorder.debt)
+    # print("Old Debt", old_debt)
+    # print("New Debt", new_debt)
+    # print("TTC", sellorder.get_ttc())
+
     html = render_to_string('sellorder/pdf.html',
                             {'order': sellorder,
                              'customer': customer,
@@ -478,7 +487,7 @@ def sellorder_facture_pdf(request, pk):
     else:
         enterprise = Enterprise.objects.none()
     total_in_letters = num2words(order.get_ttc(), lang='fr_DZ', to='currency')
-    context ={
+    context = {
         'order': sellorder,
         'total_in_letters': total_in_letters.capitalize(),
         'enterprise': enterprise
