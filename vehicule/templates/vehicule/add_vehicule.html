@@ -29,7 +29,7 @@
                     {% for customer in customers %}
                     <tr>
                         <td><input class="form-check-input" type="radio" value="{{customer.id}}" id="{{customer.id}}"
-                                   name="customer">
+                                   name="customer" required>
                         </td>
                         <td>
                             {{customer.firstname}} {{customer.lastname}}
@@ -63,7 +63,7 @@
                     <tr>
                         <td>
                             <input class="form-check-input" type="radio" value="{{type.id}}" id="{{type.id}}"
-                                   name="type">
+                                   name="type" required>
                         </td>
                         <td>
                             <img class="card-img" style="width: 50%; height: 20vh;" src="{% if type.image %}{{type.image.url}}{%else%} {% static 'img/no_image.png' %}{%endif%}"
