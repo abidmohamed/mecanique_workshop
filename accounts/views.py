@@ -12,7 +12,6 @@ from payments.models import SellOrderPayment, BuyOrderPayment
 from product.models import Product
 from rdv.models import Rdv
 
-
 # Calendar Views & functions
 from rdv.utils import Calendar
 from sellorder.models import Order
@@ -51,10 +50,11 @@ def home(request):
     none_html_calendar = Calendar(calendar_date.year, calendar_date.month)
     html_calendar = none_html_calendar.formatmonth(withyear=True)
 
-    sellorders = Order.objects.all().filter(confirmed=True) # .filter(created__year=now.year, created__month=now.month)
+    sellorders = Order.objects.all().filter(confirmed=True)  # .filter(created__year=now.year, created__month=now.month)
     buyorders = BuyOrder.objects.all()  # can be filtred by year & month
     # Today order
-    today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day)
+    today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month,
+                                                  created__day=now.day, confirmed=True)
     # customers + suppliers all objects
     allcustomers = Customer.objects.all()
     allsuppliers = Supplier.objects.all()
@@ -92,20 +92,20 @@ def home(request):
         totalbuyorders += order.get_total_cost()
 
     # Sell Orders today total
-    totaltodaypanne=0
-    totaltodaypiece=0
+    totaltodaypanne = 0
+    totaltodaypiece = 0
     for order in today_sellorders:
         totaltodaypanne += order.get_total_panne()
         totaltodaypiece += order.get_total_cost()
 
     # Stock Qt Alert
-    stockproductsalertcount=0
+    stockproductsalertcount = 0
     products = Product.objects.all()
     for product in products:
         stockproductsalertcount = StockProduct.objects.all().filter(quantity__lte=product.alert_quantity).count()
 
     if not stockproductsalertcount:
-        stockproductsalertcount= 0
+        stockproductsalertcount = 0
 
     # Total Caisse Value
     for transaction in transactions:

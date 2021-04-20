@@ -279,6 +279,7 @@ def performa_order_stockproduct_list(request):
     }
     return render(request, 'stockproduct/order_list_stockproduct.html', context)
 
+
 # Real Order
 def order_vehicle(request, pk):
     sellorder = Order.objects.get(id=pk)
