@@ -14,8 +14,10 @@
             <br>
             {% if order.factured %}
             <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_pdf' order.id %}">{% trans "Print" %} </a>
-            {% else %}
+            {% elif order.confirmed %}
             <a class="btn btn-warning " href="{% url 'sellorder:sellorder_pdf' order.id %}">{% trans "Print" %} </a>
+            {% else %}
+             <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_proforma_pdf' order.id %}">{% trans "Print" %} </a>
             {% endif %}
 
         </div>

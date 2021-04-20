@@ -219,11 +219,10 @@ text-align: right !important;
     <table>
         <tr>
             <td class="text-center" colspan="5">
-                <h1>Facture </h1>
+                <h1>Facture Proforma</h1>
             </td>
         </tr>
-        
-        
+
     </table>
 
     <table>
@@ -244,8 +243,8 @@ text-align: right !important;
              <td></td>
              <td colspan="2" class="text-left"
                  style="border-color: silver; border-width: 1px; border-style: solid; padding: 2px; padding-top: 3px;">
-                 <h2 class="text-left">{{ order.order.customer.firstname }}
-                     {{ order.order.customer.lastname }}</h2>
+                 <h2 class="text-left">{{ order.customer.firstname }}
+                     {{ order.customer.lastname }}</h2>
              </td>
          </tr>
         <tr></tr>
@@ -263,7 +262,7 @@ text-align: right !important;
             <td></td>
             <!--Customer-->
             <td class="text-left">NIF</td>
-            {% if order.order.customer.enterprise %}
+            {% if order.customer.enterprise %}
             <td class="text-right">{{enterprise.nif}}</td>
             {% else %}
             <td class="text-right">X.XXX.XXX.XXX.XXX</td>
@@ -276,7 +275,7 @@ text-align: right !important;
             <td></td>
             <!--Customer-->
             <td class="text-left">ART</td>
-            {% if order.order.customer.enterprise %}
+            {% if order.customer.enterprise %}
             <td class="text-right">{{enterprise.art}}</td>
             {% else %}
             <td class="text-right">XXXXXXXXXXX</td>
@@ -289,7 +288,7 @@ text-align: right !important;
              <td></td>
              <!--Customer-->
              <td class="text-left">RC</td>
-             {% if order.order.customer.enterprise %}
+             {% if order.customer.enterprise %}
              <td class="text-right">{{enterprise.rc}}</td>
              {% else %}
              <td class="text-right">XX/XX-XXXXXXXXXX</td>
@@ -302,7 +301,7 @@ text-align: right !important;
              <td></td>
              <!--Customer-->
              <td class="text-left">NIS</td>
-             {% if order.order.customer.enterprise %}
+             {% if order.customer.enterprise %}
              <td class="text-right">{{enterprise.nis}}</td>
              {% else %}
              <td class="text-right">XXXXXXXXXXXXX</td>
@@ -316,7 +315,7 @@ text-align: right !important;
             <td colspan="3">
                 <h6 class="text-left">CITE ELMOUDJAHIDIN SUD LOCAL N°03 EL-OUED</h6>
             </td>
-            <td class="text-centre">N° DE F {{ order.id }}/{{order.created|date:"Y"}}</td>
+            <td class="text-centre">N° DE F Proforma {{ order.id }}/{{order.created|date:"Y"}}</td>
         </tr>
     </table>
     <table>
@@ -326,7 +325,7 @@ text-align: right !important;
             </td>
             <td></td>
             <td></td>
-            <td>DATE {{ order.order.created|date:"d M Y" }}</td>
+            <td>DATE {{ order.created|date:"d M Y" }}</td>
         </tr>
         <tr>
             <td>
@@ -389,7 +388,7 @@ text-align: right !important;
 </table>
   -->  
   <!--<h3>Item bought</h3>-->
-    {% if order.order.items.all %}
+    {% if order.items.all %}
     <table class="items-table">
         <thead>
             <tr>
@@ -400,7 +399,7 @@ text-align: right !important;
             </tr>
         </thead>
         <tbody>
-            {% for item in order.order.items.all %}
+            {% for item in order.items.all %}
             <tr class="row{% cycle '1' '2' %} ">
                 <td colspan="3">{{ item.stockproduct.product.name }}</td>
                 <td colspan="1" class="num"> {{ item.price }}</td>
@@ -413,7 +412,7 @@ text-align: right !important;
     </table>
     {% endif %}
 
-    {% if order.order.pannes.all %}
+    {% if order.pannes.all %}
     <table class="items-table">
         <thead>
             <tr>
@@ -424,7 +423,7 @@ text-align: right !important;
             </tr>
         </thead>
         <tbody>
-            {% for item in order.order.pannes.all %}
+            {% for item in order.pannes.all %}
             <tr class="row{% cycle '1' '2' %} ">
                 <td colspan="3">{{ item.panne.desc }}</td>
                 <td colspan="1" class="num"> {{ item.get_cost }}</td>
@@ -442,23 +441,23 @@ text-align: right !important;
             <tr class="total">
                 <td style="background-color: inherit;" colspan="3"></td>
                 <td class="">Total HT</td>
-                <td  class="num"> {{ order.order.get_total_item_panne }}</td>
+                <td  class="num"> {{ order.get_total_item_panne }}</td>
             </tr>
             <tr class="total">
                 <td style="background-color: inherit;" colspan="3"></td>
                 <td >TVA 19%</td>
-                <td class="num"> {{ order.order.get_tva }}</td>
+                <td class="num"> {{ order.get_tva }}</td>
             </tr>
             <tr class="total">
                 <td style="background-color: inherit;" colspan="3"></td>
                 <td >Timbre</td>
-                <td class="num"> {{ order.order.timbre }}</td>
+                <td class="num"> {{ order.timbre }}</td>
             </tr>
             <tr class="total">
                 <td style="background-color: inherit;" colspan="3">
                    </td>
                 <td >TTC</td>
-                <td class="num"> {{ order.order.get_ttc }}</td>
+                <td class="num"> {{ order.get_ttc }}</td>
             </tr>
             
         </tbody>
