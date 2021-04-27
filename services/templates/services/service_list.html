@@ -1,0 +1,75 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>{% trans "Services" %}</h5>
+        </div>
+        <div class="card card-body">
+            <table id="table_id" class="display text-center table">
+                <thead>
+                <tr>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Charges" %}</th>
+                    <th>{% trans "Provider" %}</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for service in services %}
+                <tr>
+                    <td>
+                       {{service.name}}
+                   </td>
+                    <td>
+                       {{service.price}} {% trans "DZD" %}
+                   </td>
+                    <td>
+                       {{service.charge}} {% trans "DZD" %}
+                   </td>
+                    <td>
+                       {{service.provider}}
+                   </td>
+                    <td>
+                        <a class="btn btn-success " href="{% url 'services:update_service' service.id %}">{% trans "Update" %}</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger " href="{% url 'services:delete_service' service.id %}">{% trans "Delete" %}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}
+{% block jsscript %}
+<!-- custom javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
+<!-- Data Table  -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+<script type='text/javascript'>
+    //Data Table init
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+
+</script>
+{% endblock %}
