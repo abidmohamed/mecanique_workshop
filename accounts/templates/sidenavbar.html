@@ -120,6 +120,26 @@
         </div>
     </li>
 
+    <!-- Nav Item - Services Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseService"
+           aria-expanded="true" aria-controls="collapseService">
+            <i class="fas fa-cogs"></i>
+            <span>{% trans "Service" %}</span>
+        </a>
+        <div id="collapseService" class="collapse" aria-labelledby="headingService" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">{% trans "Service"%} :</h6>
+                <a class="collapse-item" href="{% url 'services:add_service' %}">{% trans "Add" %}</a>
+                <a class="collapse-item" href="{% url 'services:service_list' %}">{% trans "List" %}</a>
+                <hr>
+                <h6 class="collapse-header">{% trans "Provider"%} :</h6>
+                <a class="collapse-item" href="{% url 'services:add_provider' %}">{% trans "Add" %}</a>
+                <a class="collapse-item" href="{% url 'services:provider_list' %}">{% trans "List" %}</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Nav Item - Supplier Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsesupplier"
