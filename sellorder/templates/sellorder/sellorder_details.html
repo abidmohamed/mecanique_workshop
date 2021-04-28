@@ -18,6 +18,8 @@
             <a class="btn btn-warning " href="{% url 'sellorder:sellorder_pdf' order.id %}">{% trans "Print" %} </a>
             {% else %}
              <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_proforma_pdf' order.id %}">{% trans "Print" %} </a>
+            <br>
+             <a class="btn btn-info " href="{% url 'sellorder:sellorder_facture_proforma_pdf_no_date' order.id %}">{% trans "Print No Date" %} </a>
             {% endif %}
 
         </div>
