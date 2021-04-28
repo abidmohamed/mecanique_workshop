@@ -531,6 +531,32 @@ def sellorder_facture_proforma_pdf(request, pk):
     return response
 
 
+def sellorder_facture_proforma_pdf_no_date(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    customer = Customer.objects.get(id=order.customer.id)
+    if customer.enterprise:
+        enterprise = Enterprise.objects.get(customer=customer)
+    else:
+        enterprise = Enterprise.objects.none()
+    total_in_letters = num2words(order.get_ttc(), lang='fr_DZ', to='currency')
+    context = {
+        'order': order,
+        'total_in_letters': total_in_letters.capitalize(),
+        'enterprise': enterprise
+    }
+    html = render_to_string('sellorder/facture_proforma_pdf_no_date.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{order.id}_{order.customer}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
 # pannes per period date
 def get_orders_pannes(request):
     # now time
