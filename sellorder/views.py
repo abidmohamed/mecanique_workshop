@@ -18,7 +18,7 @@ from payments.models import SellOrderPayment
 from rdv.models import Panne
 from sellorder.apps import SellorderConfig
 from sellorder.forms import PeriodForm
-from sellorder.models import Order, SellOrderFacture, OrderItem
+from sellorder.models import Order, SellOrderFacture, OrderItem, PanneItem
 from stock.models import StockProduct
 from num2words import num2words
 
@@ -168,6 +168,43 @@ def confirm_order_performa(request, pk):
         'stockproducts': stockproducts,
     }
     return render(request, 'sellorder/sellorder_confirmation.html', context)
+
+
+# Copy an Order to Performa
+def order_to_performa(request, pk):
+    performa_order = Order()
+    sellorder = Order.objects.get(id=pk)
+
+    # Copy Order
+    performa_order.customer = sellorder.customer
+    performa_order.vehicle = sellorder.vehicle
+    performa_order.debt = sellorder.debt
+    performa_order.timbre = sellorder.timbre
+    performa_order.total_price = sellorder.total_price
+    performa_order.discount_amount = sellorder.discount_amount
+    performa_order.paid = sellorder.paid
+    performa_order.order_tva = sellorder.order_tva
+    performa_order.confirmed = False
+    performa_order.factured = sellorder.factured
+    performa_order.order_date = sellorder.order_date
+    performa_order.save()
+    # copy order items
+    for item in sellorder.items.all():
+        OrderItem.objects.create(
+            order=performa_order,
+            stockproduct=item.stockproduct,
+            price=item.price,
+            quantity=item.quantity,
+        )
+    # copy panne items
+    for panne in sellorder.pannes.all():
+        PanneItem.objects.create(
+            order=performa_order,
+            panne=panne.panne,
+            price=panne.price,
+        )
+
+    return redirect('sellorder:performa_sellorder_list')
 
 
 def update_order(request, pk):
@@ -461,6 +498,74 @@ def sellorder_pdf(request, pk):
     # print("TTC", sellorder.get_ttc())
 
     html = render_to_string('sellorder/pdf.html',
+                            {'order': sellorder,
+                             'customer': customer,
+                             'old_debt': old_debt,
+                             'new_debt': new_debt
+                             })
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{sellorder.id}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+# Bon Pour
+def sellorder_pour_pdf(request, pk):
+    sellorder = get_object_or_404(Order, id=pk)
+    customer = get_object_or_404(Customer, id=sellorder.customer.id)
+    if customer.debt - sellorder.get_ttc() == 0 or customer.debt - sellorder.get_ttc() < 0:
+        old_debt = 0
+    else:
+        old_debt = customer.debt - sellorder.get_ttc()
+    new_debt = old_debt + sellorder.get_ttc()
+
+    # print("Customer Debt", customer.debt)
+    # print("Order Debt", sellorder.debt)
+    # print("Old Debt", old_debt)
+    # print("New Debt", new_debt)
+    # print("TTC", sellorder.get_ttc())
+
+    html = render_to_string('sellorder/bon_pour_pdf.html',
+                            {'order': sellorder,
+                             'customer': customer,
+                             'old_debt': old_debt,
+                             'new_debt': new_debt
+                             })
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{sellorder.id}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+# Bon livraison
+def sellorder_livraison_pdf(request, pk):
+    sellorder = get_object_or_404(Order, id=pk)
+    customer = get_object_or_404(Customer, id=sellorder.customer.id)
+    if customer.debt - sellorder.get_ttc() == 0 or customer.debt - sellorder.get_ttc() < 0:
+        old_debt = 0
+    else:
+        old_debt = customer.debt - sellorder.get_ttc()
+    new_debt = old_debt + sellorder.get_ttc()
+
+    # print("Customer Debt", customer.debt)
+    # print("Order Debt", sellorder.debt)
+    # print("Old Debt", old_debt)
+    # print("New Debt", new_debt)
+    # print("TTC", sellorder.get_ttc())
+
+    html = render_to_string('sellorder/bon_livraison_pdf.html',
                             {'order': sellorder,
                              'customer': customer,
                              'old_debt': old_debt,

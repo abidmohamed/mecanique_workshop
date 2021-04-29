@@ -100,7 +100,7 @@ def stockproduct_list(request, pk):
     context = {
         'stockproducts': stockproducts,
     }
-    return render(request, 'stockproduct/list_stockproduct.html', context)
+    return render(request, 'stockproduct/all_list_stockproduct.html', context)
 
 
 def all_stockproduct_list(request):

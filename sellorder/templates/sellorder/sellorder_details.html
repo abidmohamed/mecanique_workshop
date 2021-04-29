@@ -9,17 +9,27 @@
         <div class="card card-body">
             <h5>{% trans "Order Details" %}</h5>
             {% if order.debt > 0%}
-                        <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">{% trans "PayDebt" %}</a>
+                        <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}"><i class="fas fa-comment-dollar"></i> {% trans "PayDebt" %}</a>
             {% endif %}
             <br>
             {% if order.factured %}
             <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_pdf' order.id %}">{% trans "Print" %} </a>
             {% elif order.confirmed %}
-            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_pdf' order.id %}">{% trans "Print" %} </a>
+            <a class="btn btn-success " href="{% url 'sellorder:order_to_performa' order.id %}"><i class="fas fa-copy"></i> {% trans "Copy to Proforma" %} </a>
+            <br>
+            <hr>
+            <h3><i class="fas fa-print"></i> {% trans "Print" %}</h3>
+            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_pdf' order.id %}"><i class="fas fa-print"></i> {% trans "Print" %} </a>
+            <br>
+            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_pour_pdf' order.id %}"><i class="fas fa-print"></i> {% trans "Print Bon Pour" %} </a>
+            <br>
+            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_livraison_pdf' order.id %}"><i class="fas fa-print"></i> {% trans "Print Livraison" %} </a>
+
             {% else %}
              <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_proforma_pdf' order.id %}">{% trans "Print" %} </a>
             <br>
              <a class="btn btn-info " href="{% url 'sellorder:sellorder_facture_proforma_pdf_no_date' order.id %}">{% trans "Print No Date" %} </a>
+
             {% endif %}
 
         </div>
