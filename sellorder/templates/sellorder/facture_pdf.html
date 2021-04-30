@@ -408,7 +408,15 @@ text-align: right !important;
                 <td colspan="1" class="num"> {{ item.get_cost }}</td>
             </tr>
             {% endfor %}
-
+{% for service in order.services.all %}
+    <tr class="row{% cycle '1' '2' %} ">
+        <td>_</td>
+        <td>{{service.service.name}}</td>
+        <td class="num">{{service.get_cost}}</td>
+        <td class="num">1</td>
+        <td class="num">{{service.get_cost}}</td>
+    </tr>
+    {% endfor %}
         </tbody>
     </table>
     {% endif %}

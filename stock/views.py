@@ -5,7 +5,8 @@ from category.models import Category
 from customer.models import Customer
 from product.models import Product
 from rdv.models import Panne
-from sellorder.models import Order, OrderItem, PanneItem
+from sellorder.models import Order, OrderItem, PanneItem, ServiceItem
+from services.models import Service
 from stock.forms import StockForm, StockProductForm
 from stock.models import Stock, StockProduct
 from vehicule.models import Vehicle
@@ -169,6 +170,7 @@ def order_stockproduct_list(request):
     stockproducts = StockProduct.objects.all().filter(quantity__gt=0)
     customers = Customer.objects.all()
     pannes = Panne.objects.all()
+    services = Service.objects.all()
 
     if request.method == 'POST':
         # get submitted orders
@@ -176,22 +178,17 @@ def order_stockproduct_list(request):
         chosencustomer = request.POST.getlist("customers")
         # chosenvehicule = request.POST.getlist("vehicle")
         chosenpannes = request.POST.getlist("pannes")
+        chosenservices = request.POST.getlist("services")
         # print(chosencustomer)
         # print(chosenvehicule)
         if len(chosencustomer) != 0:
             sellorder = Order()
             customer = Customer.objects.get(id=chosencustomer[0])
-            # print(customer)
-            # vehicles = Vehicle.objects.all().filter(customer=customer)
-            # print(vehicles)
-            #
-            # vehicle = Vehicle.objects.get(id=chosenvehicule[int(chosencustomer[0]) - 1])
-            # print(vehicle)
 
             sellorder.customer = customer
-            # sellorder.vehicle = vehicle
             sellorder.save()
             print(chosenproducts)
+            # add products
             if len(chosenproducts) != 0:
                 for product in chosenproducts:
                     currentproduct = StockProduct.objects.get(id=product)
@@ -203,6 +200,7 @@ def order_stockproduct_list(request):
                         # weight=currentproduct.product.weight,
                         quantity=1,
                     )
+            # add pannes
             if len(chosenpannes) != 0:
                 for panne in chosenpannes:
                     currentpanne = Panne.objects.get(id=panne)
@@ -212,12 +210,23 @@ def order_stockproduct_list(request):
                         panne=currentpanne,
                         price=currentpanne.price
                     )
+            # add services
+            if len(chosenservices) != 0:
+                for service in chosenservices:
+                    currentservice = Service.objects.get(id=service)
+                    ServiceItem.objects.create(
+                        order=sellorder,
+                        service=currentservice,
+                        price=currentservice.price + currentservice.charge
+                    )
+
             return redirect('stock:order_vehicle', sellorder.pk)
 
     context = {
         'customers': customers,
         'stockproducts': stockproducts,
         'pannes': pannes,
+        "services": services,
     }
     return render(request, 'stockproduct/order_list_stockproduct.html', context)
 
