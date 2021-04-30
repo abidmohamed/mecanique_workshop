@@ -115,6 +115,25 @@
 
                 </table>
                 <br>
+                <table class="thead-light">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>{% trans "Service" %}</th>
+                        <th>{% trans "Price" %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in sellorder.services.all %}
+                    <tr>
+                        <td>{{item.service.name}}</td>
+                        <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+                <br>
                 <input class="form-control btn btn-primary" type="submit" name="submit">
             </form>
         </div>

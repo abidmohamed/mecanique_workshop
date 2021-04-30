@@ -6,6 +6,7 @@ from django.db import models
 # Create your models here.
 from customer.models import Customer
 from rdv.models import Panne
+from services.models import Service
 from stock.models import StockProduct
 from vehicule.models import Vehicle
 
@@ -37,8 +38,12 @@ class Order(models.Model):
     def get_total_panne(self):
         return sum(item.get_cost() for item in self.pannes.all())
 
+    def get_total_service(self):
+        return sum(item.get_cost() for item in self.services.all())
+
     def get_total_item_panne(self):
-        return sum(item.get_cost() for item in self.pannes.all()) + sum(item.get_cost() for item in self.items.all())
+        return sum(item.get_cost() for item in self.pannes.all()) + sum(item.get_cost() for item in self.items.all()) + \
+               sum(item.get_cost() for item in self.services.all())
 
     def get_tva(self):
         return round(self.get_total_item_panne() * Decimal(self.order_tva / 100), 2)
@@ -70,6 +75,21 @@ class PanneItem(models.Model):
                               on_delete=models.CASCADE)
     panne = models.ForeignKey(Panne, related_name='order_panne',
                               on_delete=models.DO_NOTHING, null=True, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return str(self.id)
+
+    def get_cost(self):
+        return self.price
+
+
+class ServiceItem(models.Model):
+    order = models.ForeignKey(Order,
+                              related_name='services',
+                              on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, related_name='order_service',
+                                on_delete=models.DO_NOTHING, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):

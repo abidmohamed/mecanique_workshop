@@ -138,6 +138,33 @@
                 </tbody>
             </table>
             <br>
+            <br>
+            <h2>{% trans "Services" %} : {{order.get_total_service}}</h2>
+            <hr>
+            <table id="table_service" class="table display text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th>{% trans "Service" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Charge" %}</th>
+                    <th>{% trans "Total" %}</th>
+                    <th>{% trans "Provider" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in order.services.all %}
+                <tr>
+                    <td class="table-light">{{ item.service.name }}</td>
+                    <td class="table-light">{{ item.service.price }} {% trans "DZD" %}</td>
+                    <td class="table-light">{{ item.service.charge }} {% trans "DZD" %}</td>
+                    <td class="table-light">{{ item.price }} {% trans "DZD" %}</td>
+                    <td class="table-light">{{ item.service.provider }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br>
+
             <h2> {% trans "Payments" %} </h2>
             <hr>
             <table id="table_payments" class="table display text-center">

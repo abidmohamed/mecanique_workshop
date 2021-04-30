@@ -34,15 +34,18 @@ def confirm_order(request, pk):
     discountform = DiscountForm()
     # print(sellorder.vehicle)
     if request.method == 'POST':
+
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
         tva = request.POST.get('tva')
         timbre = request.POST.get('timbre')
         chosen_date = request.POST.get('order_date')
+
         # get year month day
         chosen_year = chosen_date.split("-", 1)
         chosen_month = chosen_date.split("-", 2)
         chosen_day = chosen_date.split("-", 2)
+
         if sellorder.items.all():
             for index, item in enumerate(sellorder.items.all()):
                 # get the price and value of each element
