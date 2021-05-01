@@ -236,6 +236,7 @@ def performa_order_stockproduct_list(request):
     stockproducts = StockProduct.objects.all().filter(quantity__gt=0)
     customers = Customer.objects.all()
     pannes = Panne.objects.all()
+    services = Service.objects.all()
 
     if request.method == 'POST':
         # get submitted orders
@@ -243,6 +244,8 @@ def performa_order_stockproduct_list(request):
         chosencustomer = request.POST.getlist("customers")
         # chosenvehicule = request.POST.getlist("vehicle")
         chosenpannes = request.POST.getlist("pannes")
+        chosenservices = request.POST.getlist("services")
+
         # print(chosencustomer)
         # print(chosenvehicule)
         if len(chosencustomer) != 0:
@@ -259,6 +262,7 @@ def performa_order_stockproduct_list(request):
             # sellorder.vehicle = vehicle
             sellorder.save()
             print(chosenproducts)
+            # add products
             if len(chosenproducts) != 0:
                 for product in chosenproducts:
                     currentproduct = StockProduct.objects.get(id=product)
@@ -270,6 +274,7 @@ def performa_order_stockproduct_list(request):
                         # weight=currentproduct.product.weight,
                         quantity=1,
                     )
+            # add Pannes
             if len(chosenpannes) != 0:
                 for panne in chosenpannes:
                     currentpanne = Panne.objects.get(id=panne)
@@ -279,12 +284,22 @@ def performa_order_stockproduct_list(request):
                         panne=currentpanne,
                         price=currentpanne.price
                     )
+            # add services
+            if len(chosenservices) != 0:
+                for service in chosenservices:
+                    currentservice = Service.objects.get(id=service)
+                    ServiceItem.objects.create(
+                        order=sellorder,
+                        service=currentservice,
+                        price=currentservice.price + currentservice.charge
+                    )
             return redirect('stock:performa_order_vehicle', sellorder.pk)
 
     context = {
         'customers': customers,
         'stockproducts': stockproducts,
         'pannes': pannes,
+        'services': services,
     }
     return render(request, 'stockproduct/order_list_stockproduct.html', context)
 
