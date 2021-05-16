@@ -142,6 +142,7 @@ LANGUAGES = [
     ('en', 'English'),
     ('fr', 'Francais'),
     ('ar', 'Arabic'),
+
 ]
 
 # Static files (CSS, JavaScript, Images)
