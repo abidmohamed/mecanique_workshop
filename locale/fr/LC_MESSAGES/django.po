@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-01 11:58+0100\n"
+"POT-Creation-Date: 2021-05-16 11:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -690,6 +690,7 @@ msgid "ARE YOU SURE YOU WANT TO DELETE"
 msgstr "Voulez-vous vraiment supprimer "
 
 #: .\buyorder\templates\buyorder\buyorder_delete.html:17
+#: .\caisse\templates\caisse\transaction_delete.html:21
 #: .\category\templates\category\delete_category.html:18
 #: .\customer\templates\customer\delete_customer.html:18
 #: .\family\templates\family\delete_family.html:17
