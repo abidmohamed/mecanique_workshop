@@ -14,7 +14,7 @@ class CaisseHistory(models.Model):
 
 class Transaction(models.Model):
     Transaction_name = models.CharField(max_length=200, null=True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
     type_choices = (
         ('Income', 'Income'),
         ('Expense', 'Expense')
