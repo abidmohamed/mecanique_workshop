@@ -233,7 +233,7 @@ def order_stockproduct_list(request):
 
 # Performa order
 def performa_order_stockproduct_list(request):
-    stockproducts = StockProduct.objects.all().filter(quantity__gt=0)
+    stockproducts = StockProduct.objects.all()
     customers = Customer.objects.all()
     pannes = Panne.objects.all()
     services = Service.objects.all()
