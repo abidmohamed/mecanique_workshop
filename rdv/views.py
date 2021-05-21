@@ -157,6 +157,29 @@ def update_order_panne_list(request, pk):
     return render(request, 'panne/modal_order_list_panne.html', context)
 
 
+# Add Panne to Confirm order
+def confirm_order_panne_list(request, pk):
+    sellorder = Order.objects.get(id=pk)
+    pannes = Panne.objects.all()
+    if request.method == 'POST':
+        # get submitted order
+        chosenpannes = request.POST.getlist("pannes")
+        if len(chosenpannes) != 0:
+            for panne in chosenpannes:
+                currentpanne = Panne.objects.get(id=panne)
+
+                PanneItem.objects.create(
+                    order=sellorder,
+                    panne=currentpanne,
+                    price=currentpanne.price,
+                )
+        return redirect('sellorder:confirm_order', sellorder.id)
+    context = {
+        'pannes': pannes,
+    }
+    return render(request, 'panne/modal_order_list_panne.html', context)
+
+
 def panne_list(request):
     pannes = Panne.objects.all()
     context = {

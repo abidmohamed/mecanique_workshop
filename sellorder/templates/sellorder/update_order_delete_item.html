@@ -10,11 +10,11 @@
     </div>
     <div class="col-md-6">
         <div class="card card-body">
-            <P>{% trans "ARE YOU SURE YOU WANT TO DELETE" %} {{sellorder}} _ {{item.panne.desc}} _ {{item.price}}</P>
-            <form action="{% url 'sellorder:confirm_order_panne_delete' sellorder.id item.id%}" method="post">
+            <P>{% trans "ARE YOU SURE YOU WANT TO DELETE" %} {{sellorder}} _ {{item.stockproduct}} _ {{item.quantity}}</P>
+            <form action="{% url 'sellorder:order_item_delete' sellorder.id item.id%}" method="post">
 
                 {% csrf_token %}
-                <a class="btn btn-warning" href="{% url 'sellorder:confirm_order' sellorder.id %}">{% trans "Cancel" %}</a>
+                <a class="btn btn-warning" href="{% url 'sellorder:update_order' sellorder.id %}">{% trans "Cancel" %}</a>
                 <input class="btn btn-danger" type="submit" name="Confirm">
             </form>
         </div>
