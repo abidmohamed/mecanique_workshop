@@ -22,12 +22,17 @@
                     <div class="">
                         <!-- Button Add New Product -->
                         <a class="btn btn btn-primary form-control"
-                           href="{% url 'stock:modal_update_order_stockproduct_list' sellorder.id %}">{% trans "New Product" %}</a>
+                           href="{% url 'stock:modal_update_order_stockproduct_list' sellorder.id %}"><i class="fas fa-plus-circle"></i>  {% trans "Product" %}</a>
                         <br>
                         <br>
                         <!-- Button Add New Panne -->
                         <a class="btn btn btn-success form-control"
-                           href="{% url 'rdv:update_order_panne_list' sellorder.id %}">{% trans "New Panne" %}</a>
+                           href="{% url 'rdv:update_order_panne_list' sellorder.id %}"><i class="fas fa-plus-circle"></i> {% trans "Panne" %}</a>
+                        <br>
+                        <br>
+                             <!-- Button Add New Service -->
+                        <a class="btn btn btn-info form-control"
+                           href="{% url 'services:update_order_service_list' sellorder.id %}"><i class="fas fa-plus-circle"></i> {% trans "Service" %}</a>
                         <br>
                     </div>
                 </div>
@@ -132,6 +137,25 @@
                     {% endfor %}
                     </tbody>
 
+
+                </table>
+                <br>
+                <table class="thead-light">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>{% trans "Service" %}</th>
+                        <th>{% trans "Price" %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in sellorder.services.all %}
+                    <tr>
+                        <td>{{item.service.name}}</td>
+                        <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
 
                 </table>
                 <br>

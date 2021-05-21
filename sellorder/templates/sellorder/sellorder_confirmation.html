@@ -21,9 +21,18 @@
                     <div class="col-12">
                         <div class="">
                             <!-- Button Add New Product -->
-                            <a class="btn btn btn-primary form-control" href="{% url 'stock:modal_order_stockproduct_list' sellorder.id %}">{% trans "New Product" %}</a>
+                            <a class="btn btn btn-primary form-control" href="{% url 'stock:modal_order_stockproduct_list' sellorder.id %}"><i class="fas fa-plus-circle"></i> {% trans "Product" %}</a>
                             <br>
-
+                            <br>
+                             <!-- Button Add New Panne -->
+                        <a class="btn btn btn-success form-control"
+                           href="{% url 'rdv:confirm_order_panne_list' sellorder.id %}"><i class="fas fa-plus-circle"></i> {% trans "Panne" %}</a>
+                        <br>
+                        <br>
+                             <!-- Button Add New Service -->
+                        <a class="btn btn btn-info form-control"
+                           href="{% url 'services:confirm_order_service_list' sellorder.id %}"><i class="fas fa-plus-circle"></i> {% trans "Service" %}</a>
+                        <br>
                         </div>
                     </div>
                 </div>
@@ -70,6 +79,7 @@
                         <th>{% trans "Sell Price DZD" %}</th>
                         <th>{% trans "Buy Price DZD" %}</th>
                         <th>{% trans "Quantity" %}</th>
+                        <th></th>
                     </tr>
                     </thead>
                     {% for item in sellorder.items.all %}
@@ -92,6 +102,10 @@
                         <td class="table-light ">
                             <input onkeyup="calc()" class="form-control" type="number" name="quantities" value="{{ item.quantity }}" required>
                         </td>
+                        <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'sellorder:confirm_order_item_delete' sellorder.id item.id %}">{% trans "Delete" %}</a>
+                        </td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -101,6 +115,7 @@
                     <tr>
                         <th>{% trans "Mo" %}</th>
                         <th>{% trans "Price" %}</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -108,6 +123,10 @@
                     <tr>
                         <td>{{item.panne.desc}}</td>
                         <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'sellorder:confirm_order_panne_delete' sellorder.id item.id %}">{% trans "Delete" %}</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -120,6 +139,7 @@
                     <tr>
                         <th>{% trans "Service" %}</th>
                         <th>{% trans "Price" %}</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -127,6 +147,10 @@
                     <tr>
                         <td>{{item.service.name}}</td>
                         <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'sellorder:confirm_order_service_delete' sellorder.id item.id %}">{% trans "Delete" %}</a>
                         </td>
                     </tr>
                     {% endfor %}

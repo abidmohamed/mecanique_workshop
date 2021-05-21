@@ -18,6 +18,7 @@ urlpatterns = [
     path('panne_list', views.panne_list, name='panne_list'),
     path('update_panne/<str:pk>', views.update_panne, name='update_panne'),
     path('update_order_panne_list/<str:pk>', views.update_order_panne_list, name='update_order_panne_list'),
+    path('confirm_order_panne_list/<str:pk>', views.confirm_order_panne_list, name='confirm_order_panne_list'),
     path('delete_panne/<str:pk>', views.delete_panne, name='delete_panne'),
 
 ]

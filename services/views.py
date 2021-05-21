@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from sellorder.models import Order, ServiceItem
 from services.forms import ServiceForm, ServiceProviderForm
 from services.models import Service, ServiceProvider
 
@@ -47,6 +48,51 @@ def delete_service(request, pk):
         service.delete()
         return redirect('/')
     return render(request, 'services/delete_service.html', context)
+
+
+# Add Service to confirm order
+def confirm_order_service_list(request, pk):
+    sellorder = Order.objects.get(id=pk)
+    services = Service.objects.all()
+    if request.method == 'POST':
+        chosenservices = request.POST.getlist("services")
+        if len(chosenservices) != 0:
+            for service in chosenservices:
+                currentservice = Service.objects.get(id=service)
+                ServiceItem.objects.create(
+                    order=sellorder,
+                    service=currentservice,
+                    price=currentservice.price + currentservice.charge
+                )
+        return redirect('sellorder:confirm_order', sellorder.id)
+
+    context = {
+        'services': services,
+    }
+    return render(request, 'services/modal_order_list_service.html', context)
+
+
+# Add Service to update order
+def update_order_service_list(request, pk):
+    sellorder = Order.objects.get(id=pk)
+    services = Service.objects.all()
+    if request.method == 'POST':
+        chosenservices = request.POST.getlist("services")
+        if len(chosenservices) != 0:
+            for service in chosenservices:
+                currentservice = Service.objects.get(id=service)
+                ServiceItem.objects.create(
+                    order=sellorder,
+                    service=currentservice,
+                    price=currentservice.price + currentservice.charge
+                )
+        return redirect('sellorder:update_order', sellorder.id)
+
+    context = {
+        'services': services,
+    }
+    return render(request, 'services/modal_order_list_service.html', context)
+
 
 
 def add_provider(request):

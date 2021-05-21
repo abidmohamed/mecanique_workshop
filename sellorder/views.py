@@ -321,7 +321,7 @@ def update_order(request, pk):
     }
     return render(request, 'sellorder/sellorder_update.html', context)
 
-
+# Update order delete item
 def order_item_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
     item = sellorder.items.get(id=itempk)
@@ -341,7 +341,47 @@ def order_item_delete(request, orderpk, itempk):
     return render(request, 'sellorder/delete_item.html', context)
 
 
-# delete panne from orderS
+# Update order delete item
+def order_item_delete(request, orderpk, itempk):
+    sellorder = Order.objects.get(id=orderpk)
+    item = sellorder.items.get(id=itempk)
+    print(item)
+    if request.method == 'POST':
+        item = sellorder.items.get(id=itempk)
+        stockproduct = StockProduct.objects.get(id=item.stockproduct.id)
+        stockproduct.quantity += item.quantity
+        stockproduct.save()
+        item.delete()
+        return redirect('sellorder:update_order', sellorder.id)
+
+    context = {
+        'sellorder': sellorder,
+        'item': item
+    }
+    return render(request, 'sellorder/update_order_delete_item.html', context)
+
+
+# Update order delete item
+def confirm_order_item_delete(request, orderpk, itempk):
+    sellorder = Order.objects.get(id=orderpk)
+    item = sellorder.items.get(id=itempk)
+    print(item)
+    if request.method == 'POST':
+        item = sellorder.items.get(id=itempk)
+        stockproduct = StockProduct.objects.get(id=item.stockproduct.id)
+        stockproduct.quantity += item.quantity
+        stockproduct.save()
+        item.delete()
+        return redirect('sellorder:confirm_order', sellorder.id)
+
+    context = {
+        'sellorder': sellorder,
+        'item': item
+    }
+    return render(request, 'sellorder/delete_item.html', context)
+
+
+# delete panne from order update
 def order_panne_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
     item = sellorder.pannes.get(id=itempk)
@@ -355,7 +395,56 @@ def order_panne_delete(request, orderpk, itempk):
         'sellorder': sellorder,
         'item': item
     }
+    return render(request, 'sellorder/update_order_delete_panne.html', context)
+
+
+# delete panne from order confirm
+def confirm_order_panne_delete(request, orderpk, itempk):
+    sellorder = Order.objects.get(id=orderpk)
+    item = sellorder.pannes.get(id=itempk)
+    print(item)
+    if request.method == 'POST':
+        item = sellorder.pannes.get(id=itempk)
+        item.delete()
+        return redirect('sellorder:confirm_order', sellorder.id)
+
+    context = {
+        'sellorder': sellorder,
+        'item': item
+    }
     return render(request, 'sellorder/delete_panne.html', context)
+
+
+# delete service in confirm order
+def confirm_order_service_delete(request, orderpk, itempk):
+    sellorder = Order.objects.get(id=orderpk)
+    item = sellorder.services.get(id=itempk)
+    if request.method == 'POST':
+        item = sellorder.services.get(id=itempk)
+        item.delete()
+        return redirect('sellorder:confirm_order', sellorder.id)
+
+    context = {
+        'sellorder': sellorder,
+        'item': item
+    }
+    return render(request, 'sellorder/delete_service.html', context)
+
+
+# delete service in update order
+def order_service_delete(request, orderpk, itempk):
+    sellorder = Order.objects.get(id=orderpk)
+    item = sellorder.services.get(id=itempk)
+    if request.method == 'POST':
+        item = sellorder.services.get(id=itempk)
+        item.delete()
+        return redirect('sellorder:update_order', sellorder.id)
+
+    context = {
+        'sellorder': sellorder,
+        'item': item
+    }
+    return render(request, 'sellorder/update_order_delete_service.html', context)
 
 
 # order details
