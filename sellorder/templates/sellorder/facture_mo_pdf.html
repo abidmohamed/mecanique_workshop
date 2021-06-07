@@ -285,7 +285,7 @@ text-align: right !important;
         </tr>
          <tr>
              <td class="text-left">RC</td>
-             <td class="text-right">39/01-0544603B20</td>
+             <td class="text-right">39/00-0544603B20</td>
              <td></td>
              <!--Customer-->
              <td class="text-left">RC</td>
@@ -389,37 +389,6 @@ text-align: right !important;
 </table>
   -->  
   <!--<h3>Item bought</h3>-->
-    {% if order.order.items.all %}
-    <table class="items-table">
-        <thead>
-            <tr>
-                <th colspan="3">Product</th>
-                <th colspan="1">Prix Unitaire</th>
-                <th colspan="1">Quantity</th>
-                <th colspan="1">Prix total</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in order.order.items.all %}
-            <tr class="row{% cycle '1' '2' %} ">
-                <td colspan="3">{{ item.stockproduct.product.name }}</td>
-                <td colspan="1" class="num"> {{ item.price }}</td>
-                <td colspan="1" class="num">{{ item.quantity }}</td>
-                <td colspan="1" class="num"> {{ item.get_cost }}</td>
-            </tr>
-            {% endfor %}
-{% for service in order.services.all %}
-    <tr class="row{% cycle '1' '2' %} ">
-        <td colspan="3" >{{service.service.name}}</td>
-        <td class="num">{{service.get_cost}}</td>
-        <td class="num">1</td>
-        <td class="num">{{service.get_cost}}</td>
-    </tr>
-    {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
-
     {% if order.order.pannes.all %}
     <table class="items-table">
         <thead>

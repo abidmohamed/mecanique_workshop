@@ -321,6 +321,7 @@ def update_order(request, pk):
     }
     return render(request, 'sellorder/sellorder_update.html', context)
 
+
 # Update order delete item
 def order_item_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
@@ -701,6 +702,32 @@ def sellorder_facture_pdf(request, pk):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+
+def sellorder_facture_mo_pdf(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    sellorder = get_object_or_404(SellOrderFacture, order=order)
+    customer = Customer.objects.get(id=sellorder.order.customer.id)
+    if customer.enterprise:
+        enterprise = Enterprise.objects.get(customer=customer)
+    else:
+        enterprise = Enterprise.objects.none()
+    total_in_letters = num2words(order.get_ttc(), lang='fr_DZ', to='currency')
+    context = {
+        'order': sellorder,
+        'total_in_letters': total_in_letters.capitalize(),
+        'enterprise': enterprise
+    }
+    html = render_to_string('sellorder/facture_mo_pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{sellorder.id}_{sellorder.order.customer}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 def sellorder_facture_proforma_pdf(request, pk):
     order = get_object_or_404(Order, id=pk)
