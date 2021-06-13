@@ -18,6 +18,9 @@ urlpatterns = [
     path('sellorder_facture_pdf/<str:pk>', views.sellorder_facture_pdf, name='sellorder_facture_pdf'),
     path('sellorder_facture_mo_pdf/<str:pk>', views.sellorder_facture_mo_pdf, name='sellorder_facture_mo_pdf'),
     path('sellorder_facture_proforma_pdf/<str:pk>', views.sellorder_facture_proforma_pdf, name='sellorder_facture_proforma_pdf'),
+    path('bsb_sellorder_facture_proforma_pdf/<str:pk>', views.bsb_sellorder_facture_proforma_pdf, name='bsb_sellorder_facture_proforma_pdf'),
+    path('nacer_sellorder_facture_proforma_pdf/<str:pk>', views.nacer_sellorder_facture_proforma_pdf, name='nacer_sellorder_facture_proforma_pdf'),
+    path('ghezal_sellorder_facture_proforma_pdf/<str:pk>', views.ghezal_sellorder_facture_proforma_pdf, name='ghezal_sellorder_facture_proforma_pdf'),
     path('sellorder_facture_proforma_pdf_no_date/<str:pk>', views.sellorder_facture_proforma_pdf_no_date, name='sellorder_facture_proforma_pdf_no_date'),
 
     path('sellorder_list_by_customer/<str:pk>', views.sellorder_list_by_customer,
