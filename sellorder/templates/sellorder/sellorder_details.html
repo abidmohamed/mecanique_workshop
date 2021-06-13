@@ -32,6 +32,12 @@
              <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_proforma_pdf' order.id %}">{% trans "Print" %} </a>
             <br>
              <a class="btn btn-info " href="{% url 'sellorder:sellorder_facture_proforma_pdf_no_date' order.id %}">{% trans "Print No Date" %} </a>
+            <br>
+             <a class="btn btn-info " href="{% url 'sellorder:bsb_sellorder_facture_proforma_pdf' order.id %}">{% trans "Proforma BSB" %} </a>
+            <br>
+             <a class="btn btn-info " href="{% url 'sellorder:nacer_sellorder_facture_proforma_pdf' order.id %}">{% trans "Proforma Nacer" %} </a>
+            <br>
+             <a class="btn btn-info " href="{% url 'sellorder:ghezal_sellorder_facture_proforma_pdf' order.id %}">{% trans "Proforma Ghezal" %} </a>
 
             {% endif %}
 

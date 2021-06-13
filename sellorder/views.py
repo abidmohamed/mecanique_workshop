@@ -745,6 +745,7 @@ def sellorder_facture_mo_pdf(request, pk):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+
 def sellorder_facture_proforma_pdf(request, pk):
     order = get_object_or_404(Order, id=pk)
     customer = Customer.objects.get(id=order.customer.id)
@@ -769,6 +770,85 @@ def sellorder_facture_proforma_pdf(request, pk):
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+
+def bsb_sellorder_facture_proforma_pdf(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    customer = Customer.objects.get(id=order.customer.id)
+    if customer.enterprise:
+        enterprise = Enterprise.objects.get(customer=customer)
+    else:
+        enterprise = Enterprise.objects.none()
+    total_in_letters = num2words(order.get_ttc() * 3, lang='fr_DZ', to='currency')
+    context = {
+        'order': order,
+        'total_in_letters': total_in_letters.capitalize(),
+        'enterprise': enterprise
+    }
+    html = render_to_string('sellorder/bsb_facture_proforma_pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{order.id}_{order.customer}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+def nacer_sellorder_facture_proforma_pdf(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    customer = Customer.objects.get(id=order.customer.id)
+    if customer.enterprise:
+        enterprise = Enterprise.objects.get(customer=customer)
+    else:
+        enterprise = Enterprise.objects.none()
+    total_in_letters = num2words(order.get_ttc() * 2, lang='fr_DZ', to='currency')
+    context = {
+        'order': order,
+        'total_in_letters': total_in_letters.capitalize(),
+        'enterprise': enterprise
+    }
+    html = render_to_string('sellorder/nacer_facture_proforma_pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{order.id}_{order.customer}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+def ghezal_sellorder_facture_proforma_pdf(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    customer = Customer.objects.get(id=order.customer.id)
+    if customer.enterprise:
+        enterprise = Enterprise.objects.get(customer=customer)
+    else:
+        enterprise = Enterprise.objects.none()
+    total_in_letters = num2words(order.get_ttc() * 2, lang='fr_DZ', to='currency')
+    context = {
+        'order': order,
+        'total_in_letters': total_in_letters.capitalize(),
+        'enterprise': enterprise
+    }
+    html = render_to_string('sellorder/ghezal_facture_proforma_pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{order.id}_{order.customer}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
 
 
 def sellorder_facture_proforma_pdf_no_date(request, pk):
