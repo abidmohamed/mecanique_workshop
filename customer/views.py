@@ -1,5 +1,5 @@
 from customer.forms import UserForm, CustomerForm, CityForm, EnterpriseForm
-from customer.models import Customer, City
+from customer.models import Customer, City, Enterprise
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -55,6 +55,43 @@ def add_enterprise(request, pk):
         'enter_form': enter_form
     }
     return render(request, 'customer/add_enterprise.html', context)
+
+
+def update_enterprise(request, pk):
+    # customer = Customer.objects.get(id=pk)
+    # get entrprise
+    enterprise = Enterprise.objects.get(id=pk)
+    # Enterprise form
+    enter_form = EnterpriseForm(instance=enterprise)
+    if request.method == 'POST':
+        enter_form = EnterpriseForm(request.POST, instance=enterprise)
+        if enter_form.is_valid():
+            enter_form.save()
+            return redirect('customer:customer_list')
+
+    context = {
+        'enter_form': enter_form
+    }
+    return render(request, 'customer/add_enterprise.html', context)
+
+
+def enterprise_list(request):
+    enterprises = Enterprise.objects.all()
+    context = {
+        'enterprises': enterprises
+    }
+    return render(request, 'customer/list_enterprise.html', context)
+
+
+def delete_enterprise(request, pk):
+    enterprise = Enterprise.objects.get(id=pk)
+    context = {
+        'enterprise': enterprise,
+    }
+    if request.method == 'POST':
+        enterprise.delete()
+        return redirect('customer:enterprise_list')
+    return render(request, 'customer/delete_enterprise.html', context)
 
 
 def add_customer_rdv(request):
@@ -115,7 +152,10 @@ def update_customer(request, pk):
         if customer_form.is_valid():
             customer_form.save()
             if customer.enterprise:
-                return redirect('customer:add_enterprise', customer.id)
+                if Enterprise.objects.filter(customer=customer):
+                    return redirect('customer:update_enterprise', customer.enterprise.id)
+                else:
+                    return redirect('customer:add_enterprise', customer.id)
             else:
                 return redirect('customer:customer_list')
     context = {

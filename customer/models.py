@@ -32,7 +32,7 @@ class Customer(models.Model):
 
 class Enterprise(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='owner')
-    rc = models.CharField(max_length=250, null=True)
-    nif = models.CharField(max_length=250, null=True)
-    nis = models.CharField(max_length=250, null=True)
-    art = models.CharField(max_length=250, null=True)
+    rc = models.CharField(max_length=250, null=True, blank=True)
+    nif = models.CharField(max_length=250, null=True, blank=True)
+    nis = models.CharField(max_length=250, null=True, blank=True)
+    art = models.CharField(max_length=250, null=True, blank=True)

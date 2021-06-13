@@ -1,0 +1,72 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>{% trans "Enterprises" %}</h5>
+            </div>
+            <div class="card card-body">
+                <table id="table_id" class="display text-center">
+                    <thead>
+                    <tr>
+                        <th>{% trans "RC" %}</th>
+                        <th>{% trans "NIF" %}</th>
+                        <th>{% trans "NIS" %}</th>
+                        <th>{% trans "ART" %}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for enter in enterprises %}
+                    <tr>
+                        <td>
+                            {{enter.rc}}
+                        </td>
+                        <td>
+                            {{enter.nif}}
+                        </td>
+                        <td>
+                            {{enter.nis}}
+                        </td>
+                        <td>
+                            {{enter.art}}
+                        </td>
+                        <td>
+                            <a class="btn btn-success "
+                               href="{% url 'customer:update_enterprise' enter.id %}">{% trans "Update" %}</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'customer:delete_enterprise' enter.id %}">{% trans "Delete" %}</a>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block jsscript %}
+<!-- Data Table  -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+<script type='text/javascript'>
+    //Data Table init
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+    } );
+
+</script>
+{% endblock %}
