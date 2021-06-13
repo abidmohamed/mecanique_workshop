@@ -188,7 +188,7 @@ def order_to_performa(request, pk):
     performa_order.paid = sellorder.paid
     performa_order.order_tva = sellorder.order_tva
     performa_order.confirmed = False
-    performa_order.factured = sellorder.factured
+    performa_order.factured = False
     performa_order.order_date = sellorder.order_date
     performa_order.save()
     # copy order items
@@ -848,7 +848,6 @@ def ghezal_sellorder_facture_proforma_pdf(request, pk):
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-
 
 
 def sellorder_facture_proforma_pdf_no_date(request, pk):

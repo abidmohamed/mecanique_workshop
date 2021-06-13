@@ -16,7 +16,10 @@
             <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_pdf' order.id %}">{% trans "Print" %} </a>
             <br>
             <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_mo_pdf' order.id %}">{% trans "Print MO"  %} </a>
-                       <br>
+
+            <br>
+                        <a class="btn btn-success " href="{% url 'sellorder:order_to_performa' order.id %}"><i class="fas fa-copy"></i> {% trans "Copy to Proforma" %} </a>
+
             {% elif order.confirmed %}
             <a class="btn btn-success " href="{% url 'sellorder:order_to_performa' order.id %}"><i class="fas fa-copy"></i> {% trans "Copy to Proforma" %} </a>
             <br>
