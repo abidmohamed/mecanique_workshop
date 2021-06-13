@@ -13,6 +13,7 @@
                 <table id="table_id" class="display text-center">
                     <thead>
                     <tr>
+                        <th>{% trans "Customer" %}</th>
                         <th>{% trans "RC" %}</th>
                         <th>{% trans "NIF" %}</th>
                         <th>{% trans "NIS" %}</th>
@@ -25,6 +26,9 @@
                     <tbody>
                     {% for enter in enterprises %}
                     <tr>
+                        <td>
+                            {{enter.customer}}
+                        </td>
                         <td>
                             {{enter.rc}}
                         </td>
