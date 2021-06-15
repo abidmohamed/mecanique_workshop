@@ -36,3 +36,6 @@ class Enterprise(models.Model):
     nif = models.CharField(max_length=250, null=True, blank=True)
     nis = models.CharField(max_length=250, null=True, blank=True)
     art = models.CharField(max_length=250, null=True, blank=True)
+    article_imposition = models.CharField(max_length=250, null=True, blank=True)
+    num_compte_bancaire = models.CharField(max_length=250, null=True, blank=True)
+
