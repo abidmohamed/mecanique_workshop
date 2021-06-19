@@ -32,4 +32,5 @@ class EnterpriseForm(ModelForm):
     class Meta:
         model = Enterprise
 
-        fields = ('nif', 'nis', 'art', 'rc', 'article_imposition', 'num_compte_bancaire')
+        fields = ('nif', 'nif_check', 'nis', 'nis_check', 'art', 'art_check', 'rc', 'rc_check', 'article_imposition', 'ai_check',
+                  'N_compte', 'matriculation')
