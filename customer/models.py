@@ -33,9 +33,15 @@ class Customer(models.Model):
 class Enterprise(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='owner')
     rc = models.CharField(max_length=250, null=True, blank=True)
+    rc_check = models.BooleanField(default=False)
     nif = models.CharField(max_length=250, null=True, blank=True)
+    nif_check = models.BooleanField(default=False)
     nis = models.CharField(max_length=250, null=True, blank=True)
+    nis_check = models.BooleanField(default=False)
     art = models.CharField(max_length=250, null=True, blank=True)
+    art_check = models.BooleanField(default=False)
     article_imposition = models.CharField(max_length=250, null=True, blank=True)
-    num_compte_bancaire = models.CharField(max_length=250, null=True, blank=True)
+    ai_check = models.BooleanField(default=False)
+    matriculation = models.BooleanField(default=False)
+    N_compte = models.CharField(max_length=250, null=True, blank=True)
 

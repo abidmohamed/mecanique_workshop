@@ -257,16 +257,16 @@ text-align: right !important;
              <td></td>
              <td></td>
          </tr>
-        <tr>
+          <tr>
             <td class="text-left" >NIF</td>
             <td class="text-right">2.039.054.460.387</td>
             <td></td>
             <!--Customer-->
-            <td class="text-left">NIF</td>
             {% if order.order.customer.enterprise %}
+            {% if enterprise.nif_check %}
+            <td class="text-left">NIF</td>
             <td class="text-right">{{enterprise.nif}}</td>
-            {% else %}
-            <td class="text-right">X.XXX.XXX.XXX.XXX</td>
+            {% endif %}
             {% endif %}
 
         </tr>
@@ -275,24 +275,24 @@ text-align: right !important;
             <td class="text-right">39012000644</td>
             <td></td>
             <!--Customer-->
-            <td class="text-left">ART</td>
             {% if order.order.customer.enterprise %}
+            {% if enterprise.art_check %}
+            <td class="text-left">ART</td>
             <td class="text-right">{{enterprise.art}}</td>
-            {% else %}
-            <td class="text-right">XXXXXXXXXXX</td>
+            {% endif %}
             {% endif %}
 
         </tr>
          <tr>
              <td class="text-left">RC</td>
-             <td class="text-right">39/00-0544603B20</td>
+             <td class="text-right">39/01-0544603B20</td>
              <td></td>
              <!--Customer-->
-             <td class="text-left">RC</td>
              {% if order.order.customer.enterprise %}
+             {% if enterprise.rc_check %}
+             <td class="text-left">RC</td>
              <td class="text-right">{{enterprise.rc}}</td>
-             {% else %}
-             <td class="text-right">XX/XX-XXXXXXXXXX</td>
+             {% endif %}
              {% endif %}
 
          </tr>
@@ -301,11 +301,24 @@ text-align: right !important;
              <td class="text-right">2039010013858</td>
              <td></td>
              <!--Customer-->
-             <td class="text-left">NIS</td>
              {% if order.order.customer.enterprise %}
+             {% if enterprise.nis_check %}
+             <td class="text-left">NIS</td>
              <td class="text-right">{{enterprise.nis}}</td>
-             {% else %}
-             <td class="text-right">XXXXXXXXXXXXX</td>
+             {% endif %}
+             {% endif %}
+
+         </tr>
+        <tr>
+             <td class="text-left"></td>
+             <td class="text-right"></td>
+             <td></td>
+             <!--Customer-->
+             {% if order.order.customer.enterprise %}
+             {% if enterprise.ai_check %}
+             <td class="text-left">AI</td>
+             <td class="text-right">{{enterprise.article_imposition}}</td>
+             {% endif %}
              {% endif %}
 
          </tr>
@@ -475,7 +488,7 @@ text-align: right !important;
     <tr style="margin: auto;">
         <td class="text-center font-14" colspan="5" >Veuillez, s'il vous plait, effectuer les paiement par
             transfert bancaire sur notre compte courant:
-            <h3 style="margin: auto;">BEA: 002000940942202279</h3>
+            <h3 style="margin: auto;">BEA: 002000940942202279 cle 85</h3>
         </td>
     </tr>
     <tr style="margin: auto;">

@@ -153,7 +153,8 @@ def update_customer(request, pk):
             customer_form.save()
             if customer.enterprise:
                 if Enterprise.objects.filter(customer=customer):
-                    return redirect('customer:update_enterprise', customer.enterprise.id)
+                    enterprise = Enterprise.objects.get(customer=customer)
+                    return redirect('customer:update_enterprise', enterprise.id)
                 else:
                     return redirect('customer:add_enterprise', customer.id)
             else:
