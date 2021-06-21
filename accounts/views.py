@@ -151,6 +151,14 @@ def home(request):
         if supplierpayment.pay_status == "Cheque":
             bank -= supplierpayment.amount
 
+    for customerpayment in customerpayments:
+        if customerpayment.pay_status == "Versement":
+            bank += customerpayment.amount
+
+    for supplierpayment in supplierpayments:
+        if supplierpayment.pay_status == "Versement":
+            bank -= supplierpayment.amount
+
     context = {
         'calendar': mark_safe(html_calendar),
         'prev_month': prev_month(calendar_date),

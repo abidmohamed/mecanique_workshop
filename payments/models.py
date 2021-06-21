@@ -17,8 +17,10 @@ class SellOrderPayment(models.Model):
     pay_type = (
         ('Cash', 'Cash'),
         ('Cheque', 'Cheque'),
+        ('Versement', 'Versement'),
+
     )
-    pay_status = models.CharField(max_length=8, choices=pay_type, blank=True, default="Cash")
+    pay_status = models.CharField(max_length=9, choices=pay_type, blank=True, default="Cash")
 
 
 class CustomerCheque(models.Model):
@@ -40,8 +42,9 @@ class BuyOrderPayment(models.Model):
     pay_type = (
         ('Cash', 'Cash'),
         ('Cheque', 'Cheque'),
+        ('Versement', 'Versement'),
     )
-    pay_status = models.CharField(max_length=8, choices=pay_type, blank=True, default="Cash")
+    pay_status = models.CharField(max_length=9, choices=pay_type, blank=True, default="Cash")
 
 
 class SupplierCheque(models.Model):
