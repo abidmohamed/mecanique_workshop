@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.db.models import Q
 from django.shortcuts import render, redirect
 # Create your views here.
 from bank.forms import BankTransactionForm
@@ -27,8 +28,8 @@ def transaction_list(request):
     periodform = PeriodForm()
     transactions = BankTransaction.objects.all()
 
-    customerpayments = SellOrderPayment.objects.all().filter(pay_status='Cheque')
-    supplierpayments = BuyOrderPayment.objects.all().filter(pay_status='Cheque')
+    customerpayments = SellOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Versement'))
+    supplierpayments = BuyOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Versement'))
     total_per_period = 0
     income_per_period = 0
     expense_per_period = 0
@@ -67,15 +68,16 @@ def transaction_list(request):
             trans_date__lte=date(int(end_year), int(end_month), int(end_day)),
         )
         customerpayments = SellOrderPayment.objects.all().filter(
+            Q(pay_status='Cheque') | Q(pay_status='Versement'),
             pay_date__gte=date(int(start_year), int(start_month), int(start_day)),
             pay_date__lte=date(int(end_year), int(end_month), int(end_day)),
-            pay_status='Cheque',
+
 
         )
         supplierpayments = BuyOrderPayment.objects.all().filter(
+            Q(pay_status='Cheque') | Q(pay_status='Versement'),
             pay_date__gte=date(int(start_year), int(start_month), int(start_day)),
             pay_date__lte=date(int(end_year), int(end_month), int(end_day)),
-            pay_status='Cheque',
         )
 
     for transaction in transactions:
