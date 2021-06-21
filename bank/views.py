@@ -1,46 +1,34 @@
 from datetime import date
 
 from django.shortcuts import render, redirect
-
 # Create your views here.
-from caisse.forms import TransactionForm, DateForm, PeriodForm
-from caisse.models import Caisse, CaisseHistory, Transaction
+from bank.forms import BankTransactionForm
+from bank.models import BankTransaction
+from caisse.forms import DateForm, PeriodForm
 from payments.models import SellOrderPayment, BuyOrderPayment
 
 
 def create_transaction(request):
-    transaction_form = TransactionForm()
+    transaction_form = BankTransactionForm()
     if request.method == 'POST':
-        transaction_form = TransactionForm(request.POST)
+        transaction_form = BankTransactionForm(request.POST)
         if transaction_form.is_valid():
-            transaction = transaction_form.save(commit=False)
-            caisse = Caisse.objects.all().filter()[:1].get()
-            caisse_history = CaisseHistory()
-            caisse_history.caisse_value = caisse.caisse_value
+            transaction_form.save()
+            return redirect('bank:transaction_list')
 
-            caisse_history.save()
-
-            if transaction.Transaction_type == 'Income':
-                caisse.caisse_value = caisse.caisse_value + transaction.amount
-
-            elif transaction.Transaction_type == 'Expense':
-                caisse.caisse_value = caisse.caisse_value - transaction.amount
-
-            caisse.save()
-            transaction.save()
-            return redirect('caisse:transaction_list')
-
-    context = {'transaction_form': transaction_form}
-    return render(request, 'caisse/add_transaction.html', context)
+    context = {
+        'transaction_form': transaction_form
+    }
+    return render(request, 'bank/add_transaction.html', context)
 
 
 def transaction_list(request):
     dateform = DateForm()
     periodform = PeriodForm()
-    transactions = Transaction.objects.all()
+    transactions = BankTransaction.objects.all()
 
-    customerpayments = SellOrderPayment.objects.all().filter(pay_status='Cash')
-    supplierpayments = BuyOrderPayment.objects.all().filter(pay_status='Cash')
+    customerpayments = SellOrderPayment.objects.all().filter(pay_status='Cheque')
+    supplierpayments = BuyOrderPayment.objects.all().filter(pay_status='Cheque')
     total_per_period = 0
     income_per_period = 0
     expense_per_period = 0
@@ -74,20 +62,20 @@ def transaction_list(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        transactions = Transaction.objects.all().filter(
+        transactions = BankTransaction.objects.all().filter(
             trans_date__gte=date(int(start_year), int(start_month), int(start_day)),
             trans_date__lte=date(int(end_year), int(end_month), int(end_day)),
         )
         customerpayments = SellOrderPayment.objects.all().filter(
             pay_date__gte=date(int(start_year), int(start_month), int(start_day)),
             pay_date__lte=date(int(end_year), int(end_month), int(end_day)),
-            pay_status='Cash',
+            pay_status='Cheque',
 
         )
         supplierpayments = BuyOrderPayment.objects.all().filter(
             pay_date__gte=date(int(start_year), int(start_month), int(start_day)),
             pay_date__lte=date(int(end_year), int(end_month), int(end_day)),
-            pay_status='Cash',
+            pay_status='Cheque',
         )
 
     for transaction in transactions:
@@ -117,26 +105,13 @@ def transaction_list(request):
         "expense_per_period": expense_per_period,
     }
 
-    return render(request, "caisse/transaction_list.html", context)
+    return render(request, "bank/transaction_list.html", context)
 
 
 def delete_transaction(request, pk):
-    transaction = Transaction.objects.get(id=pk)
+    transaction = BankTransaction.objects.get(id=pk)
     context = {'transaction': transaction}
     if request.method == 'POST':
-        caisse = Caisse.objects.all().filter()[:1].get()
-        caisse_history = CaisseHistory()
-        caisse_history.caisse_value = caisse.caisse_value
-
-        caisse_history.save()
-
-        if transaction.Transaction_type == 'Income':
-            caisse.caisse_value = caisse.caisse_value - transaction.amount
-
-        elif transaction.Transaction_type == 'Expense':
-            caisse.caisse_value = caisse.caisse_value + transaction.amount
-
-        caisse.save()
         transaction.delete()
-        return redirect('caisse:transaction_list')
-    return render(request, 'caisse/transaction_delete.html', context)
+        return redirect('bank:transaction_list')
+    return render(request, 'bank/transaction_delete.html', context)
