@@ -5,6 +5,7 @@ from datetime import timedelta
 # Create your views here.
 from django.utils.safestring import mark_safe
 
+from bank.models import BankTransaction
 from buyorder.models import BuyOrder
 from caisse.models import Caisse, Transaction
 from customer.models import Customer
@@ -55,6 +56,9 @@ def home(request):
     # Today order
     today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month,
                                                   created__day=now.day, confirmed=True)
+    payed_today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month,
+                                                        created__day=now.day, confirmed=True, paid=True)
+
     # customers + suppliers all objects
     allcustomers = Customer.objects.all()
     allsuppliers = Supplier.objects.all()
@@ -64,6 +68,9 @@ def home(request):
     supplierpayments = BuyOrderPayment.objects.all()
     # caisse = Caisse.objects.all().filter()[:1].get().caisse_value
     caisse = 0
+    # Bank
+    bank = 0
+    bank_transactions = BankTransaction.objects.all()
     # Customer
     customers = Customer.objects.all().count()
     # Supplier
@@ -98,6 +105,13 @@ def home(request):
         totaltodaypanne += order.get_total_panne()
         totaltodaypiece += order.get_total_cost()
 
+    # Sell Orders today total
+    payed_totaltodaypanne = 0
+    payed_totaltodaypiece = 0
+    for order in payed_today_sellorders:
+        payed_totaltodaypanne += order.get_total_panne()
+        payed_totaltodaypiece += order.get_total_cost()
+
     # Stock Qt Alert
     stockproductsalertcount = 0
     products = Product.objects.all()
@@ -115,10 +129,27 @@ def home(request):
             caisse -= transaction.amount
 
     for customerpayment in customerpayments:
-        caisse += customerpayment.amount
+        if customerpayment.pay_status == "Cash":
+            caisse += customerpayment.amount
 
     for supplierpayment in supplierpayments:
-        caisse -= supplierpayment.amount
+        if supplierpayment.pay_status == "Cash":
+            caisse -= supplierpayment.amount
+
+    # Total Bank Value
+    for transaction in bank_transactions:
+        if transaction.Transaction_type == "Income":
+            bank += transaction.amount
+        else:
+            bank -= transaction.amount
+
+    for customerpayment in customerpayments:
+        if customerpayment.pay_status == "Cheque":
+            bank += customerpayment.amount
+
+    for supplierpayment in supplierpayments:
+        if supplierpayment.pay_status == "Cheque":
+            bank -= supplierpayment.amount
 
     context = {
         'calendar': mark_safe(html_calendar),
@@ -130,5 +161,7 @@ def home(request):
         'stockproductsalertcount': stockproductsalertcount, 'suppliers': suppliers,
         'totaldebt': totaldebt, 'totalcredit': totalcredit,
         'totaltodaypanne': totaltodaypanne, 'totaltodaypiece': totaltodaypiece,
+        'bank': bank, 'payed_totaltodaypanne': payed_totaltodaypanne,
+        'payed_totaltodaypiece': payed_totaltodaypiece,
     }
     return render(request, 'dashboard.html', context)

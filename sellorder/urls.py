@@ -41,7 +41,10 @@ urlpatterns = [
     path('confirm_order_panne_delete/<str:orderpk>/<str:itempk>', views.confirm_order_panne_delete, name='confirm_order_panne_delete'),
     path('confirm_order_service_delete/<str:orderpk>/<str:itempk>', views.confirm_order_service_delete, name='confirm_order_service_delete'),
     path('order_service_delete/<str:orderpk>/<str:itempk>', views.order_service_delete, name='order_service_delete'),
+
     path('get_orders_pannes', views.get_orders_pannes, name='get_orders_pannes'),
     path('get_orders_pieces', views.get_orders_pieces, name='get_orders_pieces'),
+    path('get_orders_pannes_payed', views.get_orders_pannes_payed, name='get_orders_pannes_payed'),
+    path('get_orders_pieces_payed', views.get_orders_pieces_payed, name='get_orders_pieces_payed'),
 
 ]

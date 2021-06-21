@@ -40,6 +40,7 @@ urlpatterns = [
     path('vehicule/', include('vehicule.urls', namespace='vehicule')),
     path('rdv/', include('rdv.urls', namespace='rdv')),
     path('caisse/', include('caisse.urls', namespace='caisse')),
+    path('bank/', include('bank.urls', namespace='bank')),
     path('services/', include('services.urls', namespace='services')),
     # path('discount/', include('discount.urls', namespace='discount')),
 
