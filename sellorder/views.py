@@ -96,7 +96,7 @@ def confirm_order(request, pk):
         # customer debt
         customer.debt += sellorder.get_ttc()
         customer.save()
-        return redirect('sellorder:sellorder_list')
+        return redirect('payments:create_customer_payment', sellorder.id)
     context = {
         'customer': customer,
         'sellorder': sellorder,
