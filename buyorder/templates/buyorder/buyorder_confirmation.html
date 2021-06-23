@@ -10,6 +10,19 @@
             <h5>{% trans "Orders" %}</h5>
         </div>
         <div class="card card-body">
+            <div class="row">
+                    <div class="col-12">
+                        <div class="">
+                            <!-- Button Add New Product -->
+                            <a class="btn btn btn-primary form-control" href="{% url 'stock:modal_buyorder_stockproduct_list' buyorder.id %}"><i class="fas fa-plus-circle"></i> {% trans "Product" %}</a>
+                            <br>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+            <br>
+            <hr>
             <form action="" method="post">
                 {% csrf_token %}
                 {{buyorderform|crispy}}

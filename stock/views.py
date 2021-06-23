@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
+from buyorder.models import BuyOrderItem, BuyOrder
 from category.models import Category
 from customer.models import Customer
 from product.models import Product
@@ -114,6 +115,31 @@ def all_stockproduct_list(request):
     return render(request, 'stockproduct/all_list_stockproduct.html', context)
 
 
+# Modal Add Stock Product To Buy Order
+def modal_buyorder_stockproduct_list(request, pk):
+    order = BuyOrder.objects.get(id=pk)
+    stockproducts = Product.objects.all()
+    if request.method == 'POST':
+        # get submitted orders
+        chosenproducts = request.POST.getlist("products")
+        if len(chosenproducts) != 0:
+            for product in chosenproducts:
+                currentproduct = Product.objects.get(id=product)
+                # print(currentproduct)
+                BuyOrderItem.objects.create(
+                    order=order,
+                    product=currentproduct,
+                    price=currentproduct.buyprice,
+                    # weight=currentproduct.product.weight,
+                    quantity=1,
+                )
+        return redirect('buyorder:buyorder_confirmation', order.pk)
+    context = {
+        'stockproducts': stockproducts,
+    }
+    return render(request, 'stockproduct/modal_buyorder_list_stockproduct.html', context)
+
+
 # Modal Add Stock Product To Sell Order
 def modal_order_stockproduct_list(request, pk):
     sellorder = Order.objects.get(id=pk)
@@ -165,7 +191,7 @@ def modal_update_order_stockproduct_list(request, pk):
     return render(request, 'stockproduct/modal_order_list_stockproduct.html', context)
 
 
-# Normal
+# Normal sell order
 def order_stockproduct_list(request):
     stockproducts = StockProduct.objects.all().filter(quantity__gt=0)
     customers = Customer.objects.all()
