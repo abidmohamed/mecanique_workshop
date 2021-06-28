@@ -119,10 +119,10 @@
             font-size:16px;
             padding:5px;
             margin:0;
-            border-style: solid;
+            border-style: dashed;
             border-width: 1px;
             border-color: #000;
-            height: 35px;
+            height: auto;
         }
 
         tbody td.num {
@@ -193,7 +193,7 @@
     {% for item in order.items.all %}
     <tr class="row{% cycle '1' '2' %} ">
         <td>{{ item.stockproduct.product.ref }}</td>
-        <td>{{ item.stockproduct.product.name }}</td>
+        <td>{{ item.stockproduct.product.name |wordwrap:50|linebreaksbr }}</td>
         <td class="num">DZD {{ item.price }}</td>
         <td class="num">{{ item.quantity }}</td>
         <td class="num">DZD {{ item.get_cost }}</td>

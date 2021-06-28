@@ -149,10 +149,10 @@
 
         .items-table td {
             text-align: left;
-            font-size: 16px;
+            font-size: 12px;
             padding: 5px;
             margin: 0;
-            height: 35px;
+            height: auto;
             background-color: #fff;
         }
 
@@ -401,7 +401,7 @@ text-align: right !important;
         <tbody>
             {% for item in order.items.all %}
             <tr class="row{% cycle '1' '2' %} ">
-                <td colspan="3">{{ item.stockproduct.product.name }}</td>
+                <td colspan="3">{{ item.stockproduct.product.name |wordwrap:50|linebreaksbr }}</td>
                 <td colspan="1" class="num"> {{ item.price }}</td>
                 <td colspan="1" class="num">{{ item.quantity }}</td>
                 <td colspan="1" class="num"> {{ item.get_cost }}</td>
