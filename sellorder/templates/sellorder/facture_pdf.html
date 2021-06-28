@@ -134,6 +134,7 @@
             border-spacing: 0;
             border-collapse: collapse;
             margin: 0px 0;
+            table-layout: fixed;
         }
 
         .items-table th {
@@ -152,8 +153,10 @@
             font-size: 16px;
             padding: 5px;
             margin: 0;
-            height: 35px;
+            height: auto;
             background-color: #fff;
+            overflow-wrap: break-word;
+            table-layout: fixed;
         }
 
 
@@ -194,6 +197,13 @@ background: #5993bb;
 color: #000;
 font-weight: bold;
 text-align: right !important;
+}
+
+.product-name-container{
+ word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+    width: 100%;
+    table-layout: fixed;
 }
 
       /* Page margins are defined using CSS */
@@ -416,16 +426,19 @@ text-align: right !important;
     <table class="items-table">
         <thead>
             <tr>
-                <th colspan="3">Product</th>
+                <th colspan="3">Produit</th>
                 <th colspan="1">Prix Unitaire</th>
                 <th colspan="1">Quantity</th>
-                <th colspan="1">Prix total</th>
+                <th colspan="1">Montant</th>
             </tr>
         </thead>
         <tbody>
             {% for item in order.order.items.all %}
             <tr class="row{% cycle '1' '2' %} ">
-                <td colspan="3" style="overflow-wrap: break-word;">{{ item.stockproduct.product.name }}</td>
+                <td colspan="3" >
+                    {{ item.stockproduct.product.name|wordwrap:50|linebreaksbr }}
+
+                   </td>
                 <td colspan="1" class="num"> {{ item.price }}</td>
                 <td colspan="1" class="num">{{ item.quantity }}</td>
                 <td colspan="1" class="num"> {{ item.get_cost }}</td>
