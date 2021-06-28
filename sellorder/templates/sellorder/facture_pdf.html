@@ -425,7 +425,7 @@ text-align: right !important;
         <tbody>
             {% for item in order.order.items.all %}
             <tr class="row{% cycle '1' '2' %} ">
-                <td colspan="3">{{ item.stockproduct.product.name }}</td>
+                <td colspan="3" style="overflow-wrap: break-word;">{{ item.stockproduct.product.name }}</td>
                 <td colspan="1" class="num"> {{ item.price }}</td>
                 <td colspan="1" class="num">{{ item.quantity }}</td>
                 <td colspan="1" class="num"> {{ item.get_cost }}</td>
