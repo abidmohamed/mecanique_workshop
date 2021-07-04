@@ -772,6 +772,77 @@ def sellorder_facture_proforma_pdf(request, pk):
     return response
 
 
+# proforma MO
+def sellorder_facture_proforma_mo_pdf(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    customer = Customer.objects.get(id=order.customer.id)
+    if customer.enterprise:
+        enterprise = Enterprise.objects.get(customer=customer)
+    else:
+        enterprise = Enterprise.objects.none()
+
+    # total panne + service
+    total_ht = order.get_total_panne() + order.get_total_service()
+    # tva panne + service only
+    tva = round(total_ht * decimal.Decimal(0.19), 2)
+    # TTC
+    total_price = total_ht + tva + order.timbre
+    total_in_letters = num2words(total_price, lang='fr_DZ', to='currency')
+    context = {
+        'order': order,
+        'total_in_letters': total_in_letters.capitalize(),
+        'enterprise': enterprise,
+        'total_ht': total_ht,
+        'tva': tva,
+        'total_price': total_price,
+    }
+    html = render_to_string('sellorder/facture_proforma_mo_pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{order.id}_{order.customer}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+# proforma Piece
+def sellorder_facture_proforma_piece_pdf(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    customer = Customer.objects.get(id=order.customer.id)
+    if customer.enterprise:
+        enterprise = Enterprise.objects.get(customer=customer)
+    else:
+        enterprise = Enterprise.objects.none()
+
+    # tva for products only
+    tva = round(order.get_total_cost() * decimal.Decimal(0.19), 2)
+    # get total price for products only
+    total_price = order.get_total_cost() + tva + order.timbre
+    total_in_letters = num2words(total_price, lang='fr_DZ', to='currency')
+    context = {
+        'order': order,
+        'total_in_letters': total_in_letters.capitalize(),
+        'enterprise': enterprise,
+        'tva': tva,
+        'total_price': total_price,
+    }
+    html = render_to_string('sellorder/facture_proforma_piece_pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{order.id}_{order.customer}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
 def bsb_sellorder_facture_proforma_pdf(request, pk):
     order = get_object_or_404(Order, id=pk)
     customer = Customer.objects.get(id=order.customer.id)
@@ -986,7 +1057,8 @@ def get_orders_pannes_payed(request):
     now = datetime.now()
     dateform = DateForm()
     periodform = PeriodForm()
-    orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day, paid=True)
+    orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day,
+                                        paid=True)
     pannes = Panne.objects.none()
     totalpanne = 0
     if request.method == 'POST':
@@ -1039,7 +1111,8 @@ def get_orders_pieces_payed(request):
     now = datetime.now()
     dateform = DateForm()
     periodform = PeriodForm()
-    orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day, paid=True)
+    orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day,
+                                        paid=True)
     pieces = OrderItem.objects.none()
     totalpiece = 0
     if request.method == 'POST':
