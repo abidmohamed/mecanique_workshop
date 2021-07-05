@@ -46,6 +46,7 @@ def create_buyorder(request):
                     orderitem = BuyOrderItem()
                     orderitem.order = buyorder
                     print("PRODUCT ID ====================>", prod_list_item)
+                    prod_list_item = ''.join(prod_list_item.split())
                     orderitem.product = Product.objects.get(id=prod_list_item)
                     orderitem.price = Product.objects.get(id=prod_list_item).buyprice
                     orderitem.save()
