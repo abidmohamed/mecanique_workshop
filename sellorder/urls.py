@@ -16,7 +16,9 @@ urlpatterns = [
 
     path('sellorder_facture/<str:pk>', views.sellorder_facture, name='sellorder_facture'),
     path('sellorder_facture_pdf/<str:pk>', views.sellorder_facture_pdf, name='sellorder_facture_pdf'),
+    path('sellorder_facture_no_date_pdf/<str:pk>', views.sellorder_facture_no_date_pdf, name='sellorder_facture_no_date_pdf'),
     path('sellorder_facture_mo_pdf/<str:pk>', views.sellorder_facture_mo_pdf, name='sellorder_facture_mo_pdf'),
+    path('sellorder_facture_mo_no_date_pdf/<str:pk>', views.sellorder_facture_mo_no_date_pdf, name='sellorder_facture_mo_no_date_pdf'),
 
     # print proforma
     path('sellorder_facture_proforma_pdf/<str:pk>', views.sellorder_facture_proforma_pdf, name='sellorder_facture_proforma_pdf'),

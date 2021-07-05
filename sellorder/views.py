@@ -709,6 +709,39 @@ def sellorder_facture_pdf(request, pk):
     return response
 
 
+def sellorder_facture_no_date_pdf(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    sellorder = get_object_or_404(SellOrderFacture, order=order)
+    customer = Customer.objects.get(id=sellorder.order.customer.id)
+    if customer.enterprise:
+        enterprise = Enterprise.objects.get(customer=customer)
+    else:
+        enterprise = Enterprise.objects.none()
+    # tva for products only
+    tva = round(order.get_total_cost() * decimal.Decimal(0.19), 2)
+    # get total price for products only
+    total_price = order.get_total_cost() + tva + order.timbre
+    total_in_letters = num2words(total_price, lang='fr_DZ', to='currency')
+    context = {
+        'order': sellorder,
+        'total_in_letters': total_in_letters.capitalize(),
+        'enterprise': enterprise,
+        'tva': tva,
+        'total_price': total_price,
+    }
+    html = render_to_string('sellorder/facture_no_date_pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{sellorder.id}_{sellorder.order.customer}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
 def sellorder_facture_mo_pdf(request, pk):
     order = get_object_or_404(Order, id=pk)
     sellorder = get_object_or_404(SellOrderFacture, order=order)
@@ -734,6 +767,43 @@ def sellorder_facture_mo_pdf(request, pk):
         'total_price': total_price,
     }
     html = render_to_string('sellorder/facture_mo_pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{sellorder.id}_{sellorder.order.customer}.pdf'
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+def sellorder_facture_mo_no_date_pdf(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    sellorder = get_object_or_404(SellOrderFacture, order=order)
+    customer = Customer.objects.get(id=sellorder.order.customer.id)
+    if customer.enterprise:
+        enterprise = Enterprise.objects.get(customer=customer)
+    else:
+        enterprise = Enterprise.objects.none()
+    # total panne + service
+    total_ht = order.get_total_panne() + order.get_total_service()
+    # tva panne + service only
+    tva = round(total_ht * decimal.Decimal(0.19), 2)
+    # TTC
+    total_price = total_ht + tva + order.timbre
+
+    total_in_letters = num2words(total_price, lang='fr_DZ', to='currency')
+    context = {
+        'order': sellorder,
+        'total_in_letters': total_in_letters.capitalize(),
+        'enterprise': enterprise,
+        'total_ht': total_ht,
+        'tva': tva,
+        'total_price': total_price,
+    }
+    html = render_to_string('sellorder/facture_mo_no_date_pdf.html', context)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}_{sellorder.order.customer}.pdf'
 
