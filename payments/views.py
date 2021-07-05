@@ -12,8 +12,9 @@ from supplier.models import Supplier
 
 # Sell Order Payment is Customer Payment
 def create_customer_payment(request, pk):
-    # customer = Customer.objects.get(id=pk)
+
     order = Order.objects.get(id=pk)
+    customer = Customer.objects.get(id=order.customer.id)
     customerpaymentform = CustomerPaymentForm()
     if request.method == "POST":
         customerpaymentform = CustomerPaymentForm(request.POST)
@@ -31,11 +32,13 @@ def create_customer_payment(request, pk):
             if order.debt == 0:
                 order.paid = True
             order.save()
-            order.customer.debt -= customerpayment.amount
+            customer.debt -= customerpayment.amount
+            customer.save()
+
             caisse = Caisse.objects.all().filter()[:1].get()
             caisse.caisse_value += customerpayment.amount
             caisse.save()
-            order.customer.save()
+
             # TODO: Uncomment this one
             # customerpayment.user = request.user.id
             if customerpayment.pay_status == "Cheque":

@@ -1,0 +1,508 @@
+{% load  static %}
+{% load i18n %}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        /*
+        Normilizing the css 
+        */
+        *,
+        body,
+        button,
+        input,
+        textarea,
+        select {
+            text-rendering: optimizeLegibility;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        table {
+            border-collapse: separate !important;
+        }
+
+
+        /*My styling*/
+        h1 {
+            font-size: 24px;
+            margin: auto;
+        }
+
+        h3 {
+            font-size: 16px;
+        }
+
+        h4 {
+            font-size: 14px;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-left {
+            text-align: left !important;
+        }
+
+        .text-right {
+            text-align: right !important;
+        }
+
+        .font-weight-bold {
+            font-weight: bold;
+        }
+
+        .font-14 {
+            font-size: 14px;
+        }
+
+        .customer_table {
+            border: 0px solid #000;
+            padding: 5px;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+        }
+
+
+
+        .customer_table tr {
+            border: 0px;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            border-style: hidden;
+        }
+
+        .customer_table th {
+            border: 0px;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            border-style: hidden;
+            background-color: silver;
+            color: #000;
+        }
+
+        .customer_table td {
+            border: 0px;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            border-style: hidden;
+            background-color: #fff;
+        }
+
+        .vehicle_table {
+            border: 0px solid #000;
+            padding: 5px;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            border-style: hidden;
+
+        }
+
+        .vehicle_table tr {
+            border: 0px solid #000;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+        }
+
+        .vehicle_table th {
+            border: 0px solid #000;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .vehicle_table td {
+            border: 0px;
+            border-radius: 26px;
+            -moz-border-radius: 26px;
+            -webkit-border-radius: 26px;
+            border-style: hidden;
+            background-color: #eee;
+        }
+
+        .items-table {
+            width: 100%;
+            height: 100px;
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin: 0px 0;
+            table-layout: fixed;
+        }
+
+        .items-table th {
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 3px;
+            margin: 0;
+            height: 30px;
+            background-color: silver;
+            color: #000;
+        }
+
+        .items-table td {
+            text-align: left;
+            font-size: 14px;
+            padding: 5px;
+            margin: 0;
+            height: auto;
+            background-color: #fff;
+        }
+
+
+        .total-table {
+            width: 100%;
+            height: 100px;
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin: 0px 0;
+        }
+
+        .total-table th {
+            text-align: left;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 3px;
+            margin: 0;
+            height: 30px;
+            background-color: silver;
+            color: #000;
+        }
+
+        .total-table td {
+            text-align: left;
+            font-size: 16px;
+            padding: 5px;
+            margin: 0;
+            height: 35px;
+            background-color: #fff;
+        }
+
+        tbody td.num {
+            text-align: right;
+        }
+thead th,
+tbody tr.total {
+background: #5993bb;
+color: #000;
+font-weight: bold;
+text-align: right !important;
+}
+
+.product-name-container{
+ word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+    width: 100%;
+    table-layout: fixed;
+}
+
+      /* Page margins are defined using CSS */
+      @page {
+      margin: 1cm;
+      margin-top:1cm;
+      margin-bottom: 1cm;
+
+      /* Footer frame starts outside margin-bottom of @page */
+      @frame footer {
+      -pdf-frame-content: footerContent;
+      bottom: 1cm;
+      margin-left: 1cm;
+      margin-right: 1cm;
+      height: 2cm;
+      }
+      }
+      
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td class="text-center" colspan="5">
+                <h1>Facture N° {{ order.id }}/{{order.created|date:"Y"}} </h1>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+    <table>
+        <tr>
+            <td colspan="2" class="text-left">
+                <h2 style="color: silver;">Fournisseur</h2>
+            </td>
+            <td></td>
+            <td colspan="2" class="text-left">
+                <h2 style="color: silver;">Client</h2>
+            </td>
+        </tr>
+         <tr>
+             <td colspan="2" class="text-left"
+                 style="border-color: silver; border-width: 1px; border-style: solid; padding: 2px; margin-bottom: 50px;">
+                 <h2 class="text-left" >SARL My Garage</h2>
+             </td>
+             <td></td>
+             <td colspan="2" class="text-left"
+                 style="border-color: silver; border-width: 1px; border-style: solid; padding: 2px; padding-top: 3px;">
+                 <h2 class="text-left">{{ order.order.customer.firstname }}
+                     {{ order.order.customer.lastname }}</h2>
+             </td>
+         </tr>
+        <tr></tr>
+         <tr>
+             <td colspan="2" class="text-left">
+                 <h6 class="text-left">PIECE DETACHEES AUTO</h6>
+             </td>
+             
+             <td></td>
+             <td></td>
+         </tr>
+        <tr>
+            <td class="text-left" >NIF</td>
+            <td class="text-right">2.039.054.460.387</td>
+            <td></td>
+            <!--Customer-->
+            {% if order.order.customer.enterprise %}
+            {% if enterprise.nif_check %}
+            <td class="text-left">NIF</td>
+            <td class="text-right">{{enterprise.nif}}</td>
+            {% endif %}
+            {% endif %}
+
+        </tr>
+        <tr>
+            <td class="text-left">ART</td>
+            <td class="text-right">39012000644</td>
+            <td></td>
+            <!--Customer-->
+            {% if order.order.customer.enterprise %}
+            {% if enterprise.art_check %}
+            <td class="text-left">ART</td>
+            <td class="text-right">{{enterprise.art}}</td>
+            {% endif %}
+            {% endif %}
+
+        </tr>
+         <tr>
+             <td class="text-left">RC</td>
+             <td class="text-right">39/01-0544603B20</td>
+             <td></td>
+             <!--Customer-->
+             {% if order.order.customer.enterprise %}
+             {% if enterprise.rc_check %}
+             <td class="text-left">RC</td>
+             <td class="text-right">{{enterprise.rc}}</td>
+             {% endif %}
+             {% endif %}
+
+         </tr>
+         <tr>
+             <td class="text-left">NIS</td>
+             <td class="text-right">2039010013858</td>
+             <td></td>
+             <!--Customer-->
+             {% if order.order.customer.enterprise %}
+             {% if enterprise.nis_check %}
+             <td class="text-left">NIS</td>
+             <td class="text-right">{{enterprise.nis}}</td>
+             {% endif %}
+             {% endif %}
+
+         </tr>
+        <tr>
+             <td class="text-left"></td>
+             <td class="text-right"></td>
+             <td></td>
+             <!--Customer-->
+             {% if order.order.customer.enterprise %}
+             {% if enterprise.ai_check %}
+             <td class="text-left">AI</td>
+             <td class="text-right">{{enterprise.article_imposition}}</td>
+             {% endif %}
+             {% endif %}
+
+         </tr>
+        <!-- Vehicle -->
+        <tr>
+             <td class="text-left"></td>
+             <td class="text-right"></td>
+             <td></td>
+             <!--Customer-->
+            {% if enterprise.matriculation %}
+             <td class="text-left">Voiture Matriculation</td>
+             <td class="text-right">{{order.order.vehicle.vehicle_mat}}</td>
+             {% endif %}
+        </tr>
+    </table>
+    <br>
+    <table>
+        <tr>
+            <td colspan="3">
+                <h6 class="text-left">CITE ELMOUDJAHIDIN SUD LOCAL N°03 EL-OUED</h6>
+            </td>
+            <td class="text-centre">N° DE F {{ order.id }}/{{order.created|date:"Y"}}</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                <h6 class="text-left"> 39000.EL-OUED</h6>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <h6 class="text-left"> 032 11 47 57</h6>
+            </td>
+            <td></td>
+            <td></td>
+            <td><span class="font-weight-bold">Devise:</span> Dinars Algerian</td>
+        </tr>
+        <tr>
+            <td>
+                <h6 class="text-left"> info@my-garage.pro</h6>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <br>
+    <table class="customer_table">
+        <thead>
+            <tr>
+                <th>VENDEUR</th>
+                <th>CONDITIONS DE PAIEMENT</th>
+                <th>DATE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td class="text-center">..</td>
+            <td class="text-center">Du a la reception de la facture</td>
+            <td class="text-center">..</td>
+            </tr>
+        </tbody>
+
+    </table>
+    <br>
+    <!--<h4>Vehicle</h4>-->
+
+  <!--
+<table class="vehicle_table">
+    <thead>
+        <tr>
+            <th>TYPE</th>
+            <th>MATT</th>
+            <th>CARD</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="font-14 text-center"><span class="font-weight-bold"></span>
+                {{ order.order.vehicle.vehicle_type }}</td>
+            <td class="font-14 text-center"><span class="font-weight-bold"></span>
+                {{ order.order.vehicle.vehicle_mat }}</td>
+            <td class="font-14 text-center"><span class="font-weight-bold"></span>
+                {{ order.order.vehicle.vehicle_cart_gris }}</td>
+        </tr>
+    </tbody>
+
+</table>
+  -->  
+  <!--<h3>Item bought</h3>-->
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th colspan="3">Produit</th>
+                <th colspan="1">Prix Unitaire</th>
+                <th colspan="1">Quantity</th>
+                <th colspan="1">Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.order.items.all %}
+            <tr class="row{% cycle '1' '2' %} ">
+                <td colspan="3" >
+                    {{ item.stockproduct.product.name|wordwrap:50|linebreaksbr }}
+
+                   </td>
+                <td colspan="1" class="num"> {{ item.price }}</td>
+                <td colspan="1" class="num">{{ item.quantity }}</td>
+                <td colspan="1" class="num"> {{ item.get_cost }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <table class="total-table">
+        <tbody>
+            <tr class="total">
+                <td style="background-color: inherit;" colspan="3"></td>
+                <td class="">Total HT</td>
+                <td  class="num"> {{ order.order.get_total_cost }}</td>
+            </tr>
+            <tr class="total">
+                <td style="background-color: inherit;" colspan="3"></td>
+                <td >TVA 19%</td>
+                <td class="num"> {{ tva }}</td>
+            </tr>
+            <tr class="total">
+                <td style="background-color: inherit;" colspan="3"></td>
+                <td >Timbre</td>
+                <td class="num"> {{ order.order.timbre }}</td>
+            </tr>
+            <tr class="total">
+                <td style="background-color: inherit;" colspan="3">
+                   </td>
+                <td >TTC</td>
+                <td class="num"> {{ total_price }}</td>
+            </tr>
+            
+        </tbody>
+        
+    </table>
+    <br>
+    <table>
+<tr>
+    <td colspan="5" style="width: 100%; background-color: inherit; font-size: 18px !important;">
+        <h2 class="text-center">ARRETEE LA
+            PRESENTE FACTURE A LA
+            SOMME DE : {{total_in_letters}}</h2>
+    </td>
+</tr>
+    </table>
+
+
+</body>
+
+<div id="footerContent">
+    <hr>
+<table>
+    <tr style="margin: auto;">
+        <td class="text-center font-14" colspan="5" >Veuillez, s'il vous plait, effectuer les paiement par
+            transfert bancaire sur notre compte courant:
+            <h3 style="margin: auto;">BEA: 002000940942202279 cle 85</h3>
+        </td>
+    </tr>
+    <tr style="margin: auto;">
+        <td colspan="4">
+            </td>
+        <td class="text-center font-weight-bold">
+            <pdf:pagenumber></pdf:pagenumber>
+            / <pdf:pagecount></pdf:pagecount>
+        </td>
+    </tr>
+</table>
+</div>
+</html>

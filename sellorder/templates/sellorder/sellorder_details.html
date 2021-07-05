@@ -12,13 +12,25 @@
                         <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}"><i class="fas fa-comment-dollar"></i> {% trans "PayDebt" %}</a>
             {% endif %}
             <br>
+            <hr>
             {% if order.factured %}
+
+            <!----------------------- FACTURE -------------------->
             <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_pdf' order.id %}">{% trans "Print" %} </a>
             <br>
+            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_no_date_pdf' order.id %}">{% trans "Print No Date" %} </a>
+            <br>
+            <hr>
             <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_mo_pdf' order.id %}">{% trans "Print MO"  %} </a>
             <br>
+            <a class="btn btn-warning " href="{% url 'sellorder:sellorder_facture_mo_no_date_pdf' order.id %}">{% trans "Print MO No Date"  %} </a>
+            <br>
+            <hr>
             <a class="btn btn-success " href="{% url 'sellorder:order_to_performa' order.id %}"><i class="fas fa-copy"></i> {% trans "Copy to Proforma" %} </a>
+
             {% elif order.confirmed %}
+                        <!----------------------- ORDER -------------------->
+
             <a class="btn btn-success " href="{% url 'sellorder:order_to_performa' order.id %}"><i class="fas fa-copy"></i> {% trans "Copy to Proforma" %} </a>
             <br>
             <hr>
