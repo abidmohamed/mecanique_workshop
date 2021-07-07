@@ -62,6 +62,20 @@ def delete_stock(request, pk):
     return render(request, 'stock/delete.html', context)
 
 
+def reset_stock(request, pk):
+    stock = Stock.objects.get(id=pk)
+    stockproducts = StockProduct.objects.all().filter(stock=stock)
+    if request.method == 'POST':
+        for stockproduct in stockproducts:
+            stockproduct.quantity = 0
+            stockproduct.save()
+        return redirect('stock:stock_list')
+    context = {
+        'stock': stock
+    }
+    return render(request, 'stock/reset.html', context)
+
+
 def add_stockproduct(request):
     # check if product exist in stock already
     if request.method == 'GET':
