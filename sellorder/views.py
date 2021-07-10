@@ -362,7 +362,7 @@ def order_item_delete(request, orderpk, itempk):
     return render(request, 'sellorder/update_order_delete_item.html', context)
 
 
-# Update order delete item
+# Confirm order delete item
 def confirm_order_item_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
     item = sellorder.items.get(id=itempk)
