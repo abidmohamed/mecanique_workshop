@@ -409,3 +409,28 @@ def buyorder_delete(request, pk):
         'order': order
     }
     return render(request, 'buyorder/buyorder_delete.html', context)
+
+
+# Confirm Order Delete item or Update
+def confirm_order_item_delete(request, orderpk, itempk):
+    buyorder = BuyOrder.objects.get(id=orderpk)
+    item = buyorder.items.get(id=itempk)
+    if request.method == 'POST':
+        if buyorder.confirmed:
+            item = buyorder.items.get(id=itempk)
+            stockproduct = StockProduct.objects.get(product=item.product)
+            # print("StockProduct =====> ", stockproduct)
+            stockproduct.quantity -= item.quantity
+            stockproduct.save()
+            item.delete()
+        else:
+            item = buyorder.items.get(id=itempk)
+            item.delete()
+        buyorder.save()
+        return redirect('buyorder:buyorder_confirmation', buyorder.id)
+
+    context = {
+        'buyorder': buyorder,
+        'item': item,
+    }
+    return render(request, 'buyorder/delete_item.html', context)
