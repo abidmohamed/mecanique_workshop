@@ -231,6 +231,7 @@ def order_stockproduct_list(request):
             # add products
             if len(chosenproducts) != 0:
                 for product in chosenproducts:
+                    product = ''.join(product.split())
                     currentproduct = StockProduct.objects.get(id=product)
                     # print(currentproduct)
                     OrderItem.objects.create(
