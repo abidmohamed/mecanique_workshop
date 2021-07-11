@@ -147,7 +147,10 @@ def modal_buyorder_stockproduct_list(request, pk):
                     # weight=currentproduct.product.weight,
                     quantity=1,
                 )
-        return redirect('buyorder:buyorder_confirmation', order.pk)
+        if order.confirmed:
+            return redirect('buyorder:update_order', order.pk)
+        else:
+            return redirect('buyorder:buyorder_confirmation', order.pk)
     context = {
         'stockproducts': stockproducts,
     }
