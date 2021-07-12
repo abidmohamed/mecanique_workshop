@@ -129,29 +129,18 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-3 mb-4">
+    <div class="col-xl-6 col-md-6 mb-4">
         <div class="card bg-gradient-success shadow h-100 py-2">
-            <!-- Today Payed pannes & peice-->
-            <a href="{% url 'sellorder:get_orders_pannes_payed' %}">
+            <!-- Today Caisse -->
+            <a href="{% url 'caisse:today_transaction_list' %}">
                 <div class="card-body text-center">
-             <h2 class=" font-weight-bold text-white text-uppercase mb-2">{% trans "Payed MO" %}</h2>
-                        <div class="h3 mb-0 font-weight-bold text-white">{{payed_totaltodaypanne}} {% trans " DZD" %}</div>
+             <h2 class=" font-weight-bold text-white text-uppercase mb-2">{% trans "Today Caisse" %}</h2>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{today_caisse}} {% trans " DZD" %}</div>
             </div>
             </a>
-
         </div>
     </div>
-    <div class="col-xl-3 col-md-3 mb-4">
-        <div class="card bg-gradient-info shadow h-100 py-2">
-         <a href="{% url 'sellorder:get_orders_pieces_payed' %}">
-            <div class="card-body text-center">
-                             <h2 class=" font-weight-bold text-white text-uppercase ">{% trans "Payed Piece" %}</h2>
-                        <div class="h3 mb-0 font-weight-bold text-white">{{payed_totaltodaypiece}} {% trans "DZD" %}</div>
 
-            </div>
-         </a>
-        </div>
-    </div>
 </div>
 <!-- Second Bank row Ends Here -->
 
