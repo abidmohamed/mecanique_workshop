@@ -138,6 +138,7 @@ def modal_buyorder_stockproduct_list(request, pk):
         chosenproducts = request.POST.getlist("products")
         if len(chosenproducts) != 0:
             for product in chosenproducts:
+                product = ''.join(product.split())
                 currentproduct = Product.objects.get(id=product)
                 # print(currentproduct)
                 BuyOrderItem.objects.create(
@@ -166,6 +167,7 @@ def modal_order_stockproduct_list(request, pk):
         chosenproducts = request.POST.getlist("products")
         if len(chosenproducts) != 0:
             for product in chosenproducts:
+                product = ''.join(product.split())
                 currentproduct = StockProduct.objects.get(id=product)
                 # print(currentproduct)
                 OrderItem.objects.create(
@@ -191,6 +193,7 @@ def modal_update_order_stockproduct_list(request, pk):
         chosenproducts = request.POST.getlist("products")
         if len(chosenproducts) != 0:
             for product in chosenproducts:
+                product = ''.join(product.split())
                 currentproduct = StockProduct.objects.get(id=product)
                 # print(currentproduct)
                 OrderItem.objects.create(
@@ -309,6 +312,8 @@ def performa_order_stockproduct_list(request):
             # add products
             if len(chosenproducts) != 0:
                 for product in chosenproducts:
+
+                    product = ''.join(product.split())
                     currentproduct = StockProduct.objects.get(id=product)
                     # print(currentproduct)
                     OrderItem.objects.create(
