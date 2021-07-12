@@ -66,7 +66,16 @@ def home(request):
     transactions = Transaction.objects.all()
     customerpayments = SellOrderPayment.objects.all()
     supplierpayments = BuyOrderPayment.objects.all()
+    # today Caisse
+    today_transactions = Transaction.objects.all().filter(date_created__year=now.year, date_created__month=now.month,
+                                                          date_created__day=now.day)
+    today_customerpayments = SellOrderPayment.objects.all().filter(created__year=now.year, created__month=now.month,
+                                                                   created__day=now.day)
+    today_supplierpayments = BuyOrderPayment.objects.all().filter(created__year=now.year, created__month=now.month,
+                                                                  created__day=now.day)
+
     # caisse = Caisse.objects.all().filter()[:1].get().caisse_value
+    today_caisse = 0
     caisse = 0
     # Bank
     bank = 0
@@ -108,6 +117,7 @@ def home(request):
     # Sell Orders today total
     payed_totaltodaypanne = 0
     payed_totaltodaypiece = 0
+    today_caisse = 0
     for order in payed_today_sellorders:
         payed_totaltodaypanne += order.get_total_panne()
         payed_totaltodaypiece += order.get_total_cost()
@@ -135,6 +145,21 @@ def home(request):
     for supplierpayment in supplierpayments:
         if supplierpayment.pay_status == "Cash":
             caisse -= supplierpayment.amount
+
+    # Today Caisse
+    for transaction in today_transactions:
+        if transaction.Transaction_type == "Income":
+            today_caisse += transaction.amount
+        else:
+            today_caisse -= transaction.amount
+
+    for customerpayment in today_customerpayments:
+        if customerpayment.pay_status == "Cash":
+            today_caisse += customerpayment.amount
+
+    for supplierpayment in today_supplierpayments:
+        if supplierpayment.pay_status == "Cash":
+            today_caisse -= supplierpayment.amount
 
     # Total Bank Value
     for transaction in bank_transactions:
@@ -171,5 +196,6 @@ def home(request):
         'totaltodaypanne': totaltodaypanne, 'totaltodaypiece': totaltodaypiece,
         'bank': bank, 'payed_totaltodaypanne': payed_totaltodaypanne,
         'payed_totaltodaypiece': payed_totaltodaypiece,
+        'today_caisse': today_caisse,
     }
     return render(request, 'dashboard.html', context)
