@@ -1,10 +1,15 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.models import User, Group, Permission
+
+from django.shortcuts import render, redirect
 import calendar
 from datetime import date, datetime
 from datetime import timedelta
 # Create your views here.
 from django.utils.safestring import mark_safe
 
+from accounts.decorators import unauthneticated_user
 from bank.models import BankTransaction
 from buyorder.models import BuyOrder
 from caisse.models import Caisse, Transaction
@@ -40,6 +45,30 @@ def next_month(d):
     next_month = last + timedelta(days=1)
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
+
+
+# Login & Log Out
+@unauthneticated_user
+def loginpage(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        print('USER LOGED ------->', user)
+        if user is not None:
+            login(request, user)
+            return redirect('accounts:home')
+        else:
+            messages.info(request, 'Username Or Password Is not correct')
+    context = {}
+    return render(request, 'login/login.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('accounts:login')
 
 
 # Dashboard
