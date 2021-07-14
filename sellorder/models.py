@@ -33,7 +33,7 @@ class Order(models.Model):
         return f'Order {self.id}'
 
     def get_total_cost(self):
-        return sum(item.get_cost() for item in self.items.all())
+        return round(sum(item.get_cost() for item in self.items.all()), 2)
 
     def get_total_panne(self):
         return sum(item.get_cost() for item in self.pannes.all())
@@ -42,7 +42,7 @@ class Order(models.Model):
         return sum(item.get_cost() for item in self.services.all())
 
     def get_total_item_panne(self):
-        return sum(item.get_cost() for item in self.pannes.all()) + sum(item.get_cost() for item in self.items.all()) + \
+        return sum(item.get_cost() for item in self.pannes.all()) + self.get_total_cost() + \
                sum(item.get_cost() for item in self.services.all())
 
     def get_tva(self):

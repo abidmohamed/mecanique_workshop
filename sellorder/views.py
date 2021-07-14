@@ -56,7 +56,11 @@ def confirm_order(request, pk):
                 # Remove white spaces
                 str_price = ''.join(str_price.split())
                 item.price = str_price
-                item.quantity = quantities[index]
+
+                str_quantity = quantities[index]
+                str_quantity = str_quantity.replace(",", ".")
+                item.quantity = str_quantity
+                print("=========>", str_quantity)
                 item.save()
                 # Reducing the sold products from stock
                 stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.product.stock)
@@ -68,6 +72,7 @@ def confirm_order(request, pk):
                         if stockitem.product.id == item.stockproduct.product.id:
                             # if stockitem.quantity > 0 and stockitem.quantity - decimal.Decimal(item.quantity) >= 0:
                             stockitem.quantity -= decimal.Decimal(item.quantity)
+                            print("=========>", stockitem.quantity)
                             stockitem.save()
                             itemexist = 2
                             #                 # operation done same product plus the new quantity
