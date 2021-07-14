@@ -1,6 +1,8 @@
 {% extends 'home.html' %}
 {% load static %}
 {% load i18n %}
+{% load erpextra %}
+
 <head>
     <style>
  /*Calendar CSS*/
@@ -39,7 +41,11 @@
 
     </style>
 </head>
+
 {% block content %}
+
+<!-- ********************Admin View************** -->
+{% if request.user|has_group:"admin" %}
 <!-- First Caisse row Starts Here -->
 <div class="row">
     <div class="col-xl-6 col-md-6 mb-4">
@@ -113,8 +119,6 @@
                                 class="fas fa-list-ul fa-2x text-white"></i></a>
                     </div>
                 </div>
-
-
             </div>
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -290,6 +294,67 @@
     <br>
 
 </div>
+
+{% endif %}
+
+<!-- ********************Desk Helper View************** -->
+{% if request.user|has_group:"desk_helper" %}
+<!-- First Caisse row Starts Here -->
+<div class="row">
+    <div class="col-xl-3 col-md-3 mb-4">
+        <div class="card bg-gradient-success shadow h-100 py-2">
+            <!-- Today Caisse -->
+            <a href="{% url 'caisse:today_transaction_list' %}">
+                <div class="card-body text-center">
+             <h2 class=" font-weight-bold text-white text-uppercase mb-2">{% trans "Today Caisse" %}</h2>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{today_caisse}} {% trans " DZD" %}</div>
+            </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-3 mb-4">
+        <div class="card bg-gradient-success shadow h-100 py-2">
+            <a href="{% url 'sellorder:get_orders_pannes' %}">
+                <div class="card-body text-center">
+             <h2 class=" font-weight-bold text-white text-uppercase mb-2">{% trans "MO" %}</h2>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{totaltodaypanne}} {% trans " DZD" %}</div>
+
+            </div>
+            </a>
+
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-3 mb-4">
+        <div class="card bg-gradient-info shadow h-100 py-2">
+         <a href="{% url 'sellorder:get_orders_pieces' %}">
+            <div class="card-body text-center">
+                             <h2 class=" font-weight-bold text-white text-uppercase ">{% trans "Piece" %}</h2>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{totaltodaypiece}} {% trans "DZD" %}</div>
+
+            </div>
+         </a>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+            <a href="{% url 'stock:stockproduct_stockalert'%}">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">{% trans "Stock Alert" %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"> {% if stockproductsalertcount %}{{stockproductsalertcount}}{% else %} 0 {% endif %}</div>
+
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-boxes fa-2x text-danger text-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
 <!-- New row Starts Here -->
 <!-- Second row Starts Here Calendar -->
 <div class="row">

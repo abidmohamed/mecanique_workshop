@@ -1,5 +1,6 @@
 {% load  static %}
 {% load i18n %}
+{% load erpextra %}
 <!-- how the translation is done
 1- django-admin makemessages -l fr
 2- django-admin compilemessages
@@ -32,7 +33,7 @@
     <div class="sidebar-heading">
         {% trans "Interface" %}
     </div>
-
+{% if request.user|has_group:"admin" or request.user|has_group:"desk_helper" %}
 <!-- Nav Item - Caisse Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCaisse"
@@ -44,7 +45,9 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">{% trans "Operations" %} :</h6>
                 <a class="collapse-item" href="{% url 'caisse:create_transaction' %}">{% trans "Add" %}</a>
+            {% if request.user|has_group:"admin" %}
                 <a class="collapse-item" href="{% url 'caisse:transaction_list' %}">{% trans "List" %}</a>
+            {% endif %}
             </div>
         </div>
     </li>
@@ -173,7 +176,8 @@
             </div>
         </div>
     </li>
-
+{% endif %}
+<!-- What Stock Agent can see starts here-->
     <!-- Nav Item - Stock Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsestock"
@@ -221,6 +225,9 @@
             </div>
         </div>
     </li>
+
+<!-- What Stock Agent can see ends here-->
+    {% if request.user|has_group:"admin" or request.user|has_group:"desk_helper" %}
 
     <!-- Nav Item - Buyorder Collapse Menu -->
     <li class="nav-item">
@@ -281,7 +288,7 @@
             <i class="fas fa-search-dollar"></i>
             <span>{% trans "Suppliers Payments" %}</span></a>
     </li>
-
+{% endif %}
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

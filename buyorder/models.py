@@ -26,7 +26,7 @@ class BuyOrder(models.Model):
         return f'Order {self.id}'
 
     def get_total_cost(self):
-        return sum(item.get_cost() for item in self.items.all())
+        return round(sum(item.get_cost() for item in self.items.all()), 2)
 
     def get_tva(self):
         return round(self.get_total_cost() * Decimal(self.order_tva/100), 2)

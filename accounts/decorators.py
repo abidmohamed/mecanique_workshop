@@ -21,12 +21,12 @@ def allowed_user(allowed_roles=[]):
                 group = request.user.groups.all()[0].name
             if group in allowed_roles:
                 return view_func(request, *args, **kwargs)
-            elif group == 'customer':
+            elif group == 'stock_agent':
                 return redirect('category:category_list')
             else:
                 return HttpResponse('You are not allowed')
 
-            return view_func(request, *args, **kwargs)
+            # return view_func(request, *args, **kwargs)
 
         return wrapper_func
 
@@ -38,32 +38,32 @@ def admin_only(view_func):
         group = None
         if request.user.groups.exists():
             group = request.user.groups.all()[0].name
-        if group == 'customer':
-            return redirect('category:category_list')
+        # if group == 'customer':
+        #     return redirect('category:category_list')
         if group == 'admin' or group == 'desk_helper':
             print("#############> Admin/desk helper")
             return view_func(request, *args, **kwargs)
-        if group == 'delivery':
-            print("#############> Delivery")
+        if group == 'stock_agent':
+            print("#############> stock_agent")
             return redirect('accounts:home')
         else:
             return redirect('accounts:login')
 
     return wrapper_func
-
-
-def customer_only(view_func):
-    def wrapper_func(request, *args, **kwargs):
-        group = None
-        if request.user.groups.exists():
-            group = request.user.groups.all()[0].name
-        if group == 'customer':
-            return view_func(request, *args, **kwargs)
-        if group == 'admin' or group == 'desk_helper':
-            return redirect('accounts:home')
-        if group == 'delivery':
-            return redirect('accounts:home')
-        else:
-            return redirect('accounts:login')
-
-    return wrapper_func
+#
+#
+# def customer_only(view_func):
+#     def wrapper_func(request, *args, **kwargs):
+#         group = None
+#         if request.user.groups.exists():
+#             group = request.user.groups.all()[0].name
+#         if group == 'customer':
+#             return view_func(request, *args, **kwargs)
+#         if group == 'admin' or group == 'desk_helper':
+#             return redirect('accounts:home')
+#         if group == 'delivery':
+#             return redirect('accounts:home')
+#         else:
+#             return redirect('accounts:login')
+#
+#     return wrapper_func
