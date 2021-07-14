@@ -66,9 +66,9 @@ def confirm_order(request, pk):
                     for stockitem in stockitems:
                         # the same product exist
                         if stockitem.product.id == item.stockproduct.product.id:
-                            if stockitem.quantity > 0 and stockitem.quantity - int(item.quantity) >= 0:
-                                stockitem.quantity -= int(item.quantity)
-                                stockitem.save()
+                            # if stockitem.quantity > 0 and stockitem.quantity - decimal.Decimal(item.quantity) >= 0:
+                            stockitem.quantity -= decimal.Decimal(item.quantity)
+                            stockitem.save()
                             itemexist = 2
                             #                 # operation done same product plus the new quantity
 
@@ -236,7 +236,7 @@ def update_order(request, pk):
         if sellorder.items.all():
             for item in sellorder.items.all():
                 stockitem = StockProduct.objects.get(id=item.stockproduct.id)
-                stockitem.quantity += int(item.quantity)
+                stockitem.quantity += decimal.Decimal(item.quantity)
                 stockitem.save()
         prices = request.POST.getlist('prices')
         print("-------------------------------------")
@@ -261,7 +261,15 @@ def update_order(request, pk):
                 # Remove white spaces
                 str_price = ''.join(str_price.split())
                 item.price = str_price
-                item.quantity = quantities[index]
+
+                # treating the quantity
+                str_quantity = quantities[index]
+                str_quantity = str_quantity.replace(",", ".")
+                # Remove white spaces
+                str_quantity = ''.join(str_quantity.split())
+                # assign quantity
+                item.quantity = str_quantity
+
                 print(item.quantity)
                 print(item.stockproduct)
                 item.save()
@@ -273,13 +281,13 @@ def update_order(request, pk):
                     for stockitem in stockitems:
                         # the same product exist
                         if stockitem.product.id == item.stockproduct.product.id:
-                            if stockitem.quantity > 0 and stockitem.quantity - int(item.quantity) >= 0:
-                                print("----------------------------------")
-                                print(stockitem.quantity - int(item.quantity))
-                                stockitem.quantity -= int(item.quantity)
-                                print(item.stockproduct)
-                                print(item.quantity)
-                                stockitem.save()
+                            # if stockitem.quantity > 0 and stockitem.quantity - int(item.quantity) >= 0:
+                            print("----------------------------------")
+                            print(stockitem.quantity - decimal.Decimal(item.quantity))
+                            stockitem.quantity -= decimal.Decimal(item.quantity)
+                            print(item.stockproduct)
+                            print(item.quantity)
+                            stockitem.save()
         discount.order = sellorder
         discount.value = request.POST.get('discount-value')
         discount.discount_status = request.POST.get('discount-status')
@@ -513,7 +521,7 @@ def sellorder_delete(request, pk):
             if order.items.all():
                 for item in order.items.all():
                     stockitem = StockProduct.objects.get(id=item.stockproduct.id)
-                    stockitem.quantity += int(item.quantity)
+                    stockitem.quantity += decimal.Decimal(item.quantity)
                     stockitem.save()
         customer = Customer.objects.get(id=order.customer.id)
         customer.debt -= order.debt

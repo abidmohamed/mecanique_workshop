@@ -106,9 +106,17 @@ def buyorder_confirmation(request, pk):
                 # str_price = str_price.replace(' ', '')
                 # Remove white spaces
                 str_price = ''.join(str_price.split())
-                # print("----------------------------------------------")
+                # assign price
                 item.price = str_price
-                item.quantity = quantities[index]
+                # print("----------------------------------------------")
+                # treating the quantity
+                str_quantity = quantities[index]
+                str_quantity = str_quantity.replace(",", ".")
+                # Remove white spaces
+                str_quantity = ''.join(str_quantity.split())
+                # assign quantity
+                item.quantity = str_quantity
+
                 item.save()
                 # adding the bought products to stock
                 stockitems = StockProduct.objects.all().filter(stock=item.product.stock)
@@ -119,7 +127,7 @@ def buyorder_confirmation(request, pk):
                     for stockitem in stockitems:
                         # the same product exist
                         if stockitem.product.id == item.product.id:
-                            stockitem.quantity += int(item.quantity)
+                            stockitem.quantity += decimal.Decimal(item.quantity)
                             stockitem.save()
                             itemexist = 2
                             # operation done same product plus the new quantity
@@ -129,7 +137,7 @@ def buyorder_confirmation(request, pk):
                         #             # create new stockproduct
                         StockProduct.objects.create(
                             product=item.product,
-                            quantity=int(item.quantity),
+                            quantity=decimal.Decimal(item.quantity),
                             # category=item.product.category,
                             stock=item.product.stock
                         )
@@ -140,7 +148,7 @@ def buyorder_confirmation(request, pk):
                         # create new stockproduct
                         StockProduct.objects.create(
                             product=item.product,
-                            quantity=int(item.quantity),
+                            quantity=decimal.Decimal(item.quantity),
                             # type=item.type,
                             # color=item.color,
                             # category=item.product.category,
@@ -179,9 +187,9 @@ def update_order(request, pk):
                     if StockProduct.objects.all().filter(product=item.product):
                         print("############# OKAY Update minus")
                         stockitem = StockProduct.objects.get(product=item.product)
-                        if stockitem.quantity - int(item.quantity) >= 0:
-                            stockitem.quantity -= int(item.quantity)
-                            stockitem.save()
+                        # if stockitem.quantity - int(item.quantity) >= 0:
+                        stockitem.quantity -= decimal.Decimal(item.quantity)
+                        stockitem.save()
             print(request.POST)
             buyorder = buyorderform.save()
 
@@ -219,7 +227,7 @@ def update_order(request, pk):
                     for stockitem in stockitems:
                         # the same product exist
                         if stockitem.product.id == item.product.id:
-                            stockitem.quantity += int(item.quantity)
+                            stockitem.quantity += decimal.Decimal(item.quantity)
                             stockitem.save()
                             itemexist = 2
                             # operation done same product plus the new quantity
@@ -229,7 +237,7 @@ def update_order(request, pk):
                         #             # create new stockproduct
                         StockProduct.objects.create(
                             product=item.product,
-                            quantity=int(item.quantity),
+                            quantity=decimal.Decimal(item.quantity),
                             # category=item.product.category,
                             stock=item.product.stock
                         )
@@ -240,7 +248,7 @@ def update_order(request, pk):
                         # create new stockproduct
                         StockProduct.objects.create(
                             product=item.product,
-                            quantity=int(item.quantity),
+                            quantity=decimal.Decimal(item.quantity),
                             # type=item.type,
                             # color=item.color,
                             # category=item.product.category,
@@ -329,7 +337,7 @@ def buyorderorder_list_by_supplier(request, pk):
                         for stockitem in stockitems:
                             # the same product exist
                             if stockitem.product.id == item.product.id:
-                                stockitem.quantity += int(item.quantity)
+                                stockitem.quantity += decimal.Decimal(item.quantity)
                                 stockitem.save()
                                 itemexist = 2
                                 #                 # operation done same product plus the new quantity
@@ -339,7 +347,7 @@ def buyorderorder_list_by_supplier(request, pk):
                             #             # create new stockproduct
                             StockProduct.objects.create(
                                 product=item.product,
-                                quantity=int(item.quantity),
+                                quantity=decimal.Decimal(item.quantity),
                                 # category=item.product.category,
                                 stock=item.product.stock
                             )
@@ -350,7 +358,7 @@ def buyorderorder_list_by_supplier(request, pk):
                             # create new stockproduct
                             StockProduct.objects.create(
                                 product=item.product,
-                                quantity=int(item.quantity),
+                                quantity=decimal.Decimal(item.quantity),
                                 # category=item.product.category,
                                 stock=item.product.stock
                             )
@@ -389,11 +397,11 @@ def buyorder_delete(request, pk):
                     print(stockitem)
                     print(stockitem.quantity)
                     print(item.quantity)
-                    if stockitem.quantity > 0:
-                        stockitem.quantity -= int(item.quantity)
-                        stockitem.save()
-                        print("After subtraction")
-                        print(stockitem.quantity)
+                    # if stockitem.quantity > 0:
+                    stockitem.quantity -= decimal.Decimal(item.quantity)
+                    stockitem.save()
+                    print("After subtraction")
+                    print(stockitem.quantity)
         supplier = Supplier.objects.get(id=order.supplier.id)
         supplier.credit -= order.debt
         supplier.save()

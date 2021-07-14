@@ -120,7 +120,7 @@ def stockproduct_list(request, pk):
 
 
 def all_stockproduct_list(request):
-    stockproducts = StockProduct.objects.all().filter(quantity__gt=0)
+    stockproducts = StockProduct.objects.all()
     categories = Category.objects.all()
     context = {
         'categories': categories,
