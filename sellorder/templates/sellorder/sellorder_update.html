@@ -105,7 +105,7 @@
 
                         </td>
                         <td class="table-light ">
-                            <input onkeyup="calc()" class="form-control" type="number" name="quantities"
+                            <input onkeyup="calc()" class="form-control" type="text" name="quantities"
                                    value="{{ item.quantity }}" required>
                         </td>
                         <td>
@@ -222,7 +222,8 @@
     }else {
            total_price =  parseFloat(document.getElementById("total-price").value);
            total_price += parseFloat(prices[i].value * quantities[i].value);
-
+           total_price = total_price.substring(0, total_price.length - 2);
+           console.log(total_price);
            // console.log("Total Price");
            // console.log(total_price);
 

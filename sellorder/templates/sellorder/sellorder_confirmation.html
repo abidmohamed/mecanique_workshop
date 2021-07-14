@@ -169,6 +169,19 @@
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);
     }
 
+    // Treat total value on loading page
+    window.addEventListener("load", function(){
+        total_price = document.getElementById("total-price").value;
+        total_price = total_price.replace(/\s/g, "");
+        var comma_index = total_price.length - 3
+        if(total_price.indexOf(',') > -1){
+            total_price = total_price.replaceAt(comma_index , ".");
+            // any rest commas
+            total_price = total_price.replace(",", "");
+            }
+        document.getElementById("total-price").value = total_price  
+    });
+
    function calc(){
     var prices = document.getElementsByName("prices");
     var panne_prices = document.getElementsByName("panne-prices");
@@ -202,16 +215,23 @@
             prices[i].value = prices[i].value.replace(",", "");
         }
         // any rest commas
-      //  prices[i].value = prices[i].value.replace(",", "");
-
+        //  prices[i].value = prices[i].value.replace(",", "");
+        // Removing quantity comma
+        var comma_index = quantities[i].value.length - 3
+        if(quantities[i].value.indexOf(',') > -1){
+            quantities[i].value = quantities[i].value.replaceAt(comma_index , ".");
+        }
     if (i == 0){
         total_price = prices[i].value * quantities[i].value;
 
         document.getElementById("total-price").value = total_price;
+        // total_price = total_price.substring(0, total_price.length - 2);
+        console.log(total_price);
     }else {
            total_price =  parseFloat(document.getElementById("total-price").value);
            total_price += parseFloat(prices[i].value * quantities[i].value);
-
+      //     total_price = total_price.substring(0, total_price.length - 2);
+       //    console.log(total_price);
            console.log("Total Price");
            console.log(total_price);
            
@@ -259,6 +279,8 @@
            console.log(total_price);
            document.getElementById("total-price").value = total_price;
      }
+
+     console.log(total_price)
 
     }
 
