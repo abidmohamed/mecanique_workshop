@@ -82,7 +82,7 @@
 
                         </td>
                         <td class="table-light ">
-                            <input class="form-control" type="number" name="quantities" value="{{ item.quantity }}">
+                            <input class="form-control" type="text" name="quantities" value="{{ item.quantity }}">
                         </td>
                         <td>
                                                     <a class="btn btn-danger " href="{% url 'buyorder:confirm_order_item_delete' buyorder.id item.id %}">{% trans "Delete" %}</a>

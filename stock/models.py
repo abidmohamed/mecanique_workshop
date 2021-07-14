@@ -19,7 +19,7 @@ class Stock(models.Model):
 
 class StockProduct(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=0)
+    quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE)
     stock = models.ForeignKey(Stock, null=True, on_delete=models.CASCADE)
 
