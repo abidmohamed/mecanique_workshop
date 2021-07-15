@@ -96,12 +96,12 @@ def home(request):
     customerpayments = SellOrderPayment.objects.all()
     supplierpayments = BuyOrderPayment.objects.all()
     # today Caisse
-    today_transactions = Transaction.objects.all().filter(date_created__year=now.year, date_created__month=now.month,
-                                                          date_created__day=now.day)
-    today_customerpayments = SellOrderPayment.objects.all().filter(created__year=now.year, created__month=now.month,
-                                                                   created__day=now.day)
-    today_supplierpayments = BuyOrderPayment.objects.all().filter(created__year=now.year, created__month=now.month,
-                                                                  created__day=now.day)
+    today_transactions = Transaction.objects.all().filter(trans_date__year=now.year, trans_date__month=now.month,
+                                                          trans_date__day=now.day)
+    today_customerpayments = SellOrderPayment.objects.all().filter(pay_date__year=now.year, pay_date__month=now.month,
+                                                                   pay_date__day=now.day)
+    today_supplierpayments = BuyOrderPayment.objects.all().filter(pay_date__year=now.year, pay_date__month=now.month,
+                                                                  pay_date__day=now.day)
 
     # caisse = Caisse.objects.all().filter()[:1].get().caisse_value
     today_caisse = 0
