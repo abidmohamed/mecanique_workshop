@@ -46,6 +46,7 @@ def create_customer_payment(request, pk):
             return redirect('customer:customer_list')
     context = {
         'customerpaymentform': customerpaymentform,
+        'customer': customer,
     }
     return render(request, 'payments/customer/create_payment.html', context)
 
