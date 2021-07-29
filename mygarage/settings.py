@@ -26,7 +26,7 @@ SECRET_KEY = '-wx59#clvu0c72ph%aj2jeh-!(970fwt@b%w4fvdjga02$@gv2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nadhir-mygarage.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['nadhir-mygarage.herokuapp.com', '127.0.0.1', "mygo-my-garage.herokuapp.com"]
 
 # Application definition
 
