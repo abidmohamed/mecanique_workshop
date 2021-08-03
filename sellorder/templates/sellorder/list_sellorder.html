@@ -1,5 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% load i18n %}
 {% block content %}
 <br>
@@ -8,6 +9,18 @@
         <div class="card card-body">
             <h5>{% trans "Sell Orders" %}</h5>
         </div>
+        <br>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label> {% trans "Pick a Date" %}</label>
+                    <br>
+                    {{dateform}}
+                    <br>
+                    <input class="btn btn-primary" type="submit" value="Validate">
+                </div>
+            </form>
+        <br>
         <div class="card card-body">
             <table id="table_id" class="table display text-center">
                 <thead>
@@ -82,6 +95,11 @@
 
 {% endblock %}
 {% block jsscript %}
+<!-- Date Picker-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 <!-- custom javascript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -92,6 +110,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+<!-- Date Picker-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script type='text/javascript'>
     //Data Table init
@@ -99,6 +119,8 @@
     $('#table_id').DataTable();
 } );
 
+// Date Picker
+$('input[name="date"]').daterangepicker();
 
 </script>
 {% endblock %}
