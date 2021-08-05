@@ -9,7 +9,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 from billing.models import OrderBilling, BillOrderItem
-from caisse.forms import DateForm
+from caisse.forms import DateForm, PeriodForm
 from caisse.models import Caisse
 from customer.models import Customer, Enterprise
 from discount.forms import DiscountForm
