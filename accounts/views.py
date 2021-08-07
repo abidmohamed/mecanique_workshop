@@ -130,8 +130,8 @@ def home(request):
     # sell orders total
     totalsellorders = 0
     totalbuyorders = 0
-    for order in Order.objects.all().filter(confirmed=True):
-        totalsellorders += order.get_ttc()
+    # for order in Order.objects.all().filter(confirmed=True):
+    #     totalsellorders += order.get_ttc()
     # Buy orders total
     for order in buyorders:
         totalbuyorders += order.get_total_cost()
