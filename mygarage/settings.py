@@ -190,19 +190,16 @@ MEDIA_URL = '/media/'
 
 # Cache setting
 CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
-CACHE_MIDDLEWARE_SECONDS = '600'  # number of seconds to cache a page for (TTL)
-CACHE_MIDDLEWARE_KEY_PREFIX = ''  # should be used if the cache is shared across multiple sites that use the same
-
-
-# Django instance
+CACHE_MIDDLEWARE_SECONDS = 600  # number of seconds to cache a page for (TTL)
+CACHE_MIDDLEWARE_KEY_PREFIX = ''  # should be used if the cache is shared across multiple sites that use the same Django instance
 
 
 def get_cache():
     import os
     try:
-        servers = os.environ['MEMCACHIER_SERVERS']
-        username = os.environ['MEMCACHIER_USERNAME']
-        password = os.environ['MEMCACHIER_PASSWORD']
+        servers = os.environ['mc2.dev.ec2.memcachier.com:11211']
+        username = os.environ['8D55B5']
+        password = os.environ['AA0847F049CA8AE8362D63E0B0829916']
         return {
             'default': {
                 'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
@@ -210,12 +207,11 @@ def get_cache():
                 # timeout that should be applied to keys! Setting it to `None`
                 # disables expiration.
                 'TIMEOUT': None,
-                'LOCATION': 'mc2.dev.ec2.memcachier.com:11211',
-
+                'LOCATION': servers,
                 'OPTIONS': {
                     'binary': True,
-                    'username': '8D55B5',
-                    'password': 'AA0847F049CA8AE8362D63E0B0829916',
+                    'username': username,
+                    'password': password,
                     'behaviors': {
                         # Enable faster IO
                         'no_block': True,
