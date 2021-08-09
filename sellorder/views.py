@@ -499,7 +499,7 @@ def sellorder_list(request):
     dateform = DateForm()
     # now time
     now = datetime.now()
-    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created=now)
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False)
     customers = Customer.objects.all()
     # Search request by date===>
     if request.method == 'POST':
