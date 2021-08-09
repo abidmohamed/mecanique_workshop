@@ -171,7 +171,10 @@ def delete_customer(request, pk):
         'customer': customer
     }
     if request.method == 'POST':
-        customer.delete()
+        if Order.objects.filter(customer=customer):
+            pass
+        else:
+            customer.delete()
         return redirect('customer:customer_list')
     return render(request, 'customer/delete_customer.html', context)
 

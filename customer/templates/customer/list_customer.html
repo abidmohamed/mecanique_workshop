@@ -20,6 +20,7 @@
                         <th>{% trans "Debt" %}</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                     </thead>
 
@@ -48,6 +49,10 @@
                         <td>
                             <a class="btn btn-warning "
                                href="{% url 'customer:customer_detail' customer.id %}">{% trans "Details" %}</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'customer:delete_customer' customer.id %}">{% trans "Delete" %}</a>
                         </td>
 
 
