@@ -3,6 +3,7 @@ from datetime import date, datetime
 
 from django.db.models import Q
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
 from caisse.forms import TransactionForm, DateForm, PeriodForm
@@ -36,6 +37,7 @@ def create_transaction(request):
     return render(request, 'caisse/add_transaction.html', context)
 
 
+@cache_page(60 * 15)
 def transaction_list(request):
     dateform = DateForm()
     periodform = PeriodForm()

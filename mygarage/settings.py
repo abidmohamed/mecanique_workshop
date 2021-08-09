@@ -191,8 +191,8 @@ MEDIA_URL = '/media/'
 # PWA_APP_LANG = 'en-US'
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': 'C:/Users/Public/Roaming',
-    }
+   'default': {
+      'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+      'LOCATION': '/var/tmp/django_cache',
+   }
 }
