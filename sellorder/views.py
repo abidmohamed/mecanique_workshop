@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from xhtml2pdf import pisa
 from django.template.loader import render_to_string
 from django.http import HttpResponse
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
 from billing.models import OrderBilling, BillOrderItem
@@ -495,6 +496,7 @@ def sellorder_facture(request, pk):
     return render(request, 'sellorder/sellorder_facture.html', context={'order': order})
 
 
+@cache_page(60 * 15)
 def sellorder_list(request):
     dateform = DateForm()
     # now time

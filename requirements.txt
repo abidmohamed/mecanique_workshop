@@ -22,3 +22,4 @@ webencodings==0.5.1
 whitenoise==5.2.0
 xhtml2pdf==0.2.5
 django-mathfilters==1.0.0
+pylibmc==1.6.1
