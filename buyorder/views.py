@@ -3,6 +3,7 @@ from datetime import date
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
+from django.views.decorators.cache import cache_page
 
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -285,7 +286,7 @@ def buyorder_details(request, pk):
     }
     return render(request, 'buyorder/buyorder_details.html', context)
 
-
+@cache_page(60 * 15)
 def buyorder_list(request):
     buyorders = BuyOrder.objects.all()
     context = {
