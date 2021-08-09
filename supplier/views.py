@@ -72,7 +72,7 @@ def delete_supplier(request, pk):
 
 def supplier_detail(request, pk):
     supplier = get_object_or_404(Supplier, id=pk)
-    orders = BuyOrder.objects.all().filter(supplier=supplier, confirmed=True, factured=False)
+    orders = BuyOrder.objects.all().filter(supplier=supplier, confirmed=True)
     context = {
         'supplier': supplier,
         'orders': orders,
