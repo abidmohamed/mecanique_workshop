@@ -4,6 +4,7 @@ from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -18,6 +19,8 @@ from product.forms import ProductForm
 from product.models import Product
 from supplier.models import Supplier
 from stock.models import StockProduct
+
+Buyorder_KEY = "buyorder.all"
 
 
 def create_buyorder(request):
@@ -52,7 +55,7 @@ def create_buyorder(request):
                     orderitem.price = Product.objects.get(id=prod_list_item).buyprice
                     orderitem.save()
                     # print(Product.objects.get(id=prod_list_item))
-
+            cache.delete(Buyorder_KEY)
             return redirect(f'../buyorder/buyorder_confirmation/{buyorder.pk}')
     context = {
         'products': products,
@@ -69,9 +72,10 @@ def confirm_all(request):
         order.total_price = order.get_total_cost()
         order.confirmed = True
         order.save()
+        cache.delete(Buyorder_KEY)
     context = {
-            'buyorders': buyorders,
-        }
+        'buyorders': buyorders,
+    }
     return render(request, 'buyorder/list_buyorder.html', context)
 
 
@@ -165,7 +169,9 @@ def buyorder_confirmation(request, pk):
             buyorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
             buyorder.confirmed = True
             buyorder.save()
+            cache.delete(Buyorder_KEY)
             return redirect('buyorder:buyorder_list')
+
     context = {
         'buyorderform': buyorderform,
         'buyorder': buyorder,
@@ -176,7 +182,7 @@ def buyorder_confirmation(request, pk):
 def update_order(request, pk):
     buyorder = BuyOrder.objects.get(id=pk)
     buyorderform = BuyOrderForm(instance=buyorder)
-    old_ttc = round(buyorder.total_price + (buyorder.total_price * decimal.Decimal(buyorder.order_tva/100)), 2)
+    old_ttc = round(buyorder.total_price + (buyorder.total_price * decimal.Decimal(buyorder.order_tva / 100)), 2)
     new_ttc = 0
     ttc_difference = 0
     if request.method == 'POST':
@@ -271,6 +277,7 @@ def update_order(request, pk):
             buyorder.confirmed = True
             buyorder.total_price = buyorder.get_total_cost()
             buyorder.save()
+            cache.delete(Buyorder_KEY)
             return redirect('buyorder:buyorder_list')
     context = {
         'buyorderform': buyorderform,
@@ -286,9 +293,13 @@ def buyorder_details(request, pk):
     }
     return render(request, 'buyorder/buyorder_details.html', context)
 
+
 @cache_page(60 * 15)
 def buyorder_list(request):
-    buyorders = BuyOrder.objects.all()
+    buyorders = cache.get(Buyorder_KEY)
+    if not buyorders:
+        buyorders = BuyOrder.objects.all()
+        cache.set(Buyorder_KEY, buyorders)
     context = {
         'buyorders': buyorders
     }
@@ -413,6 +424,7 @@ def buyorder_delete(request, pk):
             caisse.save()
             supplierpayment.delete()
         order.delete()
+        cache.delete(Buyorder_KEY)
         return redirect('buyorder:buyorder_list')
     context = {
         'order': order
