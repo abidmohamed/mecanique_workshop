@@ -19,7 +19,7 @@ from payments.models import SellOrderPayment
 from rdv.models import Panne
 from sellorder.apps import SellorderConfig
 from sellorder.models import Order, SellOrderFacture, OrderItem, PanneItem
-from stock.models import StockProduct
+from stock.models import StockProduct, Stock
 from num2words import num2words
 
 
@@ -499,6 +499,7 @@ def sellorder_list(request):
     dateform = DateForm()
     # now time
     now = datetime.now()
+    stocks = Stock.objects.all()
     sellorders = Order.objects.all().filter(confirmed=True, factured=False)
     # customers = Customer.objects.all()
     # Search request by date===>
