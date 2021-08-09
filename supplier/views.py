@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.shortcuts import render, redirect
 
+from buyorder.models import BuyOrder
 from supplier.forms import SupplierForm
 from supplier.models import Supplier
 
@@ -67,3 +68,13 @@ def delete_supplier(request, pk):
         supplier.delete()
         return redirect('supplier:supplier_list')
     return render(request, 'supplier/delete_supplier.html', context)
+
+
+def supplier_detail(request, pk):
+    supplier = get_object_or_404(Supplier, id=pk)
+    orders = BuyOrder.objects.all().filter(supplier=supplier, confirmed=True, factured=False)
+    context = {
+        'supplier': supplier,
+        'orders': orders,
+    }
+    return render(request, 'supplier/detail.html', context)

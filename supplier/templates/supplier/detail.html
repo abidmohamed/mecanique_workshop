@@ -1,0 +1,77 @@
+{% extends "home.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>{% trans "Order Details" %}</h5>
+        </div>
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-md-3">
+                    <h6>{% trans "Supplier" %}: </h6>
+                    <td>{{ supplier.firstname }} {{ supplier.lastname }}</td>
+            </div>
+            <div class="col-md-3">
+                    <h6>{% trans "Address" %}: </h6>
+                    <td>{{ supplier.address }}</td>
+            </div>
+            <div class="col-md-3">
+                    <h6>{% trans "Phone" %}: </h6>
+                    <td>{{ supplier.phone }}</td>
+            </div>
+            <div class="col-md-3">
+                    <h6>{% trans "Debt" %}: </h6>
+                    <td>{{ supplier.debt }}</td>
+            </div>
+        </div>
+        <hr>
+        <br>
+        <h2>{% trans "Orders" %}</h2>
+        <hr>
+        <table id="table_order">
+            <thead class="thead-light">
+            <tr>
+                <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Address" %}</th>
+                    <th>{% trans "Total Piece" %}</th>
+                    <th>{% trans "Total Panne" %}</th>
+                    <th>{% trans "Total" %}</th>
+                    <th>{% trans "Debt" %}</th>
+                    <th></th>
+                    <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{order.id}}</td>
+                    <td>{{order.customer}}</td>
+                    <td>{{order.customer.address}}</td>
+                    <td>{{order.get_total_cost}} {% trans "DZD" %}</td>
+                    <td>{{order.get_total_panne}} {% trans "DZD" %}</td>
+                    <td>{{order.get_ttc}} {% trans "DZD" %}</td>
+                    <td>{{order.debt}} {% trans "DZD" %}</td>
+                    <td>
+                        {% if order.debt > 0%}
+                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">{% trans "PayDebt" %}</a>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">{% trans "Details" %}</a>
+                    </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        <br>
+
+    </div>
+    </div>
+</div>
+{% endblock %}

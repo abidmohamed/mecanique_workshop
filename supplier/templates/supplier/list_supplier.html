@@ -20,6 +20,7 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -50,6 +51,9 @@
                     </td>
                     <td>
                         <a class="btn btn-danger " href="{% url 'supplier:delete_supplier' supplier.id %}">{% trans "Delete" %}</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning " href="{% url 'supplier:supplier_detail' supplier.id %}">{% trans "Details" %}</a>
                     </td>
 
                 </tr>
