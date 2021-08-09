@@ -19,7 +19,7 @@ from payments.models import SellOrderPayment
 from rdv.models import Panne
 from sellorder.apps import SellorderConfig
 from sellorder.models import Order, SellOrderFacture, OrderItem, PanneItem
-from stock.models import StockProduct, Stock
+from stock.models import StockProduct
 from num2words import num2words
 
 
@@ -499,60 +499,60 @@ def sellorder_list(request):
     dateform = DateForm()
     # now time
     now = datetime.now()
-    stocks = Stock.objects.all()
-    sellorders = Order.objects.all().filter(confirmed=True, factured=False)
-    # customers = Customer.objects.all()
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created=now)
+    customers = Customer.objects.all()
     # Search request by date===>
-    # if request.method == 'POST':
-    #     alldata = request.POST
-    #     print(alldata)
-    #     # customer
-    #     chosencustomer = request.POST.getlist("customers")
-    #     if len(chosencustomer) != 0:
-    #         customer = Customer.objects.get(id=chosencustomer[0])
-    #         sellorders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False)
-    #
-    #     # Search by date removed
-    #     # chosen_date = alldata.get("date")
-    #     # chosen_date = chosen_date.split("-", 1)
-    #     # chosen_start_date = chosen_date[0]
-    #     # chosen_end_date = chosen_date[1]
-    #     #
-    #     # chosen_start_date = chosen_start_date.split("/", 2)
-    #     # start_month = chosen_start_date[0]
-    #     # start_year = chosen_start_date[2]
-    #     # start_day = chosen_start_date[1]
-    #     # # Remove white spaces
-    #     # start_year = ''.join(start_year.split())
-    #     # start_month = ''.join(start_month.split())
-    #     # start_day = ''.join(start_day.split())
-    #     #
-    #     # chosen_end_date = chosen_end_date.split("/", 2)
-    #     # end_month = chosen_end_date[0]
-    #     # end_year = chosen_end_date[2]
-    #     # end_day = chosen_end_date[1]
-    #     # # Remove white spaces
-    #     # end_year = ''.join(end_year.split())
-    #     # end_month = ''.join(end_month.split())
-    #     # end_day = ''.join(end_day.split())
-    #     #
-    #     # sellorders = Order.objects.all().filter(
-    #     #     Q(
-    #     #         created__gt=date(int(start_year), int(start_month),
-    #     #                          int(start_day)),
-    #     #         created__lt=date(int(end_year), int(end_month), int(end_day))
-    #     #     )
-    #     #     |
-    #     #     Q(
-    #     #         created=date(int(end_year), int(end_month), int(end_day))
-    #     #     )
-    #     #     , confirmed=True, factured=False,
-    #     #
-    #     # )
+    if request.method == 'POST':
+        alldata = request.POST
+        print(alldata)
+        # customer
+        chosencustomer = request.POST.getlist("customers")
+        if len(chosencustomer) != 0:
+            customer = Customer.objects.get(id=chosencustomer[0])
+            sellorders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False)
+
+        # Search by date removed
+        # chosen_date = alldata.get("date")
+        # chosen_date = chosen_date.split("-", 1)
+        # chosen_start_date = chosen_date[0]
+        # chosen_end_date = chosen_date[1]
+        #
+        # chosen_start_date = chosen_start_date.split("/", 2)
+        # start_month = chosen_start_date[0]
+        # start_year = chosen_start_date[2]
+        # start_day = chosen_start_date[1]
+        # # Remove white spaces
+        # start_year = ''.join(start_year.split())
+        # start_month = ''.join(start_month.split())
+        # start_day = ''.join(start_day.split())
+        #
+        # chosen_end_date = chosen_end_date.split("/", 2)
+        # end_month = chosen_end_date[0]
+        # end_year = chosen_end_date[2]
+        # end_day = chosen_end_date[1]
+        # # Remove white spaces
+        # end_year = ''.join(end_year.split())
+        # end_month = ''.join(end_month.split())
+        # end_day = ''.join(end_day.split())
+        #
+        # sellorders = Order.objects.all().filter(
+        #     Q(
+        #         created__gt=date(int(start_year), int(start_month),
+        #                          int(start_day)),
+        #         created__lt=date(int(end_year), int(end_month), int(end_day))
+        #     )
+        #     |
+        #     Q(
+        #         created=date(int(end_year), int(end_month), int(end_day))
+        #     )
+        #     , confirmed=True, factured=False,
+        #
+        # )
 
     context = {
         'sellorders': sellorders,
         "dateform": dateform,
+        'customers': customers,
     }
     return render(request, 'sellorder/list_sellorder.html', context)
 
