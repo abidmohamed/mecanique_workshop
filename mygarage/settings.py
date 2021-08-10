@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-wx59#clvu0c72ph%aj2jeh-!(970fwt@b%w4fvdjga02$@gv2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['nadhir-mygarage.herokuapp.com', '127.0.0.1', "mygo-my-garage.herokuapp.com"]
+ALLOWED_HOSTS = ['nadhir-mygarage.herokuapp.com', '127.0.0.1', "mygo-my-garage.herokuapp.com", "www.my-garage.pro"]
 
 # Application definition
 
@@ -95,7 +95,7 @@ DATABASES = {
 
 import dj_database_url
 
-db_from_env = dj_database_url.config(conn_max_age=600)
+db_from_env = dj_database_url.config(conn_max_age=900)
 DATABASES['default'].update(db_from_env)
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
