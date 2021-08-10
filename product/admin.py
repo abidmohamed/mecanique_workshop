@@ -8,4 +8,5 @@ from product.models import Product
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name',
                     # 'category',
-                    'desc')
+                    'desc',
+                    'ref')
