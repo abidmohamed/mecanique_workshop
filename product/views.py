@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -6,6 +7,15 @@ from category.models import Category
 from product.forms import ProductForm
 from product.models import Product
 from sellorder.models import Order, OrderItem
+
+
+def delete_duplicated(request):
+    # assuming which duplicate is removed doesn't matter...
+    for current_prod in Product.objects.all().reverse():
+        if Product.objects.filter(ref=current_prod.ref).count() > 1:
+            current_prod.delete()
+
+    return HttpResponse("Duplicate Deleted")
 
 
 def add_product(request):
@@ -32,6 +42,7 @@ def add_product_buyorder(request):
             return redirect("buyorder:create_buyorder")
     context = {'productform': productform}
     return render(request, 'product/add_product.html', context)
+
 
 # def product_list(request, pk):
 #     category = Category.objects.get(id=pk)
