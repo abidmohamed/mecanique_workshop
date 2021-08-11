@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
@@ -11,6 +12,17 @@ from services.models import Service
 from stock.forms import StockForm, StockProductForm
 from stock.models import Stock, StockProduct
 from vehicule.models import Vehicle
+
+
+def delete_duplicated_stockproduct(request):
+    # assuming which duplicate is removed doesn't matter...
+    stocks = Stock.objects.all()
+    for stock in stocks:
+        for current_prod in StockProduct.objects.all().reverse():
+            if StockProduct.objects.filter(product=current_prod.product, stock=stock).count() > 1:
+                current_prod.delete()
+
+    return HttpResponse("Duplicate Deleted")
 
 
 def add_stock(request):
