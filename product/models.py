@@ -8,7 +8,7 @@ class Product(models.Model):
     # category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE)
     brand = models.CharField(max_length=250, null=True)
     name = models.CharField(max_length=250, null=True)
-    ref = models.CharField(max_length=250, null=True, unique=True)
+    ref = models.CharField(max_length=250, null=True)
     desc = models.CharField(max_length=250, null=True, blank=True)
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True, )
     buyprice = models.DecimalField(max_digits=10, null=True, decimal_places=2, default=0)
