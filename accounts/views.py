@@ -81,7 +81,7 @@ def home(request):
     html_calendar = none_html_calendar.formatmonth(withyear=True)
 
     # sellorders = Order.objects.all().filter(confirmed=True)  # .filter(created__year=now.year, created__month=now.month)
-    buyorders = BuyOrder.objects.all()  # can be filtred by year & month
+    # buyorders = BuyOrder.objects.all()  # can be filtred by year & month
     # Today order
     today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month,
                                                   created__day=now.day, confirmed=True)
@@ -133,8 +133,8 @@ def home(request):
     # for order in Order.objects.all().filter(confirmed=True):
     #     totalsellorders += order.get_ttc()
     # Buy orders total
-    for order in buyorders:
-        totalbuyorders += order.get_total_cost()
+    #for order in buyorders:
+    #    totalbuyorders += order.get_total_cost()
 
     # Sell Orders today total
     totaltodaypanne = 0

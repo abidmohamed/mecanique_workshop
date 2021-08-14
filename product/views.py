@@ -7,6 +7,7 @@ from category.models import Category
 from product.forms import ProductForm
 from product.models import Product
 from sellorder.models import Order, OrderItem
+from stock.models import StockProduct
 
 
 def delete_duplicated(request):
@@ -25,6 +26,13 @@ def add_product(request):
         productform = ProductForm(request.POST, request.FILES)
         if productform.is_valid():
             product = productform.save()
+
+            StockProduct.objects.create(
+                product=product,
+                quantity=0,
+                stock=product.stock
+            )
+
             return redirect("product:all_product_list")
     context = {'productform': productform}
     return render(request, 'product/add_product.html', context)
