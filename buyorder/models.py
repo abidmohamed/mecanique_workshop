@@ -49,4 +49,4 @@ class BuyOrderItem(models.Model):
         return str(self.id)
 
     def get_cost(self):
-        return self.price * self.quantity
+        return round(self.price * self.quantity, 2)

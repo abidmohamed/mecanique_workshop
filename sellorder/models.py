@@ -36,14 +36,14 @@ class Order(models.Model):
         return round(sum(item.get_cost() for item in self.items.all()), 2)
 
     def get_total_panne(self):
-        return sum(item.get_cost() for item in self.pannes.all())
+        return round(sum(item.get_cost() for item in self.pannes.all()), 2)
 
     def get_total_service(self):
-        return sum(item.get_cost() for item in self.services.all())
+        return round(sum(item.get_cost() for item in self.services.all()), 2)
 
     def get_total_item_panne(self):
-        return sum(item.get_cost() for item in self.pannes.all()) + self.get_total_cost() + \
-               sum(item.get_cost() for item in self.services.all())
+        return round(sum(item.get_cost() for item in self.pannes.all()) + self.get_total_cost() + \
+                     sum(item.get_cost() for item in self.services.all()), 2)
 
     def get_tva(self):
         return round(self.get_total_item_panne() * Decimal(self.order_tva / 100), 2)
@@ -66,7 +66,7 @@ class OrderItem(models.Model):
         return str(self.id)
 
     def get_cost(self):
-        return self.price * self.quantity
+        return round(self.price * self.quantity, 2)
 
 
 class PanneItem(models.Model):
