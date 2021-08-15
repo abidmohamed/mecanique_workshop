@@ -805,7 +805,7 @@ def sellorder_facture_no_date_pdf(request, pk):
 
     # create a pdf
     pisa_status = pisa.CreatePDF(
-        html, dest=response, encoding='UTF-8')
+        html.encode("UTF-8"), dest=response, encoding='UTF-8')
     # if error then show some funy view
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
