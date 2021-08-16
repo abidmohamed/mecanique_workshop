@@ -771,7 +771,7 @@ def sellorder_facture_pdf(request, pk):
 
     # create a pdf
     pisa_status = pisa.CreatePDF(
-        html.encode("UTF-8"), dest=response, encoding='UTF-8')
+        html, dest=response, encoding='UTF-8')
 
     # if error then show some funy view
     if pisa_status.err:
