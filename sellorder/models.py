@@ -1,3 +1,4 @@
+import decimal
 from decimal import Decimal
 from unicodedata import decimal
 
@@ -91,12 +92,13 @@ class ServiceItem(models.Model):
     service = models.ForeignKey(Service, related_name='order_service',
                                 on_delete=models.DO_NOTHING, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    charge = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, default=0)
 
     def __str__(self):
         return str(self.id)
 
     def get_cost(self):
-        return self.price
+        return Decimal(self.price) + Decimal(0 if self.charge is None else self.charge)
 
 
 # Facture

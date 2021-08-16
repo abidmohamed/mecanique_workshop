@@ -20,6 +20,7 @@ from payments.models import SellOrderPayment
 from rdv.models import Panne
 from sellorder.apps import SellorderConfig
 from sellorder.models import Order, SellOrderFacture, OrderItem, PanneItem
+from services.models import ServiceProvider, Service
 from stock.models import StockProduct
 from num2words import num2words
 
@@ -36,8 +37,16 @@ def confirm_order(request, pk):
     # print(sellorder.vehicle)
     if request.method == 'POST':
 
+        # product prices
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
+        # Panne prices
+        panne_prices = request.POST.getlist('panne-prices')
+
+        # Service price & charge
+        service_prices = request.POST.getlist('service-prices')
+        service_charges = request.POST.getlist('service-charge')
+
         tva = request.POST.get('tva')
         timbre = request.POST.get('timbre')
         chosen_date = request.POST.get('order_date')
@@ -62,6 +71,7 @@ def confirm_order(request, pk):
                 str_quantity = str_quantity.replace(",", ".")
                 item.quantity = str_quantity
                 print("=========>", str_quantity)
+
                 item.save()
                 # Reducing the sold products from stock
                 stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.product.stock)
@@ -77,6 +87,40 @@ def confirm_order(request, pk):
                             stockitem.save()
                             itemexist = 2
                             #                 # operation done same product plus the new quantity
+        if sellorder.pannes.all():
+            for index, item in enumerate(sellorder.pannes.all()):
+                # pannes
+                print(panne_prices[index])
+                str_panne_price = panne_prices[index]
+                str_panne_price = str_panne_price.replace(",", ".")
+                # Remove white spaces
+                str_panne_price = ''.join(str_panne_price.split())
+                item.price = str_panne_price
+
+                item.save()
+
+        if sellorder.services.all():
+            for index, item in enumerate(sellorder.services.all()):
+                # Services
+                print(service_prices[index])
+                print(service_charges[index])
+                str_service_price = service_prices[index]
+                str_service_price = str_service_price.replace(",", ".")
+                # Remove white spaces
+                str_service_price = ''.join(str_service_price.split())
+                item.price = str_service_price
+                # Add credit to provider
+                service = Service.objects.get(id=item.service.id)
+                service_provider = ServiceProvider.objects.get(id=service.provider.id)
+                service_provider.credit += item.price
+                # Charge
+                str_service_charge = service_charges[index]
+                str_service_charge = str_service_charge.replace(",", ".")
+                # Remove white spaces
+                str_service_charge = ''.join(str_service_charge.split())
+                item.price = str_service_charge
+
+                item.save()
 
         print(request.POST)
         discount.order = sellorder
@@ -102,7 +146,7 @@ def confirm_order(request, pk):
         # customer debt
         customer.debt += sellorder.get_ttc()
         customer.save()
-        return redirect('payments:create_customer_payment', sellorder.id)
+        # return redirect('payments:create_customer_payment', sellorder.id)
     context = {
         'customer': customer,
         'sellorder': sellorder,
