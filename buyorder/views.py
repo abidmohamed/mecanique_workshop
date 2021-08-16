@@ -22,6 +22,7 @@ from stock.models import StockProduct, Stock
 
 Buyorder_KEY = "buyorder.all"
 
+
 def create_buyorder(request):
     buyorderform = BuyOrderForm()
     buyorderitemformset = BuyOrderItemFormset(queryset=BuyOrderItem.objects.none())

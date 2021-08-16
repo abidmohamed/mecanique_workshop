@@ -20,6 +20,9 @@ def putit_in_stock(request):
         if stockproduct.stock is None:
             stockproduct.stock = Stock.objects.get(id=2)
             stockproduct.save()
+        elif stockproduct.quantity <= -13:
+            stockproduct.quantity = 0
+    return HttpResponse("All stocked")
 
 
 def delete_duplicated_stockproduct(request):
