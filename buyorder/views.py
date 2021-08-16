@@ -304,7 +304,7 @@ def buyorder_details(request, pk):
 def buyorder_list(request):
     # now time
     now = datetime.now()
-    suppliers = Supplier.obejcts.all()
+    suppliers = Supplier.objects.all()
     buyorders = BuyOrder.objects.filter(created__day=now.day, created__month=now.month)
 
     if request.method == 'POST':
