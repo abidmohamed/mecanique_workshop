@@ -500,8 +500,11 @@ def sellorder_list(request):
     dateform = DateForm()
     # now time
     now = datetime.now()
-    sellorders = Order.objects.all().filter(confirmed=True, factured=False)
-    customers = Customer.objects.filter(debt__gte=0)
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created__day=now.day, created__month=now.month)
+    sellorders_customers = Customer.objects.all()
+    # sellorders_customers = Order.customer.all()
+    print(sellorders_customers)
+    customers = Customer.objects.all()
     # Search request by date===>
     if request.method == 'POST':
         alldata = request.POST
@@ -510,7 +513,7 @@ def sellorder_list(request):
         chosencustomer = request.POST.getlist("customers")
         if len(chosencustomer) != 0:
             customer = Customer.objects.get(id=chosencustomer[0])
-            sellorders = Order.objects.all().filter(confirmed=True, factured=False)
+            sellorders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False)
 
         # Search by date removed
         # chosen_date = alldata.get("date")
