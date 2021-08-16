@@ -50,9 +50,9 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',  # new
+    # 'django.middleware.cache.UpdateCacheMiddleware',  # new
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',  # new
+    #  'django.middleware.cache.FetchFromCacheMiddleware',  # new
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -187,57 +187,57 @@ MEDIA_URL = '/media/'
 # ]
 # PWA_APP_DIR = 'ltr'
 # PWA_APP_LANG = 'en-US'
-
-# Cache setting
-CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
-CACHE_MIDDLEWARE_SECONDS = 600  # number of seconds to cache a page for (TTL)
-CACHE_MIDDLEWARE_KEY_PREFIX = ''  # should be used if the cache is shared across multiple sites that use the same Django instance
-
-
-def get_cache():
-    import os
-    try:
-        servers = os.environ['mc2.dev.ec2.memcachier.com:11211']
-        username = os.environ['8D55B5']
-        password = os.environ['AA0847F049CA8AE8362D63E0B0829916']
-        return {
-            'default': {
-                'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-                # TIMEOUT is not the connection timeout! It's the default expiration
-                # timeout that should be applied to keys! Setting it to `None`
-                # disables expiration.
-                'TIMEOUT': None,
-                'LOCATION': servers,
-                'OPTIONS': {
-                    'binary': True,
-                    'username': username,
-                    'password': password,
-                    'behaviors': {
-                        # Enable faster IO
-                        'no_block': True,
-                        'tcp_nodelay': True,
-                        # Keep connection alive
-                        'tcp_keepalive': True,
-                        # Timeout settings
-                        'connect_timeout': 2000,  # ms
-                        'send_timeout': 750 * 1000,  # us
-                        'receive_timeout': 750 * 1000,  # us
-                        '_poll_timeout': 2000,  # ms
-                        # Better failover
-                        'ketama': True,
-                        'remove_failed': 1,
-                        'retry_timeout': 2,
-                        'dead_timeout': 30,
-                    }
-                }
-            }
-        }
-    except:
-        return {
-            'default': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-            }
-        }
-
-
-CACHES = get_cache()
+#
+# # Cache setting
+# CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
+# CACHE_MIDDLEWARE_SECONDS = 600  # number of seconds to cache a page for (TTL)
+# CACHE_MIDDLEWARE_KEY_PREFIX = ''  # should be used if the cache is shared across multiple sites that use the same Django instance
+#
+#
+# def get_cache():
+#     import os
+#     try:
+#         servers = os.environ['mc2.dev.ec2.memcachier.com:11211']
+#         username = os.environ['8D55B5']
+#         password = os.environ['AA0847F049CA8AE8362D63E0B0829916']
+#         return {
+#             'default': {
+#                 'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+#                 # TIMEOUT is not the connection timeout! It's the default expiration
+#                 # timeout that should be applied to keys! Setting it to `None`
+#                 # disables expiration.
+#                 'TIMEOUT': None,
+#                 'LOCATION': servers,
+#                 'OPTIONS': {
+#                     'binary': True,
+#                     'username': username,
+#                     'password': password,
+#                     'behaviors': {
+#                         # Enable faster IO
+#                         'no_block': True,
+#                         'tcp_nodelay': True,
+#                         # Keep connection alive
+#                         'tcp_keepalive': True,
+#                         # Timeout settings
+#                         'connect_timeout': 2000,  # ms
+#                         'send_timeout': 750 * 1000,  # us
+#                         'receive_timeout': 750 * 1000,  # us
+#                         '_poll_timeout': 2000,  # ms
+#                         # Better failover
+#                         'ketama': True,
+#                         'remove_failed': 1,
+#                         'retry_timeout': 2,
+#                         'dead_timeout': 30,
+#                     }
+#                 }
+#             }
+#         }
+#     except:
+#         return {
+#             'default': {
+#                 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+#             }
+#         }
+#
+#
+# CACHES = get_cache()
