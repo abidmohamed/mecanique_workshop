@@ -15,6 +15,7 @@
                 <tr>
                     <th>{% trans "Name" %}</th>
                     <th>{% trans "Phone" %}</th>
+                    <th>{% trans "Credit" %}</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -27,6 +28,9 @@
                    </td>
                     <td>
                        {{provider.phone}}
+                   </td>
+                    <td>
+                       {{provider.credit}}
                    </td>
                     <td>
                         <a class="btn btn-success " href="{% url 'services:update_provider' provider.id %}">{% trans "Update" %}</a>
