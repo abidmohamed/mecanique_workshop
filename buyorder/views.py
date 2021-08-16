@@ -1,5 +1,6 @@
 import decimal
 from datetime import date, datetime
+from decimal import Decimal
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
@@ -238,7 +239,7 @@ def update_order(request, pk):
                 # Remove white spaces
                 str_price = ''.join(str_price.split())
                 # print("----------------------------------------------")
-                item.price = str_price
+                item.price = decimal.Decimal(str_price)
                 item.quantity = quantities[index]
 
                 # get stock
