@@ -22,7 +22,6 @@ from stock.models import StockProduct, Stock
 
 Buyorder_KEY = "buyorder.all"
 
-
 def create_buyorder(request):
     buyorderform = BuyOrderForm()
     buyorderitemformset = BuyOrderItemFormset(queryset=BuyOrderItem.objects.none())
@@ -201,7 +200,7 @@ def update_order(request, pk):
             # Reset Stock Quantity to update the quantities
             if buyorder.items.all():
                 for item in buyorder.items.all():
-                    if StockProduct.objects.all().filter(product=item.product):
+                    if StockProduct.objects.all().filter(product__id=item.product.id):
                         print("############# OKAY Update minus")
                         stockitem = StockProduct.objects.filter(stock=item.stock)
                         if len(stockitem) > 1:
