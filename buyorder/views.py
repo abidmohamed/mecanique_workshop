@@ -188,9 +188,7 @@ def buyorder_confirmation(request, pk):
 
 def update_order(request, pk):
     buyorder = BuyOrder.objects.get(id=pk)
-
     stocks = Stock.objects.all()
-
     buyorderform = BuyOrderForm(instance=buyorder)
     old_ttc = round(buyorder.total_price + (buyorder.total_price * decimal.Decimal(buyorder.order_tva / 100)), 2)
     new_ttc = 0
@@ -208,11 +206,11 @@ def update_order(request, pk):
                             for currentstockitem in stockitem:
                                 currentstockitem.quantity -= decimal.Decimal(item.quantity)
                                 currentstockitem.save()
-                        else:
-                            stockitem = StockProduct.objects.get(stock=item.stock)
-                        # if stockitem.quantity - int(item.quantity) >= 0:
-                            stockitem.quantity -= decimal.Decimal(item.quantity)
-                            stockitem.save()
+                        # else:
+                        #     stockitem = StockProduct.objects.get(stock=item.stock)
+                        # # if stockitem.quantity - int(item.quantity) >= 0:
+                        #     stockitem.quantity -= decimal.Decimal(item.quantity)
+                        #     stockitem.save()
             print(request.POST)
             buyorder = buyorderform.save()
 
