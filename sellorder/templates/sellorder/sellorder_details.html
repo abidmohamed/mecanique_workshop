@@ -183,8 +183,8 @@
                 {% for item in order.services.all %}
                 <tr>
                     <td class="table-light">{{ item.service.name }}</td>
-                    <td class="table-light">{{ item.service.price }} {% trans "DZD" %}</td>
-                    <td class="table-light">{{ item.service.charge }} {% trans "DZD" %}</td>
+                    <td class="table-light">{{ item.price }} {% trans "DZD" %}</td>
+                    <td class="table-light">{{ item.charge }} {% trans "DZD" %}</td>
                     <td class="table-light">{{ item.price }} {% trans "DZD" %}</td>
                     <td class="table-light">{{ item.service.provider }}</td>
                 </tr>
