@@ -496,13 +496,12 @@ def sellorder_facture(request, pk):
     return render(request, 'sellorder/sellorder_facture.html', context={'order': order})
 
 
-@cache_page(60 * 15)
 def sellorder_list(request):
     dateform = DateForm()
     # now time
     now = datetime.now()
-    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created=now)
-    customers = Customer.objects.all()
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False)
+    customers = Customer.objects.get(id=10)
     # Search request by date===>
     if request.method == 'POST':
         alldata = request.POST
@@ -511,7 +510,7 @@ def sellorder_list(request):
         chosencustomer = request.POST.getlist("customers")
         if len(chosencustomer) != 0:
             customer = Customer.objects.get(id=chosencustomer[0])
-            sellorders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False)
+            sellorders = Order.objects.all().filter(confirmed=True, factured=False)
 
         # Search by date removed
         # chosen_date = alldata.get("date")
