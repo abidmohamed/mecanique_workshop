@@ -188,6 +188,9 @@ def buyorder_confirmation(request, pk):
 
 def update_order(request, pk):
     buyorder = BuyOrder.objects.get(id=pk)
+
+    stocks = Stock.objects.all()
+
     buyorderform = BuyOrderForm(instance=buyorder)
     old_ttc = round(buyorder.total_price + (buyorder.total_price * decimal.Decimal(buyorder.order_tva / 100)), 2)
     new_ttc = 0
@@ -212,6 +215,8 @@ def update_order(request, pk):
             # get modified items
             prices = request.POST.getlist('prices')
             quantities = request.POST.getlist('quantities')
+            # Stock list
+            stocklist = request.POST.getlist('stock')
             tva = request.POST.get('tva')
             chosen_date = request.POST.get('order_date')
             # get year month day
@@ -231,9 +236,13 @@ def update_order(request, pk):
                 # print("----------------------------------------------")
                 item.price = str_price
                 item.quantity = quantities[index]
+
+                # get stock
+                item.stock = Stock.objects.get(id=stocklist[index])
+
                 item.save()
                 # adding the bought products to stock
-                stockitems = StockProduct.objects.all().filter(stock=item.product.stock)
+                stockitems = StockProduct.objects.all().filter(stock=item.stock)
                 itemexist = 1
                 # check if stock doesn't have the product
                 if len(stockitems) > 0:
@@ -253,7 +262,7 @@ def update_order(request, pk):
                             product=item.product,
                             quantity=decimal.Decimal(item.quantity),
                             # category=item.product.category,
-                            stock=item.product.stock
+                            stock=item.stock
                         )
                 else:
                     #         # stock is empty
@@ -266,7 +275,7 @@ def update_order(request, pk):
                             # type=item.type,
                             # color=item.color,
                             # category=item.product.category,
-                            stock=item.product.stock
+                            stock=item.stock
                         )
             # print(buyorder.get_total_cost())
             # print(supplier)
