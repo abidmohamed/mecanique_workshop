@@ -122,7 +122,7 @@
                     {% for item in sellorder.pannes.all %}
                     <tr>
                         <td>{{item.panne.desc}}</td>
-                        <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
+                        <td><input onkeyup="calc()" type="text" class="form-control" name="panne-prices" value="{{item.price}}">
                         </td>
                         <td>
                             <a class="btn btn-danger "
@@ -146,7 +146,8 @@
                     {% for item in sellorder.services.all %}
                     <tr>
                         <td>{{item.service.name}}</td>
-                        <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
+                        <td><input onkeyup="calc()" type="text" class="form-control" name="service-prices" value="{{item.price}}">
+                        <td><input onkeyup="calc()" type="text" class="form-control" name="service-charge" value="{{item.charge}}">
                         </td>
                         <td>
                             <a class="btn btn-danger "
@@ -185,6 +186,8 @@
    function calc(){
     var prices = document.getElementsByName("prices");
     var panne_prices = document.getElementsByName("panne-prices");
+    var service_prices = document.getElementsByName("service-prices");
+    var service_charges = document.getElementsByName("service-charge");
     var quantities = document.getElementsByName("quantities");
     var discount_status = document.getElementById("discount-status");
     var discount_value = document.getElementById("discount-value");
@@ -221,6 +224,7 @@
         if(quantities[i].value.indexOf(',') > -1){
             quantities[i].value = quantities[i].value.replaceAt(comma_index , ".");
         }
+
     if (i == 0){
         total_price = prices[i].value * quantities[i].value;
 
@@ -261,6 +265,56 @@
         }
         total_price += parseFloat(panne_prices[i].value);
     }
+
+    // Adding Service 
+    for (var i = 0; i<service_prices.length; i++){
+        // Fixing numbers to calculate
+        // prices
+        if (/\s/g.test(service_prices[i].value)){
+        service_prices[i].value = service_prices[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = service_prices[i].value.length - 3
+         if(service_prices[i].value.indexOf(',') > -1){
+            service_prices[i].value = service_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_prices[i].value = service_prices[i].value.replace(",", "");
+        }
+        }
+
+        // service_charges
+        if (/\s/g.test(service_charges[i].value)){
+        service_charges[i].value = service_charges[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = service_charges[i].value.length - 3
+         if(service_charges[i].value.indexOf(',') > -1){
+            service_charges[i].value = service_charges[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_charges[i].value = service_charges[i].value.replace(",", "");
+        }
+        }
+
+        // Removing Comma
+        // service_prices
+         var comma_index = service_prices[i].value.length - 3
+         if(service_prices[i].value.indexOf(',') > -1){
+            service_prices[i].value = service_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_prices[i].value = service_prices[i].value.replace(",", "");
+        }
+
+        // service_charges
+         var comma_index = service_charges[i].value.length - 3
+         if(service_charges[i].value.indexOf(',') > -1){
+            service_charges[i].value = service_charges[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_charges[i].value = service_charges[i].value.replace(",", "");
+        }
+        total_price += parseFloat(service_prices[i].value);
+        total_price += parseFloat(service_charges[i].value);
+    }
+
     // Applying Tva
     total_price += (total_price * (tva_value.value/100));
     // applying timbre

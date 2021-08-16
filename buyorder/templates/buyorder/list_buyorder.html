@@ -17,6 +17,7 @@
             <table id="table_supplier" class="display text-center">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>{% trans "First Name" %}</th>
                     <th>{% trans "Last Name" %}</th>
                     <th>{% trans "Phone" %}</th>
@@ -31,6 +32,10 @@
                 <tbody>
                 {% for supplier in suppliers %}
                 <tr>
+                    <td>
+                                <input class="form-check-input" type="radio" value="{{supplier.id}}"
+                                       id="{{supplier.id}}" name="suppliers">
+                    </td>
                     <td>
                         {{supplier.firstname}}
                     </td>
