@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from django.db import models
 from product.models import Product
+from stock.models import Stock
 from supplier.models import Supplier
 
 
@@ -44,6 +45,7 @@ class BuyOrderItem(models.Model):
                                 on_delete=models.SET_NULL, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    stock = models.ForeignKey(Stock, related_name='item_stocks', on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def __str__(self):
         return str(self.id)

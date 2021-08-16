@@ -58,6 +58,7 @@
                         <th>{% trans "Product Name" %}</th>
                         <th>{% trans "Price DZD" %}</th>
                         <th>{% trans "Quantity" %}</th>
+                        <th>{% trans "Stock" %}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -84,6 +85,17 @@
                         <td class="table-light ">
                             <input class="form-control" type="text" name="quantities" value="{{ item.quantity }}">
                         </td>
+
+                        <td class="table-light">
+                            <select class="form-control"  name="stock">
+                                {% for stock in stocks %}
+                                <option value="{{stock.id}}">{{stock}}</option>
+                                {% empty %}
+                                <option value="None">{% trans "None" %}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+
                         <td>
                                                     <a class="btn btn-danger " href="{% url 'buyorder:confirm_order_item_delete' buyorder.id item.id %}">{% trans "Delete" %}</a>
                         </td>
