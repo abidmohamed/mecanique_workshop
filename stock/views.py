@@ -14,6 +14,14 @@ from stock.models import Stock, StockProduct
 from vehicule.models import Vehicle
 
 
+def putit_in_stock(request):
+    stockproducts = StockProduct.objects.all()
+    for stockproduct in stockproducts:
+        if stockproduct.stock is None:
+            stockproduct.stock = Stock.objects.get(id=2)
+            stockproduct.save()
+
+
 def delete_duplicated_stockproduct(request):
     # assuming which duplicate is removed doesn't matter...
     stocks = Stock.objects.all()

@@ -36,5 +36,6 @@ urlpatterns = [
     path('performa_order_vehicle/<str:pk>', views.performa_order_vehicle, name='performa_order_vehicle'),
     path('stockproduct_stockalert', views.stockproduct_quantityalert, name='stockproduct_stockalert'),
     path('delete_duplicated_stockproduct', views.delete_duplicated_stockproduct, name='delete_duplicated_stockproduct'),
+    path('putit_in_stock', views.putit_in_stock, name='putit_in_stock'),
 
 ]
