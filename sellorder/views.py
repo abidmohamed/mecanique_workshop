@@ -501,7 +501,7 @@ def sellorder_list(request):
     # now time
     now = datetime.now()
     sellorders = Order.objects.all().filter(confirmed=True, factured=False)
-    customers = Customer.objects.get(id=10)
+    customers = Customer.objects.filter(debt__gte=0)
     # Search request by date===>
     if request.method == 'POST':
         alldata = request.POST
