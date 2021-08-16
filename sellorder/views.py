@@ -497,6 +497,7 @@ def sellorder_facture(request, pk):
 
 
 def sellorder_list(request):
+    list_type = 1 # Sellorder
     dateform = DateForm()
     # now time
     now = datetime.now()
@@ -557,22 +558,27 @@ def sellorder_list(request):
         'sellorders': sellorders,
         "dateform": dateform,
         'customers': customers,
+        'list_type': list_type,
     }
     return render(request, 'sellorder/list_sellorder.html', context)
 
 
 def factured_sellorder_list(request):
+    list_type = 2  # Sellorder Bill
     sellorders = SellOrderFacture.objects.all()
     context = {
-        'sellorders': sellorders
+        'sellorders': sellorders,
+        'list_type': list_type,
     }
     return render(request, 'sellorder/list_sellorder_facture.html', context)
 
 
 def performa_sellorder_list(request):
+    list_type = 3  # Sellorder Proforma Bill
     sellorders = Order.objects.all().filter(confirmed=False)
     context = {
-        'sellorders': sellorders
+        'sellorders': sellorders,
+        'list_type': list_type,
     }
     return render(request, 'sellorder/list_sellorder.html', context)
 
