@@ -203,10 +203,16 @@ def update_order(request, pk):
                 for item in buyorder.items.all():
                     if StockProduct.objects.all().filter(product=item.product):
                         print("############# OKAY Update minus")
-                        stockitem = StockProduct.objects.get(stock=item.stock)
+                        stockitem = StockProduct.objects.filter(stock=item.stock)
+                        if len(stockitem) > 1:
+                            for currentstockitem in stockitem:
+                                currentstockitem.quantity -= decimal.Decimal(item.quantity)
+                                currentstockitem.save()
+                        else:
+                            stockitem = StockProduct.objects.get(stock=item.stock)
                         # if stockitem.quantity - int(item.quantity) >= 0:
-                        stockitem.quantity -= decimal.Decimal(item.quantity)
-                        stockitem.save()
+                            stockitem.quantity -= decimal.Decimal(item.quantity)
+                            stockitem.save()
             print(request.POST)
             buyorder = buyorderform.save()
 
