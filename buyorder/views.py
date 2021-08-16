@@ -293,11 +293,11 @@ def update_order(request, pk):
             buyorder.confirmed = True
             buyorder.total_price = buyorder.get_total_cost()
             buyorder.save()
-            cache.delete(Buyorder_KEY)
             return redirect('buyorder:buyorder_list')
     context = {
         'buyorderform': buyorderform,
         'buyorder': buyorder,
+        'stocks': stocks,
     }
     return render(request, 'buyorder/buyorder_confirmation.html', context)
 
