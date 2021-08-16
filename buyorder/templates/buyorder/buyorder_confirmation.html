@@ -121,6 +121,7 @@
 window.addEventListener('load', (event) => {
   console.log('page is fully loaded');
     var prices = document.getElementsByName("prices");
+    var qunatites = document.getElementsByName("quantities");
     var total_price = 0;
     for (var i = 0; i<prices.length; i++)
     {
@@ -144,7 +145,30 @@ window.addEventListener('load', (event) => {
             // any rest commas
             prices[i].value = prices[i].value.replace(",", "");
         }
+
+        // Quantity
+
+        if (/\s/g.test(qunatites[i].value)){
+        qunatites[i].value = qunatites[i].value.replace(/\s/g, "");
+        }else{
+         // Removing Comma
+         var comma_index = qunatites[i].value.length - 3
+            if(qunatites[i].value.indexOf(',') > -1){
+                qunatites[i].value = qunatites[i].value.replaceAt(comma_index , ".");
+                // any rest commas
+                qunatites[i].value = qunatites[i].value.replace(",", "");
+            }
+        }
+        // Removing Comma
+         var comma_index = qunatites[i].value.length - 3
+         if(qunatites[i].value.indexOf(',') > -1){
+            qunatites[i].value = qunatites[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            qunatites[i].value = qunatites[i].value.replace(",", "");
+        }
+
     }
+
 
 });
 
