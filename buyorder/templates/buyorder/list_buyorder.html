@@ -17,6 +17,7 @@
                     <th>{% trans "Order ID" %}</th>
                     <th>{% trans "Supplier" %}</th>
                     <th>{% trans "Phone" %}</th>
+                    <th>{% trans "Date" %}</th>
                     <th>{% trans "Paid" %}</th>
                     <th>{% trans "HT" %}</th>
                     <th>{% trans "TVA" %}</th>
@@ -34,6 +35,7 @@
                     <td>{{order.id}}</td>
                     <td>{{order.supplier}}</td>
                     <td>{{order.supplier.phone}}</td>
+                    <td>{{order.order_date}}</td>
                     <td>{{order.paid}}</td>
                     <td>{{order.total_price}} {% trans "DZD" %}</td>
                     <td>{{order.get_tva}} {% trans "DZD" %}</td>
