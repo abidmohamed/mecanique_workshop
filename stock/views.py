@@ -252,6 +252,7 @@ def order_stockproduct_list(request):
         # print(chosenvehicule)
         if len(chosencustomer) != 0:
             sellorder = Order()
+            chosencustomer[0] = ''.join(chosencustomer[0].split())
             customer = Customer.objects.get(id=chosencustomer[0])
 
             sellorder.customer = customer
@@ -260,6 +261,8 @@ def order_stockproduct_list(request):
             # add products
             if len(chosenproducts) != 0:
                 for product in chosenproducts:
+                    product = ''.join(product.split())
+                    print("Product ID ###########>", product)
                     product = ''.join(product.split())
                     currentproduct = StockProduct.objects.get(id=product)
                     # print(currentproduct)
@@ -273,6 +276,7 @@ def order_stockproduct_list(request):
             # add pannes
             if len(chosenpannes) != 0:
                 for panne in chosenpannes:
+                    panne = ''.join(panne.split())
                     currentpanne = Panne.objects.get(id=panne)
                     # print(currentpanne)
                     PanneItem.objects.create(
@@ -283,6 +287,7 @@ def order_stockproduct_list(request):
             # add services
             if len(chosenservices) != 0:
                 for service in chosenservices:
+                    service = ''.join(service.split())
                     currentservice = Service.objects.get(id=service)
                     ServiceItem.objects.create(
                         order=sellorder,
