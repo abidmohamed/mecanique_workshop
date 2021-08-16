@@ -18,7 +18,7 @@ from payments.models import BuyOrderPayment
 from product.forms import ProductForm
 from product.models import Product
 from supplier.models import Supplier
-from stock.models import StockProduct
+from stock.models import StockProduct, Stock
 
 Buyorder_KEY = "buyorder.all"
 
@@ -81,8 +81,9 @@ def confirm_all(request):
 
 def buyorder_confirmation(request, pk):
     buyorder = BuyOrder.objects.get(id=pk)
-
+    stocks = Stock.objects.all()
     buyorderform = BuyOrderForm(instance=buyorder)
+
     if request.method == 'POST':
         buyorderform = BuyOrderForm(request.POST, instance=buyorder)
         if buyorderform.is_valid():
@@ -93,6 +94,8 @@ def buyorder_confirmation(request, pk):
             # get modified items
             prices = request.POST.getlist('prices')
             quantities = request.POST.getlist('quantities')
+            # Stock list
+            stocklist = request.POST.getlist('stock')
             tva = request.POST.get('tva')
             chosen_date = request.POST.get('order_date')
             # get year month day
@@ -122,9 +125,12 @@ def buyorder_confirmation(request, pk):
                 # assign quantity
                 item.quantity = str_quantity
 
+                # get stock
+                item.stock = Stock.objects.get(id=stocklist[index])
+
                 item.save()
                 # adding the bought products to stock
-                stockitems = StockProduct.objects.all().filter(stock=item.product.stock)
+                stockitems = StockProduct.objects.all().filter(stock=item.stock)
                 itemexist = 1
                 # check if stock doesn't have the product
                 if len(stockitems) > 0:
@@ -144,7 +150,7 @@ def buyorder_confirmation(request, pk):
                             product=item.product,
                             quantity=decimal.Decimal(item.quantity),
                             # category=item.product.category,
-                            stock=item.product.stock
+                            stock=item.stock
                         )
                 else:
                     #         # stock is empty
@@ -157,7 +163,7 @@ def buyorder_confirmation(request, pk):
                             # type=item.type,
                             # color=item.color,
                             # category=item.product.category,
-                            stock=item.product.stock
+                            stock=item.stock
                         )
             # print(buyorder.get_total_cost())
             # print(supplier)
@@ -175,6 +181,7 @@ def buyorder_confirmation(request, pk):
     context = {
         'buyorderform': buyorderform,
         'buyorder': buyorder,
+        'stocks': stocks,
     }
     return render(request, 'buyorder/buyorder_confirmation.html', context)
 
