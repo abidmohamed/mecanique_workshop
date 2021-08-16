@@ -112,7 +112,7 @@ def confirm_order(request, pk):
                 # Add credit to provider
                 service = Service.objects.get(id=item.service.id)
                 service_provider = ServiceProvider.objects.get(id=service.provider.id)
-                service_provider.credit += item.price
+                service_provider.credit += decimal.Decimal(item.price)
                 # Charge
                 str_service_charge = service_charges[index]
                 str_service_charge = str_service_charge.replace(",", ".")
