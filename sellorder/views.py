@@ -118,7 +118,7 @@ def confirm_order(request, pk):
                 str_service_charge = str_service_charge.replace(",", ".")
                 # Remove white spaces
                 str_service_charge = ''.join(str_service_charge.split())
-                item.price = str_service_charge
+                item.charge = str_service_charge
 
                 item.save()
 
