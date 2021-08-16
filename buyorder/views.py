@@ -1,5 +1,5 @@
 import decimal
-from datetime import date
+from datetime import date, datetime
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
@@ -301,14 +301,22 @@ def buyorder_details(request, pk):
     return render(request, 'buyorder/buyorder_details.html', context)
 
 
-@cache_page(60 * 15)
 def buyorder_list(request):
-    buyorders = cache.get(Buyorder_KEY)
-    if not buyorders:
-        buyorders = BuyOrder.objects.all()
-        cache.set(Buyorder_KEY, buyorders)
+    # now time
+    now = datetime.now()
+    suppliers = Supplier.obejcts.all()
+    buyorders = BuyOrder.objects.filter(created__day=now.day, created__month=now.month)
+
+    if request.method == 'POST':
+        alldata = request.POST
+        chosensupplier = request.POST.getlist("suppliers")
+        if len(chosensupplier) != 0:
+            supplier = Supplier.objects.get(id=chosensupplier[0])
+            buyorders = BuyOrder.objects.filter(supplier=supplier)
+
     context = {
-        'buyorders': buyorders
+        'buyorders': buyorders,
+        'suppliers': suppliers
     }
     return render(request, 'buyorder/list_buyorder.html', context)
 

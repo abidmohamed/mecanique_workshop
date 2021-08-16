@@ -10,6 +10,70 @@
         </div>
         <br>
         <div class="card card-body">
+                        <h5>{% trans "Customers" %}</h5>
+
+            <form id="order-form" action="" method="post">
+                    {% csrf_token %}
+            <table id="table_supplier" class="display text-center">
+                <thead>
+                <tr>
+                    <th>{% trans "First Name" %}</th>
+                    <th>{% trans "Last Name" %}</th>
+                    <th>{% trans "Phone" %}</th>
+                    <th>{% trans "Address" %}</th>
+                    <th>{% trans "Credit" %}</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for supplier in suppliers %}
+                <tr>
+                    <td>
+                        {{supplier.firstname}}
+                    </td>
+                    <td>
+                        {{supplier.lastname}}
+                    </td>
+                    <td>
+                        {{supplier.phone}}
+                    </td>
+                    <td>
+                        {{supplier.address}}
+                    </td>
+                    <td>
+                        {{supplier.credit}}
+                    </td>
+                    <td>
+                        {% if supplier.credit > 0%}
+                        <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment_by_supplier' supplier.id %}">{% trans "PayDebt" %}</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-success " href="{% url 'supplier:update_supplier' supplier.id %}">{% trans "Update" %}</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger " href="{% url 'supplier:delete_supplier' supplier.id %}">{% trans "Delete" %}</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning " href="{% url 'supplier:supplier_detail' supplier.id %}">{% trans "Details" %}</a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+            <input class="form-control btn btn-primary" type="submit" name="submit">
+            </form>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="card card-body">
             <table id="table_id" class="table display text-center">
 
                 <thead>
@@ -85,6 +149,7 @@
     //Data Table init
     $(document).ready( function () {
     $('#table_id').DataTable();
+    $('#table_supplier').DataTable();
 } );
 
 
