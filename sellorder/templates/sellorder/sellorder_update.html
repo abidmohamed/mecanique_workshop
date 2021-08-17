@@ -41,6 +41,8 @@
             <hr>
             <form action="" method="post">
                 {% csrf_token %}
+                {{old_date}}
+                <br>
                 <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date" required>
                 <br>
                 <input onkeyup="calc()" id="discount-value" name="discount-value" type="number" class="form-control"
