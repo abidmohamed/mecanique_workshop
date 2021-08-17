@@ -128,7 +128,7 @@
                     {% for item in sellorder.pannes.all %}
                     <tr>
                         <td>{{item.panne.desc}}</td>
-                        <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
+                        <td><input onkeyup="calc()" type="text" class="form-control" name="panne-prices" value="{{item.price}}">
                     <td>
                             <a class="btn btn-danger "
                                href="{% url 'sellorder:order_panne_delete' sellorder.id item.id %}">{% trans "Delete" %}</a>
@@ -145,13 +145,20 @@
                     <tr>
                         <th>{% trans "Service" %}</th>
                         <th>{% trans "Price" %}</th>
+                        <th>{% trans "Charge" %}</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for item in sellorder.services.all %}
                     <tr>
                         <td>{{item.service.name}}</td>
-                        <td><input type="text" class="form-control" name="panne-prices" value="{{item.price}}" disabled>
+                        <td><input onkeyup="calc()" type="text" class="form-control" name="service-prices" value="{{item.price}}">
+                        <td><input onkeyup="calc()" type="text" class="form-control" name="service-charge" value="{{item.charge}}">
+                        </td>
+                        <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'sellorder:confirm_order_service_delete' sellorder.id item.id %}">{% trans "Delete" %}</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -166,66 +173,79 @@
     </div>
 </div>
 <script>
-
-    // treat numbers from final ","
+// treat numbers from final ","
     String.prototype.replaceAt = function(index, replacement) {
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);
     }
 
+    // Treat total value on loading page
+    window.addEventListener("load", function(){
+        total_price = document.getElementById("total-price").value;
+        total_price = total_price.replace(/\s/g, "");
+        var comma_index = total_price.length - 3
+        if(total_price.indexOf(',') > -1){
+            total_price = total_price.replaceAt(comma_index , ".");
+            // any rest commas
+            total_price = total_price.replace(",", "");
+            }
+        document.getElementById("total-price").value = total_price
+    });
+
    function calc(){
     var prices = document.getElementsByName("prices");
     var panne_prices = document.getElementsByName("panne-prices");
+    var service_prices = document.getElementsByName("service-prices");
+    var service_charges = document.getElementsByName("service-charge");
     var quantities = document.getElementsByName("quantities");
     var discount_status = document.getElementById("discount-status");
     var discount_value = document.getElementById("discount-value");
     var tva_value = document.getElementById("tva");
     var timbre_value = document.getElementById("timbre");
     var total_price = 0;
-    var white_space = /\s/g
     // console.log(prices);
     for (var i = 0; i<prices.length; i++)
     {
-
         // made for server live
         // Removing Spaces
         if (/\s/g.test(prices[i].value)){
         prices[i].value = prices[i].value.replace(/\s/g, "");
         }else{
-          // Removing Comma
+         // Removing Comma
+         var comma_index = prices[i].value.length - 3
+            if(prices[i].value.indexOf(',') > -1){
+                prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+                // any rest commas
+                prices[i].value = prices[i].value.replace(",", "");
+            }
+        }
+         // Removing Comma
          var comma_index = prices[i].value.length - 3
          if(prices[i].value.indexOf(',') > -1){
             prices[i].value = prices[i].value.replaceAt(comma_index , ".");
             // any rest commas
             prices[i].value = prices[i].value.replace(",", "");
         }
-        }
-        // Removing Comma
-         var comma_index = prices[i].value.length - 3
-         if(prices[i].value.indexOf(',') > -1){
-            prices[i].value = prices[i].value.replaceAt(comma_index , ".");
-            // any rest commas
-           // prices[i].value = prices[i].value.replace(",", "");
-        }
         // any rest commas
-      //  prices[i].value = prices[i].value.replace(",", "");
-        /*
-        var str_value = prices[i].value;
-        for (var j = 0; j < prices[i].value.length; j++){
-        console.log(prices[i].value[j]);
+        //  prices[i].value = prices[i].value.replace(",", "");
+        // Removing quantity comma
+        var comma_index = quantities[i].value.length - 3
+        if(quantities[i].value.indexOf(',') > -1){
+            quantities[i].value = quantities[i].value.replaceAt(comma_index , ".");
         }
-        */
 
-    // console.log(prices[i].value);
     if (i == 0){
         total_price = prices[i].value * quantities[i].value;
+
         document.getElementById("total-price").value = total_price;
+        // total_price = total_price.substring(0, total_price.length - 2);
+        console.log(total_price);
     }else {
            total_price =  parseFloat(document.getElementById("total-price").value);
            total_price += parseFloat(prices[i].value * quantities[i].value);
-          // total_price = total_price.substring(0, total_price.length - 2);
-          // console.log(total_price);
-           // console.log("Total Price");
-           // console.log(total_price);
+      //     total_price = total_price.substring(0, total_price.length - 2);
+       //    console.log(total_price);
+           console.log("Total Price");
+           console.log(total_price);
 
         document.getElementById("total-price").value = total_price;
     }
@@ -253,28 +273,78 @@
         }
         total_price += parseFloat(panne_prices[i].value);
     }
+
+    // Adding Service
+    for (var i = 0; i<service_prices.length; i++){
+        // Fixing numbers to calculate
+        // prices
+        if (/\s/g.test(service_prices[i].value)){
+        service_prices[i].value = service_prices[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = service_prices[i].value.length - 3
+         if(service_prices[i].value.indexOf(',') > -1){
+            service_prices[i].value = service_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_prices[i].value = service_prices[i].value.replace(",", "");
+        }
+        }
+
+        // service_charges
+        if (/\s/g.test(service_charges[i].value)){
+        service_charges[i].value = service_charges[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = service_charges[i].value.length - 3
+         if(service_charges[i].value.indexOf(',') > -1){
+            service_charges[i].value = service_charges[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_charges[i].value = service_charges[i].value.replace(",", "");
+        }
+        }
+
+        // Removing Comma
+        // service_prices
+         var comma_index = service_prices[i].value.length - 3
+         if(service_prices[i].value.indexOf(',') > -1){
+            service_prices[i].value = service_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_prices[i].value = service_prices[i].value.replace(",", "");
+        }
+
+        // service_charges
+         var comma_index = service_charges[i].value.length - 3
+         if(service_charges[i].value.indexOf(',') > -1){
+            service_charges[i].value = service_charges[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_charges[i].value = service_charges[i].value.replace(",", "");
+        }
+        total_price += parseFloat(service_prices[i].value);
+        total_price += parseFloat(service_charges[i].value);
+    }
+
     // Applying Tva
     total_price += (total_price * (tva_value.value/100));
     // applying timbre
     total_price += parseFloat(timbre_value.value)
-     //console.log(discount_status.value);
-     //console.log(discount_value.value);
+     console.log(discount_status.value);
+     console.log(discount_value.value);
      // Applying Discount
     if (discount_status.value == 1){
         total_price -= (total_price * (discount_value.value/100));
-       // console.log("Total Price");
-        //   console.log(total_price);
+        console.log("Total Price");
+           console.log(total_price);
            document.getElementById("total-price").value = total_price;
      }else{
         total_price -= discount_value.value;
-          //  console.log("Total Price");
-          // console.log(total_price);
+            console.log("Total Price");
+           console.log(total_price);
            document.getElementById("total-price").value = total_price;
      }
 
+     console.log(total_price)
+
     }
-
-
 
 </script>
 {% endblock %}
