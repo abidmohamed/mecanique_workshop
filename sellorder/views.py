@@ -429,6 +429,7 @@ def update_order(request, pk):
         'stockproducts': stockproducts,
         'tva': sellorder.order_tva,
         'timbre': sellorder.timbre,
+        'old_date': old_date,
     }
     return render(request, 'sellorder/sellorder_update.html', context)
 
