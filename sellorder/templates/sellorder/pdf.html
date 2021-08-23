@@ -80,11 +80,11 @@
 
         .items-table th{
         text-align:center;
-        font-size:14px;
+        font-size:16px;
         font-weight: bold;
         padding:3px;
         margin:0;
-        border-style: solid;
+        border-style: dotted;
         border-width: 1px;
         border-color: #000;
         height: 30px;
@@ -95,7 +95,7 @@
             font-size:14px;
             padding:5px;
             margin:0;
-            border-style: Dotted;
+            border-style: dotted;
             border-width: 1px;
             border-color: #000;
             height: auto;
@@ -157,7 +157,6 @@
 <table class="items-table">
     <thead>
     <tr>
-        <th>Ref</th>
         <th>Produit</th>
         <th>Prix</th>
         <th>Quantité</th>
@@ -167,7 +166,6 @@
     <tbody>
     {% for item in order.items.all %}
     <tr class="row{% cycle '1' '2' %} ">
-        <td>{{ item.stockproduct.product.ref }}</td>
         <td>{{ item.stockproduct.product.name }}</td>
         <td class="num">DZD {{ item.price }}</td>
         <td class="num">{{ item.quantity }}</td>
