@@ -70,7 +70,7 @@ def create_rdv(request, pk):
                     rdvitem.panne = Panne.objects.get(id=panne)
                     rdvitem.price = Panne.objects.get(id=panne).price
                     rdvitem.save()
-            return redirect('rdv:rdv_pdf', rdv.id)
+            return redirect('rdv:rdv_list')
 
     context = {
         'rdvform': rdvform,

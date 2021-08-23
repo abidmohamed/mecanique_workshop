@@ -131,7 +131,7 @@ def buyorder_confirmation(request, pk):
 
                 item.save()
                 # adding the bought products to stock
-                stockitems = StockProduct.objects.all().filter(stock=item.stock)
+                stockitems = StockProduct.objects.all().filter(product=item.product, stock=item.stock)
                 itemexist = 1
                 # check if stock doesn't have the product
                 if len(stockitems) > 0:
@@ -200,13 +200,16 @@ def update_order(request, pk):
             # Reset Stock Quantity to update the quantities
             if buyorder.items.all():
                 for item in buyorder.items.all():
-                    if StockProduct.objects.all().filter(product__id=item.product.id):
+                    if StockProduct.objects.all().filter(product__id=item.product.id, stock=item.stock):
+                        currentstockitem = StockProduct.objects.all().filter(product__id=item.product.id, stock=item.stock)
+                        currentstockitem.quantity -= decimal.Decimal(item.quantity)
+                        currentstockitem.save()
                         print("############# OKAY Update minus")
-                        stockitem = StockProduct.objects.filter(stock=item.stock)
-                        if len(stockitem) > 1:
-                            for currentstockitem in stockitem:
-                                currentstockitem.quantity -= decimal.Decimal(item.quantity)
-                                currentstockitem.save()
+                        # stockitem = StockProduct.objects.filter(stock=item.stock)
+                        # if len(stockitem) > 1:
+                        #    for currentstockitem in stockitem:
+                        #        currentstockitem.quantity -= decimal.Decimal(item.quantity)
+                        #        currentstockitem.save()
                         # else:
                         #     stockitem = StockProduct.objects.get(stock=item.stock)
                         # # if stockitem.quantity - int(item.quantity) >= 0:
@@ -247,7 +250,7 @@ def update_order(request, pk):
 
                 item.save()
                 # adding the bought products to stock
-                stockitems = StockProduct.objects.all().filter(stock=item.stock)
+                stockitems = StockProduct.objects.all().filter(product=item.product, stock=item.stock)
                 itemexist = 1
                 # check if stock doesn't have the product
                 if len(stockitems) > 0:
@@ -434,7 +437,7 @@ def buyorder_delete(request, pk):
         if order.confirmed:
             if order.items.all():
                 for item in order.items.all():
-                    stockitem = StockProduct.objects.get(product__id=item.product.id)
+                    stockitem = StockProduct.objects.get(product__id=item.product.id, stock=item.stock)
                     print(stockitem)
                     print(stockitem.quantity)
                     print(item.quantity)
@@ -468,7 +471,7 @@ def confirm_order_item_delete(request, orderpk, itempk):
     if request.method == 'POST':
         if buyorder.confirmed:
             item = buyorder.items.get(id=itempk)
-            stockproduct = StockProduct.objects.get(product=item.product)
+            stockproduct = StockProduct.objects.get(product=item.product, stock=item.stock)
             # print("StockProduct =====> ", stockproduct)
             stockproduct.quantity -= item.quantity
             stockproduct.save()
