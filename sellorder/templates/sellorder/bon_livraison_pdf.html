@@ -156,7 +156,6 @@
 <table class="items-table">
     <thead>
     <tr>
-        <th>Ref</th>
         <th>Produit</th>
         <th>Prix</th>
         <th>Quantité</th>
@@ -166,7 +165,6 @@
     <tbody>
     {% for item in order.items.all %}
     <tr class="row{% cycle '1' '2' %} ">
-        <td>{{ item.stockproduct.product.ref }}</td>
         <td>{{ item.stockproduct.product.name|wordwrap:50|linebreaksbr  }}</td>
         <td class="num">DZD {{ item.price }}</td>
         <td class="num">{{ item.quantity }}</td>
