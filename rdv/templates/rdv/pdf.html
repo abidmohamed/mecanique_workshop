@@ -146,13 +146,12 @@ thead th, tbody tr.total {
         </td>
         <td class="font-14"><span class="font-weight-bold">Address:</span>
             {{ rdv.customer.address }}
-
-
         </td>
         <td class="font-14"><span class="font-weight-bold">Phone:</span> {{ rdv.customer.phone }}</td>
-        <td class="font-14"><span class="font-weight-bold">Date:</span> {{ rdv.created|date:"M d, Y" }}</td>
+        <td class="font-14"><span class="font-weight-bold">Date:</span> {{rdv_date}}</td>
+        <td class="font-14"><span class="font-weight-bold">Created:</span> {{ rdv.created|date:"M d, Y" rdv_date}}</td>
     </tr>
-
+rdv_date
 </table>
 <br>
 <h4>Vehicle</h4>

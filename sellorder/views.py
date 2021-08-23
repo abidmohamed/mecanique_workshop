@@ -74,13 +74,13 @@ def confirm_order(request, pk):
 
                 item.save()
                 # Reducing the sold products from stock
-                stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.product.stock)
+                stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.stock)
                 # check if stock doesn't have the product
                 if len(stockitems) > 0:
                     # stock has products check if product exist
                     for stockitem in stockitems:
                         # the same product exist
-                        if stockitem.product.id == item.stockproduct.product.id:
+                        if stockitem.id == item.stockproduct.id:
                             # if stockitem.quantity > 0 and stockitem.quantity - decimal.Decimal(item.quantity) >= 0:
                             stockitem.quantity -= decimal.Decimal(item.quantity)
                             print("=========>", stockitem.quantity)
@@ -341,13 +341,13 @@ def update_order(request, pk):
                 print(item.stockproduct)
                 item.save()
                 # Reducing the sold products from stock
-                stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.product.stock)
+                stockitems = StockProduct.objects.all().filter(stock=item.stockproduct.stock)
                 # check if stock doesn't have the product
                 if len(stockitems) > 0:
                     # stock has products check if product exist
                     for stockitem in stockitems:
                         # the same product exist
-                        if stockitem.product.id == item.stockproduct.product.id:
+                        if stockitem.id == item.stockproduct.id:
                             # if stockitem.quantity > 0 and stockitem.quantity - int(item.quantity) >= 0:
                             print("----------------------------------")
                             print(stockitem.quantity - decimal.Decimal(item.quantity))
