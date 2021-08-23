@@ -137,6 +137,7 @@
                 <table class="thead-light">
                     <thead class="thead-light">
                     <tr>
+                        <th>{% trans "Provider" %}</th>
                         <th>{% trans "Service" %}</th>
                         <th>{% trans "Price" %}</th>
                         <th>{% trans "Charge" %}</th>
@@ -146,6 +147,7 @@
                     <tbody>
                     {% for item in sellorder.services.all %}
                     <tr>
+                        <td>{{item.service.provider}}</td>
                         <td>{{item.service.name}}</td>
                         <td><input onkeyup="calc()" type="text" class="form-control" name="service-prices" value="{{item.price}}">
                         <td><input onkeyup="calc()" type="text" class="form-control" name="service-charge" value="{{item.charge}}">
