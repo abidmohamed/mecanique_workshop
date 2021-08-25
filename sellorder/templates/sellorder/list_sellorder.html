@@ -129,6 +129,8 @@
                     <td>
                         {% if order.debt > 0 and order.confirmed %}
                             <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">{% trans "PayDebt" %}</a>
+                        {% else %}
+                            <a class="btn btn-primary " href="{% url 'sellorder:update_order_performa' order.id %}">{% trans "Update" %}</a>
                         {% endif %}
                     </td>
 

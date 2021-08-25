@@ -223,6 +223,81 @@ def confirm_order_performa(request, pk):
     return render(request, 'sellorder/sellorder_confirmation.html', context)
 
 
+# Update Performa
+def update_order_performa(request, pk):
+    # get Stock Products
+    stockproducts = StockProduct.objects.all()
+    # Get Sell order
+    sellorder = Order.objects.get(id=pk)
+    # Verify discount
+    if Discount.objects.all().filter(order=sellorder):
+        print("################## Exist")
+        discount = Discount.objects.all().filter(order=sellorder)[:1].get()
+    else:
+        print("################# Don't Exist")
+        discount = Discount()
+    # Get Customer
+    customer = Customer.objects.get(id=sellorder.customer.pk)
+    # Get Discount
+    discountform = DiscountForm(instance=discount)
+
+    if request.method == 'POST':
+        prices = request.POST.getlist('prices')
+        quantities = request.POST.getlist('quantities')
+        tva = request.POST.get('tva')
+        timbre = request.POST.get('timbre')
+        chosen_date = request.POST.get('order_date')
+        # get year month day
+        chosen_year = chosen_date.split("-", 1)
+        chosen_month = chosen_date.split("-", 2)
+        chosen_day = chosen_date.split("-", 2)
+
+        if sellorder.items.all():
+            for index, item in enumerate(sellorder.items.all()):
+                # get the price and value of each element
+                # Saving the orderitem
+                str_price = prices[index]
+                str_price = str_price.replace(",", ".")
+                # str_price = str_price.replace(' ', '')
+                # Remove white spaces
+                str_price = ''.join(str_price.split())
+                item.price = str_price
+                item.quantity = quantities[index]
+                item.save()
+
+        print(request.POST)
+        discount.order = sellorder
+        discount.value = request.POST.get('discount-value')
+        discount.discount_status = request.POST.get('discount-status')
+        discount.save()
+        print(discount.discount_status)
+        if discount.discount_status == '1':
+            sellorder.discount_amount = (sellorder.get_ttc() * decimal.Decimal(decimal.Decimal(discount.value) / 100))
+        else:
+            sellorder.discount_amount = decimal.Decimal(discount.value)
+
+        sellorder.total_price = sellorder.get_total_item_panne()
+        sellorder.order_tva = int(tva)
+        timbre = timbre.replace(",", ".")
+        timbre = ''.join(timbre.split())
+        sellorder.timbre = decimal.Decimal(timbre)
+        sellorder.debt = sellorder.get_ttc()
+        sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
+        sellorder.save()
+        print(sellorder.confirmed)
+        # customer debt
+        # customer.debt += sellorder.get_ttc()
+        # customer.save()
+        return redirect('sellorder:performa_sellorder_list')
+    context = {
+        'customer': customer,
+        'sellorder': sellorder,
+        'discountform': discountform,
+        'stockproducts': stockproducts,
+    }
+    return render(request, 'sellorder/sellorder_confirmation.html', context)
+
+
 # Copy an Order to Performa
 def order_to_performa(request, pk):
     performa_order = Order()
