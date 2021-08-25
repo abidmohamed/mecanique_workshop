@@ -200,7 +200,11 @@ def modal_order_stockproduct_list(request, pk):
                     # weight=currentproduct.product.weight,
                     quantity=1,
                 )
-        return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
+        if sellorder.confirmed:
+            return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
+        else:
+            return redirect('sellorder:update_order_performa', sellorder.id)
+
     context = {
         'stockproducts': stockproducts,
     }
@@ -226,8 +230,10 @@ def modal_update_order_stockproduct_list(request, pk):
                     # weight=currentproduct.product.weight,
                     quantity=0,
                 )
-
-        return redirect('sellorder:update_order', sellorder.id)
+        if sellorder.confirmed:
+            return redirect('sellorder:update_order', sellorder.id)
+        else :
+            return redirect('sellorder:update_order_performa', sellorder.id)
     context = {
         'stockproducts': stockproducts,
     }
