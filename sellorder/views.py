@@ -512,15 +512,21 @@ def update_order(request, pk):
 # Update order delete item
 def order_item_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
-    item = sellorder.items.get(id=itempk)
+    if sellorder.items.filter(id=itempk):
+        item = sellorder.items.get(id=itempk)
+    else:
+        return redirect('sellorder:update_order', sellorder.id)
     print(item)
     if request.method == 'POST':
-        item = sellorder.items.get(id=itempk)
-        stockproduct = StockProduct.objects.get(id=item.stockproduct.id)
-        stockproduct.quantity += item.quantity
-        stockproduct.save()
-        item.delete()
-        return redirect('sellorder:update_order', sellorder.id)
+        if sellorder.items.filter(id=itempk):
+            item = sellorder.items.get(id=itempk)
+            stockproduct = StockProduct.objects.get(id=item.stockproduct.id)
+            stockproduct.quantity += item.quantity
+            stockproduct.save()
+            item.delete()
+            return redirect('sellorder:update_order', sellorder.id)
+        else:
+            return redirect('sellorder:update_order', sellorder.id)
 
     context = {
         'sellorder': sellorder,
@@ -532,7 +538,10 @@ def order_item_delete(request, orderpk, itempk):
 # Update order delete item
 def order_item_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
-    item = sellorder.items.get(id=itempk)
+    if sellorder.items.filter(id=itempk):
+        item = sellorder.items.get(id=itempk)
+    else:
+        return redirect('sellorder:update_order', sellorder.id)
     print(item)
     if request.method == 'POST':
         item = sellorder.items.get(id=itempk)
@@ -552,7 +561,10 @@ def order_item_delete(request, orderpk, itempk):
 # Confirm order delete item
 def confirm_order_item_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
-    item = sellorder.items.get(id=itempk)
+    if sellorder.items.filter(id=itempk):
+        item = sellorder.items.get(id=itempk)
+    else:
+        return redirect('sellorder:confirm_order', sellorder.id)
     print(item)
     if request.method == 'POST':
         item = sellorder.items.get(id=itempk)
@@ -572,7 +584,10 @@ def confirm_order_item_delete(request, orderpk, itempk):
 # delete panne from order update
 def order_panne_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
-    item = sellorder.pannes.get(id=itempk)
+    if sellorder.pannes.filter(id=itempk):
+        item = sellorder.pannes.get(id=itempk)
+    else:
+        return redirect('sellorder:update_order', sellorder.id)
     print(item)
     if request.method == 'POST':
         item = sellorder.pannes.get(id=itempk)
@@ -589,7 +604,10 @@ def order_panne_delete(request, orderpk, itempk):
 # delete panne from order confirm
 def confirm_order_panne_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
-    item = sellorder.pannes.get(id=itempk)
+    if sellorder.pannes.filter(id=itempk):
+        item = sellorder.pannes.get(id=itempk)
+    else:
+        return redirect('sellorder:confirm_order', sellorder.id)
     print(item)
     if request.method == 'POST':
         item = sellorder.pannes.get(id=itempk)
@@ -606,7 +624,10 @@ def confirm_order_panne_delete(request, orderpk, itempk):
 # delete service in confirm order
 def confirm_order_service_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
-    item = sellorder.services.get(id=itempk)
+    if sellorder.services.filter(id=itempk):
+        item = sellorder.services.get(id=itempk)
+    else:
+        return redirect('sellorder:confirm_order', sellorder.id)
     if request.method == 'POST':
         item = sellorder.services.get(id=itempk)
         item.delete()
@@ -622,7 +643,10 @@ def confirm_order_service_delete(request, orderpk, itempk):
 # delete service in update order
 def order_service_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
-    item = sellorder.services.get(id=itempk)
+    if sellorder.services.filter(id=itempk):
+        item = sellorder.services.get(id=itempk)
+    else:
+        return redirect('sellorder:update_order', sellorder.id)
     if request.method == 'POST':
         item = sellorder.services.get(id=itempk)
         item.delete()
@@ -826,7 +850,7 @@ def sellorder_list_by_customer(request, pk):
     return render(request, 'sellorder/billing_list_sellorder.html', context)
 
 
-def sellorder_pdf(request, pk):
+def sellorder_pdf(request, pk, credit, tva):
     sellorder = get_object_or_404(Order, id=pk)
     customer = get_object_or_404(Customer, id=sellorder.customer.id)
     if customer.debt - sellorder.get_ttc() == 0 or customer.debt - sellorder.get_ttc() < 0:
@@ -845,7 +869,9 @@ def sellorder_pdf(request, pk):
                             {'order': sellorder,
                              'customer': customer,
                              'old_debt': old_debt,
-                             'new_debt': new_debt
+                             'new_debt': new_debt,
+                             'credit': credit,
+                             'tva': tva,
                              })
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}.pdf'
@@ -860,7 +886,7 @@ def sellorder_pdf(request, pk):
 
 
 # Bon Pour
-def sellorder_pour_pdf(request, pk):
+def sellorder_pour_pdf(request, pk, credit, tva):
     sellorder = get_object_or_404(Order, id=pk)
     customer = get_object_or_404(Customer, id=sellorder.customer.id)
     if customer.debt - sellorder.get_ttc() == 0 or customer.debt - sellorder.get_ttc() < 0:
@@ -879,7 +905,9 @@ def sellorder_pour_pdf(request, pk):
                             {'order': sellorder,
                              'customer': customer,
                              'old_debt': old_debt,
-                             'new_debt': new_debt
+                             'new_debt': new_debt,
+                             'credit': credit,
+                             'tva': tva,
                              })
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}.pdf'
@@ -894,7 +922,7 @@ def sellorder_pour_pdf(request, pk):
 
 
 # Bon livraison
-def sellorder_livraison_pdf(request, pk):
+def sellorder_livraison_pdf(request, pk, credit, tva):
     sellorder = get_object_or_404(Order, id=pk)
     customer = get_object_or_404(Customer, id=sellorder.customer.id)
     if customer.debt - sellorder.get_ttc() == 0 or customer.debt - sellorder.get_ttc() < 0:
@@ -913,7 +941,9 @@ def sellorder_livraison_pdf(request, pk):
                             {'order': sellorder,
                              'customer': customer,
                              'old_debt': old_debt,
-                             'new_debt': new_debt
+                             'new_debt': new_debt,
+                             'credit': credit,
+                             'tva': tva,
                              })
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'filename=order_{sellorder.id}.pdf'

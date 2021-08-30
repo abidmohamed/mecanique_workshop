@@ -174,7 +174,6 @@
 
     {% for service in order.services.all %}
     <tr class="row{% cycle '1' '2' %} ">
-        <td>_</td>
         <td>{{service.service.name}}</td>
         <td class="num">{{service.get_cost}} DZD</td>
         <td class="num">1</td>
@@ -222,6 +221,7 @@
         <td>Total HT</td>
         <td class="num">DZD {{ order.get_total_item_panne }}</td>
     </tr>
+    {% if credit == "1" %}
      <tr class="total">
         <td colspan="2" style="border-width:0px;"></td>
         <td>Ancient Credit
@@ -229,16 +229,33 @@
         <td class="num"> DZD {{old_debt}}
         </td>
     </tr>
+    {% endif %}
     <tr class="total">
         <td colspan="2" style="border-width:0px;"></td>
         <td>Remise</td>
         <td class="num"> DZD {{order.discount_amount}}</td>
     </tr>
-        <tr class="total">
+    {% if tva == "1" %}
+    <tr class="total">
+        <td colspan="2" style="border-width:0px;"></td>
+        <td>TVA</td>
+        <td class="num"> DZD {{order.get_tva}}</td>
+    </tr>
+    {% endif %}
+    {% if credit == "1" %}
+    <tr class="total">
         <td colspan="2" style="border-width:0px;"></td>
         <td>Reste a payer</td>
         <td class="num"> DZD {{new_debt}}</td>
     </tr>
+    {% endif %}
+    {% if tva == "1" %}
+    <tr class="total">
+        <td colspan="2" style="border-width:0px;"></td>
+        <td>TTC</td>
+        <td class="num"> DZD {{order.get_ttc}}</td>
+    </tr>
+    {% endif %}
     </tbody>
 </table>
 
