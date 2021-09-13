@@ -10,52 +10,65 @@
                 <h5>{% trans "Sell Order" %}</h5>
             </div>
             <div class="card card-body">
+                <button class="btn btn-primary btn-lg rounded-pill check" onclick="uncheck_all()"><i class="far fa-square text-left pr-5"></i>UnCheck ALL</button>
+
                 <form id="order-form" action="" method="post">
                     {% csrf_token %}
                     <h2>{% trans "Choose Products" %}</h2>
+                    <div>
+                        <h5 class="text-primary d-inline">
+                            {% trans "Selected Products"  %}:
+                            <div class="d-inline font-weight-bold" id="product_counter">
+                            </div>
+                        </h5>
+                        
+                    </div>
+                    
+                    
                     <table id="table_id" class=" table display text-center">
                         <thead>
-                        <tr>
-                            <th><label class="form-check-label" for="{{prod.id}}"></label></th>
-                            <th>{% trans "Brand" %}</th>
-                            <th>{% trans "Name" %}</th>
-                            <th>{% trans "Ref" %}</th>
-                            <th>{% trans "Sell Price" %}</th>
-                            <th>{% trans "Buy Price" %}</th>
-                            <th>{% trans "Stock" %}</th>
-                            <th>{% trans "Quantity" %}</th>
-                        </tr>
+                            <tr>
+                                <th><label class="form-check-label" for="{{prod.id}}"></label></th>
+                                <th>{% trans "Brand" %}</th>
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Ref" %}</th>
+                                <th>{% trans "Sell Price" %}</th>
+                                <th>{% trans "Buy Price" %}</th>
+                                <th>{% trans "Stock" %}</th>
+                                <th>{% trans "Quantity" %}</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {% for prod in stockproducts %}
-                        <tr class="row{% cycle '1' '2' %}">
-                            <td>
-                                <input class="form-check-input product-input" type="checkbox" value="{{prod.id}}" id="{{prod.id}}" name="products">
-                            </td>
-                            <td>
-                                {{prod.product.brand}}
-                            </td>
-                            <td>
-                                {{prod.product.name}}
-                            </td>
-                            <td>
-                                {{prod.product.ref}}
-                            </td>
-                            <td>
-                                {{prod.product.sellprice}}
-                            </td>
-                            <td>
-                                {{prod.product.buyprice}}
-                            </td>
-                            <td>
-                                {{prod.stock}}
-                            </td>
+                            {% for prod in stockproducts %}
+                            <tr class="row{% cycle '1' '2' %}">
+                                <td>
+                                    <input onclick="count_products(this.id)" class="form-check-input product-input" type="checkbox" value="{{prod.id}}"
+                                        id="{{prod.id}}" name="products">
+                                </td>
+                                <td>
+                                    {{prod.product.brand}}
+                                </td>
+                                <td>
+                                    {{prod.product.name}}
+                                </td>
+                                <td>
+                                    {{prod.product.ref}}
+                                </td>
+                                <td>
+                                    {{prod.product.sellprice}}
+                                </td>
+                                <td>
+                                    {{prod.product.buyprice}}
+                                </td>
+                                <td>
+                                    {{prod.stock}}
+                                </td>
 
-                            <td>
-                                {{prod.quantity}}
-                            </td>
-                        </tr>
-                        {% endfor %}
+                                <td>
+                                    {{prod.quantity}}
+                                </td>
+                            </tr>
+                            {% endfor %}
                         </tbody>
 
                     </table>
@@ -66,45 +79,45 @@
                     <!-- Customers Table -->
                     <table id="table_customer" class="display text-center">
                         <thead>
-                        <tr>
-                            <th></th>
-                            <th>{% trans "Name" %}</th>
-                            <th>{% trans "Adress" %}</th>
-                            <th>{% trans "Email" %}</th>
-                            <th>{% trans "Phone" %}</th>
-                            <th>{% trans "Debt" %}</th>
+                            <tr>
+                                <th></th>
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Adress" %}</th>
+                                <th>{% trans "Email" %}</th>
+                                <th>{% trans "Phone" %}</th>
+                                <th>{% trans "Debt" %}</th>
 
-                        </tr>
+                            </tr>
                         </thead>
 
                         <tbody>
-                        {% for customer in customers %}
-                        <tr>
-                            <td>
-                                <input class="form-check-input" type="radio" value="{{customer.id}}"
-                                       id="{{customer.id}}" name="customers">
-                            </td>
-                            <td>
-                                {{customer.firstname}}
-                                {{customer.lastname}}
-                            </td>
-                            <td>
-                                {{customer.address}}
-                            </td>
-                            <td>
-                                {{customer.email}}
-                            </td>
-                            <td>
-                                {{customer.phone}}
-                            </td>
-                            <td>
-                                {{customer.debt}}
-                            </td>
+                            {% for customer in customers %}
+                            <tr>
+                                <td>
+                                    <input class="form-check-input" type="radio" value="{{customer.id}}"
+                                        id="{{customer.id}}" name="customers">
+                                </td>
+                                <td>
+                                    {{customer.firstname}}
+                                    {{customer.lastname}}
+                                </td>
+                                <td>
+                                    {{customer.address}}
+                                </td>
+                                <td>
+                                    {{customer.email}}
+                                </td>
+                                <td>
+                                    {{customer.phone}}
+                                </td>
+                                <td>
+                                    {{customer.debt}}
+                                </td>
 
 
-                        </tr>
+                            </tr>
 
-                        {% endfor %}
+                            {% endfor %}
                         </tbody>
 
                     </table>
@@ -112,33 +125,40 @@
                     <hr>
                     <br>
                     <h2>{% trans "Choose Pannes" %}</h2>
+                    <div>
+                        <h5 class="text-primary d-inline">
+                            {% trans "Selected Pannes" %}:
+                            <div class="d-inline font-weight-bold" id="panne_counter">
+                            </div>
+                        </h5>
+                    </div>
                     <!-- Pannes Table -->
                     <table id="table_panne" class="display text-center">
                         <thead>
-                        <tr>
-                            <th></th>
-                            <th>{% trans "Name" %}</th>
-                            <th>{% trans "Price" %}</th>
-                        </tr>
+                            <tr>
+                                <th></th>
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Price" %}</th>
+                            </tr>
                         </thead>
 
                         <tbody>
-                        {% for panne in pannes %}
-                        <tr class="row{% cycle '1' '2' %}">
-                            <td>
-                                <input class="form-check-input panne-input" type="checkbox" value="{{panne.id}}" id="{{panne.id}}"
-                                       name="pannes">
-                            </td>
-                            <td>
-                                {{panne.desc}}
-                            </td>
-                            <td>
-                                {{panne.price}}
-                            </td>
+                            {% for panne in pannes %}
+                            <tr class="row{% cycle '1' '2' %}">
+                                <td>
+                                    <input onclick="count_pannes(this.id)" class="form-check-input panne-input"
+                                        type="checkbox" value="{{panne.id}}" id="{{panne.id}}" name="pannes">
+                                </td>
+                                <td>
+                                    {{panne.desc}}
+                                </td>
+                                <td>
+                                    {{panne.price}}
+                                </td>
 
-                        </tr>
+                            </tr>
 
-                        {% endfor %}
+                            {% endfor %}
                         </tbody>
                         <tr class="text-center">
                             <td class="text-center">
@@ -150,40 +170,47 @@
                     <hr>
                     <br>
                     <h2>{% trans "Choose Services" %}</h2>
+                    <div>
+                        <h5 class="text-primary d-inline">
+                            {% trans "Selected Services" %}:
+                            <div class="d-inline font-weight-bold" id="service_counter">
+                            </div>
+                        </h5>
+                    </div>
                     <table id="table_service" class="display text-center">
                         <thead>
-                        <tr>
-                            <th></th>
-                            <th>{% trans "Name" %}</th>
-                            <th>{% trans "Price" %}</th>
-                            <th>{% trans "Charge" %}</th>
-                            <th>{% trans "Provider" %}</th>
-                        </tr>
+                            <tr>
+                                <th></th>
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Price" %}</th>
+                                <th>{% trans "Charge" %}</th>
+                                <th>{% trans "Provider" %}</th>
+                            </tr>
                         </thead>
 
                         <tbody>
-                        {% for service in services %}
-                        <tr class="row{% cycle '1' '2' %}">
-                            <td>
-                                <input class="form-check-input service-input" type="checkbox" value="{{service.id}}" id="{{service.id}}"
-                                       name="services">
-                            </td>
-                            <td>
-                                {{service.name}}
-                            </td>
-                            <td>
-                                {{service.price}}
-                            </td>
-                            <td>
-                                {{service.charge}}
-                            </td>
-                            <td>
-                                {{service.provider}}
-                            </td>
+                            {% for service in services %}
+                            <tr class="row{% cycle '1' '2' %}">
+                                <td>
+                                    <input onclick="count_services(this.id)" class="form-check-input service-input" type="checkbox" value="{{service.id}}"
+                                        id="{{service.id}}" name="services">
+                                </td>
+                                <td>
+                                    {{service.name}}
+                                </td>
+                                <td>
+                                    {{service.price}}
+                                </td>
+                                <td>
+                                    {{service.charge}}
+                                </td>
+                                <td>
+                                    {{service.provider}}
+                                </td>
 
-                        </tr>
+                            </tr>
 
-                        {% endfor %}
+                            {% endfor %}
                         </tbody>
                         <tr class="text-center">
                             <td class="text-center">
@@ -203,123 +230,272 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
 <!-- Data Table  -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 
 <script type='text/javascript'>
 
+    // Product Counter
+    var product_counter = 0
+    // Panne Counter 
+    var panne_counter = 0
+    // Service Counter 
+    var service_counter = 0
+    // Register checked box in local storage to stay after refresh
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var checkbox = document.querySelectorAll("input[type='checkbox']");
+
+        for (var item of checkbox) {
+            item.addEventListener("click", function () {
+                localStorage.s_item ? // verify if item in existe localStorage
+                    localStorage.s_item = localStorage.s_item.indexOf(this.id + ",") == -1 // verifico de localStorage contém o id
+                    ?
+                    localStorage.s_item + this.id + "," // não existe. Adiciono a id no loaclStorage
+                    :
+                    localStorage.s_item.replace(this.id + ",", "") : // já existe, apago do localStorage
+                    localStorage.s_item = this.id + ","; // não existe. Crio com o id do checkbox
+            });
+        }
+
+        if (localStorage.s_item) { // verifico se existe localStorage
+            for (var item of checkbox) { // existe, percorro as checkbox
+                item.checked = localStorage.s_item.indexOf(item.id + ",") != -1 ? true :
+                false; // marco true nas ids que existem no localStorage
+            }
+        }
+
+        // Count Checked products
+         // Iterate over all checkboxes in the table
+        // product table
+        var table = $('#table_id').DataTable();
+        table.$('input[type="checkbox"]').each(function () {
+            // If checkbox  exist in DOM
+            if ($.contains(document, this)) {
+                if (this.checked) {
+                    // Count CheckBoxes
+                   product_counter++;
+                   document.getElementById('product_counter').innerHTML = product_counter;
+                }
+            }
+        });
+
+         // Iterate over all checkboxes in the table
+        // panne table
+        var table = $('#table_panne').DataTable();
+        table.$('input[type="checkbox"]').each(function () {
+            // If checkbox  exist in DOM
+            if ($.contains(document, this)) {
+                if (this.checked) {
+                    // Count CheckBoxes
+                    panne_counter++;
+                    document.getElementById('panne_counter').innerHTML = panne_counter;
+                }
+            }
+        });
+
+        // Iterate over all checkboxes in the table
+        // service table
+        var table = $('#table_service').DataTable();
+        table.$('input[type="checkbox"]').each(function () {
+            // If checkbox doesn't exist in DOM
+            if ($.contains(document, this)) {
+                if (this.checked) {
+                    // Count CheckBoxes
+                    service_counter++;
+                    document.getElementById('service_counter').innerHTML = service_counter;
+                }
+            }
+        });
+
+
+    });
+
+
+    // Count Product Checked
+    function count_products(check_id) {
+        product = document.getElementById(check_id) 
+                if (product.checked) {
+                    // Count CheckBoxes
+                   product_counter++;
+                   document.getElementById('product_counter').innerHTML = product_counter;
+                }else{
+                   product_counter--;
+                   document.getElementById('product_counter').innerHTML = product_counter;
+                }
+    }
+
+    // Count Panne Checked
+    function count_pannes(check_id) {
+       // console.log("panne Checked")
+        pannes = document.getElementsByName("pannes") 
+        
+        pannes.forEach(element => {
+          //  console.log(element)
+            if (element.id === check_id){
+                if (element.checked){
+                   panne_counter++;
+                   document.getElementById('panne_counter').innerHTML = panne_counter;
+                }else {
+                    panne_counter--;
+                   document.getElementById('panne_counter').innerHTML = panne_counter;
+                }
+            }
+        });
+    }
+
+    // Count Service Checked 
+    function count_services(check_id){
+        //console.log("checked", check_id)
+        services = document.getElementsByName("services") 
+        //console.log(services)
+        services.forEach(element => {
+         //   console.log(element)
+            if (element.id === check_id){
+           //     console.log("match")
+                if (element.checked){
+                    service_counter++;
+                   document.getElementById('service_counter').innerHTML = service_counter;
+                }else {
+                    service_counter--;
+                   document.getElementById('service_counter').innerHTML = service_counter;
+                }
+            }
+        });
+    }
+
+    // Ucheck all
+    function uncheck_all(){
+        var checkbox = document.querySelectorAll("input[type='checkbox']");
+
+        checkbox.forEach(element => {
+            console.log(element)
+            element.checked = false;
+            console.log("new ", element)
+        });
+        service_counter = 0, panne_counter=0, product_counter=0;
+        document.getElementById('service_counter').innerHTML = service_counter;
+        document.getElementById('panne_counter').innerHTML = panne_counter;
+        document.getElementById('product_counter').innerHTML = product_counter;
+        localStorage.clear();
+    }
+
+
     //Data Table init
-    $(document).ready( function () {
-    $('#table_id').DataTable();
-    $('#table_customer').DataTable();
-    $('#table_panne').DataTable();
-    $('#table_service').DataTable();
-    } );
-  document.getElementsByClassName("panne-input").required = false;
-  document.getElementsByClassName("service-input").required = false;
-  document.getElementsByClassName("product-input").required = false;
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+        $('#table_customer').DataTable();
+        $('#table_panne').DataTable();
+        $('#table_service').DataTable();
+    });
+    document.getElementsByClassName("panne-input").required = false;
+    document.getElementsByClassName("service-input").required = false;
+    document.getElementsByClassName("product-input").required = false;
+
+
+
     // Form Submition order-form
-    $('#order-form').on('submit', function(e){
+    $('#order-form').on('submit', function (e) {
+        localStorage.clear();
         var form = this;
         // Iterate over all checkboxes in the table
         // product table
         var table = $('#table_id').DataTable();
-        table.$('input[type="checkbox"]').each(function(){
-             // If checkbox doesn't exist in DOM
-             if(!$.contains(document, this)){
-             if(this.checked){
-             // Create a hidden element
-             $(form).append(
-             $('<input>')
-             .attr('type', 'hidden')
-             .attr('name', this.name)
-             .val(this.value)
-             );
-             }
+        table.$('input[type="checkbox"]').each(function () {
+            // If checkbox doesn't exist in DOM
+            if (!$.contains(document, this)) {
+                if (this.checked) {
+                    // Create a hidden element
+                    $(form).append(
+                        $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', this.name)
+                        .val(this.value)
+                    );
+                }
             }
         });
 
         // Iterate over all checkboxes in the table
         // panne table
         var table = $('#table_panne').DataTable();
-        table.$('input[type="checkbox"]').each(function(){
-        // If checkbox doesn't exist in DOM
-        if(!$.contains(document, this)){
-        if(this.checked){
-        // Create a hidden element
-        $(form).append(
-        $('<input>')
-        .attr('type', 'hidden')
-        .attr('name', this.name)
-        .val(this.value)
-        );
-        }
-        }
+        table.$('input[type="checkbox"]').each(function () {
+            // If checkbox doesn't exist in DOM
+            if (!$.contains(document, this)) {
+                if (this.checked) {
+                    // Create a hidden element
+                    $(form).append(
+                        $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', this.name)
+                        .val(this.value)
+                    );
+                }
+            }
         });
 
         // Iterate over all checkboxes in the table
         // service table
         var table = $('#table_service').DataTable();
-        table.$('input[type="checkbox"]').each(function(){
-        // If checkbox doesn't exist in DOM
-        if(!$.contains(document, this)){
-        if(this.checked){
-        // Create a hidden element
-        $(form).append(
-        $('<input>')
-        .attr('type', 'hidden')
-        .attr('name', this.name)
-        .val(this.value)
-        );
-        }
-        }
+        table.$('input[type="checkbox"]').each(function () {
+            // If checkbox doesn't exist in DOM
+            if (!$.contains(document, this)) {
+                if (this.checked) {
+                    // Create a hidden element
+                    $(form).append(
+                        $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', this.name)
+                        .val(this.value)
+                    );
+                }
+            }
         });
 
     });
 
     // Testing Function
-    function submittion(){
+    function submittion() {
 
-    //var form = this;
-         var form = document.getElementById('order-form');
+        //var form = this;
+        var form = document.getElementById('order-form');
         console.log(form)
         // Iterate over all checkboxes in the table
         // product table
         var table = $('#table_id').DataTable();
-        table.$('input[type="checkbox"]').each(function(){
-             // If checkbox doesn't exist in DOM
-             if(this.checked){
-             // Create a hidden element
-             $(form).append(
-             $('<input>')
-             .attr('type', 'hidden')
-             .attr('name', this.name)
-             .val(this.value)
-             );
-             }
-            
+        table.$('input[type="checkbox"]').each(function () {
+            // If checkbox doesn't exist in DOM
+            if (this.checked) {
+                // Create a hidden element
+                $(form).append(
+                    $('<input>')
+                    .attr('type', 'hidden')
+                    .attr('name', this.name)
+                    .val(this.value)
+                );
+            }
+
         });
 
         // Iterate over all checkboxes in the table
         // product table
         var table = $('#table_panne').DataTable();
-        table.$('input[type="checkbox"]').each(function(){
-        // If checkbox doesn't exist in DOM
-        if(this.checked){
-        // Create a hidden element
-        $(form).append(
-        $('<input>')
-        .attr('type', 'hidden')
-        .attr('name', this.name)
-        .val(this.value)
-        );
-        }
+        table.$('input[type="checkbox"]').each(function () {
+            // If checkbox doesn't exist in DOM
+            if (this.checked) {
+                // Create a hidden element
+                $(form).append(
+                    $('<input>')
+                    .attr('type', 'hidden')
+                    .attr('name', this.name)
+                    .val(this.value)
+                );
+            }
 
         });
-    
-    }
 
+    }
 </script>
 {% endblock %}
