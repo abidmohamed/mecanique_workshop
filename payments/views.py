@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from buyorder.models import BuyOrder
@@ -221,3 +221,25 @@ def supplier_payment_list(request):
         "supplierpayments": supplierpayments
     }
     return render(request, 'payments/supplier/payment_list.html', context)
+
+
+def delete_supplier_payment(request, pk):
+    buyorder_payment = get_object_or_404(BuyOrderPayment, id=pk)
+    order = get_object_or_404(BuyOrder, id=buyorder_payment.order.id)
+    if request.method == "POST":
+
+        payment_amount = buyorder_payment.amount
+        buyorder_payment.delete()
+        # fix order values after deleting
+        order.debt += payment_amount
+        order.supplier.credit += payment_amount
+        order.save()
+        order.supplier.save()
+
+        return redirect("payments:supplier_payment_list")
+
+    context = {
+        'buyorder_payment': buyorder_payment,
+        'order': order,
+    }
+    return render(request, 'payments/supplier/delete_payment.html', context)

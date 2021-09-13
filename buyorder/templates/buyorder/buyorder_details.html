@@ -66,6 +66,47 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <br>
+
+            <h2> {% trans "Payments" %} </h2>
+            <hr>
+            <table id="table_payments" class="table display text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th>{% trans "Supplier" %}</th>
+                    <th>{% trans "Pay Status" %}</th>
+                    <th>{% trans "Amount" %}</th>
+                    <th>{% trans "Created" %}</th>
+                    <th>{% trans "Payed" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for payment in buyorder_payments %}
+                <tr>
+                    <td class="table-light">
+                        {{payment.supplier}}
+                    </td>
+                    <td class="table-light">
+                        {{payment.pay_status}}
+                    </td>
+                    <td class="table-light">
+                        {{payment.amount}}
+                    </td>
+                    <td class="table-light">
+                        {{payment.created}}
+                    </td>
+                    <td class="table-light">
+                        {{payment.pay_date}}
+                    </td>
+                    <td class="table-light">
+                        <a class="btn btn-danger " href="{% url 'payments:delete_supplier_payment' payment.id %}">{% trans "Delete" %}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>

@@ -312,8 +312,10 @@ def update_order(request, pk):
 
 def buyorder_details(request, pk):
     order = BuyOrder.objects.get(id=pk)
+    buyorder_payments = BuyOrderPayment.objects.filter(order=order)
     context = {
-        'order': order
+        'order': order,
+        'buyorder_payments': buyorder_payments,
     }
     return render(request, 'buyorder/buyorder_details.html', context)
 
