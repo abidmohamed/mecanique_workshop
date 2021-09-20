@@ -32,7 +32,10 @@
                         <a class="btn btn-danger " href="{% url 'stock:delete_stock' stock.id %}">{% trans "Delete" %}</a>
                     </td>
                     <td>
-                        <a class="btn btn-warning " href="{% url 'stock:reset_stock' stock.id %}">{% trans "Reset" %}</a>
+                        <a class="btn btn-primary " href="{% url 'stock:reset_stock' stock.id %}">{% trans "Reset" %}</a>
+                    </td>
+                     <td>
+                        <a class="btn btn-warning " href="{% url 'stock:calculate_one_stock' stock.id %}">{% trans "Details" %}</a>
                     </td>
                 </tr>
                 {% endfor %}

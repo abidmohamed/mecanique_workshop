@@ -37,6 +37,7 @@
             </form>
         </div>
         <div class="card card-body">
+            <h1>{% trans "Transaction" %} : {{total_transaction_payments}}</h1>
             <table id="table_id" class="table table-sm">
                 <thead>
                 <tr>
@@ -69,6 +70,8 @@
                 </tbody>
 
             </table>
+            <hr>
+            <h1>{% trans "Customer Payments"%} : {{total_customer_payments}}</h1>
             <table id="customer_table_id" class="display text-center">
                 <thead>
                 <tr>
@@ -111,6 +114,8 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <hr>
+            <h1>{% trans "Supplier Payments"%} : {{total_supplier_payments}}</h1>
             <table id="supplier_table_id" class="display text-center">
                 <thead>
                 <tr>
@@ -146,6 +151,39 @@
                         <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' payment.order.id %}">{% trans "Details" %}</a>
                         {% endif %}
                     </td>
+                </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+            <h1>{% trans "Service Payments"%} : {{total_service_payments}}</h1>
+            <table id="service_table_id" class="display text-center">
+                <thead>
+                <tr>
+                    <th>{% trans "Provider" %}</th>
+                    <th>{% trans "Amount" %}</th>
+                    <th>{% trans "Created" %}</th>
+                    <th>{% trans "Payed" %}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for payment in servicepayments %}
+                <tr>
+                    <td>
+                        {{payment.provider}}
+                    </td>
+                    <td>
+                        {{payment.amount}}
+                    </td>
+                    <td>
+                        {{payment.created}}
+                    </td>
+                    <td>
+                        {{payment.pay_date}}
+                    </td>
+
                 </tr>
 
                 {% endfor %}
@@ -199,6 +237,12 @@
         ]
     });
     $('#supplier_table_id').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+    $('#service_table_id').DataTable({
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'

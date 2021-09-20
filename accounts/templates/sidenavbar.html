@@ -190,6 +190,8 @@
                 <h6 class="collapse-header">{% trans "Operations" %} :</h6>
                 <a class="collapse-item" href="{% url 'stock:add_stock' %}">{% trans "Add" %}</a>
                 <a class="collapse-item" href="{% url 'stock:all_stock_list' %}">{% trans "List" %}</a>
+                <hr>
+                <a class="collapse-item" href="{% url 'stock:calculate_general_stock' %}">{% trans "Status" %} </a>
             </div>
         </div>
     </li>

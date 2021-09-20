@@ -38,6 +38,9 @@
                     <td>
                         <a class="btn btn-danger " href="{% url 'services:delete_provider' provider.id %}">{% trans "Delete" %}</a>
                     </td>
+                    <td>
+                        <a class="btn btn-primary " href="{% url 'payments:create_service_payment' provider.id %}"> {% trans "Pay Debt" %}</a>
+                    </td>
                 </tr>
                 {% endfor %}
                 </tbody>
