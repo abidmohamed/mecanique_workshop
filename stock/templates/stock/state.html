@@ -1,0 +1,64 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-xl-4 col-md-4 mb-4 col-sm-12">
+             <div class="card bg-danger shadow h-100 py-2">
+                 <div class="card-header bg-danger">
+                        <h1 class="bg-danger text-white">{% trans "In" %}</h1>
+                 </div>
+                 <div class="card-body">
+                     <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="h3 mb-0 font-weight-bold text-white">{{in_price}} {% trans "DZD" %}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-angle-double-down fa-5x text-white"></i>
+                    </div>
+                </div>
+                 </div>
+             </div>
+        </div>
+        <div class="col-xl-4 col-md-4 mb-4 col-sm-12">
+             <div class="card bg-primary shadow h-100 py-2">
+                 <div class="card-header bg-primary">
+                    <h1 class="bg-primary text-white">{% trans "Out" %}</h1>
+                 </div>
+                 <div class="card-body">
+                     <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="h3 mb-0 font-weight-bold text-white">{{out_price}} {% trans "DZD" %}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-angle-double-up fa-5x text-white"></i>
+                    </div>
+                </div>
+                 </div>
+             </div>
+        </div>
+
+        <div class="col-xl-4 col-md-4 mb-4 col-sm-12">
+             <div class="card bg-gradient-warning shadow h-100 py-2">
+                 <div class="card-header bg-gradient-warning">
+                    <h1 class=" text-white">{% trans "Benefits" %}</h1>
+                 </div>
+                 <div class="card-body">
+                     <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="h3 mb-0 font-weight-bold text-white">{{benefits}} {% trans "DZD" %}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-money-bill-wave fa-5x text-white"></i>
+                    </div>
+                </div>
+                 </div>
+             </div>
+        </div>
+
+    </div>
+    <hr>
+</div>
+{% endblock %}

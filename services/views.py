@@ -94,7 +94,6 @@ def update_order_service_list(request, pk):
     return render(request, 'services/modal_order_list_service.html', context)
 
 
-
 def add_provider(request):
     providerform = ServiceProviderForm()
     if request.method == 'POST':

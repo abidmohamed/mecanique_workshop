@@ -14,7 +14,7 @@ from bank.models import BankTransaction
 from buyorder.models import BuyOrder
 from caisse.models import Caisse, Transaction
 from customer.models import Customer
-from payments.models import SellOrderPayment, BuyOrderPayment
+from payments.models import SellOrderPayment, BuyOrderPayment, ServicePayment
 from product.models import Product
 from rdv.models import Rdv
 
@@ -95,6 +95,7 @@ def home(request):
     transactions = Transaction.objects.all()
     customerpayments = SellOrderPayment.objects.all()
     supplierpayments = BuyOrderPayment.objects.all()
+    servicepayments = ServicePayment.objects.all()
     # today Caisse
     today_transactions = Transaction.objects.all().filter(trans_date__year=now.year, trans_date__month=now.month,
                                                           trans_date__day=now.day)
@@ -102,6 +103,9 @@ def home(request):
                                                                    pay_date__day=now.day)
     today_supplierpayments = BuyOrderPayment.objects.all().filter(pay_date__year=now.year, pay_date__month=now.month,
                                                                   pay_date__day=now.day)
+
+    today_servicepayments = ServicePayment.objects.all().filter(pay_date__year=now.year, pay_date__month=now.month,
+                                                                pay_date__day=now.day)
 
     # caisse = Caisse.objects.all().filter()[:1].get().caisse_value
     today_caisse = 0
@@ -133,7 +137,7 @@ def home(request):
     # for order in Order.objects.all().filter(confirmed=True):
     #     totalsellorders += order.get_ttc()
     # Buy orders total
-    #for order in buyorders:
+    # for order in buyorders:
     #    totalbuyorders += order.get_total_cost()
 
     # Sell Orders today total
@@ -175,6 +179,9 @@ def home(request):
         if supplierpayment.pay_status == "Cash":
             caisse -= supplierpayment.amount
 
+    for servicepayment in servicepayments:
+        caisse -= servicepayment.amount
+
     # Today Caisse
     for transaction in today_transactions:
         if transaction.Transaction_type == "Income":
@@ -189,6 +196,9 @@ def home(request):
     for supplierpayment in today_supplierpayments:
         if supplierpayment.pay_status == "Cash":
             today_caisse -= supplierpayment.amount
+
+    for servicepayment in today_servicepayments:
+        today_caisse -= servicepayment.amount
 
     # Total Bank Value
     for transaction in bank_transactions:

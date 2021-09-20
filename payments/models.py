@@ -3,6 +3,7 @@ from django.db import models
 from buyorder.models import BuyOrder
 from customer.models import Customer
 from sellorder.models import Order
+from services.models import ServiceProvider
 from supplier.models import Supplier
 
 
@@ -53,3 +54,11 @@ class SupplierCheque(models.Model):
     cheque_number = models.PositiveIntegerField()
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
+
+
+class ServicePayment(models.Model):
+    provider = models.ForeignKey(ServiceProvider, on_delete=models.CASCADE)
+    user = models.IntegerField(default=0)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    created = models.DateTimeField(auto_now_add=True)
+    pay_date = models.DateField(null=True, blank=True)

@@ -4,15 +4,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 from buyorder.models import BuyOrder
 from caisse.models import Caisse
 from customer.models import Customer
-from payments.forms import CustomerChequeForm, SupplierPaymentForm, SupplierChequeForm, CustomerPaymentForm
-from payments.models import SellOrderPayment, BuyOrderPayment, CustomerCheque
+from payments.forms import CustomerChequeForm, SupplierPaymentForm, SupplierChequeForm, CustomerPaymentForm, \
+    ServicePaymentForm
+from payments.models import SellOrderPayment, BuyOrderPayment, CustomerCheque, ServicePayment
 from sellorder.models import Order
+from services.models import ServiceProvider
 from supplier.models import Supplier
 
 
 # Sell Order Payment is Customer Payment
 def create_customer_payment(request, pk):
-
     order = Order.objects.get(id=pk)
     customer = Customer.objects.get(id=order.customer.id)
     customerpaymentform = CustomerPaymentForm()
@@ -227,7 +228,6 @@ def delete_supplier_payment(request, pk):
     buyorder_payment = get_object_or_404(BuyOrderPayment, id=pk)
     order = get_object_or_404(BuyOrder, id=buyorder_payment.order.id)
     if request.method == "POST":
-
         payment_amount = buyorder_payment.amount
         buyorder_payment.delete()
         # fix order values after deleting
@@ -243,3 +243,34 @@ def delete_supplier_payment(request, pk):
         'order': order,
     }
     return render(request, 'payments/supplier/delete_payment.html', context)
+
+
+def create_service_payment(request, pk):
+    provider = get_object_or_404(ServiceProvider, id=pk)
+    servicepaymentform = ServicePaymentForm()
+    if request.method == "POST":
+        servicepaymentform = ServicePaymentForm(request.POST)
+        if servicepaymentform.is_valid():
+            # saving service payment
+            servicepayment = servicepaymentform.save(commit=False)
+            servicepayment.provider = provider
+            servicepayment.save()
+            # handling provider credit
+            provider.credit -= servicepayment.amount
+            provider.save()
+
+            return redirect('payments:service_payment_list')
+
+    context = {
+        'servicepaymentform': servicepaymentform,
+    }
+    return render(request, "payments/service/create_payment.html", context)
+
+
+def service_payment_list(request):
+    serivcepayments = ServicePayment.objects.all()
+
+    context = {
+        'serivcepayments': serivcepayments,
+    }
+    return render(request, 'payments/service/payment_list.html', context)

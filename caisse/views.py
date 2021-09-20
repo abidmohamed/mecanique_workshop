@@ -8,7 +8,7 @@ from django.views.decorators.cache import cache_page
 # Create your views here.
 from caisse.forms import TransactionForm, DateForm, PeriodForm
 from caisse.models import Caisse, CaisseHistory, Transaction
-from payments.models import SellOrderPayment, BuyOrderPayment
+from payments.models import SellOrderPayment, BuyOrderPayment, ServicePayment
 
 
 def create_transaction(request):
@@ -37,7 +37,6 @@ def create_transaction(request):
     return render(request, 'caisse/add_transaction.html', context)
 
 
-@cache_page(60 * 15)
 def transaction_list(request):
     dateform = DateForm()
     periodform = PeriodForm()
@@ -45,6 +44,13 @@ def transaction_list(request):
 
     customerpayments = SellOrderPayment.objects.all().filter(pay_status='Cash')
     supplierpayments = BuyOrderPayment.objects.all().filter(pay_status='Cash')
+    servicepayments = ServicePayment.objects.all()
+
+    total_customer_payments = 0
+    total_supplier_payments = 0
+    total_service_payments = 0
+    total_transaction_payments = 0
+
     total_per_period = 0
     income_per_period = 0
     expense_per_period = 0
@@ -114,31 +120,60 @@ def transaction_list(request):
             pay_status='Cash',
         )
 
+        servicepayments = ServicePayment.objects.all().filter(
+            Q(
+                pay_date__gt=date(int(start_year), int(start_month), int(start_day)),
+                pay_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                pay_date=date(int(end_year), int(end_month), int(end_day))
+            )
+        )
+
     for transaction in transactions:
         if transaction.Transaction_type == "Income":
             total_per_period += transaction.amount
             income_per_period += transaction.amount
+            total_transaction_payments += transaction.amount
         else:
             total_per_period -= transaction.amount
             expense_per_period += transaction.amount
+            total_transaction_payments -= transaction.amount
 
     for customerpayment in customerpayments:
         total_per_period += customerpayment.amount
         income_per_period += customerpayment.amount
+        total_customer_payments += customerpayment.amount
 
     for supplierpayment in supplierpayments:
         total_per_period -= supplierpayment.amount
         expense_per_period += supplierpayment.amount
+        total_supplier_payments += supplierpayment.amount
+
+    for servicepayment in servicepayments:
+        total_per_period -= servicepayment.amount
+        expense_per_period += servicepayment.amount
+        total_service_payments += servicepayment.amount
 
     context = {
         "transactions": transactions,
+
         "dateform": dateform,
         "periodform": periodform,
+
         "customerpayments": customerpayments,
         "supplierpayments": supplierpayments,
+        'servicepayments': servicepayments,
+
         "total_per_period": total_per_period,
         "income_per_period": income_per_period,
         "expense_per_period": expense_per_period,
+
+        'total_customer_payments': total_customer_payments,
+        'total_supplier_payments': total_supplier_payments,
+        'total_service_payments': total_service_payments,
+        'total_transaction_payments': total_transaction_payments,
     }
 
     return render(request, "caisse/transaction_list.html", context)

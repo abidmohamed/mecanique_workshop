@@ -21,6 +21,11 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
+    <script type="text/javascript">
+      // A CSRF token is required when making post requests in Django
+      // To be used for making AJAX requests in script.js
+      window.CSRF_TOKEN = "{{ csrf_token }}";
+    </script>
 </head>
 <body id="page-top">
 

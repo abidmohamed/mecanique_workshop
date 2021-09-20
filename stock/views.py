@@ -232,7 +232,7 @@ def modal_update_order_stockproduct_list(request, pk):
                 )
         if sellorder.confirmed:
             return redirect('sellorder:update_order', sellorder.id)
-        else :
+        else:
             return redirect('sellorder:update_order_performa', sellorder.id)
     context = {
         'stockproducts': stockproducts,
@@ -346,7 +346,6 @@ def performa_order_stockproduct_list(request):
             # add products
             if len(chosenproducts) != 0:
                 for product in chosenproducts:
-
                     product = ''.join(product.split())
                     currentproduct = StockProduct.objects.get(id=product)
                     # print(currentproduct)
@@ -485,3 +484,42 @@ def delete_stockproduct(request, pk):
         stockproduct.delete()
         return redirect('stock:stock_list')
     return render(request, 'stockproduct/delete.html', context)
+
+
+def calculate_general_stock(request):
+    in_products = StockProduct.objects.all().filter(quantity__gt=0)
+    in_price = 0
+    out_price = 0
+    benefits = 0
+    for product in in_products:
+        in_price += product.product.buyprice
+        out_price += product.product.sellprice
+    benefits = out_price - in_price
+
+    context = {
+        'in_price': in_price,
+        'out_price': out_price,
+        'benefits': benefits,
+    }
+
+    return render(request, 'stock/state.html', context)
+
+
+def calculate_one_stock(request, pk):
+    stock = Stock.objects.get(id=pk)
+    in_products = StockProduct.objects.all().filter(quantity__gt=0, stock=stock)
+    in_price = 0
+    out_price = 0
+    benefits = 0
+    for product in in_products:
+        in_price += product.product.buyprice
+        out_price += product.product.sellprice
+    benefits = out_price - in_price
+
+    context = {
+        'in_price': in_price,
+        'out_price': out_price,
+        'benefits': benefits,
+    }
+
+    return render(request, 'stock/state.html', context)
