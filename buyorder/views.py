@@ -311,7 +311,7 @@ def update_order(request, pk):
 
 
 def buyorder_details(request, pk):
-    order = BuyOrder.objects.get(id=pk)
+    order = get_object_or_404(BuyOrder, id=pk)
     buyorder_payments = BuyOrderPayment.objects.filter(order=order)
     context = {
         'order': order,
