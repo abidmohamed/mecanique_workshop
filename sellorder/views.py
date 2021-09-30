@@ -807,10 +807,6 @@ def sellorder_list_by_date(request):
             )
             |
             Q(
-                created=date(int(start_year), int(start_month), int(start_day))
-            )
-            |
-            Q(
                 created=date(int(end_year), int(end_month), int(end_day))
             )
             , confirmed=True, factured=False,
