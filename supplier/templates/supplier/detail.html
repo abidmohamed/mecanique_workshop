@@ -35,11 +35,10 @@
             <thead class="thead-light">
             <tr>
                 <th>{% trans "Order ID" %}</th>
-                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Supplier" %}</th>
                     <th>{% trans "Address" %}</th>
-                    <th>{% trans "Total Piece" %}</th>
-                    <th>{% trans "Total Panne" %}</th>
-                    <th>{% trans "Total" %}</th>
+                    <th>{% trans "HT" %}</th>
+                    <th>{% trans "TTC" %}</th>
                     <th>{% trans "Debt" %}</th>
                     <th></th>
                     <th></th>
@@ -49,20 +48,19 @@
             {% for order in orders %}
             <tr>
                 <td>{{order.id}}</td>
-                    <td>{{order.customer}}</td>
-                    <td>{{order.customer.address}}</td>
+                    <td>{{order.supplier}}</td>
+                    <td>{{order.supplier.address}}</td>
                     <td>{{order.get_total_cost}} {% trans "DZD" %}</td>
-                    <td>{{order.get_total_panne}} {% trans "DZD" %}</td>
                     <td>{{order.get_ttc}} {% trans "DZD" %}</td>
                     <td>{{order.debt}} {% trans "DZD" %}</td>
                     <td>
                         {% if order.debt > 0%}
-                            <a class="btn btn-primary " href="{% url 'payments:create_customer_payment' order.id %}">{% trans "PayDebt" %}</a>
+                            <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment' order.id %}">{% trans "PayDebt" %}</a>
                         {% endif %}
                     </td>
 
                     <td>
-                           <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">{% trans "Details" %}</a>
+                           <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' order.id %}">{% trans "Details" %}</a>
                     </td>
             </tr>
             {% endfor %}
