@@ -766,6 +766,7 @@ def sellorder_list_by_date(request):
     dateform = DateForm()
     # now time
     now = datetime.now()
+    chosen_date = datetime.now()
     sellorders = Order.objects.all().filter(confirmed=True, factured=False, created__year=now.year, created__day=now.day,
                                             created__month=now.month)
 
@@ -806,6 +807,10 @@ def sellorder_list_by_date(request):
             )
             |
             Q(
+                created=date(int(start_year), int(start_month), int(start_day))
+            )
+            |
+            Q(
                 created=date(int(end_year), int(end_month), int(end_day))
             )
             , confirmed=True, factured=False,
@@ -816,6 +821,7 @@ def sellorder_list_by_date(request):
         'sellorders': sellorders,
         "dateform": dateform,
         'list_type': list_type,
+        'chosen_date': chosen_date,
     }
     return render(request, 'sellorder/list_sellorder_by_date.html', context)
 

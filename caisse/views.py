@@ -42,6 +42,10 @@ def transaction_list(request):
     periodform = PeriodForm()
     transactions = Transaction.objects.all()
 
+    # now time
+    now = datetime.now()
+    chosen_date = datetime.now()
+
     customerpayments = SellOrderPayment.objects.all().filter(pay_status='Cash')
     supplierpayments = BuyOrderPayment.objects.all().filter(pay_status='Cash')
     servicepayments = ServicePayment.objects.all()
@@ -161,6 +165,7 @@ def transaction_list(request):
 
         "dateform": dateform,
         "periodform": periodform,
+        "chosen_date": chosen_date,
 
         "customerpayments": customerpayments,
         "supplierpayments": supplierpayments,
