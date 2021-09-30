@@ -761,6 +761,65 @@ def sellorder_list(request):
     return render(request, 'sellorder/list_sellorder.html', context)
 
 
+def sellorder_list_by_date(request):
+    list_type = 1  # Sellorder
+    dateform = DateForm()
+    # now time
+    now = datetime.now()
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created__year=now.year, created__day=now.day,
+                                            created__month=now.month)
+
+    if request.method == 'POST':
+        alldata = request.POST
+        print(alldata)
+        # customer
+
+        # Search by date
+        chosen_date = alldata.get("date")
+        chosen_date = chosen_date.split("-", 1)
+        chosen_start_date = chosen_date[0]
+        chosen_end_date = chosen_date[1]
+
+        chosen_start_date = chosen_start_date.split("/", 2)
+        start_month = chosen_start_date[0]
+        start_year = chosen_start_date[2]
+        start_day = chosen_start_date[1]
+        # Remove white spaces
+        start_year = ''.join(start_year.split())
+        start_month = ''.join(start_month.split())
+        start_day = ''.join(start_day.split())
+
+        chosen_end_date = chosen_end_date.split("/", 2)
+        end_month = chosen_end_date[0]
+        end_year = chosen_end_date[2]
+        end_day = chosen_end_date[1]
+        # Remove white spaces
+        end_year = ''.join(end_year.split())
+        end_month = ''.join(end_month.split())
+        end_day = ''.join(end_day.split())
+
+        sellorders = Order.objects.all().filter(
+            Q(
+                created__gt=date(int(start_year), int(start_month),
+                                 int(start_day)),
+                created__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                created=date(int(end_year), int(end_month), int(end_day))
+            )
+            , confirmed=True, factured=False,
+
+        )
+
+    context = {
+        'sellorders': sellorders,
+        "dateform": dateform,
+        'list_type': list_type,
+    }
+    return render(request, 'sellorder/list_sellorder_by_date.html', context)
+
+
 def factured_sellorder_list(request):
     list_type = 2  # Sellorder Bill
     sellorders = SellOrderFacture.objects.all()

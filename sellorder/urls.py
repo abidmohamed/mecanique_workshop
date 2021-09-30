@@ -6,6 +6,7 @@ app_name = 'sellorder'
 urlpatterns = [
 
     path('sellorder_list', views.sellorder_list, name='sellorder_list'),
+    path('sellorder_list_by_date', views.sellorder_list_by_date, name='sellorder_list_by_date'),
     path('facture_all', views.facture_all, name='facture_all'),
 
     path('performa_sellorder_list', views.performa_sellorder_list, name='performa_sellorder_list'),
