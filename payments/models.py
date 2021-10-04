@@ -18,7 +18,7 @@ class SellOrderPayment(models.Model):
     pay_type = (
         ('Cash', 'Cash'),
         ('Cheque', 'Cheque'),
-        ('Versement', 'Versement'),
+        ('Verement', 'Verement'),
 
     )
     pay_status = models.CharField(max_length=9, choices=pay_type, blank=True, default="Cash")
@@ -28,6 +28,14 @@ class CustomerCheque(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     sellorderpayment = models.ForeignKey(SellOrderPayment, on_delete=models.CASCADE, null=True)
     cheque_number = models.PositiveIntegerField()
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+
+class CustomerVerment(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    sellorderpayment = models.ForeignKey(SellOrderPayment, on_delete=models.CASCADE, null=True)
+    verment_number = models.PositiveIntegerField()
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -43,7 +51,7 @@ class BuyOrderPayment(models.Model):
     pay_type = (
         ('Cash', 'Cash'),
         ('Cheque', 'Cheque'),
-        ('Versement', 'Versement'),
+        ('Verement', 'Verement'),
     )
     pay_status = models.CharField(max_length=9, choices=pay_type, blank=True, default="Cash")
 

@@ -5,7 +5,7 @@ from buyorder.models import BuyOrder
 from caisse.models import Caisse
 from customer.models import Customer
 from payments.forms import CustomerChequeForm, SupplierPaymentForm, SupplierChequeForm, CustomerPaymentForm, \
-    ServicePaymentForm
+    ServicePaymentForm, CustomerVermentForm
 from payments.models import SellOrderPayment, BuyOrderPayment, CustomerCheque, ServicePayment
 from sellorder.models import Order
 from services.models import ServiceProvider
@@ -44,6 +44,8 @@ def create_customer_payment(request, pk):
             # customerpayment.user = request.user.id
             if customerpayment.pay_status == "Cheque":
                 return redirect(f'../create_customer_cheque/{customerpayment.pk}')
+            if customerpayment.pay_status == "Verement":
+                return redirect("payments:create_customer_verment", customerpayment.pk)
             return redirect('customer:customer_list')
     context = {
         'customerpaymentform': customerpaymentform,
@@ -92,6 +94,24 @@ def create_customer_cheque(request, pk):
 
     context = {
         "customerchequeform": customerchequeform
+    }
+    return render(request, 'payments/customer/create_cheque.html', context)
+
+
+def create_customer_verment(request, pk):
+    customerpayment = SellOrderPayment.objects.get(id=pk)
+    customervermentform = CustomerVermentForm()
+    if request.method == "POST":
+        customervermentform = CustomerVermentForm(request.POST)
+        if customervermentform.is_valid():
+            customerverment = customervermentform.save(commit=False)
+            customerverment.customer = customerpayment.customer
+            customerverment.customerpayment = customerpayment
+            customerverment.save()
+            return redirect("payments:customer_payment_list")
+
+    context = {
+            "customerchequeform": customervermentform,
     }
     return render(request, 'payments/customer/create_cheque.html', context)
 

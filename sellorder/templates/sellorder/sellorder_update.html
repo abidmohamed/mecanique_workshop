@@ -190,7 +190,122 @@
             // any rest commas
             total_price = total_price.replace(",", "");
             }
-        document.getElementById("total-price").value = total_price
+        document.getElementById("total-price").value = total_price;
+
+
+        // fixing all fields from comma
+        var prices = document.getElementsByName("prices");
+    var panne_prices = document.getElementsByName("panne-prices");
+    var service_prices = document.getElementsByName("service-prices");
+    var service_charges = document.getElementsByName("service-charge");
+    var quantities = document.getElementsByName("quantities");
+    var discount_status = document.getElementById("discount-status");
+    var discount_value = document.getElementById("discount-value");
+    var tva_value = document.getElementById("tva");
+    var timbre_value = document.getElementById("timbre");
+
+    // Prices
+    for (var i = 0; i<prices.length; i++)
+    {
+        // made for server live
+        // Removing Spaces
+        if (/\s/g.test(prices[i].value)){
+        prices[i].value = prices[i].value.replace(/\s/g, "");
+        }else{
+         // Removing Comma
+         var comma_index = prices[i].value.length - 3
+            if(prices[i].value.indexOf(',') > -1){
+                prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+                // any rest commas
+                prices[i].value = prices[i].value.replace(",", "");
+            }
+        }
+         // Removing Comma
+         var comma_index = prices[i].value.length - 3
+         if(prices[i].value.indexOf(',') > -1){
+            prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            prices[i].value = prices[i].value.replace(",", "");
+        }
+        // any rest commas
+        //  prices[i].value = prices[i].value.replace(",", "");
+        // Removing quantity comma
+        var comma_index = quantities[i].value.length - 3
+        if(quantities[i].value.indexOf(',') > -1){
+            quantities[i].value = quantities[i].value.replaceAt(comma_index , ".");
+        }
+    }
+
+    // Fixing Panne Prices
+    for (var i = 0; i<panne_prices.length; i++){
+        // Fixing numbers to calculate
+        if (/\s/g.test(panne_prices[i].value)){
+        panne_prices[i].value = panne_prices[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = panne_prices[i].value.length - 3
+         if(panne_prices[i].value.indexOf(',') > -1){
+            panne_prices[i].value = panne_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            panne_prices[i].value = panne_prices[i].value.replace(",", "");
+        }
+        }
+        // Removing Comma
+         var comma_index = panne_prices[i].value.length - 3
+         if(panne_prices[i].value.indexOf(',') > -1){
+            panne_prices[i].value = panne_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            panne_prices[i].value = panne_prices[i].value.replace(",", "");
+        }
+    }
+
+    // Adding Service
+    for (var i = 0; i<service_prices.length; i++){
+        // Fixing numbers to calculate
+        // prices
+        if (/\s/g.test(service_prices[i].value)){
+        service_prices[i].value = service_prices[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = service_prices[i].value.length - 3
+         if(service_prices[i].value.indexOf(',') > -1){
+            service_prices[i].value = service_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_prices[i].value = service_prices[i].value.replace(",", "");
+        }
+        }
+
+        // service_charges
+        if (/\s/g.test(service_charges[i].value)){
+        service_charges[i].value = service_charges[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = service_charges[i].value.length - 3
+         if(service_charges[i].value.indexOf(',') > -1){
+            service_charges[i].value = service_charges[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_charges[i].value = service_charges[i].value.replace(",", "");
+        }
+        }
+
+        // Removing Comma
+        // service_prices
+         var comma_index = service_prices[i].value.length - 3
+         if(service_prices[i].value.indexOf(',') > -1){
+            service_prices[i].value = service_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_prices[i].value = service_prices[i].value.replace(",", "");
+        }
+
+        // service_charges
+         var comma_index = service_charges[i].value.length - 3
+         if(service_charges[i].value.indexOf(',') > -1){
+            service_charges[i].value = service_charges[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_charges[i].value = service_charges[i].value.replace(",", "");
+        }
+    }
+
     });
 
    function calc(){

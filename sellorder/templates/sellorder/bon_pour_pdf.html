@@ -171,17 +171,30 @@
         <td class="num">DZD {{ item.get_cost }}</td>
     </tr>
     {% endfor %}
-{% for service in order.services.all %}
+    </tbody>
+</table>
+{% endif %}
+
+{% if order.services.all %}
+<h3>Services</h3>
+<table class="items-table">
+    <thead>
+    <tr>
+        <th colspan="3">Service</th>
+        <th>Prix</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for service in order.services.all %}
     <tr class="row{% cycle '1' '2' %} ">
-        <td>{{service.service.name}}</td>
-        <td class="num">{{service.get_cost}} DZD</td>
-        <td class="num">1</td>
+        <td colspan="3" >{{service.service.name}}</td>
         <td class="num">{{service.get_cost}} DZD</td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
 {% endif %}
+
 
 {% if order.pannes.all %}
 <h3>MO</h3>

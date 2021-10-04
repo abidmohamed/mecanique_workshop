@@ -7,6 +7,7 @@ urlpatterns = [
 
     path('create_buyorder', views.create_buyorder, name='create_buyorder'),
     path('buyorder_list', views.buyorder_list, name='buyorder_list'),
+    path('buyorder_list_by_date', views.buyorder_list_by_date, name='buyorder_list_by_date'),
     path('buyorder_confirmation/<str:pk>', views.buyorder_confirmation, name='buyorder_confirmation'),
     path('buyorder_pdf/<str:pk>', views.buyorder_pdf, name='buyorder_pdf'),
     path('buyorder_details/<str:pk>', views.buyorder_details, name='buyorder_details'),

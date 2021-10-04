@@ -1,6 +1,7 @@
 from django.forms import ModelForm, modelformset_factory
 from django import forms
-from payments.models import SellOrderPayment, CustomerCheque, BuyOrderPayment, SupplierCheque, ServicePayment
+from payments.models import SellOrderPayment, CustomerCheque, BuyOrderPayment, SupplierCheque, ServicePayment, \
+    CustomerVerment
 
 
 class CustomerPaymentForm(ModelForm):
@@ -17,6 +18,13 @@ class CustomerChequeForm(ModelForm):
         model = CustomerCheque
 
         fields = ['cheque_number', ]
+
+
+class CustomerVermentForm(ModelForm):
+    class Meta:
+        model = CustomerVerment
+
+        fields = ['verment_number', ]
 
 
 class SupplierPaymentForm(ModelForm):
