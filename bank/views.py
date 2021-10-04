@@ -28,8 +28,8 @@ def transaction_list(request):
     periodform = PeriodForm()
     transactions = BankTransaction.objects.all()
 
-    customerpayments = SellOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Versement'))
-    supplierpayments = BuyOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Versement'))
+    customerpayments = SellOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Verement'))
+    supplierpayments = BuyOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Verement'))
     total_per_period = 0
     income_per_period = 0
     expense_per_period = 0
@@ -68,14 +68,14 @@ def transaction_list(request):
             trans_date__lte=date(int(end_year), int(end_month), int(end_day)),
         )
         customerpayments = SellOrderPayment.objects.all().filter(
-            Q(pay_status='Cheque') | Q(pay_status='Versement'),
+            Q(pay_status='Cheque') | Q(pay_status='Verement'),
             pay_date__gte=date(int(start_year), int(start_month), int(start_day)),
             pay_date__lte=date(int(end_year), int(end_month), int(end_day)),
 
 
         )
         supplierpayments = BuyOrderPayment.objects.all().filter(
-            Q(pay_status='Cheque') | Q(pay_status='Versement'),
+            Q(pay_status='Cheque') | Q(pay_status='Verement'),
             pay_date__gte=date(int(start_year), int(start_month), int(start_day)),
             pay_date__lte=date(int(end_year), int(end_month), int(end_day)),
         )

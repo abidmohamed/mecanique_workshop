@@ -7,6 +7,7 @@ urlpatterns = [
     # Customer
     path('create_customer_payment/<str:pk>', views.create_customer_payment, name='create_customer_payment'),
     path('create_customer_cheque/<str:pk>', views.create_customer_cheque, name='create_customer_cheque'),
+    path('create_customer_verment/<str:pk>', views.create_customer_verment, name='create_customer_verment'),
     path('delete_customer_payment/<str:pk>', views.delete_customer_payment, name='delete_customer_payment'),
     path('customer_payment_list', views.customer_payment_list, name='customer_payment_list'),
 

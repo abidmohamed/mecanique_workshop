@@ -242,8 +242,18 @@ def update_order_performa(request, pk):
     discountform = DiscountForm(instance=discount)
 
     if request.method == 'POST':
+
+        # Product Price & Quantity
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
+
+        # Panne prices
+        panne_prices = request.POST.getlist('panne-prices')
+
+        # Service price & charge
+        service_prices = request.POST.getlist('service-prices')
+        service_charges = request.POST.getlist('service-charge')
+
         tva = request.POST.get('tva')
         timbre = request.POST.get('timbre')
         chosen_date = request.POST.get('order_date')
@@ -263,6 +273,43 @@ def update_order_performa(request, pk):
                 str_price = ''.join(str_price.split())
                 item.price = str_price
                 item.quantity = quantities[index]
+                item.save()
+
+        # Pannes
+        if sellorder.pannes.all():
+            for index, item in enumerate(sellorder.pannes.all()):
+                # pannes
+                print(panne_prices[index])
+                str_panne_price = panne_prices[index]
+                str_panne_price = str_panne_price.replace(",", ".")
+                # Remove white spaces
+                str_panne_price = ''.join(str_panne_price.split())
+                item.price = str_panne_price
+
+                item.save()
+
+        # Services
+        if sellorder.services.all():
+            for index, item in enumerate(sellorder.services.all()):
+                # Services
+                print(service_prices[index])
+                print(service_charges[index])
+                str_service_price = service_prices[index]
+                str_service_price = str_service_price.replace(",", ".")
+                # Remove white spaces
+                str_service_price = ''.join(str_service_price.split())
+                item.price = str_service_price
+                # Add credit to provider
+                service = Service.objects.get(id=item.service.id)
+                service_provider = ServiceProvider.objects.get(id=service.provider.id)
+                service_provider.credit += decimal.Decimal(item.price)
+                # Charge
+                str_service_charge = service_charges[index]
+                str_service_charge = str_service_charge.replace(",", ".")
+                # Remove white spaces
+                str_service_charge = ''.join(str_service_charge.split())
+                item.charge = str_service_charge
+
                 item.save()
 
         print(request.POST)
@@ -702,7 +749,7 @@ def sellorder_list(request):
                                             created__month=now.month)
     sellorders_customers = Customer.objects.all()
     # sellorders_customers = Order.customer.all()
-    print(sellorders_customers)
+    # print(sellorders_customers)
     customers = Customer.objects.all()
     # Search request by date===>
     if request.method == 'POST':
@@ -751,7 +798,7 @@ def sellorder_list(request):
         #     , confirmed=True, factured=False,
         #
         # )
-
+    # print(customers)
     context = {
         'sellorders': sellorders,
         "dateform": dateform,
@@ -767,7 +814,8 @@ def sellorder_list_by_date(request):
     # now time
     now = datetime.now()
     chosen_date = datetime.now()
-    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created__year=now.year, created__day=now.day,
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created__year=now.year,
+                                            created__day=now.day,
                                             created__month=now.month)
 
     if request.method == 'POST':
@@ -801,13 +849,13 @@ def sellorder_list_by_date(request):
 
         sellorders = Order.objects.all().filter(
             Q(
-                created__gt=date(int(start_year), int(start_month),
-                                 int(start_day)),
-                created__lt=date(int(end_year), int(end_month), int(end_day))
+                order_date__gt=date(int(start_year), int(start_month),
+                                    int(start_day)),
+                order_date__lt=date(int(end_year), int(end_month), int(end_day))
             )
             |
             Q(
-                created=date(int(end_year), int(end_month), int(end_day))
+                order_date=date(int(end_year), int(end_month), int(end_day))
             )
             , confirmed=True, factured=False,
 
@@ -834,10 +882,26 @@ def factured_sellorder_list(request):
 
 def performa_sellorder_list(request):
     list_type = 3  # Sellorder Proforma Bill
-    sellorders = Order.objects.all().filter(confirmed=False)
+    # now time
+    now = datetime.now()
+
+    sellorders = Order.objects.all().filter(confirmed=False, factured=False, created__day=now.day,
+                                            created__month=now.month)
+
+    customers = Customer.objects.all()
+    if request.method == 'POST':
+        alldata = request.POST
+        print(alldata)
+        # customer
+        chosencustomer = request.POST.getlist("customers")
+        if len(chosencustomer) != 0:
+            customer = Customer.objects.get(id=chosencustomer[0])
+            sellorders = Order.objects.all().filter(customer=customer, confirmed=False, factured=False)
+
     context = {
         'sellorders': sellorders,
         'list_type': list_type,
+        'customers': customers,
     }
     return render(request, 'sellorder/list_sellorder.html', context)
 

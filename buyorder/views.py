@@ -2,6 +2,7 @@ import decimal
 from datetime import date, datetime
 from decimal import Decimal
 
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.views.decorators.cache import cache_page
@@ -14,6 +15,7 @@ from xhtml2pdf import pisa
 from billing.models import BuyOrderBilling, BillBuyOrderItem
 from buyorder.forms import BuyOrderForm, BuyOrderItemFormset
 from buyorder.models import BuyOrderItem, BuyOrder
+from caisse.forms import DateForm
 from caisse.models import Caisse
 from payments.models import BuyOrderPayment
 from product.forms import ProductForm
@@ -338,6 +340,63 @@ def buyorder_list(request):
         'suppliers': suppliers
     }
     return render(request, 'buyorder/list_buyorder.html', context)
+
+
+def buyorder_list_by_date(request):
+    dateform = DateForm()
+    # now time
+    now = datetime.now()
+    chosen_date = datetime.now()
+    buyorders = BuyOrder.objects.all().filter(confirmed=True, created__year=now.year, created__day=now.day,
+                                              created__month=now.month)
+
+    if request.method == 'POST':
+        alldata = request.POST
+
+        # Search by date
+        chosen_date = alldata.get("date")
+        chosen_date = chosen_date.split("-", 1)
+        chosen_start_date = chosen_date[0]
+        chosen_end_date = chosen_date[1]
+
+        chosen_start_date = chosen_start_date.split("/", 2)
+        start_month = chosen_start_date[0]
+        start_year = chosen_start_date[2]
+        start_day = chosen_start_date[1]
+        # Remove white spaces
+        start_year = ''.join(start_year.split())
+        start_month = ''.join(start_month.split())
+        start_day = ''.join(start_day.split())
+
+        chosen_end_date = chosen_end_date.split("/", 2)
+        end_month = chosen_end_date[0]
+        end_year = chosen_end_date[2]
+        end_day = chosen_end_date[1]
+        # Remove white spaces
+        end_year = ''.join(end_year.split())
+        end_month = ''.join(end_month.split())
+        end_day = ''.join(end_day.split())
+
+        buyorders = BuyOrder.objects.all().filter(
+            Q(
+                order_date__gt=date(int(start_year), int(start_month),
+                                 int(start_day)),
+                order_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order_date=date(int(end_year), int(end_month), int(end_day))
+            )
+            , confirmed=True,
+        )
+
+    context = {
+        'buyorders': buyorders,
+        "dateform": dateform,
+        'chosen_date': chosen_date,
+    }
+
+    return render(request, 'buyorder/list_buyorder_by_date.html', context)
 
 
 def buyorderorder_list_by_supplier(request, pk):
