@@ -207,6 +207,7 @@ def home(request):
         else:
             bank -= transaction.amount
 
+    # Cheque Payment
     for customerpayment in customerpayments:
         if customerpayment.pay_status == "Cheque":
             bank += customerpayment.amount
@@ -215,12 +216,13 @@ def home(request):
         if supplierpayment.pay_status == "Cheque":
             bank -= supplierpayment.amount
 
+    # Verement Payment
     for customerpayment in customerpayments:
-        if customerpayment.pay_status == "Versement":
+        if customerpayment.pay_status == "Verement":
             bank += customerpayment.amount
 
     for supplierpayment in supplierpayments:
-        if supplierpayment.pay_status == "Versement":
+        if supplierpayment.pay_status == "Verement":
             bank -= supplierpayment.amount
 
     context = {
