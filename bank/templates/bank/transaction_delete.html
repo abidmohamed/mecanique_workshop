@@ -14,11 +14,11 @@
                 <br>
             {{transaction.amount}}
             </P>
-            <form action="{% url 'caisse:delete_transaction' transaction.id %}" method="post">
+            <form action="{% url 'bank:delete_transaction' transaction.id %}" method="post">
 
                 {% csrf_token %}
                 <input class="btn btn-danger" type="submit" name="Confirm">
-                <a class="btn btn-warning" href="{% url 'caisse:transaction_list' %}">{% trans "Cancel" %}</a>
+                <a class="btn btn-warning" href="{% url 'bank:transaction_list' %}">{% trans "Cancel" %}</a>
             </form>
         </div>
     </div>
