@@ -51,6 +51,8 @@ def rdv_vehicle_list(request, pk):
 
 
 def create_rdv(request, pk):
+    # Remove white spaces
+    pk = ''.join(pk.split())
     vehicle = Vehicle.objects.get(id=pk)
     rdvform = RdvFrom()
     pannes = Panne.objects.all()
