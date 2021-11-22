@@ -393,6 +393,8 @@ def order_vehicle(request, pk):
     vehicles = Vehicle.objects.all().filter(customer=customer)
     if request.method == 'POST':
         chosenvehicule = request.POST.get("vehicle")
+        # Remove white spaces
+        chosenvehicule = ''.join(chosenvehicule.split())
         if chosenvehicule:
             # print(chosenvehicule)
             vehicle = Vehicle.objects.get(id=chosenvehicule)
