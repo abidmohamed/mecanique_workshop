@@ -165,7 +165,7 @@
                 {% for item in order.items.all %}
                 <tr>
                     <td class="table-light">{{ item.stockproduct.product.brand }}</td>
-                    <td class="table-light">{{ item.stockproduct.product.name }}</td>
+                    <td class="table-light">{{ item.product.name }}</td>
                     <td class="table-light ">{% trans "DZD" %}{{ item.price }}</td>
                     <td class="table-light ">{{ item.quantity }}</td>
                     <td class="table-light">{% trans "DZD" %}{{ item.get_cost }}</td>
