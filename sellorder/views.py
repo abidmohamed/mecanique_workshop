@@ -543,6 +543,7 @@ def update_order(request, pk):
         # customer.debt += sellorder.get_ttc()
         customer.debt -= old_ttc
         customer.debt += new_ttc
+
         customer.save()
         return redirect('sellorder:sellorder_list')
     context = {
