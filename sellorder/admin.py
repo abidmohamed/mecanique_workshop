@@ -39,3 +39,4 @@ class LogEntryAdmin(admin.ModelAdmin):
         'content_type',
         'action_flag',
     ]
+

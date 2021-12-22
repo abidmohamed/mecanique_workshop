@@ -541,7 +541,8 @@ def update_order(request, pk):
         sellorder.save()
         # customer debt
         # customer.debt += sellorder.get_ttc()
-        customer.debt += ttc_difference
+        customer.debt -= old_ttc
+        customer.debt += new_ttc
         customer.save()
         return redirect('sellorder:sellorder_list')
     context = {
