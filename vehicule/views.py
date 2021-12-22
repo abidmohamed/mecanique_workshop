@@ -133,8 +133,14 @@ def add_vehicule(request):
         vehiculeform = VehiculeFrom(request.POST)
         if vehiculeform.is_valid():
             vehicle = vehiculeform.save(commit=False)
-            vehicle.customer = Customer.objects.get(id=request.POST.get("customer"))
-            vehicle.vehicle_type = Type.objects.get(id=request.POST.get("type"))
+            # Remove white spaces
+            chosencustomer= request.POST.get("customer")
+            chosencustomer = ''.join(chosencustomer.split())
+            vehicle.customer = Customer.objects.get(id=chosencustomer)
+
+            chosentype = request.POST.get("type")
+            chosentype = ''.join(chosentype.split())
+            vehicle.vehicle_type = Type.objects.get(id=chosentype)
             # print(request.POST.get("customer"))
             # print(request.POST.get("type"))
             vehicle.save()
