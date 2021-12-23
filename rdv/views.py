@@ -19,8 +19,11 @@ def create_rdv_customer(request):
     customer_form = CustomerForm()
     customers = Customer.objects.all()
     if request.method == 'POST':
+        # print(customer_id)
+        # get chosen customer
         customer_id = request.POST.get("customer")
-        print(customer_id)
+        # remove white space from id
+        customer_id = ''.join(customer_id.split())
         customer = Customer.objects.get(id=customer_id)
         return redirect('rdv:rdv_vehicle_list', customer.id)
 
