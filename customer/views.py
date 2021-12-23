@@ -40,7 +40,7 @@ def add_customer(request):
 
 
 def add_enterprise(request, pk):
-    customer = Customer.objects.get(id=pk)
+    customer = get_object_or_404(Customer, id=pk)
     # Enterprise form
     enter_form = EnterpriseForm()
     if request.method == 'POST':
@@ -145,7 +145,7 @@ def sellorder_customer_list(request):
 
 
 def update_customer(request, pk):
-    customer = Customer.objects.get(id=pk)
+    customer = get_object_or_404(Customer, id=pk)
     customer_form = CustomerForm(instance=customer)
     if request.method == 'POST':
         customer_form = CustomerForm(request.POST, instance=customer)
