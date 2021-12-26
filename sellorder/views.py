@@ -759,9 +759,8 @@ def sellorder_list(request):
         print(alldata)
         # customer
         # Remove white spaces
-        chosencustomer = request.POST.get("customer")
+        chosencustomer = request.POST.get("customers")
         chosencustomer = ''.join(chosencustomer.split())
-
         if len(chosencustomer) != 0:
             customer = Customer.objects.get(id=chosencustomer[0])
             sellorders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False)
