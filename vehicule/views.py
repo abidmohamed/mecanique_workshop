@@ -188,7 +188,11 @@ def update_vehicule(request, pk):
         vehiculeform = VehiculeFrom(request.POST, instance=veh)
         if vehiculeform.is_valid():
             vehicle = vehiculeform.save(commit=False)
-            vehicle.customer = Customer.objects.get(id=request.POST.get("customer"))
+
+            # Remove white spaces
+            chosencustomer = request.POST.get("customer")
+            chosencustomer = ''.join(chosencustomer.split())
+            vehicle.customer = Customer.objects.get(id=chosencustomer)
             vehicle.vehicle_type = Type.objects.get(id=request.POST.get("type"))
             # print(request.POST.get("customer"))
             # print(request.POST.get("type"))
