@@ -121,7 +121,8 @@ def add_customer_rdv(request):
 
 
 def customer_list(request):
-    customers = Customer.objects.all()
+    customers = Customer.objects.only("firstname", "lastname", "phone", "address", "debt",)
+
     context = {
         'customers': customers
     }
