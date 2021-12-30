@@ -16,6 +16,8 @@
                     <th>{% trans "Brand" %}</th>
                     <th>{% trans "Name" %}</th>
                     <th>{% trans "Ref" %}</th>
+                    <th>{% trans "Sell Price" %}</th>
+                    <th>{% trans "Buy Price" %}</th>
                     <th>{% trans "Stock" %}</th>
                     <th>{% trans "Quantity" %}</th>
                     <th></th>
@@ -29,10 +31,16 @@
                        {{prod.product.brand}}
                    </td>
                     <td>
-                       {{prod.product.name}}
+                       {{prod}}
                    </td>
                     <td>
                        {{prod.product.ref}}
+                   </td>
+                    <td>
+                       {{prod.product.sellprice}} DZD
+                   </td>
+                    <td>
+                       {{prod.product.buyprice}} DZD
                    </td>
                     <td>
                        {{prod.stock}}

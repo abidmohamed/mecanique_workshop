@@ -143,8 +143,10 @@ def stockproduct_list(request, pk):
 
 
 def all_stockproduct_list(request):
-    stockproducts = StockProduct.objects.all()
+    stockproducts = StockProduct.objects.only("product", "quantity", "stock")
     categories = Category.objects.all()
+    print("======>", stockproducts[1].product)
+
     context = {
         'categories': categories,
         'stockproducts': stockproducts,
