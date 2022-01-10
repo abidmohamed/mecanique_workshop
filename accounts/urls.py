@@ -6,10 +6,20 @@ from . import views
 app_name = 'accounts'
 
 urlpatterns = [
+    # auths
     path('login/', views.loginpage, name='login'),
     path('logout/', views.logoutUser, name='logout'),
 
+    # Dashboard
     path('', views.home, name='home'),
+
+    # User
+    path('add_user/', views.add_user, name='add_user'),
+    path('users_list/', views.users_list, name='users_list'),
+    path('update_user/<str:pk>', views.update_user, name='update_user'),
+
+
+    # Offline Service Worker
     path('serviceworker', (TemplateView.as_view(
         template_name="serviceworker.js",
         content_type='application/javascript', )),

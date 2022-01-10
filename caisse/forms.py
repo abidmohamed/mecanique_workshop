@@ -1,7 +1,14 @@
 from django.forms import ModelForm
 from django import forms
 
-from caisse.models import Transaction
+from caisse.models import Transaction, TransactionCategory
+
+
+class CategoryTransactionForm(ModelForm):
+    class Meta:
+        model = TransactionCategory
+
+        fields = ['name']
 
 
 class TransactionForm(ModelForm):
@@ -10,10 +17,10 @@ class TransactionForm(ModelForm):
         widgets = {
             'trans_date': forms.DateInput(attrs={'class': 'datepicker', 'type': 'date'}),
         }
-        fields = ['Transaction_name', 'amount', 'Transaction_type', 'trans_date']
+        fields = ['Transaction_name', 'category', 'amount', 'Transaction_type', 'trans_date']
 
 
-# Specify Limite Year
+# Specify Limit Year
 YEARS = [x for x in range(2000, 2200)]
 
 

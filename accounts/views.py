@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User, Group, Permission
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import calendar
 from datetime import date, datetime
 from datetime import timedelta
@@ -10,6 +10,7 @@ from datetime import timedelta
 from django.utils.safestring import mark_safe
 
 from accounts.decorators import unauthneticated_user
+from accounts.forms import UserForm
 from bank.models import BankTransaction
 from buyorder.models import BuyOrder
 from caisse.models import Caisse, Transaction
@@ -69,6 +70,62 @@ def loginpage(request):
 def logoutUser(request):
     logout(request)
     return redirect('accounts:login')
+
+
+# Add user
+def add_user(request):
+    user_form = UserForm()
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save()
+
+            if Group.objects.all().filter(name='desk_helper'):
+                group = Group.objects.get(name='desk_helper')
+            else:
+                group = Group.objects.create(name='desk_helper')
+
+            user.groups.add(group)
+
+            user.save()
+
+            return redirect('accounts:users_list')
+
+    context = {
+        'user_form': user_form,
+    }
+
+    return render(request, 'user/add_user.html', context)
+
+
+def update_user(request, pk):
+    user = get_object_or_404(User, id=pk)
+    user_form = UserForm(instance=user)
+    groups = Group.objects.all()
+
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=user)
+
+        if user_form.is_valid():
+            user_form.save()
+
+            return redirect("accounts:users_list")
+
+    context = {
+        'user_form': user_form,
+        'groups': groups,
+    }
+
+    return render(request, 'user/update_user.html', context)
+
+
+def users_list(request):
+    users = User.objects.filter(is_superuser=False)
+    context = {
+        "users": users,
+    }
+    return render(request, "user/list_user.html", context)
 
 
 # Dashboard

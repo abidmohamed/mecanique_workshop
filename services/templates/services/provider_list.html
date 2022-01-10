@@ -18,6 +18,7 @@
                     <th>{% trans "Credit" %}</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,7 +40,9 @@
                         <a class="btn btn-danger " href="{% url 'services:delete_provider' provider.id %}">{% trans "Delete" %}</a>
                     </td>
                     <td>
+                        {% if provider.credit > 0 %}
                         <a class="btn btn-primary " href="{% url 'payments:create_service_payment' provider.id %}"> {% trans "Pay Debt" %}</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

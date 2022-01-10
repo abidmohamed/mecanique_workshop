@@ -6,9 +6,31 @@ from django.shortcuts import render, redirect
 from django.views.decorators.cache import cache_page
 
 # Create your views here.
-from caisse.forms import TransactionForm, DateForm, PeriodForm
-from caisse.models import Caisse, CaisseHistory, Transaction
+from caisse.forms import TransactionForm, DateForm, PeriodForm, CategoryTransactionForm
+from caisse.models import Caisse, CaisseHistory, Transaction, TransactionCategory
 from payments.models import SellOrderPayment, BuyOrderPayment, ServicePayment
+
+
+def create_transaction_category(request):
+    transaction_form = CategoryTransactionForm()
+    if request.method == 'POST':
+        transaction_form = CategoryTransactionForm(request.POST)
+        if transaction_form.is_valid():
+            transaction_form.save()
+
+            return redirect('caisse:transaction_category_list')
+
+    context = {'transaction_form': transaction_form}
+    return render(request, 'caisse/add_transaction.html', context)
+
+
+def transaction_category_list(request):
+    categories = TransactionCategory.objects.all()
+
+    context = {
+        'categories': categories
+    }
+    return render(request, 'category/list.html', context)
 
 
 def create_transaction(request):
