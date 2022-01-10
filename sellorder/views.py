@@ -119,8 +119,9 @@ def confirm_order(request, pk):
                 # Remove white spaces
                 str_service_charge = ''.join(str_service_charge.split())
                 item.charge = str_service_charge
-
+                # saving values
                 item.save()
+                service_provider.save()
 
         print(request.POST)
         discount.order = sellorder
@@ -510,8 +511,9 @@ def update_order(request, pk):
                 # Remove white spaces
                 str_service_charge = ''.join(str_service_charge.split())
                 item.charge = str_service_charge
-
+                # saving Values
                 item.save()
+                service_provider.save()
 
         discount.order = sellorder
         discount.value = request.POST.get('discount-value')
@@ -1435,7 +1437,7 @@ def get_orders_pannes(request):
     now = datetime.now()
     dateform = DateForm()
     periodform = PeriodForm()
-    orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day)
+    orders = Order.objects.all().filter(confirmed=True,created__year=now.year, created__month=now.month, created__day=now.day)
     pannes = Panne.objects.none()
     totalpanne = 0
     if request.method == 'POST':
@@ -1488,7 +1490,7 @@ def get_orders_pieces(request):
     now = datetime.now()
     dateform = DateForm()
     periodform = PeriodForm()
-    orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day)
+    orders = Order.objects.all().filter(confirmed=True, created__year=now.year, created__month=now.month, created__day=now.day)
     pieces = OrderItem.objects.none()
     totalpiece = 0
     if request.method == 'POST':

@@ -1,0 +1,84 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>{% trans "Employees" %}</h5>
+        </div>
+        <div class="card card-body">
+            <table id="table_id" class="table">
+                <thead>
+                     <tr>
+                    <th>{% trans "Job" %}</th>
+                    <th>{% trans "First Name" %}</th>
+                    <th>{% trans "Last Name" %}</th>
+                    <th>{% trans "Address" %}</th>
+                    <th>{% trans "Phone" %}</th>
+                    <th>{% trans "Date Joined" %}</th>
+                    <th>{% trans "Weekly Salary" %}</th>
+                    <th></th>
+                </tr>
+
+                </thead>
+               <tbody>
+                {% for employee in employees %}
+                <tr>
+                   <td>
+                       {{employee.job}}
+                   </td>
+                    <td>
+                       {{employee.firstname}}
+                   </td>
+                    <td>
+                       {{employee.lastname}}
+                   </td>
+                    <td>
+                       {{employee.address}}
+                   </td>
+                    <td>
+                       {{employee.phone}}
+                   </td>
+                    <td>
+                       {{employee.date_joined}}
+                   </td>
+                    <td>
+                       {{employee.weekly_salary}} DZD
+                   </td>
+                    <td>
+                        <a class="btn btn-success "
+                               href="{% url 'employee:update_employee' employee.id %}">
+                            {% trans "Update" %}
+                        </a>
+                    </td>
+
+
+                </tr>
+
+                {% endfor %}
+               </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}
+{% block jsscript %}
+<!-- Data Table  -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+<script type='text/javascript'>
+    //Data Table init
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+    } );
+
+</script>
+{% endblock %}

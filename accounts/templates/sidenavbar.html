@@ -33,6 +33,46 @@
     <div class="sidebar-heading">
         {% trans "Interface" %}
     </div>
+    {% if request.user|has_group:"admin" %}
+     <!-- Nav Item - User Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
+           aria-expanded="true" aria-controls="collapseUser">
+            <i class="fas fa-user-tie"></i>
+            <span>{% trans "User"%}</span>
+        </a>
+        <div id="collapseUser" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">{% trans "Operations"%} :</h6>
+                <a class="collapse-item" href="{% url 'accounts:add_user' %}">{% trans "Add"%}</a>
+                <a class="collapse-item" href="{% url 'accounts:users_list' %}">{% trans "List"%}</a>
+            </div>
+        </div>
+    </li>
+    {% endif %}
+
+    {% if request.user|has_group:"admin" %}
+    <!-- Nav Item - Employee Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmployee"
+           aria-expanded="true" aria-controls="collapseEmployee">
+            <i class="fas fa-users"></i>
+            <span>{% trans "Employees"%}</span>
+        </a>
+        <div id="collapseEmployee" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">{% trans "Operations"%} :</h6>
+                <a class="collapse-item" href="{% url 'employee:add_employee' %}">{% trans "Add Employee"%}</a>
+                <a class="collapse-item" href="{% url 'employee:list_employee' %}">{% trans "Employee List"%}</a>
+                <hr>
+                <a class="collapse-item" href="{% url 'employee:add_job' %}">{% trans "Add Job"%}</a>
+                <a class="collapse-item" href="{% url 'employee:list_job' %}">{% trans "Job List"%}</a>
+            </div>
+        </div>
+    </li>
+    {% endif %}
+
+
 {% if request.user|has_group:"admin" or request.user|has_group:"desk_helper" %}
 <!-- Nav Item - Caisse Collapse Menu -->
     <li class="nav-item">
@@ -45,9 +85,14 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">{% trans "Operations" %} :</h6>
                 <a class="collapse-item" href="{% url 'caisse:create_transaction' %}">{% trans "Add" %}</a>
+
             {% if request.user|has_group:"admin" %}
                 <a class="collapse-item" href="{% url 'caisse:transaction_list' %}">{% trans "List" %}</a>
             {% endif %}
+                <hr>
+                <a class="collapse-item" href="{% url 'caisse:create_transaction_category' %}">{% trans "Add Category" %}</a>
+                <a class="collapse-item" href="{% url 'caisse:transaction_category_list' %}">{% trans "Category List" %}</a>
+
             </div>
         </div>
     </li>
