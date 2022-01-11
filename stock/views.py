@@ -333,7 +333,9 @@ def performa_order_stockproduct_list(request):
         # print(chosenvehicule)
         if len(chosencustomer) != 0:
             sellorder = Order()
-            customer = Customer.objects.get(id=chosencustomer[0])
+            chosen_customer = chosencustomer[0]
+            chosen_customer = ''.join(chosen_customer.split())
+            customer = Customer.objects.get(id=chosen_customer)
             # print(customer)
             # vehicles = Vehicle.objects.all().filter(customer=customer)
             # print(vehicles)
