@@ -422,6 +422,8 @@ def performa_order_vehicle(request, pk):
         chosenvehicule = request.POST.get("vehicle")
         if chosenvehicule:
             # print(chosenvehicule)
+            # Remove white spaces
+            chosenvehicule = ''.join(chosenvehicule.split())
             vehicle = Vehicle.objects.get(id=chosenvehicule)
             # print(vehicle)
             sellorder.vehicle = vehicle
