@@ -146,12 +146,17 @@ def home(request):
     payed_today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month,
                                                         created__day=now.day, confirmed=True, paid=True)
 
-    # Employees weekly salary
-    total_salary_dict = Employee.objects.only("weekly_salary").aggregate(Sum("weekly_salary"))
-    # get only the value
-    total_salary = total_salary_dict['weekly_salary__sum']
-    # daily total salary
-    daily_salary = round(total_salary/7, 2)
+    total_salary = 0
+    daily_salary = 0
+    if Employee.objects.only("weekly_salary"):
+        # Employees weekly salary
+        total_salary_dict = Employee.objects.only("weekly_salary").aggregate(Sum("weekly_salary"))
+        # get only the value
+        total_salary = total_salary_dict['weekly_salary__sum']
+        # daily total salary
+        daily_salary = round(total_salary/7, 2)
+
+
 
     # customers + suppliers all objects
     allcustomers = Customer.objects.all()
