@@ -148,15 +148,13 @@ def home(request):
 
     total_salary = 0
     daily_salary = 0
-    if Employee.objects.only("weekly_salary"):
+    if Employee.objects.all():
         # Employees weekly salary
         total_salary_dict = Employee.objects.only("weekly_salary").aggregate(Sum("weekly_salary"))
         # get only the value
         total_salary = total_salary_dict['weekly_salary__sum']
         # daily total salary
         daily_salary = round(total_salary/7, 2)
-
-
 
     # customers + suppliers all objects
     allcustomers = Customer.objects.all()
