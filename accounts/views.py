@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User, Group, Permission
+from django.db.models import Sum
 
 from django.shortcuts import render, redirect, get_object_or_404
 import calendar
@@ -14,7 +15,8 @@ from accounts.forms import UserForm
 from bank.models import BankTransaction
 from buyorder.models import BuyOrder
 from caisse.models import Caisse, Transaction
-from customer.models import Customer
+from customer.models import Customer, Enterprise
+from employee.models import Employee
 from payments.models import SellOrderPayment, BuyOrderPayment, ServicePayment
 from product.models import Product
 from rdv.models import Rdv
@@ -137,13 +139,19 @@ def home(request):
     none_html_calendar = Calendar(calendar_date.year, calendar_date.month)
     html_calendar = none_html_calendar.formatmonth(withyear=True)
 
-    # sellorders = Order.objects.all().filter(confirmed=True)  # .filter(created__year=now.year, created__month=now.month)
-    # buyorders = BuyOrder.objects.all()  # can be filtred by year & month
-    # Today order
+    # sellorders = Order.objects.all().filter(confirmed=True)  # .filter(created__year=now.year,
+    # created__month=now.month) buyorders = BuyOrder.objects.all()  # can be filtred by year & month Today order
     today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month,
                                                   created__day=now.day, confirmed=True)
     payed_today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month,
                                                         created__day=now.day, confirmed=True, paid=True)
+
+    # Employees weekly salary
+    total_salary_dict = Employee.objects.only("weekly_salary").aggregate(Sum("weekly_salary"))
+    # get only the value
+    total_salary = total_salary_dict['weekly_salary__sum']
+    # daily total salary
+    daily_salary = round(total_salary/7, 2)
 
     # customers + suppliers all objects
     allcustomers = Customer.objects.all()
@@ -200,9 +208,19 @@ def home(request):
     # Sell Orders today total
     totaltodaypanne = 0
     totaltodaypiece = 0
+    chief_percentage = 0
     for order in today_sellorders:
         totaltodaypanne += order.get_total_panne()
         totaltodaypiece += order.get_total_cost()
+        # calculate workshop chief 10%
+        # get customer
+        order_customer = order.customer
+        # check if the customer enterprise 5% else 10%
+        if Enterprise.objects.filter(customer=order_customer):
+            chief_percentage += (order.get_total_panne() * 5) / 100
+        else:
+            chief_percentage += (order.get_total_panne() * 10) / 100
+
 
     # Sell Orders today total
     payed_totaltodaypanne = 0
@@ -295,5 +313,7 @@ def home(request):
         'bank': bank, 'payed_totaltodaypanne': payed_totaltodaypanne,
         'payed_totaltodaypiece': payed_totaltodaypiece,
         'today_caisse': today_caisse,
+        'daily_salary': daily_salary,
+        'total_salary': total_salary, 'chief_percentage': chief_percentage
     }
     return render(request, 'dashboard.html', context)

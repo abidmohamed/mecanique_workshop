@@ -133,7 +133,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-6 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-3 mb-4">
         <div class="card bg-gradient-success shadow h-100 py-2">
             <!-- Today Caisse -->
             <a href="{% url 'caisse:today_transaction_list' %}">
@@ -144,9 +144,48 @@
             </a>
         </div>
     </div>
+    <div class="col-xl-3 col-md-3 mb-4">
+        <div class="card bg-gradient-success shadow h-100 py-2">
+            <!-- Daily Salary -->
+            <a href="{% url 'employee:list_employee' %}">
+                <div class="card-body text-center">
+             <h2 class=" font-weight-bold text-white text-uppercase mb-2">{% trans "Daily Salary" %}</h2>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{daily_salary }} {% trans " DZD" %}</div>
+            </div>
+            </a>
+        </div>
+    </div>
 
 </div>
 <!-- Second Bank row Ends Here -->
+
+<hr>
+<div class="row">
+    <div class="col-xl-6 col-md-6 mb-4">
+        <div class="card bg-gradient-warning shadow h-100 py-2">
+            <!-- Today Caisse -->
+            <a href="{% url 'employee:list_employee' %}">
+                <div class="card-body text-center">
+             <h2 class=" font-weight-bold text-white text-uppercase mb-2">{% trans "Weekly Salary" %}</h2>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{total_salary}} {% trans " DZD" %}</div>
+            </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-xl-6 col-md-6 mb-4">
+        <div class="card bg-gradient-warning shadow h-100 py-2">
+            <!-- Today Caisse -->
+            <a href="{% url 'sellorder:get_orders_pannes' %}">
+                <div class="card-body text-center">
+             <h2 class=" font-weight-bold text-white text-uppercase mb-2">{% trans "Workshop Chief 10%" %}</h2>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{chief_percentage}} {% trans " DZD" %}</div>
+            </div>
+            </a>
+        </div>
+    </div>
+
+</div>
+<!-- Third Salary row Ends Here -->
 
 <div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
