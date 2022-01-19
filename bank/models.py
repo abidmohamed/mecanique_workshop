@@ -13,3 +13,6 @@ class BankTransaction(models.Model):
     cheque_number = models.PositiveIntegerField()
     Transaction_type = models.CharField(max_length=8, choices=type_choices, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        ordering = ('trans_date',)
