@@ -26,10 +26,10 @@ def create_transaction(request):
 def transaction_list(request):
     dateform = DateForm()
     periodform = PeriodForm()
-    transactions = BankTransaction.objects.all()
+    transactions = BankTransaction.objects.all().order_by('trans_date')
 
-    customerpayments = SellOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Verement'))
-    supplierpayments = BuyOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Verement'))
+    customerpayments = SellOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Verement')).order_by('pay_date')
+    supplierpayments = BuyOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Verement')).order_by('pay_date')
     total_per_period = 0
     income_per_period = 0
     expense_per_period = 0
@@ -66,19 +66,19 @@ def transaction_list(request):
         transactions = BankTransaction.objects.all().filter(
             trans_date__gte=date(int(start_year), int(start_month), int(start_day)),
             trans_date__lte=date(int(end_year), int(end_month), int(end_day)),
-        )
+        ).order_by('trans_date')
+
         customerpayments = SellOrderPayment.objects.all().filter(
             Q(pay_status='Cheque') | Q(pay_status='Verement'),
             pay_date__gte=date(int(start_year), int(start_month), int(start_day)),
             pay_date__lte=date(int(end_year), int(end_month), int(end_day)),
+        ).order_by('pay_date')
 
-
-        )
         supplierpayments = BuyOrderPayment.objects.all().filter(
             Q(pay_status='Cheque') | Q(pay_status='Verement'),
             pay_date__gte=date(int(start_year), int(start_month), int(start_day)),
             pay_date__lte=date(int(end_year), int(end_month), int(end_day)),
-        )
+        ).order_by('pay_date')
 
     for transaction in transactions:
         if transaction.Transaction_type == "Income":

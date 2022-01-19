@@ -182,9 +182,14 @@ def delete_customer(request, pk):
 
 def customer_detail(request, pk):
     customer = get_object_or_404(Customer, id=pk)
+
     orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False)
+    # total order debt
     proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False)
+
     factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer)
+    # total bills debt
+
     rdvs = Rdv.objects.all().filter(customer=customer)
     context = {
         'customer': customer,

@@ -9,6 +9,7 @@ urlpatterns = [
     path('transaction_list/', views.transaction_list, name='transaction_list'),
     path('today_transaction_list/', views.today_transaction_list, name='today_transaction_list'),
     path('delete_transaction/<str:pk>', views.delete_transaction, name='delete_transaction'),
+    path('update_transaction/<str:pk>', views.update_transaction, name='update_transaction'),
 
     # Category
 

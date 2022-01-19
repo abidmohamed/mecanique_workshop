@@ -26,6 +26,19 @@
             </form>
             <br>
             <hr>
+            <div class="row">
+                        <div class="col-xl-12 col-md-12 mb-4">
+        <div class="card bg-gradient-warning shadow h-100 py-2">
+            <!-- Today Caisse -->
+            <a href="{% url 'sellorder:get_orders_pannes' %}">
+                <div class="card-body text-center">
+             <h2 class=" font-weight-bold text-white text-uppercase mb-2">{% trans "Workshop Chief 10%" %}</h2>
+                        <div class="h3 mb-0 font-weight-bold text-white">{{chief_percentage}} {% trans " DZD" %}</div>
+            </div>
+            </a>
+        </div>
+        </div>
+            </div>
            <table id="table_panne" class="table display text-center">
                 <thead class="thead-light">
                 <tr>

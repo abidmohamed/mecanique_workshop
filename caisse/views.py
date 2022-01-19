@@ -2,7 +2,7 @@ import datetime
 from datetime import date, datetime
 
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import cache_page
 
 # Create your views here.
@@ -53,6 +53,20 @@ def create_transaction(request):
 
             caisse.save()
             transaction.save()
+            return redirect('caisse:transaction_list')
+
+    context = {'transaction_form': transaction_form}
+    return render(request, 'caisse/add_transaction.html', context)
+
+
+def update_transaction(request, pk):
+    transaction = get_object_or_404(Transaction, id=pk)
+    transaction_form = TransactionForm(instance=transaction)
+    if request.method == 'POST':
+        transaction_form = TransactionForm(request.POST)
+        if transaction_form.is_valid():
+            transaction_form.save()
+
             return redirect('caisse:transaction_list')
 
     context = {'transaction_form': transaction_form}

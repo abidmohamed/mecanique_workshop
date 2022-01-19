@@ -51,6 +51,7 @@
                     <th>{% trans "Category" %}</th>
                     <th>{% trans "Date Created" %}</th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,6 +67,10 @@
                     <td>
                         <a class="btn btn-danger "
                            href="{% url 'caisse:delete_transaction' transaction.id %}">{% trans "Delete" %}</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-success "
+                           href="{% url 'caisse:update_transaction' transaction.id %}">{% trans "Update" %}</a>
                     </td>
                 </tr>
                 {% endfor %}

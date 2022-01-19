@@ -1439,9 +1439,10 @@ def get_orders_pannes(request):
     now = datetime.now()
     dateform = DateForm()
     periodform = PeriodForm()
-    orders = Order.objects.all().filter(confirmed=True,created__year=now.year, created__month=now.month, created__day=now.day)
+    orders = Order.objects.all().filter(confirmed=True, created__year=now.year, created__month=now.month, created__day=now.day)
     pannes = Panne.objects.none()
     totalpanne = 0
+    chief_percentage = 0
     if request.method == 'POST':
         # Get Date from request.POST
         alldata = request.POST
@@ -1469,18 +1470,28 @@ def get_orders_pannes(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(created__gte=date(int(start_year), int(start_month), int(start_day)),
-                                            created__lte=date(int(end_year), int(end_month), int(end_day)))
+        orders = Order.objects.all().filter(order_date__gte=date(int(start_year), int(start_month), int(start_day)),
+                                            order_date__lte=date(int(end_year), int(end_month), int(end_day)))
+
     for order in orders:
         pannes |= order.pannes.all()
         totalpanne += order.get_total_panne()
-    print(pannes)
+        # calculate workshop chief 10%
+        # get customer
+        order_customer = order.customer
+        # check if the customer enterprise 5% else 10%
+        if Enterprise.objects.filter(customer=order_customer):
+            chief_percentage += (order.get_total_panne() * 5) / 100
+        else:
+            chief_percentage += (order.get_total_panne() * 10) / 100
+    # print(pannes)
 
     context = {
         'pannes': pannes,
         'periodform': periodform,
         'totalpanne': totalpanne,
         "dateform": dateform,
+        'chief_percentage': chief_percentage,
 
     }
     return render(request, 'sellorder/sellorders_pannes.html', context)
@@ -1522,8 +1533,8 @@ def get_orders_pieces(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(created__gte=date(int(start_year), int(start_month), int(start_day)),
-                                            created__lte=date(int(end_year), int(end_month), int(end_day)))
+        orders = Order.objects.all().filter(order_date__gte=date(int(start_year), int(start_month), int(start_day)),
+                                            order_date__lte=date(int(end_year), int(end_month), int(end_day)))
     for order in orders:
         pieces |= order.items.all()
         totalpiece += order.get_total_cost()
@@ -1574,8 +1585,11 @@ def get_orders_pannes_payed(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(created__gte=date(int(start_year), int(start_month), int(start_day)),
-                                            created__lte=date(int(end_year), int(end_month), int(end_day)))
+        orders = Order.objects.all().filter(created__year__gte=int(start_year), created__month__gte=int(start_month),
+                                            created__day__gte=int(start_day),
+                                            created__year__lte=int(end_year), created__month__lte=int(end_month),
+                                            created__day__lte=int(end_day)
+                                            )
     for order in orders:
         pannes |= order.pannes.all()
         totalpanne += order.get_total_panne()

@@ -19,10 +19,14 @@ class TransactionCategory(models.Model):
     def __str__(self):
         return self.name
 
+    def get_total_cost(self):
+        return round(sum(item.amount for item in self.items.all()), 2)
+
 
 class Transaction(models.Model):
     Transaction_name = models.CharField(max_length=200, null=True)
-    category = models.ForeignKey(TransactionCategory, on_delete=models.DO_NOTHING, null=True, blank=True)
+    category = models.ForeignKey(TransactionCategory, on_delete=models.DO_NOTHING, null=True, blank=True,
+                                 related_name="items")
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     type_choices = (
         ('Income', 'Income'),
