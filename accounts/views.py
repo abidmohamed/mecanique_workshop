@@ -222,10 +222,9 @@ def home(request):
         order_customer = order.customer
         # check if the customer enterprise 5% else 10%
         if Enterprise.objects.filter(customer=order_customer):
-            chief_percentage += decimal.Decimal((order.get_total_panne() * 5) / 100)
+            chief_percentage += (order.get_total_panne() * 5) / 100
         else:
-            chief_percentage += decimal.Decimal((order.get_total_panne() * 10) / 100)
-
+            chief_percentage += (order.get_total_panne() * 10) / 100
 
     # Sell Orders today total
     payed_totaltodaypanne = 0
