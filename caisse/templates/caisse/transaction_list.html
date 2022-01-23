@@ -61,7 +61,7 @@
                     <td>{{transaction.Transaction_name}}</td>
                     <td>{{transaction.amount}}</td>
                     <td>{{transaction.Transaction_type}}</td>
-                    <td>{{transaction.trans_date}}</td>
+                    <td>{{transaction.trans_date|date:"Y/m/d" }}</td>
                     <td>{{transaction.category}}</td>
                     <td>{{transaction.date_created}}</td>
                     <td>
@@ -114,7 +114,7 @@
                         {{payment.created}}
                     </td>
                     <td>
-                        {{payment.pay_date}}
+                        {{payment.pay_date|date:"Y/m/d"}}
                     </td>
                     <td>
                         <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' payment.order.id %}">{% trans "Details" %}</a>
@@ -154,7 +154,7 @@
                         {{payment.created}}
                     </td>
                     <td>
-                        {{payment.pay_date}}
+                        {{payment.pay_date|date:"Y/m/d"}}
                     </td>
                     <td>
                         {% if payment.order.id %}
@@ -191,7 +191,7 @@
                         {{payment.created}}
                     </td>
                     <td>
-                        {{payment.pay_date}}
+                        {{payment.pay_date|date:"Y/m/d"}}
                     </td>
 
                 </tr>
@@ -235,24 +235,28 @@
     //Data Table init
     $(document).ready( function () {
     $('#table_id').DataTable({
+        "order": [[ 4, "desc" ]],
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
     $('#customer_table_id').DataTable({
+        "order": [[ 6, "desc" ]],
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
     $('#supplier_table_id').DataTable({
+        "order": [[ 5, "desc" ]],
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
     $('#service_table_id').DataTable({
+        "order": [[ 4, "desc" ]],
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'

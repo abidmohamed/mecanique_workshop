@@ -13,7 +13,7 @@ from vehicule.models import Vehicle
 
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
+    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, related_name="orders")
     vehicle = models.ForeignKey(Vehicle, on_delete=models.DO_NOTHING, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -51,6 +51,9 @@ class Order(models.Model):
 
     def get_ttc(self):
         return round(self.get_total_item_panne() + self.get_tva() - self.discount_amount + self.timbre, 2)
+
+    def get_debt(self):
+        return self.debt
 
 
 class OrderItem(models.Model):
