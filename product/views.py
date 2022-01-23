@@ -101,16 +101,16 @@ def detail_product(request, pk):
     for order in all_sellorders:
         print("###### ORDER")
         for item in order.items.all():
-
-            if item.stockproduct.product.id == product.id:
-                print("####### ITEM FOUND")
-                print(item.stockproduct.product)
-                print(product)
-                chosen_orders |= Order.objects.all().filter(id=order.id)
-                pieces |= order.items.all().filter(id=item.id)
-                sell_quantity += item.quantity
-                quantities.append(item.quantity)
-                # print(order.items.all().filter(id=item.id))
+            if StockProduct.objects.filter(product=product):
+                if item.stockproduct.product.id == product.id:
+                    print("####### ITEM FOUND")
+                    print(item.stockproduct.product)
+                    print(product)
+                    chosen_orders |= Order.objects.all().filter(id=order.id)
+                    pieces |= order.items.all().filter(id=item.id)
+                    sell_quantity += item.quantity
+                    quantities.append(item.quantity)
+                    # print(order.items.all().filter(id=item.id))
     final_list = zip(chosen_orders, pieces, quantities)
 
     # Buy orders product count
