@@ -1,7 +1,7 @@
 from django.db.models import Sum
 
-from customer.forms import UserForm, CustomerForm, CityForm, EnterpriseForm
-from customer.models import Customer, City, Enterprise
+from customer.forms import UserForm, CustomerForm, CityForm, EnterpriseForm, AvancementForm
+from customer.models import Customer, City, Enterprise, Avancements
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -204,7 +204,11 @@ def customer_detail(request, pk):
     for order in bill_orders:
         total_bills += order.get_ttc()
 
+    # RDVs
     rdvs = Rdv.objects.all().filter(customer=customer)
+    # Advancements
+    avancements = customer.avancement.all()
+
     context = {
         'customer': customer,
         'orders': orders,
@@ -213,6 +217,7 @@ def customer_detail(request, pk):
         'rdvs': rdvs, 'total_order_debt': total_order_debt,
         'total_bills_debt': total_bills_debt, 'total_order': total_order,
         'total_bills': total_bills,
+        'avancements': avancements,
     }
     return render(request, 'customer/detail.html', context)
 
@@ -261,3 +266,34 @@ def delete_city(request, pk):
         city.delete()
         return redirect('customer:city_list')
     return render(request, 'city/delete_family.html', context)
+
+
+# avancement
+def add_avancement(request, pk):
+    customer = get_object_or_404(Customer, id=pk)
+    # Enterprises
+    enterprises = Enterprise.objects.all()
+    # avancement form
+    avancement_form = AvancementForm()
+    if request.method == 'POST':
+        avancement_form = AvancementForm(request.POST)
+        if avancement_form.is_valid():
+            # avancement
+            avancement = avancement_form.save(commit=False)
+            # customer affection
+            avancement.customer = customer
+            # get enterprise
+            enterprise = request.POST.get('enterprise')
+            enterprise = ''.join(enterprise.split())
+            avancement.enterprise = Enterprise.objects.get(id=enterprise)
+            avancement.save()
+
+            return redirect('customer:customer_detail', pk)
+
+    context = {
+        'enterprises': enterprises,
+        'avancement_form': avancement_form,
+        'customer': customer,
+    }
+
+    return render(request, 'customer/add_avancement.html', context)

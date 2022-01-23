@@ -29,6 +29,34 @@
         </div>
         <hr>
         <br>
+        <h2>{% trans "Advancements" %} : </h2>
+        <hr>
+        <a class="btn btn-primary " href="{% url 'customer:add_avancement' customer.id %}">{% trans "New Advancement" %}</a>
+        <br>
+        <br>
+        <br>
+        <table id="table_avancement">
+            <thead class="thead-light">
+            <tr>
+                <th>{% trans "N°" %}</th>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Enterprise" %}</th>
+                    <th>{% trans "Amount" %}</th>
+
+            </tr>
+            </thead>
+            <body class="">
+            {% for avanc in avancements %}
+            <tr>
+                <td>{{avanc.number}}</td>
+                <td>{{avanc.customer}}</td>
+                <td>{{avanc.enterprise}}</td>
+                <td>{{avanc.amount}}</td>
+            </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <br>
         <h2>{% trans "Orders" %} : </h2>
         <hr>
         <div class="row">

@@ -24,4 +24,6 @@ urlpatterns = [
     path('delete_enterprise/<str:pk>', views.delete_enterprise, name='delete_enterprise'),
     path('enterprise_list/', views.enterprise_list, name='enterprise_list'),
 
+    path('add_avancement/<str:pk>', views.add_avancement, name='add_avancement'),
+
 ]
