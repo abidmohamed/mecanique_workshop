@@ -1,3 +1,5 @@
+from django.db.models import Sum
+
 from customer.forms import UserForm, CustomerForm, CityForm, EnterpriseForm
 from customer.models import Customer, City, Enterprise
 from django.contrib.auth.models import User, Group
@@ -185,10 +187,22 @@ def customer_detail(request, pk):
 
     orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False)
     # total order debt
+    total_order_debt = orders.aggregate(Sum('debt'))['debt__sum']
+    # total order
+    total_order = 0
+    for order in orders:
+        total_order += order.get_ttc()
+    # print(total_order)
     proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False)
 
     factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer)
     # total bills debt
+    total_bills_debt = Order.objects.all().filter(customer=customer, confirmed=True, factured=True).aggregate(Sum('debt'))['debt__sum']
+    # total bills
+    total_bills = 0
+    bill_orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=True)
+    for order in bill_orders:
+        total_bills += order.get_ttc()
 
     rdvs = Rdv.objects.all().filter(customer=customer)
     context = {
@@ -196,7 +210,9 @@ def customer_detail(request, pk):
         'orders': orders,
         'proforma_orders': proforma_orders,
         'factured_orders': factured_orders,
-        'rdvs': rdvs,
+        'rdvs': rdvs, 'total_order_debt': total_order_debt,
+        'total_bills_debt': total_bills_debt, 'total_order': total_order,
+        'total_bills': total_bills,
     }
     return render(request, 'customer/detail.html', context)
 

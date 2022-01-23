@@ -24,13 +24,22 @@
             </div>
             <div class="col-md-3">
                     <h6>{% trans "Debt" %}: </h6>
-                    <td>{{ customer.debt }}</td>
+                    <td>{{ customer.get_debt }}</td>
             </div>
         </div>
         <hr>
         <br>
-        <h2>{% trans "Orders" %}</h2>
+        <h2>{% trans "Orders" %} : </h2>
         <hr>
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="col-3">
+                <h2>Total : {{total_order}} DZD</h2>
+            </div>
+            <div class="col-3">
+                <h2>Debt : {{total_order_debt}} DZD</h2>
+            </div>
+        </div>
         <table id="table_order">
             <thead class="thead-light">
             <tr>
@@ -110,6 +119,15 @@
         <br>
         <h2>{% trans "Billed Orders" %}</h2>
         <hr>
+         <div class="row">
+            <div class="col-6"></div>
+            <div class="col-3">
+                <h2>Total : {{total_bills}} DZD</h2>
+            </div>
+            <div class="col-3">
+                <h2>Debt : {{total_bills_debt}} DZD</h2>
+            </div>
+        </div>
         <table id="table_order_bill">
             <thead class="thead-light">
             <tr>

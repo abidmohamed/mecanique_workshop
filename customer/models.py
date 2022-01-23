@@ -29,6 +29,9 @@ class Customer(models.Model):
     def get_vehicles(self):
         return self.vehicles.all().filter(customer=self)
 
+    def get_debt(self):
+        return round(sum(order.debt for order in self.orders.filter(customer=self, confirmed=True)), 2)
+
 
 class Enterprise(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='owner')
