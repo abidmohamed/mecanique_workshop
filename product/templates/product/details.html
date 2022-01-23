@@ -9,6 +9,24 @@
         <div class="card card-body">
             <h5>{% trans "Sell Orders" %}</h5>
         </div>
+         <div class="card card-body">
+
+            <form id="order-form" action="" method="post">
+
+                    {% csrf_token %}
+                <div class="form-group">
+               <!-- date picker -->
+                <label> {% trans "Pick a Date" %}</label>
+                    <br>
+                    {{dateform}}
+                    <br>
+                    <label >{% trans "Date:" %}</label>
+                    {{chosen_date}}
+                    <br>
+            <input class="form-control btn btn-primary" type="submit" name="submit">
+            </div>
+            </form>
+        </div>
         <div class="card card-body bg-primary">
             <h5 class=" text-center text-white">{{product}} : {{sell_quantity}}</h5>
         </div>
@@ -80,6 +98,12 @@
 
 {% endblock %}
 {% block jsscript %}
+<!-- Date Picker-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
 <!-- custom javascript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -90,6 +114,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+<!-- Date Picker-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script type='text/javascript'>
     //Data Table init
@@ -98,6 +124,8 @@
     $('#table_buyorder').DataTable();
 } );
 
+// Date Picker
+$('input[name="date"]').daterangepicker();
 
 
 </script>
