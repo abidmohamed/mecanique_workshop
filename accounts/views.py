@@ -190,7 +190,7 @@ def home(request):
     # Total customers Debt
     totaldebt = 0
     for customer in allcustomers:
-        totaldebt += customer.debt
+        totaldebt += customer.get_debt()
 
     # Total suppliers Credit
     totalcredit = 0
