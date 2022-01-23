@@ -102,7 +102,8 @@ def detail_product(request, pk):
         print("###### ORDER")
         for item in order.items.all():
             if StockProduct.objects.filter(product=product):
-                if item.stockproduct.product.id == product.id:
+
+                if item.stockproduct.product == product or item.stockproduct is None:
                     print("####### ITEM FOUND")
                     print(item.stockproduct.product)
                     print(product)
