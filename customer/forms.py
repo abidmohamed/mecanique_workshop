@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
-from customer.models import Customer, City, Enterprise
+from customer.models import Customer, City, Enterprise, Avancements
 
 
 class CityForm(ModelForm):
@@ -34,3 +34,10 @@ class EnterpriseForm(ModelForm):
 
         fields = ('nif', 'nif_check', 'nis', 'nis_check', 'art', 'art_check', 'rc', 'rc_check', 'article_imposition', 'ai_check',
                   'N_compte', 'matriculation')
+
+
+class AvancementForm(ModelForm):
+    class Meta:
+        model = Avancements
+
+        fields = ('number', 'amount')

@@ -1059,10 +1059,10 @@ def sellorder_pour_pdf(request, pk, credit, tva):
 def sellorder_livraison_pdf(request, pk, credit, tva):
     sellorder = get_object_or_404(Order, id=pk)
     customer = get_object_or_404(Customer, id=sellorder.customer.id)
-    if customer.debt - sellorder.get_ttc() == 0 or customer.debt - sellorder.get_ttc() < 0:
+    if customer.get_debt() - sellorder.get_ttc() == 0 or customer.get_debt() - sellorder.get_ttc() < 0:
         old_debt = 0
     else:
-        old_debt = customer.debt - sellorder.get_ttc()
+        old_debt = customer.get_debt() - sellorder.get_ttc()
     new_debt = old_debt + sellorder.get_ttc()
 
     # print("Customer Debt", customer.debt)
@@ -1655,3 +1655,6 @@ def get_orders_pieces_payed(request):
         "dateform": dateform,
     }
     return render(request, 'sellorder/sellorders_pieces.html', context)
+
+# Add Avancement
+

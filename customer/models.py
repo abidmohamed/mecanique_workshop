@@ -48,3 +48,11 @@ class Enterprise(models.Model):
     matriculation = models.BooleanField(default=False)
     N_compte = models.CharField(max_length=250, null=True, blank=True)
 
+    def __str__(self):
+        return self.customer.__str__()
+
+class Avancements(models.Model):
+    number = models.IntegerField()
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='avancement')
+    enterprise = models.ForeignKey(Enterprise, on_delete=models.CASCADE, related_name='all_avancement')
+    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
