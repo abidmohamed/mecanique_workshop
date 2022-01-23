@@ -1,8 +1,12 @@
+from datetime import datetime, date
+
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from buyorder.models import BuyOrder
+from caisse.forms import DateForm
 from category.models import Category
 from product.forms import ProductForm
 from product.models import Product
@@ -83,8 +87,14 @@ def update_product(request, pk):
 
 def detail_product(request, pk):
     product = Product.objects.get(id=pk)
-    all_sellorders = Order.objects.all().filter(confirmed=True)
-    all_buyorders = BuyOrder.objects.all()
+    dateform = DateForm()
+    # now time
+    now = datetime.now()
+
+    all_sellorders = Order.objects.all().filter(confirmed=True, created__year=now.year, created__day=now.day,
+                                                created__month=now.month)
+    all_buyorders = BuyOrder.objects.filter(created__year=now.year, created__day=now.day,
+                                            created__month=now.month)
 
     chosen_orders = Order.objects.none()
     chosen_buyorders = BuyOrder.objects.none()
@@ -122,7 +132,99 @@ def detail_product(request, pk):
                 buy_pieces |= order.items.all().filter(id=item.id)
                 buy_quantity += item.quantity
                 buy_quantities.append(item.quantity)
+
+    if request.method == 'POST':
+        alldata = request.POST
+
+        # Search by date
+        chosen_date = alldata.get("date")
+        chosen_date = chosen_date.split("-", 1)
+        chosen_start_date = chosen_date[0]
+        chosen_end_date = chosen_date[1]
+
+        chosen_start_date = chosen_start_date.split("/", 2)
+        start_month = chosen_start_date[0]
+        start_year = chosen_start_date[2]
+        start_day = chosen_start_date[1]
+        # Remove white spaces
+        start_year = ''.join(start_year.split())
+        start_month = ''.join(start_month.split())
+        start_day = ''.join(start_day.split())
+
+        chosen_end_date = chosen_end_date.split("/", 2)
+        end_month = chosen_end_date[0]
+        end_year = chosen_end_date[2]
+        end_day = chosen_end_date[1]
+        # Remove white spaces
+        end_year = ''.join(end_year.split())
+        end_month = ''.join(end_month.split())
+        end_day = ''.join(end_day.split())
+
+        # filtering orders
+        all_sellorders = Order.objects.all().filter(
+            Q(
+                order_date__gt=date(int(start_year), int(start_month),
+                                    int(start_day)),
+                order_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order_date=date(int(end_year), int(end_month), int(end_day))
+            )
+            , confirmed=True, factured=False,
+        )
+        all_buyorders = BuyOrder.objects.filter(
+            Q(
+                order_date__gt=date(int(start_year), int(start_month),
+                                    int(start_day)),
+                order_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order_date=date(int(end_year), int(end_month), int(end_day))
+            )
+        )
+
+        # boucle orders
+        chosen_orders = Order.objects.none()
+        chosen_buyorders = BuyOrder.objects.none()
+
+        pieces = OrderItem.objects.none()
+        buy_pieces = OrderItem.objects.none()
+
+        quantities = []
+        buy_quantities = []
+
+        sell_quantity = 0
+        buy_quantity = 0
+        # Sell orders product count
+        for order in all_sellorders:
+            print("###### ORDER")
+            for item in order.items.all():
+                if StockProduct.objects.filter(product=product):
+                    if item.stockproduct is not None:
+                        if item.stockproduct.product == product:
+                            print("####### ITEM FOUND")
+                            print(item.stockproduct.product)
+                            print(product)
+                            chosen_orders |= Order.objects.all().filter(id=order.id)
+                            pieces |= order.items.all().filter(id=item.id)
+                            sell_quantity += item.quantity
+                            quantities.append(item.quantity)
+                            # print(order.items.all().filter(id=item.id))
+        final_list = zip(chosen_orders, pieces, quantities)
+
+        # Buy orders product count
+        for order in all_buyorders:
+            for item in order.items.all():
+                if item.product == product:
+                    chosen_buyorders |= BuyOrder.objects.all().filter(id=order.id)
+                    buy_pieces |= order.items.all().filter(id=item.id)
+                    buy_quantity += item.quantity
+                    buy_quantities.append(item.quantity)
+
     final_buylist = zip(chosen_buyorders, buy_pieces, buy_quantities)
+
     context = {
         'product': product,
         'pieces': pieces,
@@ -131,6 +233,7 @@ def detail_product(request, pk):
         'chosen_orders': chosen_orders,
         'sell_quantity': sell_quantity,
         'buy_quantity': buy_quantity,
+        'dateform': dateform,
     }
     return render(request, 'product/details.html', context)
 
