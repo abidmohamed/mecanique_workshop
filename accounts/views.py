@@ -321,3 +321,8 @@ def home(request):
         'total_salary': total_salary, 'chief_percentage': chief_percentage
     }
     return render(request, 'dashboard.html', context)
+
+
+# choosing the current year
+def choose_the_year(request):
+    pass
