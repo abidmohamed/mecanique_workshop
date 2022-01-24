@@ -1481,9 +1481,9 @@ def get_orders_pannes(request):
         order_customer = order.customer
         # check if the customer enterprise 5% else 10%
         if Enterprise.objects.filter(customer=order_customer):
-            chief_percentage += (order.get_total_panne() * 5) / 100
+            chief_percentage += decimal.Decimal(order.get_total_panne() * decimal.Decimal(5)) / decimal.Decimal(100)
         else:
-            chief_percentage += (order.get_total_panne() * 10) / 100
+            chief_percentage += decimal.Decimal(order.get_total_panne() * decimal.Decimal(10)) / decimal.Decimal(100)
     # print(pannes)
 
     context = {
