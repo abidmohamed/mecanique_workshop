@@ -25,4 +25,7 @@ urlpatterns = [
         content_type='application/javascript', )),
          name='serviceworker'),
 
+    # year choosing
+    path('choose_the_year/', views.choose_the_year, name='choose_the_year'),
+
 ]

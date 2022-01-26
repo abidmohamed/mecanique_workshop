@@ -6,3 +6,6 @@ import datetime
 
 class CurrentYear(models.Model):
     year = models.IntegerField(_('year'), )
+
+    def __str__(self):
+        return str(self.year)

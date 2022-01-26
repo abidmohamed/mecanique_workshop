@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.views.decorators.cache import cache_page
 
 # Create your views here.
+from accounts.models import CurrentYear
 from billing.models import OrderBilling, BillOrderItem
 from caisse.forms import DateForm, PeriodForm
 from caisse.models import Caisse
@@ -23,6 +24,8 @@ from sellorder.models import Order, SellOrderFacture, OrderItem, PanneItem
 from services.models import ServiceProvider, Service
 from stock.models import StockProduct
 from num2words import num2words
+
+
 
 
 # confirmation get order object from the stock view Of a Real Order
@@ -749,12 +752,17 @@ def sellorder_list(request):
     dateform = DateForm()
     # now time
     now = datetime.now()
+    # chosen year
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
     sellorders = Order.objects.all().filter(confirmed=True, factured=False, created__day=now.day,
-                                            created__month=now.month)
+                                            created__month=now.month, created__year=current_year.year)
     sellorders_customers = Customer.objects.all()
     # sellorders_customers = Order.customer.all()
     # print(sellorders_customers)
     customers = Customer.objects.all()
+
+    print("Current Year", current_year)
     # Search request by date===>
     if request.method == 'POST':
         alldata = request.POST
@@ -764,9 +772,11 @@ def sellorder_list(request):
 
         if len(chosencustomer) != 0:
             # Remove white spaces
+            print("Current Year", current_year)
             chosencustomer = ''.join(chosencustomer[0].split())
             customer = Customer.objects.get(id=chosencustomer)
-            sellorders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False)
+            sellorders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False,
+                                                    created__year=current_year.year)
 
         # Search by date removed
         # chosen_date = alldata.get("date")
@@ -820,8 +830,13 @@ def sellorder_list_by_date(request):
     dateform = DateForm()
     # now time
     now = datetime.now()
+    # chosen year
+
     chosen_date = datetime.now()
-    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created__year=now.year,
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created__year=current_year.year,
                                             created__day=now.day,
                                             created__month=now.month)
 
@@ -879,7 +894,10 @@ def sellorder_list_by_date(request):
 
 def factured_sellorder_list(request):
     list_type = 2  # Sellorder Bill
-    sellorders = SellOrderFacture.objects.all()
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
+    sellorders = SellOrderFacture.objects.filter(created__year=current_year.year)
     context = {
         'sellorders': sellorders,
         'list_type': list_type,
@@ -891,9 +909,10 @@ def performa_sellorder_list(request):
     list_type = 3  # Sellorder Proforma Bill
     # now time
     now = datetime.now()
-
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
     sellorders = Order.objects.all().filter(confirmed=False, factured=False, created__day=now.day,
-                                            created__month=now.month)
+                                            created__month=now.month, created__year=current_year.year)
 
     customers = Customer.objects.all()
     if request.method == 'POST':
@@ -905,7 +924,8 @@ def performa_sellorder_list(request):
             # Remove white spaces
             chosen_customer = ''.join(chosencustomer[0].split())
             customer = Customer.objects.get(id=chosen_customer)
-            sellorders = Order.objects.all().filter(customer=customer, confirmed=False, factured=False)
+            sellorders = Order.objects.all().filter(customer=customer, confirmed=False, factured=False,
+                                                    created__year=current_year.year)
 
     context = {
         'sellorders': sellorders,
@@ -946,7 +966,10 @@ def sellorder_delete(request, pk):
 
 def sellorder_list_by_customer(request, pk):
     customer = Customer.objects.get(id=pk)
-    sellorders = Order.objects.all().filter(customer=customer, factured=False)
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    sellorders = Order.objects.all().filter(customer=customer, factured=False,
+                                            created__year=current_year.year)
 
     if request.method == 'POST':
         # get submitted orders
@@ -1439,7 +1462,10 @@ def get_orders_pannes(request):
     now = datetime.now()
     dateform = DateForm()
     periodform = PeriodForm()
-    orders = Order.objects.all().filter(confirmed=True, created__year=now.year, created__month=now.month, created__day=now.day)
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    orders = Order.objects.all().filter(confirmed=True, created__year=current_year.year,
+                                        created__month=now.month, created__day=now.day)
     pannes = Panne.objects.none()
     totalpanne = 0
     chief_percentage = 0
@@ -1503,7 +1529,10 @@ def get_orders_pieces(request):
     now = datetime.now()
     dateform = DateForm()
     periodform = PeriodForm()
-    orders = Order.objects.all().filter(confirmed=True, created__year=now.year, created__month=now.month, created__day=now.day)
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    orders = Order.objects.all().filter(confirmed=True, created__year=current_year.year,
+                                        created__month=now.month, created__day=now.day)
     pieces = OrderItem.objects.none()
     totalpiece = 0
     if request.method == 'POST':
@@ -1554,7 +1583,10 @@ def get_orders_pannes_payed(request):
     now = datetime.now()
     dateform = DateForm()
     periodform = PeriodForm()
-    orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day,
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    orders = Order.objects.all().filter(created__year=current_year.year,
+                                        created__month=now.month, created__day=now.day,
                                         paid=True)
     pannes = Panne.objects.none()
     totalpanne = 0
@@ -1611,7 +1643,10 @@ def get_orders_pieces_payed(request):
     now = datetime.now()
     dateform = DateForm()
     periodform = PeriodForm()
-    orders = Order.objects.all().filter(created__year=now.year, created__month=now.month, created__day=now.day,
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    orders = Order.objects.all().filter(created__year=current_year.year,
+                                        created__month=now.month, created__day=now.day,
                                         paid=True)
     pieces = OrderItem.objects.none()
     totalpiece = 0
@@ -1657,4 +1692,3 @@ def get_orders_pieces_payed(request):
     return render(request, 'sellorder/sellorders_pieces.html', context)
 
 # Add Avancement
-
