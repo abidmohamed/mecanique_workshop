@@ -13,7 +13,8 @@ from datetime import timedelta
 from django.utils.safestring import mark_safe
 
 from accounts.decorators import unauthneticated_user
-from accounts.forms import UserForm
+from accounts.forms import UserForm, CurrentYearForm
+from accounts.models import CurrentYear
 from bank.models import BankTransaction
 from buyorder.models import BuyOrder
 from caisse.models import Caisse, Transaction
@@ -141,11 +142,16 @@ def home(request):
     none_html_calendar = Calendar(calendar_date.year, calendar_date.month)
     html_calendar = none_html_calendar.formatmonth(withyear=True)
 
+    # Choosed Year
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
     # sellorders = Order.objects.all().filter(confirmed=True)  # .filter(created__year=now.year,
     # created__month=now.month) buyorders = BuyOrder.objects.all()  # can be filtred by year & month Today order
-    today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month,
+    today_sellorders = Order.objects.all().filter(created__year=current_year.year,
+                                                  created__month=now.month,
                                                   created__day=now.day, confirmed=True)
-    payed_today_sellorders = Order.objects.all().filter(created__year=now.year, created__month=now.month,
+    payed_today_sellorders = Order.objects.all().filter(created__year=current_year.year,
+                                                        created__month=now.month,
                                                         created__day=now.day, confirmed=True, paid=True)
 
     total_salary = 0
@@ -167,14 +173,19 @@ def home(request):
     supplierpayments = BuyOrderPayment.objects.all()
     servicepayments = ServicePayment.objects.all()
     # today Caisse
-    today_transactions = Transaction.objects.all().filter(trans_date__year=now.year, trans_date__month=now.month,
+
+    today_transactions = Transaction.objects.all().filter(trans_date__year=current_year.year,
+                                                          trans_date__month=now.month,
                                                           trans_date__day=now.day)
-    today_customerpayments = SellOrderPayment.objects.all().filter(pay_date__year=now.year, pay_date__month=now.month,
+    today_customerpayments = SellOrderPayment.objects.all().filter(pay_date__year=current_year.year,
+                                                                   pay_date__month=now.month,
                                                                    pay_date__day=now.day)
-    today_supplierpayments = BuyOrderPayment.objects.all().filter(pay_date__year=now.year, pay_date__month=now.month,
+    today_supplierpayments = BuyOrderPayment.objects.all().filter(pay_date__year=current_year.year,
+                                                                  pay_date__month=now.month,
                                                                   pay_date__day=now.day)
 
-    today_servicepayments = ServicePayment.objects.all().filter(pay_date__year=now.year, pay_date__month=now.month,
+    today_servicepayments = ServicePayment.objects.all().filter(pay_date__year=current_year.year,
+                                                                pay_date__month=now.month,
                                                                 pay_date__day=now.day)
 
     # caisse = Caisse.objects.all().filter()[:1].get().caisse_value
@@ -182,7 +193,7 @@ def home(request):
     caisse = 0
     # Bank
     bank = 0
-    bank_transactions = BankTransaction.objects.all()
+    bank_transactions = BankTransaction.objects.filter(date_created__year=current_year.year)
     # Customer
     customers = Customer.objects.all().count()
     # Supplier
@@ -200,7 +211,8 @@ def home(request):
     # BuyOrder
     buyorder_number = BuyOrder.objects.all().count()
     # SellOrder
-    sellorder_number = Order.objects.all().filter(confirmed=True).count()
+    sellorder_number = Order.objects.all().filter(confirmed=True,
+                                                  created__year=current_year.year).count()
     # sell orders total
     totalsellorders = 0
     totalbuyorders = 0
@@ -318,11 +330,34 @@ def home(request):
         'payed_totaltodaypiece': payed_totaltodaypiece,
         'today_caisse': today_caisse,
         'daily_salary': daily_salary,
-        'total_salary': total_salary, 'chief_percentage': chief_percentage
+        'total_salary': total_salary, 'chief_percentage': chief_percentage,
+        'current_year': current_year,
     }
     return render(request, 'dashboard.html', context)
 
 
 # choosing the current year
 def choose_the_year(request):
-    pass
+    yearform = CurrentYearForm()
+
+    if request.method == 'POST':
+        yearform = CurrentYearForm(request.POST)
+        print(request.POST)
+        if yearform.is_valid():
+            chosen_year = yearform.save(commit=False)
+            print("chosen year ===", chosen_year)
+            current_year = CurrentYear.objects.all().filter()[:1].get()
+            print(current_year)
+            if chosen_year.year == current_year.year:
+                pass
+            else:
+                current_year.year = chosen_year.year
+                current_year.save()
+            # return redirect("/")
+
+    context = {
+        'yearform': yearform,
+    }
+
+    return render(request, "setting.html", context)
+
