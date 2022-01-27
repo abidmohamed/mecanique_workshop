@@ -104,6 +104,7 @@ def transaction_category_details(request, pk):
         'total_per_period': total_per_period,
         'income_per_period': income_per_period,
         'expense_per_period': expense_per_period,
+        'total_transaction_payments': total_transaction_payments,
         'current_year': current_year,
         "dateform": dateform,
         "periodform": periodform,
