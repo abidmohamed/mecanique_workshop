@@ -12,6 +12,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 # Create your views here.
+from accounts.models import CurrentYear
 from billing.models import BuyOrderBilling, BillBuyOrderItem
 from buyorder.forms import BuyOrderForm, BuyOrderItemFormset
 from buyorder.models import BuyOrderItem, BuyOrder
@@ -326,18 +327,21 @@ def buyorder_list(request):
     # now time
     now = datetime.now()
     suppliers = Supplier.objects.all()
-    buyorders = BuyOrder.objects.filter(created__day=now.day, created__month=now.month)
+    # current year
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    buyorders = BuyOrder.objects.filter(created__day=now.day, created__month=now.month, created__year=current_year.year)
 
     if request.method == 'POST':
         alldata = request.POST
         chosensupplier = request.POST.getlist("suppliers")
         if len(chosensupplier) != 0:
             supplier = Supplier.objects.get(id=chosensupplier[0])
-            buyorders = BuyOrder.objects.filter(supplier=supplier)
+            buyorders = BuyOrder.objects.filter(supplier=supplier,created__year=current_year.year)
 
     context = {
         'buyorders': buyorders,
-        'suppliers': suppliers
+        'suppliers': suppliers,
+        'current_year': current_year
     }
     return render(request, 'buyorder/list_buyorder.html', context)
 
@@ -347,7 +351,9 @@ def buyorder_list_by_date(request):
     # now time
     now = datetime.now()
     chosen_date = datetime.now()
-    buyorders = BuyOrder.objects.all().filter(confirmed=True, created__year=now.year, created__day=now.day,
+    # current year
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    buyorders = BuyOrder.objects.all().filter(confirmed=True, created__year=current_year.year, created__day=now.day,
                                               created__month=now.month)
 
     if request.method == 'POST':
@@ -394,6 +400,7 @@ def buyorder_list_by_date(request):
         'buyorders': buyorders,
         "dateform": dateform,
         'chosen_date': chosen_date,
+        'current_year': current_year,
     }
 
     return render(request, 'buyorder/list_buyorder_by_date.html', context)
@@ -401,7 +408,9 @@ def buyorder_list_by_date(request):
 
 def buyorderorder_list_by_supplier(request, pk):
     supplier = Supplier.objects.get(id=pk)
-    buyorders = BuyOrder.objects.all().filter(supplier=supplier, factured=False)
+    # current year
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    buyorders = BuyOrder.objects.all().filter(supplier=supplier, factured=False, created__year=current_year.year)
 
     if request.method == 'POST':
         # get submitted orders
@@ -472,7 +481,8 @@ def buyorderorder_list_by_supplier(request, pk):
             return redirect(f'../../buyor/buyorder_pdf/{pk}')
 
     context = {
-        'buyorders': buyorders
+        'buyorders': buyorders,
+        'current_year': current_year
     }
     return render(request, 'buyorder/billing_list_buyorder.html', context)
 

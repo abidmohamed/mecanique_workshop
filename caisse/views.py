@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import cache_page
 
 # Create your views here.
+from accounts.models import CurrentYear
 from caisse.forms import TransactionForm, DateForm, PeriodForm, CategoryTransactionForm
 from caisse.models import Caisse, CaisseHistory, Transaction, TransactionCategory
 from payments.models import SellOrderPayment, BuyOrderPayment, ServicePayment
@@ -76,15 +77,18 @@ def update_transaction(request, pk):
 def transaction_list(request):
     dateform = DateForm()
     periodform = PeriodForm()
-    transactions = Transaction.objects.all()
+    # current year
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
+    transactions = Transaction.objects.filter(trans_date__year=current_year.year)
 
     # now time
     now = datetime.now()
     chosen_date = datetime.now()
 
-    customerpayments = SellOrderPayment.objects.all().filter(pay_status='Cash')
-    supplierpayments = BuyOrderPayment.objects.all().filter(pay_status='Cash')
-    servicepayments = ServicePayment.objects.all()
+    customerpayments = SellOrderPayment.objects.all().filter(pay_status='Cash', pay_date__year=current_year.year)
+    supplierpayments = BuyOrderPayment.objects.all().filter(pay_status='Cash', pay_date__year=current_year.year)
+    servicepayments = ServicePayment.objects.filter(pay_date__year=current_year.year)
 
     total_customer_payments = 0
     total_supplier_payments = 0
@@ -215,6 +219,8 @@ def transaction_list(request):
         'total_supplier_payments': total_supplier_payments,
         'total_service_payments': total_service_payments,
         'total_transaction_payments': total_transaction_payments,
+
+        'current_year': current_year,
     }
 
     return render(request, "caisse/transaction_list.html", context)

@@ -2,6 +2,9 @@ from django.db import models
 
 
 # Create your models here.
+from accounts.models import CurrentYear
+
+
 class Caisse(models.Model):
     caisse_value = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     updated = models.DateTimeField(auto_now=True)
@@ -20,7 +23,9 @@ class TransactionCategory(models.Model):
         return self.name
 
     def get_total_cost(self):
-        return round(sum(item.amount for item in self.items.all()), 2)
+        return round(sum(item.amount for item in self.items.filter(
+            trans_date__year=CurrentYear.objects.all().filter()[:1].get().year)
+                         ), 2)
 
 
 class Transaction(models.Model):

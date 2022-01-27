@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from accounts.models import CurrentYear
+
 
 class City(models.Model):
     name = models.CharField(max_length=50)
@@ -30,7 +32,11 @@ class Customer(models.Model):
         return self.vehicles.all().filter(customer=self)
 
     def get_debt(self):
-        return round(sum(order.debt for order in self.orders.filter(customer=self, confirmed=True)), 2)
+        return round(sum(order.debt for order in self.orders.filter(
+            customer=self,
+            confirmed=True,
+            created__year=CurrentYear.objects.all().filter()[:1].get().year)
+                         ), 2)
 
 
 class Enterprise(models.Model):
@@ -50,6 +56,7 @@ class Enterprise(models.Model):
 
     def __str__(self):
         return self.customer.__str__()
+
 
 class Avancements(models.Model):
     number = models.IntegerField()
