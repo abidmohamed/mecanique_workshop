@@ -184,8 +184,10 @@ def delete_customer(request, pk):
 
 def customer_detail(request, pk):
     customer = get_object_or_404(Customer, id=pk)
+    # current year
+    current_year = CurrentYear.objects.all().filter()[:1].get()
 
-    orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False)
+    orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False, created__year=current_year.year)
     # total order debt
     total_order_debt = orders.aggregate(Sum('debt'))['debt__sum']
     # total order
@@ -193,14 +195,15 @@ def customer_detail(request, pk):
     for order in orders:
         total_order += order.get_ttc()
     # print(total_order)
-    proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False)
+    proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False, created__year=current_year.year)
 
-    factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer)
+    factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer, created__year=current_year.year)
     # total bills debt
-    total_bills_debt = Order.objects.all().filter(customer=customer, confirmed=True, factured=True).aggregate(Sum('debt'))['debt__sum']
+    total_bills_debt = Order.objects.all().filter(customer=customer, confirmed=True, factured=True,
+                                                  created__year=current_year.year).aggregate(Sum('debt'))['debt__sum']
     # total bills
     total_bills = 0
-    bill_orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=True)
+    bill_orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=True, created__year=current_year.year)
     for order in bill_orders:
         total_bills += order.get_ttc()
 

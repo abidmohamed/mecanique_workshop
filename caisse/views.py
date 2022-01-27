@@ -34,6 +34,9 @@ def transaction_category_list(request):
     return render(request, 'category/list.html', context)
 
 
+def transaction_category_details(request, pk):
+    pass
+
 def create_transaction(request):
     transaction_form = TransactionForm()
     if request.method == 'POST':
