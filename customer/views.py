@@ -1,5 +1,6 @@
 from django.db.models import Sum
 
+from accounts.models import CurrentYear
 from customer.forms import UserForm, CustomerForm, CityForm, EnterpriseForm, AvancementForm
 from customer.models import Customer, City, Enterprise, Avancements
 from django.contrib.auth.models import User, Group
