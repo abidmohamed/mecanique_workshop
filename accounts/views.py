@@ -168,10 +168,10 @@ def home(request):
     allcustomers = Customer.objects.all()
     allsuppliers = Supplier.objects.all()
     # Caisse
-    transactions = Transaction.objects.all()
-    customerpayments = SellOrderPayment.objects.all()
-    supplierpayments = BuyOrderPayment.objects.all()
-    servicepayments = ServicePayment.objects.all()
+    transactions = Transaction.objects.filter(trans_date__year=current_year.year)
+    customerpayments = SellOrderPayment.objects.filter(pay_date__year=current_year.year)
+    supplierpayments = BuyOrderPayment.objects.filter(pay_date__year=current_year.year)
+    servicepayments = ServicePayment.objects.filter(pay_date__year=current_year.year)
     # today Caisse
 
     today_transactions = Transaction.objects.all().filter(trans_date__year=current_year.year,
@@ -193,7 +193,7 @@ def home(request):
     caisse = 0
     # Bank
     bank = 0
-    bank_transactions = BankTransaction.objects.filter(date_created__year=current_year.year)
+    bank_transactions = BankTransaction.objects.filter(trans_date__year=current_year.year)
     # Customer
     customers = Customer.objects.all().count()
     # Supplier
@@ -206,7 +206,7 @@ def home(request):
     # Total suppliers Credit
     totalcredit = 0
     for supplier in allsuppliers:
-        totalcredit += supplier.credit
+        totalcredit += supplier.get_credit()
 
     # BuyOrder
     buyorder_number = BuyOrder.objects.all().count()

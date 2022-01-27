@@ -10,7 +10,7 @@ from supplier.models import Supplier
 
 class BuyOrder(models.Model):
     user = models.IntegerField(default=0)
-    supplier = models.ForeignKey(Supplier, on_delete=models.DO_NOTHING)
+    supplier = models.ForeignKey(Supplier, on_delete=models.DO_NOTHING, related_name="orders")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)

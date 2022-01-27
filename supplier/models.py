@@ -2,6 +2,9 @@ from django.db import models
 
 
 # Create your models here.
+from accounts.models import CurrentYear
+
+
 class Supplier(models.Model):
     firstname = models.CharField(max_length=250, null=True)
     lastname = models.CharField(max_length=250, null=True)
@@ -14,3 +17,9 @@ class Supplier(models.Model):
 
     def __str__(self):
         return self.firstname + " " + self.lastname
+
+    def get_credit(self):
+        return round(sum(order.debt for order in self.orders.filter(
+            supplier=self,
+            created__year=CurrentYear.objects.all().filter()[:1].get().year)
+                         ), 2)

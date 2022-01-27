@@ -3,6 +3,7 @@ from datetime import date
 from django.db.models import Q
 from django.shortcuts import render, redirect
 # Create your views here.
+from accounts.models import CurrentYear
 from bank.forms import BankTransactionForm
 from bank.models import BankTransaction
 from caisse.forms import DateForm, PeriodForm
@@ -26,10 +27,15 @@ def create_transaction(request):
 def transaction_list(request):
     dateform = DateForm()
     periodform = PeriodForm()
-    transactions = BankTransaction.objects.all().order_by('trans_date')
+    # current year
+    current_year = CurrentYear.objects.all().filter()[:1].get()
 
-    customerpayments = SellOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Verement')).order_by('pay_date')
-    supplierpayments = BuyOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Verement')).order_by('pay_date')
+    transactions = BankTransaction.objects.filter(trans_date__year=current_year.year).order_by('trans_date')
+
+    customerpayments = SellOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Verement'),
+                                                             pay_date__year=current_year.year).order_by('pay_date')
+    supplierpayments = BuyOrderPayment.objects.all().filter(Q(pay_status='Cheque') | Q(pay_status='Verement'),
+                                                            pay_date__year=current_year.year).order_by('pay_date')
     total_per_period = 0
     income_per_period = 0
     expense_per_period = 0
