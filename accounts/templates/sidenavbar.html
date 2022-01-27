@@ -91,8 +91,9 @@
             {% endif %}
                 <hr>
                 <a class="collapse-item" href="{% url 'caisse:create_transaction_category' %}">{% trans "Add Category" %}</a>
+            {% if request.user|has_group:"admin" %}
                 <a class="collapse-item" href="{% url 'caisse:transaction_category_list' %}">{% trans "Category List" %}</a>
-
+            {% endif %}
             </div>
         </div>
     </li>
