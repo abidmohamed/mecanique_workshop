@@ -198,7 +198,7 @@ def customer_detail(request, pk):
     # print(total_order)
     proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False, created__year=current_year.year)
 
-    factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer, created__year=current_year.year)
+    factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer, order__created__year=current_year.year)
     # total bills debt
     total_bills_debt = Order.objects.all().filter(customer=customer, confirmed=True, factured=True,
                                                   created__year=current_year.year).aggregate(Sum('debt'))['debt__sum']
