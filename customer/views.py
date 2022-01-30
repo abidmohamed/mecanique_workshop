@@ -213,6 +213,9 @@ def customer_detail(request, pk):
     # Advancements
     avancements = customer.avancement.all()
 
+    # vehicles of the customer
+    vehicles = customer.vehicles.all()
+
     context = {
         'customer': customer,
         'orders': orders,
@@ -222,7 +225,8 @@ def customer_detail(request, pk):
         'total_bills_debt': total_bills_debt, 'total_order': total_order,
         'total_bills': total_bills,
         'avancements': avancements,
-        'current_year': current_year
+        'current_year': current_year,
+        'vehicles': vehicles,
     }
     return render(request, 'customer/detail.html', context)
 
