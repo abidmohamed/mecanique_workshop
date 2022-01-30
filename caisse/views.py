@@ -144,7 +144,7 @@ def update_transaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
     transaction_form = TransactionForm(instance=transaction)
     if request.method == 'POST':
-        transaction_form = TransactionForm(request.POST)
+        transaction_form = TransactionForm(request.POST, instance=transaction)
         if transaction_form.is_valid():
             transaction_form.save()
 

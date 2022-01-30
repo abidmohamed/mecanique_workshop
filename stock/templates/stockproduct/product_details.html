@@ -1,0 +1,132 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>{% trans "Sell Orders" %}</h5>
+        </div>
+         <div class="card card-body">
+
+            <form id="order-form" action="" method="post">
+
+                    {% csrf_token %}
+                <div class="form-group">
+               <!-- date picker -->
+                <label> {% trans "Pick a Date" %}</label>
+                    <br>
+                    {{dateform}}
+                    <br>
+                    <label >{% trans "Date:" %}</label>
+                    {{chosen_date}}
+                    <br>
+            <input class="form-control btn btn-primary" type="submit" name="submit">
+            </div>
+            </form>
+        </div>
+        <div class="card card-body bg-primary">
+            <h5 class=" text-center text-white">{{stockproduct}} : {{sell_quantity}}</h5>
+        </div>
+        <div class="card card-body">
+            <table id="table_id" class="table display text-center">
+                <thead>
+                <tr>
+                    <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "Bill" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order, item, quantity in sell_list %}
+
+                <tr>
+                    <td>{{order.id}}</td>
+                    <td>{{order.customer}}</td>
+                    <td>{{order.order_date}}</td>
+                    <td>{{order.factured}}</td>
+                    <td>{{quantity}}</td>
+                    <td>
+                         <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">{% trans "Details" %}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div class="card card-body">
+            <h5>{% trans "Buy Orders" %}</h5>
+        </div>
+        <div class="card card-body bg-danger">
+            <h5 class=" text-center text-white">{{product}} : {{buy_quantity}}</h5>
+        </div>
+        <div class="card card-body">
+            <table id="table_buyorder" class="table display text-center">
+                <thead>
+                <tr>
+                    <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Supplier" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order, item, quantity in final_buylist %}
+
+                <tr>
+                    <td>{{order.id}}</td>
+                    <td>{{order.supplier}}</td>
+                    <td>{{order.order_date}}</td>
+                    <td>{{quantity}}</td>
+                    <td>
+                        <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' order.id %}">Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block jsscript %}
+<!-- Date Picker-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+<!-- custom javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
+<!-- Data Table  -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+<!-- Date Picker-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script type='text/javascript'>
+    //Data Table init
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+    $('#table_buyorder').DataTable();
+} );
+
+// Date Picker
+$('input[name="date"]').daterangepicker();
+
+
+</script>
+{% endblock %}

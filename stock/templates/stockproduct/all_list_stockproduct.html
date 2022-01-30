@@ -22,6 +22,7 @@
                     <th>{% trans "Quantity" %}</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
               </thead>
                 <tbody>
@@ -53,6 +54,9 @@
                     </td>
                     <td>
                         <a class="btn btn-danger " href="{% url 'stock:delete_stockproduct' prod.id %}">{% trans "Delete" %}</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning " href="{% url 'stock:stock_product_details' prod.id %}">{% trans "Details" %}</a>
                     </td>
                 </tr>
                 {% endfor %}
