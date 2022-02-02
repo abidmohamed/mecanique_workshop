@@ -792,8 +792,8 @@ def sellorder_list(request):
     # chosen year
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
-    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created__day=now.day,
-                                            created__month=now.month, created__year=current_year.year)
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False, order_date__day=now.day,
+                                            order_date__month=now.month, order_date__year=current_year.year)
     sellorders_customers = Customer.objects.all()
     # sellorders_customers = Order.customer.all()
     # print(sellorders_customers)
@@ -813,7 +813,7 @@ def sellorder_list(request):
             chosencustomer = ''.join(chosencustomer[0].split())
             customer = Customer.objects.get(id=chosencustomer)
             sellorders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False,
-                                                    created__year=current_year.year)
+                                                    order_date__year=current_year.year)
 
         # Search by date removed
         # chosen_date = alldata.get("date")
@@ -874,9 +874,9 @@ def sellorder_list_by_date(request):
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
 
-    sellorders = Order.objects.all().filter(confirmed=True, factured=False, created__year=current_year.year,
-                                            created__day=now.day,
-                                            created__month=now.month)
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False, order_date__year=current_year.year,
+                                            order_date__day=now.day,
+                                            order_date__month=now.month)
 
     if request.method == 'POST':
         alldata = request.POST
@@ -936,7 +936,7 @@ def factured_sellorder_list(request):
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
 
-    sellorders = Order.objects.filter(created__year=current_year.year, factured=True)
+    sellorders = Order.objects.filter(order_date__year=current_year.year, factured=True)
     context = {
         'sellorders': sellorders,
         'list_type': list_type,
@@ -951,8 +951,8 @@ def performa_sellorder_list(request):
     now = datetime.now()
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
-    sellorders = Order.objects.all().filter(confirmed=False, factured=False, created__day=now.day,
-                                            created__month=now.month, created__year=current_year.year)
+    sellorders = Order.objects.all().filter(confirmed=False, factured=False, order_date__day=now.day,
+                                            order_date__month=now.month, order_date__year=current_year.year)
 
     customers = Customer.objects.all()
     if request.method == 'POST':
@@ -965,7 +965,7 @@ def performa_sellorder_list(request):
             chosen_customer = ''.join(chosencustomer[0].split())
             customer = Customer.objects.get(id=chosen_customer)
             sellorders = Order.objects.all().filter(customer=customer, confirmed=False, factured=False,
-                                                    created__year=current_year.year)
+                                                    order_date__year=current_year.year)
 
     context = {
         'sellorders': sellorders,
@@ -1010,7 +1010,7 @@ def sellorder_list_by_customer(request, pk):
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
     sellorders = Order.objects.all().filter(customer=customer, factured=False,
-                                            created__year=current_year.year)
+                                            order_date__year=current_year.year)
 
     if request.method == 'POST':
         # get submitted orders
@@ -1505,8 +1505,8 @@ def get_orders_pannes(request):
     periodform = PeriodForm()
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
-    orders = Order.objects.all().filter(confirmed=True, created__year=current_year.year,
-                                        created__month=now.month, created__day=now.day)
+    orders = Order.objects.all().filter(confirmed=True, order_date__year=current_year.year,
+                                        order_date__month=now.month, order_date__day=now.day)
     pannes = Panne.objects.none()
     totalpanne = 0
     chief_percentage = 0
@@ -1572,8 +1572,8 @@ def get_orders_pieces(request):
     periodform = PeriodForm()
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
-    orders = Order.objects.all().filter(confirmed=True, created__year=current_year.year,
-                                        created__month=now.month, created__day=now.day)
+    orders = Order.objects.all().filter(confirmed=True, order_date__year=current_year.year,
+                                        order_date__month=now.month, order_date__day=now.day)
     pieces = OrderItem.objects.none()
     totalpiece = 0
     if request.method == 'POST':
@@ -1626,8 +1626,8 @@ def get_orders_pannes_payed(request):
     periodform = PeriodForm()
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
-    orders = Order.objects.all().filter(created__year=current_year.year,
-                                        created__month=now.month, created__day=now.day,
+    orders = Order.objects.all().filter(order_date__year=current_year.year,
+                                        order_date__month=now.month, order_date__day=now.day,
                                         paid=True)
     pannes = Panne.objects.none()
     totalpanne = 0
@@ -1658,10 +1658,10 @@ def get_orders_pannes_payed(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(created__year__gte=int(start_year), created__month__gte=int(start_month),
-                                            created__day__gte=int(start_day),
-                                            created__year__lte=int(end_year), created__month__lte=int(end_month),
-                                            created__day__lte=int(end_day)
+        orders = Order.objects.all().filter(order_date__year__gte=int(start_year), order_date__month__gte=int(start_month),
+                                            order_date__day__gte=int(start_day),
+                                            order_date__year__lte=int(end_year), order_date__month__lte=int(end_month),
+                                            order_date__day__lte=int(end_day)
                                             )
     for order in orders:
         pannes |= order.pannes.all()
@@ -1686,8 +1686,8 @@ def get_orders_pieces_payed(request):
     periodform = PeriodForm()
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
-    orders = Order.objects.all().filter(created__year=current_year.year,
-                                        created__month=now.month, created__day=now.day,
+    orders = Order.objects.all().filter(order_date__year=current_year.year,
+                                        order_date__month=now.month, order_date__day=now.day,
                                         paid=True)
     pieces = OrderItem.objects.none()
     totalpiece = 0
@@ -1718,8 +1718,8 @@ def get_orders_pieces_payed(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(created__gte=date(int(start_year), int(start_month), int(start_day)),
-                                            created__lte=date(int(end_year), int(end_month), int(end_day)))
+        orders = Order.objects.all().filter(order_date__gte=date(int(start_year), int(start_month), int(start_day)),
+                                            order_date__lte=date(int(end_year), int(end_month), int(end_day)))
     for order in orders:
         pieces |= order.items.all()
         totalpiece += order.get_total_cost()

@@ -203,7 +203,7 @@ def customer_detail(request, pk):
     chosen_date = datetime.now()
 
     orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False,
-                                        created__year=current_year.year)
+                                        order_date__year=current_year.year)
     # total order debt
     total_order_debt = orders.aggregate(Sum('debt'))['debt__sum']
     # total order
@@ -211,17 +211,17 @@ def customer_detail(request, pk):
     for order in orders:
         total_order += order.get_ttc()
     # print(total_order)
-    proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False, created__year=current_year.year)
+    proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False, order_date__year=current_year.year)
 
     factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer,
-                                                            order__created__year=current_year.year)
+                                                            order__order_date__year=current_year.year)
     # total bills debt
     total_bills_debt = Order.objects.all().filter(customer=customer, confirmed=True, factured=True,
-                                                  created__year=current_year.year).aggregate(Sum('debt'))['debt__sum']
+                                                  order_date__year=current_year.year).aggregate(Sum('debt'))['debt__sum']
     # total bills
     total_bills = 0
     bill_orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=True,
-                                             created__year=current_year.year)
+                                             order_date__year=current_year.year)
     for order in bill_orders:
         total_bills += order.get_ttc()
 
