@@ -1,6 +1,9 @@
-from django.db.models import Sum
+from datetime import datetime, date
+
+from django.db.models import Sum, Q
 
 from accounts.models import CurrentYear
+from caisse.forms import DateForm
 from customer.forms import UserForm, CustomerForm, CityForm, EnterpriseForm, AvancementForm
 from customer.models import Customer, City, Enterprise, Avancements
 from django.contrib.auth.models import User, Group
@@ -124,18 +127,25 @@ def add_customer_rdv(request):
 
 
 def customer_list(request):
-    customers = Customer.objects.only("firstname", "lastname", "phone", "address", "debt",)
+    customers = Customer.objects.only("firstname", "lastname", "phone", "address", "debt", )
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
 
     context = {
-        'customers': customers
+        'customers': customers,
+        'current_year': current_year,
     }
     return render(request, 'customer/list_customer.html', context)
 
 
 def customer_debt_list(request):
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
     customers = Customer.objects.all().filter(debt__gt=0)
     context = {
-        'customers': customers
+        'customers': customers,
+        'current_year': current_year,
     }
     return render(request, 'customer/list_customer.html', context)
 
@@ -185,10 +195,15 @@ def delete_customer(request, pk):
 
 def customer_detail(request, pk):
     customer = get_object_or_404(Customer, id=pk)
+    # TimeField related
     # current year
     current_year = CurrentYear.objects.all().filter()[:1].get()
+    dateform = DateForm()
+    # now time
+    chosen_date = datetime.now()
 
-    orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False, created__year=current_year.year)
+    orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False,
+                                        created__year=current_year.year)
     # total order debt
     total_order_debt = orders.aggregate(Sum('debt'))['debt__sum']
     # total order
@@ -198,13 +213,15 @@ def customer_detail(request, pk):
     # print(total_order)
     proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False, created__year=current_year.year)
 
-    factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer, order__created__year=current_year.year)
+    factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer,
+                                                            order__created__year=current_year.year)
     # total bills debt
     total_bills_debt = Order.objects.all().filter(customer=customer, confirmed=True, factured=True,
                                                   created__year=current_year.year).aggregate(Sum('debt'))['debt__sum']
     # total bills
     total_bills = 0
-    bill_orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=True, created__year=current_year.year)
+    bill_orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=True,
+                                             created__year=current_year.year)
     for order in bill_orders:
         total_bills += order.get_ttc()
 
@@ -215,6 +232,117 @@ def customer_detail(request, pk):
 
     # vehicles of the customer
     vehicles = customer.vehicles.all()
+
+    # searching by date
+    if request.method == 'POST':
+        alldata = request.POST
+
+        # Search by date
+        chosen_date = alldata.get("date")
+        chosen_date = chosen_date.split("-", 1)
+        chosen_start_date = chosen_date[0]
+        chosen_end_date = chosen_date[1]
+
+        chosen_start_date = chosen_start_date.split("/", 2)
+        start_month = chosen_start_date[0]
+        start_year = chosen_start_date[2]
+        start_day = chosen_start_date[1]
+        # Remove white spaces
+        start_year = ''.join(start_year.split())
+        start_month = ''.join(start_month.split())
+        start_day = ''.join(start_day.split())
+
+        chosen_end_date = chosen_end_date.split("/", 2)
+        end_month = chosen_end_date[0]
+        end_year = chosen_end_date[2]
+        end_day = chosen_end_date[1]
+        # Remove white spaces
+        end_year = ''.join(end_year.split())
+        end_month = ''.join(end_month.split())
+        end_day = ''.join(end_day.split())
+
+        # Filter order
+        orders = Order.objects.all().filter(
+            Q(
+                order_date__gt=date(int(start_year), int(start_month),
+                                    int(start_day)),
+                order_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order_date=date(int(end_year), int(end_month), int(end_day))
+            )
+            ,
+            customer=customer, confirmed=True, factured=False,
+        )
+        # total order debt
+        total_order_debt = orders.aggregate(Sum('debt'))['debt__sum']
+        # total order
+        total_order = 0
+        for order in orders:
+            total_order += order.get_ttc()
+        # print(total_order)
+        # filter performa
+        proforma_orders = Order.objects.all().filter(
+            Q(
+                order_date__gt=date(int(start_year), int(start_month),
+                                    int(start_day)),
+                order_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order_date=date(int(end_year), int(end_month), int(end_day))
+            )
+            , customer=customer, confirmed=False,
+        )
+
+        # filter bills
+        factured_orders = SellOrderFacture.objects.all().filter(
+            Q(
+                order__order_date__gt=date(int(start_year), int(start_month),
+                                           int(start_day)),
+                order__order_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order__order_date=date(int(end_year), int(end_month), int(end_day))
+            )
+            ,
+            order__customer=customer,
+        )
+
+        # total bills debt
+        total_bills_debt = Order.objects.all().filter(
+            Q(
+                order_date__gt=date(int(start_year), int(start_month),
+                                    int(start_day)),
+                order_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order_date=date(int(end_year), int(end_month), int(end_day))
+            )
+            ,
+            customer=customer, confirmed=True, factured=True
+        ).aggregate(Sum('debt'))[
+            'debt__sum']
+        # total bills
+        total_bills = 0
+        bill_orders = Order.objects.all().filter(
+            Q(
+                order_date__gt=date(int(start_year), int(start_month),
+                                    int(start_day)),
+                order_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order_date=date(int(end_year), int(end_month), int(end_day))
+            )
+            ,
+            customer=customer, confirmed=True, factured=True,
+        )
+        for order in bill_orders:
+            total_bills += order.get_ttc()
 
     context = {
         'customer': customer,
@@ -227,6 +355,8 @@ def customer_detail(request, pk):
         'avancements': avancements,
         'current_year': current_year,
         'vehicles': vehicles,
+        "dateform": dateform,
+        'chosen_date': chosen_date,
     }
     return render(request, 'customer/detail.html', context)
 

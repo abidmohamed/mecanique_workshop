@@ -26,8 +26,6 @@ from stock.models import StockProduct
 from num2words import num2words
 
 
-
-
 # confirmation get order object from the stock view Of a Real Order
 def confirm_order(request, pk):
     stockproducts = StockProduct.objects.all()
@@ -224,7 +222,7 @@ def confirm_order_performa(request, pk):
         'discountform': discountform,
         'stockproducts': stockproducts,
     }
-    return render(request, 'sellorder/sellorder_confirmation.html', context)
+    return render(request, 'sellorder/proforma_confirmation.html', context)
 
 
 # Update Performa
@@ -589,27 +587,27 @@ def order_item_delete(request, orderpk, itempk):
     return render(request, 'sellorder/delete_item.html', context)
 
 
-# Update order delete item
-def order_item_delete(request, orderpk, itempk):
+# Proforma order delete item
+def proforma_item_delete(request, orderpk, itempk):
     sellorder = Order.objects.get(id=orderpk)
     if sellorder.items.filter(id=itempk):
         item = sellorder.items.get(id=itempk)
     else:
-        return redirect('sellorder:update_order', sellorder.id)
+        return redirect('sellorder:confirm_order_performa', sellorder.id)
     print(item)
     if request.method == 'POST':
         item = sellorder.items.get(id=itempk)
-        stockproduct = StockProduct.objects.get(id=item.stockproduct.id)
-        stockproduct.quantity += item.quantity
-        stockproduct.save()
+        # stockproduct = StockProduct.objects.get(id=item.stockproduct.id)
+        # stockproduct.quantity += item.quantity
+        # stockproduct.save()
         item.delete()
-        return redirect('sellorder:update_order', sellorder.id)
+        return redirect('sellorder:confirm_order_performa', sellorder.id)
 
     context = {
         'sellorder': sellorder,
         'item': item
     }
-    return render(request, 'sellorder/update_order_delete_item.html', context)
+    return render(request, 'sellorder/proforma_order_delete_item.html', context)
 
 
 # Confirm order delete item
@@ -653,6 +651,26 @@ def order_panne_delete(request, orderpk, itempk):
         'item': item
     }
     return render(request, 'sellorder/update_order_delete_panne.html', context)
+
+
+# delete panne from order proforma
+def proforma_panne_delete(request, orderpk, itempk):
+    sellorder = Order.objects.get(id=orderpk)
+    if sellorder.pannes.filter(id=itempk):
+        item = sellorder.pannes.get(id=itempk)
+    else:
+        return redirect('sellorder:confirm_order_performa', sellorder.id)
+    print(item)
+    if request.method == 'POST':
+        item = sellorder.pannes.get(id=itempk)
+        item.delete()
+        return redirect('sellorder:confirm_order_performa', sellorder.id)
+
+    context = {
+        'sellorder': sellorder,
+        'item': item
+    }
+    return render(request, 'sellorder/proforma_order_delete_panne.html', context)
 
 
 # delete panne from order confirm
@@ -711,6 +729,25 @@ def order_service_delete(request, orderpk, itempk):
         'item': item
     }
     return render(request, 'sellorder/update_order_delete_service.html', context)
+
+
+# delete service in update order
+def proforma_service_delete(request, orderpk, itempk):
+    sellorder = Order.objects.get(id=orderpk)
+    if sellorder.services.filter(id=itempk):
+        item = sellorder.services.get(id=itempk)
+    else:
+        return redirect('sellorder:confirm_order_performa', sellorder.id)
+    if request.method == 'POST':
+        item = sellorder.services.get(id=itempk)
+        item.delete()
+        return redirect('sellorder:confirm_order_performa', sellorder.id)
+
+    context = {
+        'sellorder': sellorder,
+        'item': item
+    }
+    return render(request, 'sellorder/proforma_order_delete_service.html', context)
 
 
 # order details
@@ -821,6 +858,7 @@ def sellorder_list(request):
         "dateform": dateform,
         'customers': customers,
         'list_type': list_type,
+        'current_year': current_year,
     }
     return render(request, 'sellorder/list_sellorder.html', context)
 
@@ -888,6 +926,7 @@ def sellorder_list_by_date(request):
         "dateform": dateform,
         'list_type': list_type,
         'chosen_date': chosen_date,
+        'current_year': current_year,
     }
     return render(request, 'sellorder/list_sellorder_by_date.html', context)
 
@@ -897,10 +936,11 @@ def factured_sellorder_list(request):
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
 
-    sellorders = SellOrderFacture.objects.filter(created__year=current_year.year)
+    sellorders = Order.objects.filter(created__year=current_year.year, factured=True)
     context = {
         'sellorders': sellorders,
         'list_type': list_type,
+        'current_year': current_year,
     }
     return render(request, 'sellorder/list_sellorder_facture.html', context)
 
@@ -931,6 +971,7 @@ def performa_sellorder_list(request):
         'sellorders': sellorders,
         'list_type': list_type,
         'customers': customers,
+        'current_year': current_year,
     }
     return render(request, 'sellorder/list_sellorder.html', context)
 

@@ -1,0 +1,460 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>{% trans "Proforma Order Confirmation" %}</h5>
+        </div>
+        <div class="card card-body">
+            <h2>{% trans "Customer" %}: <span>{{customer}}</span></h2>
+                <label for="total-price">{% trans "Total" %} :</label>
+
+            <input id="total-price" type="text" class="form-control" value="{{sellorder.get_total_item_panne}}" disabled>
+            <h2>{{get_total_item_panne}}</h2>
+            <br>
+            <hr>
+            <div class="row">
+                    <div class="col-12">
+                        <div class="">
+                            <!-- Button Add New Product -->
+                            <a class="btn btn btn-primary form-control" href="{% url 'stock:modal_order_stockproduct_list' sellorder.id %}"><i class="fas fa-plus-circle"></i> {% trans "Product" %}</a>
+                            <br>
+                            <br>
+                             <!-- Button Add New Panne -->
+                        <a class="btn btn btn-success form-control"
+                           href="{% url 'rdv:confirm_order_panne_list' sellorder.id %}"><i class="fas fa-plus-circle"></i> {% trans "Panne" %}</a>
+                        <br>
+                        <br>
+                             <!-- Button Add New Service -->
+                        <a class="btn btn btn-info form-control"
+                           href="{% url 'services:confirm_order_service_list' sellorder.id %}"><i class="fas fa-plus-circle"></i> {% trans "Service" %}</a>
+                        <br>
+                        </div>
+                    </div>
+                </div>
+            <br>
+            <hr>
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date" required>
+                <br>
+                <input onkeyup="calc()" id="discount-value" name="discount-value" type="number" class="form-control" value="0">
+                <select onchange="calc()" class="form-control" name="discount-status" id="discount-status">
+                    <option value="1"> {% trans "Percentage" %}</option>
+                    <option value="2"> {% trans "Amount" %}</option>
+                </select>
+                <hr>
+                <br>
+                <hr>
+                <h3>{% trans "TVA" %}</h3>
+                <input onkeyup="calc()" class="form-control" type="number" value="0" id="tva" name="tva">
+                <br>
+                <hr>
+                <h3>{% trans "Timbre" %}</h3>
+                <input onkeyup="calc()" class="form-control" type="number" value="0" id="timbre" name="timbre">
+                <br>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>{% trans "Order ID" %}</th>
+                        <th>{% trans "Customer" %}</th>
+                        <th>{% trans "Vehicle" %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{sellorder.id}}</td>
+                        <td>{{sellorder.customer}}</td>
+                        <td>{{sellorder.vehicle}}</td>
+                    </tr>
+                    <thead class="thead-light">
+                    <tr>
+
+                        <th>{% trans "Product Brand" %}</th>
+                        <th>{% trans "Product Name" %}</th>
+                        <th>{% trans "Sell Price DZD" %}</th>
+                        <th>{% trans "Buy Price DZD" %}</th>
+                        <th>{% trans "Quantity" %}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    {% for item in sellorder.items.all %}
+                    <tr>
+                        <td class="table-light">
+                            <input class="form-control" type="text" value="{{ item.stockproduct.product.brand }}" disabled>
+                        </td>
+                        <td class="table-light">
+                            <input class="form-control" type="text" value="{{ item.stockproduct.product.name }}" name="names"
+                                   disabled>
+                        </td>
+                        <td class="table-light ">
+                            <input onkeyup="calc()" class="form-control" type="text" name="prices" value="{{ item.price }}" required>{{ item.price }}
+
+                        </td>
+                        <td class="table-light ">
+                            {{ item.stockproduct.product.buyprice }}
+
+                        </td>
+                        <td class="table-light ">
+                            <input onkeyup="calc()" class="form-control" type="text" name="quantities" value="{{ item.quantity }}" required>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'sellorder:proforma_item_delete' sellorder.id item.id %}">{% trans "Delete" %}</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <table class="thead-light">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>{% trans "Mo" %}</th>
+                        <th>{% trans "Price" %}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in sellorder.pannes.all %}
+                    <tr>
+                        <td>{{item.panne.desc}}</td>
+                        <td><input onkeyup="calc()" type="text" class="form-control" name="panne-prices" value="{{item.price}}" required>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'sellorder:proforma_panne_delete' sellorder.id item.id %}">{% trans "Delete" %}</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+                <br>
+                <table class="thead-light">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>{% trans "Provider" %}</th>
+                        <th>{% trans "Service" %}</th>
+                        <th>{% trans "Price" %}</th>
+                        <th>{% trans "Charge" %}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in sellorder.services.all %}
+                    <tr>
+                        <td>{{item.service.provider}}</td>
+                        <td>{{item.service.name}}</td>
+                        <td><input onkeyup="calc()" type="text" class="form-control" name="service-prices" value="{{item.price}}" required>
+                        <td><input onkeyup="calc()" type="text" class="form-control" name="service-charge" value="{{item.charge}}" required>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger "
+                               href="{% url 'sellorder:proforma_service_delete' sellorder.id item.id %}">{% trans "Delete" %}</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+                <br>
+                <input class="form-control btn btn-primary" type="submit" name="submit">
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+// treat numbers from final ","
+    String.prototype.replaceAt = function(index, replacement) {
+    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+    }
+
+    // Treat total value on loading page
+    window.addEventListener("load", function(){
+        total_price = document.getElementById("total-price").value;
+        total_price = total_price.replace(/\s/g, "");
+        var comma_index = total_price.length - 3
+        if(total_price.indexOf(',') > -1){
+            total_price = total_price.replaceAt(comma_index , ".");
+            // any rest commas
+            total_price = total_price.replace(",", "");
+            }
+        document.getElementById("total-price").value = total_price  
+
+        // fixing all fields from comma 
+        var prices = document.getElementsByName("prices");
+    var panne_prices = document.getElementsByName("panne-prices");
+    var service_prices = document.getElementsByName("service-prices");
+    var service_charges = document.getElementsByName("service-charge");
+    var quantities = document.getElementsByName("quantities");
+    var discount_status = document.getElementById("discount-status");
+    var discount_value = document.getElementById("discount-value");
+    var tva_value = document.getElementById("tva");
+    var timbre_value = document.getElementById("timbre");
+
+    // Prices 
+    for (var i = 0; i<prices.length; i++)
+    {
+        // made for server live
+        // Removing Spaces
+        if (/\s/g.test(prices[i].value)){
+        prices[i].value = prices[i].value.replace(/\s/g, "");
+        }else{
+         // Removing Comma
+         var comma_index = prices[i].value.length - 3
+            if(prices[i].value.indexOf(',') > -1){
+                prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+                // any rest commas
+                prices[i].value = prices[i].value.replace(",", "");
+            }
+        }
+         // Removing Comma
+         var comma_index = prices[i].value.length - 3
+         if(prices[i].value.indexOf(',') > -1){
+            prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            prices[i].value = prices[i].value.replace(",", "");
+        }
+        // any rest commas
+        //  prices[i].value = prices[i].value.replace(",", "");
+        // Removing quantity comma
+        var comma_index = quantities[i].value.length - 3
+        if(quantities[i].value.indexOf(',') > -1){
+            quantities[i].value = quantities[i].value.replaceAt(comma_index , ".");
+        }
+    }
+
+    // Fixing Panne Prices
+    for (var i = 0; i<panne_prices.length; i++){
+        // Fixing numbers to calculate
+        if (/\s/g.test(panne_prices[i].value)){
+        panne_prices[i].value = panne_prices[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = panne_prices[i].value.length - 3
+         if(panne_prices[i].value.indexOf(',') > -1){
+            panne_prices[i].value = panne_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            panne_prices[i].value = panne_prices[i].value.replace(",", "");
+        }
+        }
+        // Removing Comma
+         var comma_index = panne_prices[i].value.length - 3
+         if(panne_prices[i].value.indexOf(',') > -1){
+            panne_prices[i].value = panne_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            panne_prices[i].value = panne_prices[i].value.replace(",", "");
+        }
+    }
+
+    // Adding Service 
+    for (var i = 0; i<service_prices.length; i++){
+        // Fixing numbers to calculate
+        // prices
+        if (/\s/g.test(service_prices[i].value)){
+        service_prices[i].value = service_prices[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = service_prices[i].value.length - 3
+         if(service_prices[i].value.indexOf(',') > -1){
+            service_prices[i].value = service_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_prices[i].value = service_prices[i].value.replace(",", "");
+        }
+        }
+
+        // service_charges
+        if (/\s/g.test(service_charges[i].value)){
+        service_charges[i].value = service_charges[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = service_charges[i].value.length - 3
+         if(service_charges[i].value.indexOf(',') > -1){
+            service_charges[i].value = service_charges[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_charges[i].value = service_charges[i].value.replace(",", "");
+        }
+        }
+
+        // Removing Comma
+        // service_prices
+         var comma_index = service_prices[i].value.length - 3
+         if(service_prices[i].value.indexOf(',') > -1){
+            service_prices[i].value = service_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_prices[i].value = service_prices[i].value.replace(",", "");
+        }
+
+        // service_charges
+         var comma_index = service_charges[i].value.length - 3
+         if(service_charges[i].value.indexOf(',') > -1){
+            service_charges[i].value = service_charges[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_charges[i].value = service_charges[i].value.replace(",", "");
+        }
+    }
+
+
+    });
+
+   function calc(){
+    var prices = document.getElementsByName("prices");
+    var panne_prices = document.getElementsByName("panne-prices");
+    var service_prices = document.getElementsByName("service-prices");
+    var service_charges = document.getElementsByName("service-charge");
+    var quantities = document.getElementsByName("quantities");
+    var discount_status = document.getElementById("discount-status");
+    var discount_value = document.getElementById("discount-value");
+    var tva_value = document.getElementById("tva");
+    var timbre_value = document.getElementById("timbre");
+    var total_price = 0;
+    // console.log(prices);
+    for (var i = 0; i<prices.length; i++)
+    {
+        // made for server live
+        // Removing Spaces
+        if (/\s/g.test(prices[i].value)){
+        prices[i].value = prices[i].value.replace(/\s/g, "");
+        }else{
+         // Removing Comma
+         var comma_index = prices[i].value.length - 3
+            if(prices[i].value.indexOf(',') > -1){
+                prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+                // any rest commas
+                prices[i].value = prices[i].value.replace(",", "");
+            }
+        }
+         // Removing Comma
+         var comma_index = prices[i].value.length - 3
+         if(prices[i].value.indexOf(',') > -1){
+            prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            prices[i].value = prices[i].value.replace(",", "");
+        }
+        // any rest commas
+        //  prices[i].value = prices[i].value.replace(",", "");
+        // Removing quantity comma
+        var comma_index = quantities[i].value.length - 3
+        if(quantities[i].value.indexOf(',') > -1){
+            quantities[i].value = quantities[i].value.replaceAt(comma_index , ".");
+        }
+
+    if (i == 0){
+        total_price = prices[i].value * quantities[i].value;
+
+        document.getElementById("total-price").value = total_price;
+        // total_price = total_price.substring(0, total_price.length - 2);
+        console.log(total_price);
+    }else {
+           total_price =  parseFloat(document.getElementById("total-price").value);
+           total_price += parseFloat(prices[i].value * quantities[i].value);
+      //     total_price = total_price.substring(0, total_price.length - 2);
+       //    console.log(total_price);
+           console.log("Total Price");
+           console.log(total_price);
+           
+        document.getElementById("total-price").value = total_price;
+    }
+    }
+    // Adding Panne Prices
+    for (var i = 0; i<panne_prices.length; i++){
+        // Fixing numbers to calculate
+        if (/\s/g.test(panne_prices[i].value)){
+        panne_prices[i].value = panne_prices[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = panne_prices[i].value.length - 3
+         if(panne_prices[i].value.indexOf(',') > -1){
+            panne_prices[i].value = panne_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            panne_prices[i].value = panne_prices[i].value.replace(",", "");
+        }
+        }
+        // Removing Comma
+         var comma_index = panne_prices[i].value.length - 3
+         if(panne_prices[i].value.indexOf(',') > -1){
+            panne_prices[i].value = panne_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            panne_prices[i].value = panne_prices[i].value.replace(",", "");
+        }
+        total_price += parseFloat(panne_prices[i].value);
+    }
+
+    // Adding Service 
+    for (var i = 0; i<service_prices.length; i++){
+        // Fixing numbers to calculate
+        // prices
+        if (/\s/g.test(service_prices[i].value)){
+        service_prices[i].value = service_prices[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = service_prices[i].value.length - 3
+         if(service_prices[i].value.indexOf(',') > -1){
+            service_prices[i].value = service_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_prices[i].value = service_prices[i].value.replace(",", "");
+        }
+        }
+
+        // service_charges
+        if (/\s/g.test(service_charges[i].value)){
+        service_charges[i].value = service_charges[i].value.replace(/\s/g, "");
+        }else{
+          // Removing Comma
+         var comma_index = service_charges[i].value.length - 3
+         if(service_charges[i].value.indexOf(',') > -1){
+            service_charges[i].value = service_charges[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_charges[i].value = service_charges[i].value.replace(",", "");
+        }
+        }
+
+        // Removing Comma
+        // service_prices
+         var comma_index = service_prices[i].value.length - 3
+         if(service_prices[i].value.indexOf(',') > -1){
+            service_prices[i].value = service_prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_prices[i].value = service_prices[i].value.replace(",", "");
+        }
+
+        // service_charges
+         var comma_index = service_charges[i].value.length - 3
+         if(service_charges[i].value.indexOf(',') > -1){
+            service_charges[i].value = service_charges[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            service_charges[i].value = service_charges[i].value.replace(",", "");
+        }
+        total_price += parseFloat(service_prices[i].value);
+        total_price += parseFloat(service_charges[i].value);
+    }
+
+    // Applying Tva
+    total_price += (total_price * (tva_value.value/100));
+    // applying timbre
+    total_price += parseFloat(timbre_value.value)
+     console.log(discount_status.value);
+     console.log(discount_value.value);
+     // Applying Discount
+    if (discount_status.value == 1){
+        total_price -= (total_price * (discount_value.value/100));
+        console.log("Total Price");
+           console.log(total_price);
+           document.getElementById("total-price").value = total_price;
+     }else{
+        total_price -= discount_value.value;
+            console.log("Total Price");
+           console.log(total_price);
+           document.getElementById("total-price").value = total_price;
+     }
+
+     console.log(total_price)
+
+    }
+
+</script>
+{% endblock %}

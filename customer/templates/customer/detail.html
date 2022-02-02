@@ -29,6 +29,27 @@
         </div>
         <hr>
         <br>
+        <br>
+        <div class="card card-body">
+
+            <form id="order-form" action="" method="post">
+
+                    {% csrf_token %}
+                <div class="form-group">
+               <!-- date picker -->
+                <label> {% trans "Pick a Date" %}</label>
+                    <br>
+                    {{dateform}}
+                    <br>
+                    <label >{% trans "Date:" %}</label>
+                    {{chosen_date}}
+                    <br>
+            <input class="form-control btn btn-primary" type="submit" name="submit">
+            </div>
+            </form>
+        </div>
+        <hr>
+        <br>
         <h2>{% trans "Vehicles" %} : </h2>
         <hr>
         <br>
@@ -266,4 +287,17 @@
     </div>
     </div>
 </div>
+{% endblock %}
+{% block jsscript %}
+<!-- Date Picker-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script type='text/javascript'>
+// Date Picker
+$('input[name="date"]').daterangepicker();
+
+</script>
 {% endblock %}

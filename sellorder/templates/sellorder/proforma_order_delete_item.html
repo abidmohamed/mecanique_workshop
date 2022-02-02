@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<br>
+<br>
+<div class="container">
+    <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+        <div class="card card-body">
+            <P>{% trans "ARE YOU SURE YOU WANT TO DELETE" %} {{sellorder}} _ {{item.stockproduct}} _ {{item.quantity}}</P>
+            <form action="{% url 'sellorder:proforma_item_delete' sellorder.id item.id%}" method="post">
+
+                {% csrf_token %}
+                <a class="btn btn-warning" href="{% url 'sellorder:confirm_order_performa' sellorder.id %}">{% trans "Cancel" %}</a>
+                <input class="btn btn-danger" type="submit" name="Confirm">
+            </form>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+</div>
+
+{% endblock %}

@@ -7,7 +7,14 @@
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>{% trans "Orders" %}</h5>
+            <h5>{% trans "Buy Order Confirmation" %}</h5>
+        </div>
+        <div class="card card-body">
+            <h2>{% trans "Supplier" %}: <span>{{supplier}}</span></h2>
+            <label for="total-price">{% trans "Total" %} :</label>
+
+            <input id="total-price" type="text" class="form-control" value="{{buyorder.get_ttc}}" disabled>
+            <h2>{{buyorder.get_ttc}}</h2>
         </div>
         <div class="card card-body">
             <div class="row">
@@ -30,7 +37,7 @@
                 <input type="date" name="order_date" class="datepicker dateinput form-control" id="order_date" required>
                 <hr>
                 <h3>{% trans "TVA" %}</h3>
-                <input class="form-control" type="number" value="0" name="tva">
+                <input id="tva" class="form-control" onkeyup="calc()" type="number" value="0" name="tva">
                 <br>
                 <table class="table">
                     <thead>
@@ -78,12 +85,12 @@
                                    disabled>
                         </td>
                         <td class="table-light ">
-                            <input class="form-control" type="text" name="prices" value="{{ item.price }}">
+                            <input class="form-control" onkeyup="calc()" type="text" name="prices" value="{{ item.price }}">
                             <h2>{{ item.price }}</h2>
 
                         </td>
                         <td class="table-light ">
-                            <input class="form-control" type="text" name="quantities" value="{{ item.quantity }}">
+                            <input class="form-control" onkeyup="calc()" type="text" name="quantities" value="{{ item.quantity }}">
                         </td>
 
                         <td class="table-light">
@@ -168,9 +175,67 @@ window.addEventListener('load', (event) => {
         }
 
     }
-
-
 });
+
+
+function calc(){
+    var prices = document.getElementsByName("prices");
+    var quantities = document.getElementsByName("quantities");
+    var tva_value = document.getElementById("tva");
+    var total_price = 0;
+
+    // calculating
+    for (var i = 0; i<prices.length; i++)
+    {
+        // made for server live
+        // Removing Spaces
+        if (/\s/g.test(prices[i].value)){
+        prices[i].value = prices[i].value.replace(/\s/g, "");
+        }else{
+         // Removing Comma
+         var comma_index = prices[i].value.length - 3
+            if(prices[i].value.indexOf(',') > -1){
+                prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+                // any rest commas
+                prices[i].value = prices[i].value.replace(",", "");
+            }
+        }
+         // Removing Comma
+         var comma_index = prices[i].value.length - 3
+         if(prices[i].value.indexOf(',') > -1){
+            prices[i].value = prices[i].value.replaceAt(comma_index , ".");
+            // any rest commas
+            prices[i].value = prices[i].value.replace(",", "");
+        }
+        // any rest commas
+        //  prices[i].value = prices[i].value.replace(",", "");
+        // Removing quantity comma
+        var comma_index = quantities[i].value.length - 3
+        if(quantities[i].value.indexOf(',') > -1){
+            quantities[i].value = quantities[i].value.replaceAt(comma_index , ".");
+        }
+
+    if (i == 0){
+        total_price = prices[i].value * quantities[i].value;
+
+        document.getElementById("total-price").value = total_price;
+        // total_price = total_price.substring(0, total_price.length - 2);
+        console.log(total_price);
+    }else {
+           total_price =  parseFloat(document.getElementById("total-price").value);
+           total_price += parseFloat(prices[i].value * quantities[i].value);
+      //     total_price = total_price.substring(0, total_price.length - 2);
+       //    console.log(total_price);
+           console.log("Total Price");
+           console.log(total_price);
+
+        document.getElementById("total-price").value = total_price;
+    }
+    }
+
+    // Applying Tva
+    total_price += (total_price * (tva_value.value/100));
+  }
 
 </script>
 {% endblock %}

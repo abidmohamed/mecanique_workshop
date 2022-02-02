@@ -86,6 +86,7 @@ def confirm_all(request):
 def buyorder_confirmation(request, pk):
     buyorder = BuyOrder.objects.get(id=pk)
     stocks = Stock.objects.all()
+    supplier = buyorder.supplier
     buyorderform = BuyOrderForm(instance=buyorder)
 
     if request.method == 'POST':
@@ -186,6 +187,7 @@ def buyorder_confirmation(request, pk):
         'buyorderform': buyorderform,
         'buyorder': buyorder,
         'stocks': stocks,
+        'supplier': supplier
     }
     return render(request, 'buyorder/buyorder_confirmation.html', context)
 
