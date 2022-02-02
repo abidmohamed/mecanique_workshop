@@ -46,10 +46,15 @@ urlpatterns = [
 
     path('order_item_delete/<str:orderpk>/<str:itempk>', views.order_item_delete, name='order_item_delete'),
     path('confirm_order_item_delete/<str:orderpk>/<str:itempk>', views.confirm_order_item_delete, name='confirm_order_item_delete'),
+    path('proforma_item_delete/<str:orderpk>/<str:itempk>', views.proforma_item_delete, name='proforma_item_delete'),
+
     path('order_panne_delete/<str:orderpk>/<str:itempk>', views.order_panne_delete, name='order_panne_delete'),
     path('confirm_order_panne_delete/<str:orderpk>/<str:itempk>', views.confirm_order_panne_delete, name='confirm_order_panne_delete'),
+    path('proforma_panne_delete/<str:orderpk>/<str:itempk>', views.proforma_panne_delete, name='proforma_panne_delete'),
+
     path('confirm_order_service_delete/<str:orderpk>/<str:itempk>', views.confirm_order_service_delete, name='confirm_order_service_delete'),
     path('order_service_delete/<str:orderpk>/<str:itempk>', views.order_service_delete, name='order_service_delete'),
+    path('proforma_service_delete/<str:orderpk>/<str:itempk>', views.proforma_service_delete, name='proforma_service_delete'),
 
     path('get_orders_pannes', views.get_orders_pannes, name='get_orders_pannes'),
     path('get_orders_pieces', views.get_orders_pieces, name='get_orders_pieces'),

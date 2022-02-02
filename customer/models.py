@@ -32,6 +32,11 @@ class Customer(models.Model):
         return self.vehicles.all().filter(customer=self)
 
     def get_debt(self):
+        self.debt = round(sum(order.debt for order in self.orders.filter(
+            customer=self,
+            confirmed=True,
+            created__year=CurrentYear.objects.all().filter()[:1].get().year)
+                         ), 2)
         return round(sum(order.debt for order in self.orders.filter(
             customer=self,
             confirmed=True,
