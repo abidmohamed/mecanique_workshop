@@ -35,12 +35,12 @@ class Customer(models.Model):
         self.debt = round(sum(order.debt for order in self.orders.filter(
             customer=self,
             confirmed=True,
-            created__year=CurrentYear.objects.all().filter()[:1].get().year)
+            order_date__year=CurrentYear.objects.all().filter()[:1].get().year)
                          ), 2)
         return round(sum(order.debt for order in self.orders.filter(
             customer=self,
             confirmed=True,
-            created__year=CurrentYear.objects.all().filter()[:1].get().year)
+            order_date__year=CurrentYear.objects.all().filter()[:1].get().year)
                          ), 2)
 
 
