@@ -217,7 +217,7 @@
                     <td class="table-light">{{ item.service.name }}</td>
                     <td class="table-light">{{ item.price }} {% trans "DZD" %}</td>
                     <td class="table-light">{{ item.charge }} {% trans "DZD" %}</td>
-                    <td class="table-light">{{ item.price }} {% trans "DZD" %}</td>
+                    <td class="table-light">{{ item.get_total }} {% trans "DZD" %}</td>
                     <td class="table-light">{{ item.service.provider }}</td>
                 </tr>
                 {% endfor %}
