@@ -1,6 +1,9 @@
 from datetime import datetime, date
 
+from django.core import serializers
 from django.db.models import Sum, Q
+from django.http import HttpResponse
+from rest_framework.generics import ListAPIView
 
 from accounts.models import CurrentYear
 from caisse.forms import DateForm
@@ -9,6 +12,7 @@ from customer.models import Customer, City, Enterprise, Avancements
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
 
+from customer.serializers import CustomerSerializer, DataTableCustomerSerializer
 from rdv.models import Rdv
 from sellorder.models import Order, SellOrderFacture
 
@@ -217,7 +221,8 @@ def customer_detail(request, pk):
                                                             order__order_date__year=current_year.year)
     # total bills debt
     total_bills_debt = Order.objects.all().filter(customer=customer, confirmed=True, factured=True,
-                                                  order_date__year=current_year.year).aggregate(Sum('debt'))['debt__sum']
+                                                  order_date__year=current_year.year).aggregate(Sum('debt'))[
+        'debt__sum']
     # total bills
     total_bills = 0
     bill_orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=True,
@@ -436,3 +441,19 @@ def add_avancement(request, pk):
     }
 
     return render(request, 'customer/add_avancement.html', context)
+
+
+##DataTableCustomer Function
+def customer_list_json(request):
+    queryset = Customer.objects.all()
+    json = serializers.serialize('json', queryset)
+    return HttpResponse(json, content_type='application/json')
+
+
+##########################################
+##############" API's "###################
+##########################################
+# customer List
+class ListCustomer(ListAPIView):
+    serializer_class = DataTableCustomerSerializer
+    queryset = Customer.objects.all()

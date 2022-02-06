@@ -59,6 +59,7 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 
@@ -72,10 +73,16 @@
 
 <script type='text/javascript'>
     //Data Table init
-    $(document).ready( function () {
-    $('#table_id').DataTable();
-    } );
 
+$(document).ready(function() {
+    var table = $('#table_id').DataTable( {
+        "processing": true,
+        "deferRender": true,
+        "iDisplayLength": 5,
+        "paging": true,
+    } );
+   // alert( 'Data source: '+table.ajax.url() ); // Will show 'Data source: data.json'
+} );
 
 
 </script>
