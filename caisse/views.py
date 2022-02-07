@@ -143,6 +143,7 @@ def create_transaction(request):
 def update_transaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
     transaction_form = TransactionForm(instance=transaction)
+    transaction_date = transaction.trans_date
     if request.method == 'POST':
         transaction_form = TransactionForm(request.POST, instance=transaction)
         if transaction_form.is_valid():
@@ -150,7 +151,10 @@ def update_transaction(request, pk):
 
             return redirect('caisse:transaction_list')
 
-    context = {'transaction_form': transaction_form}
+    context = {
+        'transaction_form': transaction_form,
+        'transaction_date': transaction_date,
+               }
     return render(request, 'caisse/add_transaction.html', context)
 
 
