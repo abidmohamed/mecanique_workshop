@@ -15,7 +15,9 @@
     </div>
     <div class="col-md-6 col-sm-12">
         <div class="card card-body">
-
+            <div>
+                <h3>{{transaction_date}}</h3>
+            </div>
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{transaction_form | crispy}}
