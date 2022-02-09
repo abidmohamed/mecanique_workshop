@@ -179,7 +179,37 @@ def provider_details(request, pk):
     billed_services = provider.provided_item.filter(
         provider=provider,
         order__confirmed=True,
-        order__factured=False,
+        order__factured=True,
         order__order_date__year=current_year.year
     )
+    # total Billed
     total_billed_services = 0
+    for service in billed_services:
+        total_billed_services += service.price
+
+    # provider Payments
+    payments = provider.payments.filter(
+        provider=provider,
+        pay_date__year=current_year.year,
+    )
+
+    # total payments
+    total_payments = 0
+    for payment in payments:
+        total_payments += payment.amount
+
+    context = {
+        'provider': provider,
+        'current_year': current_year,
+        'dateform': dateform,
+        'chosen_date': chosen_date,
+        'confirmed_services': confirmed_services,
+        'total_confirmed_services': total_confirmed_services,
+        'proforma_services': proforma_services,
+        'total_proforma_services': total_proforma_services,
+        'billed_services': billed_services,
+        'total_billed_services': total_billed_services,
+        'payments': payments,
+        'total_payments': total_payments,
+    }
+    return render(request, 'services/provider_detail.html', context)

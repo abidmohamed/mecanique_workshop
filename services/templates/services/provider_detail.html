@@ -1,0 +1,206 @@
+{% extends "home.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h3>{% trans "Details" %}</h3>
+        </div>
+        <div class="card card-body">
+            <div class="row">
+                <div class="col">
+                    <h4>{{provider.name}}</h4>
+                </div>
+                 <div class="col">
+                    <h4>{{provider.phone}}</h4>
+                </div>
+                 <div class="col">
+                    <h4>{{provider.get_credit}}</h4>
+                </div>
+            </div>
+
+            <hr>
+        <br>
+        <br>
+        <div class="card card-body">
+
+            <form id="order-form" action="" method="post">
+
+                    {% csrf_token %}
+                <div class="form-group">
+               <!-- date picker -->
+                <label> {% trans "Pick a Date" %}</label>
+                    <br>
+                    {{dateform}}
+                    <br>
+                    <label >{% trans "Date:" %}</label>
+                    {{chosen_date}}
+                    <br>
+            <input class="form-control btn btn-primary" type="submit" name="submit">
+            </div>
+            </form>
+        </div>
+        <hr>
+        <br>
+            <h2>{% trans "Orders" %} : </h2>
+        <br>
+        <br>
+        <br>
+            <hr>
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="col-3">
+                <h2>Total : {{total_confirmed_services}} DZD</h2>
+            </div>
+        </div>
+            <table id="table_order">
+            <thead class="thead-light">
+            <tr>
+                    <th>{% trans "Order" %}</th>
+                    <th>{% trans "Service" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Charge" %}</th>
+                    <th></th>
+
+            </tr>
+            </thead>
+            <body class="">
+            {% for service in confirmed_services %}
+            <tr>
+                <td>{{service.order}}</td>
+                <td>{{service.service}}</td>
+                <td>{{service.price}}</td>
+                <td>{{service.charge}}</td>
+                <td>
+                  <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' service.order.id %}">{% trans "Details" %}</a>
+                </td>
+            </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <br>
+            <hr>
+        <br>
+            <h2>{% trans "Proforma" %} : </h2>
+            <hr>
+        <br>
+        <br>
+        <br>
+            <table id="table_order_proforma">
+            <thead class="thead-light">
+            <tr>
+                    <th>{% trans "Order" %}</th>
+                    <th>{% trans "Service" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Charge" %}</th>
+                    <th></th>
+
+            </tr>
+            </thead>
+            <body class="">
+            {% for service in proforma_services %}
+            <tr>
+                <td>{{service.order}}</td>
+                <td>{{service.service}}</td>
+                <td>{{service.price}}</td>
+                <td>{{service.charge}}</td>
+                <td>
+                  <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' service.order.id %}">{% trans "Details" %}</a>
+                </td>
+            </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <br>
+            <hr>
+        <br>
+        <br>
+        <br>
+            <h2>{% trans "Billed Orders" %} : </h2>
+
+            <hr>
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="col-3">
+                <h2>Total : {{total_billed_services}} DZD</h2>
+            </div>
+        </div>
+            <table id="table_order_bill">
+            <thead class="thead-light">
+            <tr>
+                    <th>{% trans "Order" %}</th>
+                    <th>{% trans "Service" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Charge" %}</th>
+                    <th></th>
+
+            </tr>
+            </thead>
+            <body class="">
+            {% for service in billed_services %}
+            <tr>
+                <td>{{service.order}}</td>
+                <td>{{service.service}}</td>
+                <td>{{service.price}}</td>
+                <td>{{service.charge}}</td>
+                <td>
+                  <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' service.order.id %}">{% trans "Details" %}</a>
+                </td>
+            </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <br>
+            <hr>
+        <br>
+            <br>
+            <h2>{% trans "Payments" %} : </h2>
+
+            <hr>
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="col-3">
+                <h2>Total : {{total_payments}} DZD</h2>
+            </div>
+        </div>
+            <table id="table_payments">
+            <thead class="thead-light">
+            <tr>
+                    <th>{% trans "Amount" %}</th>
+                    <th>{% trans "Date" %}</th>
+
+            </tr>
+            </thead>
+            <body class="">
+            {% for payment in payments %}
+            <tr>
+                <td>{{payment.amount}}</td>
+                <td>{{payment.pay_date}}</td>
+
+            </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <br>
+            <hr>
+        <br>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+{% block jsscript %}
+<!-- Date Picker-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script type='text/javascript'>
+// Date Picker
+$('input[name="date"]').daterangepicker();
+
+</script>
+{% endblock %}
