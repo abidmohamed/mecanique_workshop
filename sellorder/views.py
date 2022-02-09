@@ -35,6 +35,8 @@ def confirm_order(request, pk):
     customer = Customer.objects.get(id=sellorder.customer.pk)
     # Get Discount
     discountform = DiscountForm()
+    # providers
+    providers = ServiceProvider.objects.all()
     # print(sellorder.vehicle)
     if request.method == 'POST':
 
@@ -44,9 +46,10 @@ def confirm_order(request, pk):
         # Panne prices
         panne_prices = request.POST.getlist('panne-prices')
 
-        # Service price & charge
+        # Service price & charge & provider
         service_prices = request.POST.getlist('service-prices')
         service_charges = request.POST.getlist('service-charge')
+        chosen_providers = request.POST.getlist('providers')
 
         tva = request.POST.get('tva')
         timbre = request.POST.get('timbre')
@@ -103,17 +106,24 @@ def confirm_order(request, pk):
         if sellorder.services.all():
             for index, item in enumerate(sellorder.services.all()):
                 # Services
-                print(service_prices[index])
-                print(service_charges[index])
+                # print(service_prices[index])
+                # print(service_charges[index])
                 str_service_price = service_prices[index]
                 str_service_price = str_service_price.replace(",", ".")
                 # Remove white spaces
                 str_service_price = ''.join(str_service_price.split())
                 item.price = str_service_price
+                # get provider
+                # print("Provider LIST ======>", chosen_providers[index])
+                provider = ServiceProvider.objects.get(id=chosen_providers[index])
+                # Remove white spaces
+                # str_provider = ''.join(provider.split())
+                # print("Provider ======>", provider)
+                item.provider = provider
                 # Add credit to provider
-                service = Service.objects.get(id=item.service.id)
-                service_provider = ServiceProvider.objects.get(id=service.provider.id)
-                service_provider.credit += decimal.Decimal(item.price)
+                # service = Service.objects.get(id=item.service.id)
+                # service_provider = ServiceProvider.objects.get(id=service.provider.id)
+                provider.credit += decimal.Decimal(str_service_price)
                 # Charge
                 str_service_charge = service_charges[index]
                 str_service_charge = str_service_charge.replace(",", ".")
@@ -122,14 +132,14 @@ def confirm_order(request, pk):
                 item.charge = str_service_charge
                 # saving values
                 item.save()
-                service_provider.save()
+                provider.save()
 
-        print(request.POST)
+        # print(request.POST)
         discount.order = sellorder
         discount.value = request.POST.get('discount-value')
         discount.discount_status = request.POST.get('discount-status')
         discount.save()
-        print(discount.discount_status)
+        # print(discount.discount_status)
         if discount.discount_status == '1':
             sellorder.discount_amount = (sellorder.get_ttc() * decimal.Decimal(decimal.Decimal(discount.value) / 100))
         else:
@@ -144,7 +154,7 @@ def confirm_order(request, pk):
         sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
         sellorder.confirmed = True
         sellorder.save()
-        print(sellorder.confirmed)
+        # print(sellorder.confirmed)
         # customer debt
         customer.debt += sellorder.get_ttc()
         customer.save()
@@ -154,6 +164,7 @@ def confirm_order(request, pk):
         'sellorder': sellorder,
         'discountform': discountform,
         'stockproducts': stockproducts,
+        'providers': providers,
     }
     return render(request, 'sellorder/sellorder_confirmation.html', context)
 
@@ -168,9 +179,20 @@ def confirm_order_performa(request, pk):
     # Get Discount
     discountform = DiscountForm()
     # print(sellorder.vehicle)
+    # providers
+    providers = ServiceProvider.objects.all()
     if request.method == 'POST':
+        # product prices
         prices = request.POST.getlist('prices')
         quantities = request.POST.getlist('quantities')
+        # Panne prices
+        panne_prices = request.POST.getlist('panne-prices')
+
+        # Service price & charge & provider
+        service_prices = request.POST.getlist('service-prices')
+        service_charges = request.POST.getlist('service-charge')
+        chosen_providers = request.POST.getlist('providers')
+
         tva = request.POST.get('tva')
         timbre = request.POST.get('timbre')
         chosen_date = request.POST.get('order_date')
@@ -191,7 +213,45 @@ def confirm_order_performa(request, pk):
                 item.quantity = quantities[index]
                 item.save()
 
-        print(request.POST)
+        if sellorder.pannes.all():
+            for index, item in enumerate(sellorder.pannes.all()):
+                # pannes
+                print(panne_prices[index])
+                str_panne_price = panne_prices[index]
+                str_panne_price = str_panne_price.replace(",", ".")
+                # Remove white spaces
+                str_panne_price = ''.join(str_panne_price.split())
+                item.price = str_panne_price
+
+                item.save()
+
+        if sellorder.services.all():
+            for index, item in enumerate(sellorder.services.all()):
+                # Services
+                # print(service_prices[index])
+                # print(service_charges[index])
+                str_service_price = service_prices[index]
+                str_service_price = str_service_price.replace(",", ".")
+                # Remove white spaces
+                str_service_price = ''.join(str_service_price.split())
+                item.price = str_service_price
+                # get provider
+                # print("Provider LIST ======>", chosen_providers[index])
+                provider = ServiceProvider.objects.get(id=chosen_providers[index])
+                # Remove white spaces
+                # str_provider = ''.join(provider.split())
+                # print("Provider ======>", provider)
+                item.provider = provider
+                # Charge
+                str_service_charge = service_charges[index]
+                str_service_charge = str_service_charge.replace(",", ".")
+                # Remove white spaces
+                str_service_charge = ''.join(str_service_charge.split())
+                item.charge = str_service_charge
+                # saving values
+                item.save()
+
+        # print(request.POST)
         discount.order = sellorder
         discount.value = request.POST.get('discount-value')
         discount.discount_status = request.POST.get('discount-status')
@@ -221,6 +281,7 @@ def confirm_order_performa(request, pk):
         'sellorder': sellorder,
         'discountform': discountform,
         'stockproducts': stockproducts,
+        'providers': providers,
     }
     return render(request, 'sellorder/proforma_confirmation.html', context)
 
@@ -242,6 +303,8 @@ def update_order_performa(request, pk):
     customer = Customer.objects.get(id=sellorder.customer.pk)
     # Get Discount
     discountform = DiscountForm(instance=discount)
+    # providers
+    providers = ServiceProvider.objects.all()
 
     if request.method == 'POST':
 
@@ -252,9 +315,10 @@ def update_order_performa(request, pk):
         # Panne prices
         panne_prices = request.POST.getlist('panne-prices')
 
-        # Service price & charge
+        # Service price & charge & provider
         service_prices = request.POST.getlist('service-prices')
         service_charges = request.POST.getlist('service-charge')
+        chosen_providers = request.POST.getlist('providers')
 
         tva = request.POST.get('tva')
         timbre = request.POST.get('timbre')
@@ -294,17 +358,18 @@ def update_order_performa(request, pk):
         if sellorder.services.all():
             for index, item in enumerate(sellorder.services.all()):
                 # Services
-                print(service_prices[index])
-                print(service_charges[index])
+                # print(service_prices[index])
+                # print(service_charges[index])
                 str_service_price = service_prices[index]
                 str_service_price = str_service_price.replace(",", ".")
                 # Remove white spaces
                 str_service_price = ''.join(str_service_price.split())
                 item.price = str_service_price
-                # Add credit to provider
-                service = Service.objects.get(id=item.service.id)
-                service_provider = ServiceProvider.objects.get(id=service.provider.id)
-                service_provider.credit += decimal.Decimal(item.price)
+                # get provider
+                # print("Provider LIST ======>", chosen_providers[index])
+                provider = ServiceProvider.objects.get(id=chosen_providers[index])
+                item.provider = provider
+
                 # Charge
                 str_service_charge = service_charges[index]
                 str_service_charge = str_service_charge.replace(",", ".")
@@ -314,12 +379,12 @@ def update_order_performa(request, pk):
 
                 item.save()
 
-        print(request.POST)
+        # print(request.POST)
         discount.order = sellorder
         discount.value = request.POST.get('discount-value')
         discount.discount_status = request.POST.get('discount-status')
         discount.save()
-        print(discount.discount_status)
+        # print(discount.discount_status)
         if discount.discount_status == '1':
             sellorder.discount_amount = (sellorder.get_ttc() * decimal.Decimal(decimal.Decimal(discount.value) / 100))
         else:
@@ -333,7 +398,7 @@ def update_order_performa(request, pk):
         sellorder.debt = sellorder.get_ttc()
         sellorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
         sellorder.save()
-        print(sellorder.confirmed)
+        # print(sellorder.confirmed)
         # customer debt
         # customer.debt += sellorder.get_ttc()
         # customer.save()
@@ -343,6 +408,7 @@ def update_order_performa(request, pk):
         'sellorder': sellorder,
         'discountform': discountform,
         'stockproducts': stockproducts,
+        'providers': providers,
     }
     return render(request, 'sellorder/sellorder_confirmation.html', context)
 
@@ -387,6 +453,7 @@ def order_to_performa(request, pk):
 def update_order(request, pk):
     stockproducts = StockProduct.objects.all()
     sellorder = Order.objects.get(id=pk)
+    providers = ServiceProvider.objects.all()
 
     if Discount.objects.all().filter(order=sellorder):
         print("################## Exist")
@@ -428,9 +495,10 @@ def update_order(request, pk):
         # Panne prices
         panne_prices = request.POST.getlist('panne-prices')
 
-        # Service price & charge
+        # Service price & charge & provider
         service_prices = request.POST.getlist('service-prices')
         service_charges = request.POST.getlist('service-charge')
+        chosen_providers = request.POST.getlist('providers')
 
         tva = request.POST.get('tva')
         timbre = request.POST.get('timbre')
@@ -495,17 +563,20 @@ def update_order(request, pk):
         if sellorder.services.all():
             for index, item in enumerate(sellorder.services.all()):
                 # Services
-                print(service_prices[index])
-                print(service_charges[index])
+                # print(service_prices[index])
+                # print(service_charges[index])
                 str_service_price = service_prices[index]
                 str_service_price = str_service_price.replace(",", ".")
                 # Remove white spaces
                 str_service_price = ''.join(str_service_price.split())
                 item.price = str_service_price
+                # get provider
+                # print("Provider LIST ======>", chosen_providers[index])
+                provider = ServiceProvider.objects.get(id=chosen_providers[index])
+
+                item.provider = provider
                 # Add credit to provider
-                service = Service.objects.get(id=item.service.id)
-                service_provider = ServiceProvider.objects.get(id=service.provider.id)
-                service_provider.credit += decimal.Decimal(item.price)
+                provider.credit += decimal.Decimal(str_service_price)
                 # Charge
                 str_service_charge = service_charges[index]
                 str_service_charge = str_service_charge.replace(",", ".")
@@ -514,7 +585,7 @@ def update_order(request, pk):
                 item.charge = str_service_charge
                 # saving Values
                 item.save()
-                service_provider.save()
+                provider.save()
 
         discount.order = sellorder
         discount.value = request.POST.get('discount-value')
@@ -533,11 +604,11 @@ def update_order(request, pk):
         timbre = ''.join(timbre.split())
         sellorder.timbre = decimal.Decimal(timbre)
         # get money additiion
-        print(old_ttc)
+        # print(old_ttc)
         new_ttc = sellorder.get_ttc()
-        print(new_ttc)
+        # print(new_ttc)
         ttc_difference = new_ttc - old_ttc
-        print(ttc_difference)
+        # print(ttc_difference)
         # sellorder.debt = sellorder.get_ttc()
         sellorder.debt += ttc_difference
 
@@ -557,6 +628,7 @@ def update_order(request, pk):
         'tva': sellorder.order_tva,
         'timbre': sellorder.timbre,
         'old_date': old_date,
+        'providers': providers,
     }
     return render(request, 'sellorder/sellorder_update.html', context)
 
@@ -1658,7 +1730,8 @@ def get_orders_pannes_payed(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(order_date__year__gte=int(start_year), order_date__month__gte=int(start_month),
+        orders = Order.objects.all().filter(order_date__year__gte=int(start_year),
+                                            order_date__month__gte=int(start_month),
                                             order_date__day__gte=int(start_day),
                                             order_date__year__lte=int(end_year), order_date__month__lte=int(end_month),
                                             order_date__day__lte=int(end_day)

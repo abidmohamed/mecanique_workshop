@@ -165,8 +165,8 @@ def home(request):
         daily_salary = round(total_salary/7, 2)
 
     # customers + suppliers all objects
-    allcustomers = Customer.objects.all()
-    allsuppliers = Supplier.objects.all()
+    allcustomers = Customer.objects.filter(debt__gt=0)
+    allsuppliers = Supplier.objects.filter(credit__gt=0)
     # Caisse
     transactions = Transaction.objects.filter(trans_date__year=current_year.year)
     customerpayments = SellOrderPayment.objects.filter(pay_date__year=current_year.year)
@@ -209,7 +209,7 @@ def home(request):
         totalcredit += supplier.get_credit()
 
     # BuyOrder
-    buyorder_number = BuyOrder.objects.all().count()
+    buyorder_number = BuyOrder.objects.all().filter(created__year=current_year.year).count()
     # SellOrder
     sellorder_number = Order.objects.all().filter(confirmed=True,
                                                   created__year=current_year.year).count()
@@ -248,9 +248,9 @@ def home(request):
 
     # Stock Qt Alert
     stockproductsalertcount = 0
-    products = Product.objects.all()
-    for product in products:
-        stockproductsalertcount = StockProduct.objects.all().filter(quantity__lte=product.alert_quantity).count()
+    # products = Product.objects.all()
+    for product in StockProduct.objects.all():
+        stockproductsalertcount = StockProduct.objects.all().filter(quantity__lte=product.product.alert_quantity).count()
 
     if not stockproductsalertcount:
         stockproductsalertcount = 0

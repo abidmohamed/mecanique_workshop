@@ -1,6 +1,8 @@
-from django.shortcuts import render, redirect
-
+from django.shortcuts import render, redirect, get_object_or_404
+from datetime import datetime, date
 # Create your views here.
+from accounts.models import CurrentYear
+from caisse.forms import DateForm
 from sellorder.models import Order, ServiceItem
 from services.forms import ServiceForm, ServiceProviderForm
 from services.models import Service, ServiceProvider
@@ -136,3 +138,48 @@ def delete_provider(request, pk):
         provider.delete()
         return redirect('/')
     return render(request, 'services/delete_provider.html', context)
+
+
+def provider_details(request, pk):
+    provider = get_object_or_404(ServiceProvider, id=pk)
+    # TimeField related
+    # current year
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    dateform = DateForm()
+    # now time
+    chosen_date = datetime.now()
+
+    # services in confirmed orders
+    confirmed_services = provider.provided_item.filter(
+        provider=provider,
+        order__confirmed=True,
+        order__factured=False,
+        order__order_date__year=current_year.year
+    )
+
+    # total services
+    total_confirmed_services = 0
+    for service in confirmed_services:
+        total_confirmed_services += service.price
+
+    # services in proforma orders
+    proforma_services = provider.provided_item.filter(
+        provider=provider,
+        order__confirmed=False,
+        order__factured=False,
+        order__order_date__year=current_year.year
+    )
+
+    # Total Proforma
+    total_proforma_services = 0
+    for service in proforma_services:
+        total_proforma_services += service.price
+
+    # services in billed orders
+    billed_services = provider.provided_item.filter(
+        provider=provider,
+        order__confirmed=True,
+        order__factured=False,
+        order__order_date__year=current_year.year
+    )
+    total_billed_services = 0

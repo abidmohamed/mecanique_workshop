@@ -13,7 +13,7 @@ from customer.models import Customer
 from product.models import Product
 from rdv.models import Panne
 from sellorder.models import Order, OrderItem, PanneItem, ServiceItem
-from services.models import Service
+from services.models import Service, ServiceProvider
 from stock.forms import StockForm, StockProductForm
 from stock.models import Stock, StockProduct
 from vehicule.models import Vehicle
@@ -253,7 +253,7 @@ def order_stockproduct_list(request):
     customers = Customer.objects.all()
     pannes = Panne.objects.all()
     services = Service.objects.all()
-
+    # providers = ServiceProvider.objects.all()
     if request.method == 'POST':
         # get submitted orders
         chosenproducts = request.POST.getlist("products")
@@ -305,7 +305,8 @@ def order_stockproduct_list(request):
                     ServiceItem.objects.create(
                         order=sellorder,
                         service=currentservice,
-                        price=currentservice.price + currentservice.charge
+                        price=currentservice.price,
+                        charge=currentservice.charge,
                     )
 
             return redirect('stock:order_vehicle', sellorder.pk)

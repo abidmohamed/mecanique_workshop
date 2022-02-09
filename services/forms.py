@@ -13,4 +13,4 @@ class ServiceForm(ModelForm):
     class Meta:
         model = Service
 
-        fields = '__all__'
+        fields = ['name', 'price', 'charge', ]

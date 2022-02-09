@@ -147,7 +147,16 @@
                     <tbody>
                     {% for item in sellorder.services.all %}
                     <tr>
-                        <td>{{item.service.provider}}</td>
+                        <td>
+                            <select class="form-control"  name="providers" required>
+                                <option selected>Choose...</option>
+                                 {% for provider in providers %}
+                                <option value="{{provider.id}}">{{provider}}</option>
+                                {% empty %}
+                                <option value="None">{% trans "None" %}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
                         <td>{{item.service.name}}</td>
                         <td><input onkeyup="calc()" type="text" class="form-control" name="service-prices" value="{{item.price}}" required>
                         <td><input onkeyup="calc()" type="text" class="form-control" name="service-charge" value="{{item.charge}}" required>
