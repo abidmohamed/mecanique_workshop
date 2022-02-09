@@ -7,7 +7,7 @@ from django.db import models
 # Create your models here.
 from customer.models import Customer
 from rdv.models import Panne
-from services.models import Service
+from services.models import Service, ServiceProvider
 from stock.models import StockProduct
 from vehicule.models import Vehicle
 
@@ -94,6 +94,8 @@ class ServiceItem(models.Model):
                               on_delete=models.CASCADE)
     service = models.ForeignKey(Service, related_name='order_service',
                                 on_delete=models.DO_NOTHING, null=True, blank=True)
+    provider = models.ForeignKey(ServiceProvider, related_name='provided_item',
+                                 on_delete=models.DO_NOTHING, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     charge = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, default=0)
 

@@ -65,7 +65,7 @@ class SupplierCheque(models.Model):
 
 
 class ServicePayment(models.Model):
-    provider = models.ForeignKey(ServiceProvider, on_delete=models.CASCADE)
+    provider = models.ForeignKey(ServiceProvider, on_delete=models.CASCADE, related_name="payments")
     user = models.IntegerField(default=0)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
