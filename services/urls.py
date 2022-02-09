@@ -14,6 +14,7 @@ urlpatterns = [
     path('provider_list', views.provider_list, name='provider_list'),
     path('update_provider/<str:pk>', views.update_provider, name='update_provider'),
     path('delete_provider/<str:pk>', views.delete_provider, name='delete_provider'),
+    path('provider_details/<str:pk>', views.provider_details, name='provider_details'),
 
     path('confirm_order_service_list/<str:pk>', views.confirm_order_service_list, name='confirm_order_service_list'),
     path('update_order_service_list/<str:pk>', views.update_order_service_list, name='update_order_service_list'),
