@@ -206,7 +206,7 @@ def home(request):
     # Total suppliers Credit
     totalcredit = 0
     for supplier in allsuppliers:
-        totalcredit += supplier.get_credit()
+        totalcredit += supplier.credit
 
     # BuyOrder
     buyorder_number = BuyOrder.objects.all().filter(created__year=current_year.year).count()
