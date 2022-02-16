@@ -17,9 +17,12 @@ urlpatterns = [
     path('create_supplier_cheque/<str:pk>', views.create_supplier_cheque, name='create_supplier_cheque'),
     path('supplier_payment_list', views.supplier_payment_list, name='supplier_payment_list'),
     path('delete_supplier_payment/<str:pk>', views.delete_supplier_payment, name='delete_supplier_payment'),
+    path('delete_supplier_by_supplier_payment/<str:pk>', views.delete_supplier_by_supplier_payment,
+         name='delete_supplier_by_supplier_payment'),
 
     # Service
     path('create_service_payment/<str:pk>', views.create_service_payment, name='create_service_payment'),
     path('service_payment_list', views.service_payment_list, name='service_payment_list'),
+    path('delete_service_payment/<str:pk>', views.delete_service_payment, name='delete_service_payment'),
 
 ]

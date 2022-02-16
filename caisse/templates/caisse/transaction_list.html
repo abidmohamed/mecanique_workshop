@@ -49,6 +49,7 @@
                     <th>{% trans "Type" %}</th>
                     <th>{% trans "Date" %}</th>
                     <th>{% trans "Category" %}</th>
+                    <th>{% trans "Note" %}</th>
                     <th>{% trans "Date Created" %}</th>
                     <th></th>
                     <th></th>
@@ -63,6 +64,7 @@
                     <td>{{transaction.Transaction_type}}</td>
                     <td>{{transaction.trans_date|date:"Y/m/d" }}</td>
                     <td>{{transaction.category}}</td>
+                    <td>{{transaction.desc}}</td>
                     <td>{{transaction.date_created}}</td>
                     <td>
                         <a class="btn btn-danger "

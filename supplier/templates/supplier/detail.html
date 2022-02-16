@@ -39,7 +39,8 @@
                     <th>{% trans "Address" %}</th>
                     <th>{% trans "HT" %}</th>
                     <th>{% trans "TTC" %}</th>
-                    <th>{% trans "Debt" %}</th>
+                    <th>{% trans "Credit" %}</th>
+                    <th>{% trans "Date" %}</th>
                     <th></th>
                     <th></th>
             </tr>
@@ -53,6 +54,49 @@
                     <td>{{order.get_total_cost}} {% trans "DZD" %}</td>
                     <td>{{order.get_ttc}} {% trans "DZD" %}</td>
                     <td>{{order.debt}} {% trans "DZD" %}</td>
+                    <td>{{order.order_date}}</td>
+                    <td>
+                        {% if order.debt > 0%}
+                            <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment' order.id %}">{% trans "PayDebt" %}</a>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                           <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' order.id %}">{% trans "Details" %}</a>
+                    </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <hr>
+        <br>
+        <h2>{% trans "Not Confirmed Orders" %}</h2>
+        <hr>
+        <table id="table_unconfirmed_order">
+            <thead class="thead-light">
+            <tr>
+                <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Supplier" %}</th>
+                    <th>{% trans "Address" %}</th>
+                    <th>{% trans "HT" %}</th>
+                    <th>{% trans "TTC" %}</th>
+                    <th>{% trans "Credit" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th></th>
+                    <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in unconfirmed_orders %}
+            <tr>
+                <td>{{order.id}}</td>
+                    <td>{{order.supplier}}</td>
+                    <td>{{order.supplier.address}}</td>
+                    <td>{{order.get_total_cost}} {% trans "DZD" %}</td>
+                    <td>{{order.get_ttc}} {% trans "DZD" %}</td>
+                    <td>{{order.debt}} {% trans "DZD" %}</td>
+                    <td>{{order.order_date}}</td>
                     <td>
                         {% if order.debt > 0%}
                             <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment' order.id %}">{% trans "PayDebt" %}</a>
@@ -68,6 +112,56 @@
         </table>
         <hr>
         <br>
+        <h2>{% trans "Payments" %}</h2>
+        <hr>
+        <table id="table_payment" class="display text-center">
+                    <thead>
+                    <tr>
+                        <th>{% trans "Supplier" %}</th>
+                        <th>{% trans "Pay Status" %}</th>
+                        <th>{% trans "Amount" %}</th>
+                        <th>{% trans "Created" %}</th>
+                        <th>{% trans "Payed" %}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>
+                            {{payment.supplier}}
+                        </td>
+                        <td>
+                            {{payment.pay_status}}
+                        </td>
+                        <td>
+                            {{payment.amount}}
+                        </td>
+                        <td>
+                            {{payment.created}}
+                        </td>
+                        <td>
+                            {{payment.pay_date}}
+                        </td>
+                        <td>
+                            {% if payment.order.id %}
+                            <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' payment.order.id %}">{% trans "Details" %}</a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if payment.order.id %}
+                               <a class="btn btn-danger " href="{% url 'payments:delete_supplier_payment' payment.id %}">{% trans "Delete Order Payment" %}</a>
+                            {% else %}
+                                <a class="btn btn-danger " href="{% url 'payments:delete_supplier_by_supplier_payment' payment.id %}">{% trans "Delete Supplier Payment" %}</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
 
     </div>
     </div>

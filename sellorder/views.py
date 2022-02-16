@@ -20,7 +20,7 @@ from payments.forms import CustomerPaymentForm
 from payments.models import SellOrderPayment
 from rdv.models import Panne
 from sellorder.apps import SellorderConfig
-from sellorder.models import Order, SellOrderFacture, OrderItem, PanneItem
+from sellorder.models import Order, SellOrderFacture, OrderItem, PanneItem, ServiceItem
 from services.models import ServiceProvider, Service
 from stock.models import StockProduct
 from num2words import num2words
@@ -419,16 +419,26 @@ def order_to_performa(request, pk):
     sellorder = Order.objects.get(id=pk)
 
     # Copy Order
+    # customer
     performa_order.customer = sellorder.customer
+    # vehicle
     performa_order.vehicle = sellorder.vehicle
+    # debt
     performa_order.debt = sellorder.debt
+    # timbre
     performa_order.timbre = sellorder.timbre
+    # total price
     performa_order.total_price = sellorder.total_price
+    # discount
     performa_order.discount_amount = sellorder.discount_amount
+    # paid
     performa_order.paid = sellorder.paid
+    # tva
     performa_order.order_tva = sellorder.order_tva
+    # confirmation & billing
     performa_order.confirmed = False
     performa_order.factured = False
+    # date
     performa_order.order_date = sellorder.order_date
     performa_order.save()
     # copy order items
@@ -445,6 +455,14 @@ def order_to_performa(request, pk):
             order=performa_order,
             panne=panne.panne,
             price=panne.price,
+        )
+    for service in sellorder.services.all():
+        ServiceItem.objects.create(
+            order=performa_order,
+            service=service.service,
+            provider=service.provider,
+            price=service.price,
+            charge=service.charge
         )
 
     return redirect('sellorder:performa_sellorder_list')
@@ -1123,11 +1141,11 @@ def sellorder_list_by_customer(request, pk):
 def sellorder_pdf(request, pk, credit, tva):
     sellorder = get_object_or_404(Order, id=pk)
     customer = get_object_or_404(Customer, id=sellorder.customer.id)
-    if customer.debt - sellorder.get_ttc() == 0 or customer.debt - sellorder.get_ttc() < 0:
-        old_debt = 0
-    else:
-        old_debt = customer.debt - sellorder.get_ttc()
-    new_debt = old_debt + sellorder.get_ttc()
+    # if customer.get_debt() - sellorder.get_ttc() == 0 or customer.get_debt() - sellorder.get_ttc() < 0:
+    #     old_debt = 0
+    # else:
+    #     old_debt = customer.get_debt() - sellorder.get_ttc()
+    new_debt = customer.get_debt() + sellorder.get_ttc()
 
     # print("Customer Debt", customer.debt)
     # print("Order Debt", sellorder.debt)
@@ -1138,7 +1156,7 @@ def sellorder_pdf(request, pk, credit, tva):
     html = render_to_string('sellorder/pdf.html',
                             {'order': sellorder,
                              'customer': customer,
-                             'old_debt': old_debt,
+                             'old_debt': customer.get_debt(),
                              'new_debt': new_debt,
                              'credit': credit,
                              'tva': tva,

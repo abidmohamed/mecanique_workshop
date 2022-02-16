@@ -16,8 +16,9 @@ class TransactionForm(ModelForm):
         model = Transaction
         widgets = {
             'trans_date': forms.DateInput(attrs={'class': 'datepicker', 'type': 'date'}),
+            'desc': forms.Textarea(),
         }
-        fields = ['Transaction_name', 'category', 'amount', 'Transaction_type', 'trans_date']
+        fields = ['Transaction_name', 'category', 'amount', 'Transaction_type', 'trans_date', 'desc']
 
 
 # Specify Limit Year

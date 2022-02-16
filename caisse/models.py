@@ -40,5 +40,7 @@ class Transaction(models.Model):
     trans_date = models.DateField(null=True, blank=True)
     Transaction_type = models.CharField(max_length=8, choices=type_choices, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    desc = models.CharField(max_length=250, null=True, blank=True)
+
 
 
