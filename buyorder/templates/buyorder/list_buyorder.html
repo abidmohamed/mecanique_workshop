@@ -23,6 +23,7 @@
                     <th>{% trans "Phone" %}</th>
                     <th>{% trans "Address" %}</th>
                     <th>{% trans "Credit" %}</th>
+                    <th>{% trans "Date" %}</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -51,6 +52,7 @@
                     <td>
                         {{supplier.get_credit}}
                     </td>
+                    <td>{{order.order_date}}</td>
                     <td>
                         {% if supplier.credit > 0%}
                         <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment_by_supplier' supplier.id %}">{% trans "PayDebt" %}</a>

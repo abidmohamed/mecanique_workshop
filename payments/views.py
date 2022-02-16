@@ -6,7 +6,7 @@ from caisse.models import Caisse
 from customer.models import Customer
 from payments.forms import CustomerChequeForm, SupplierPaymentForm, SupplierChequeForm, CustomerPaymentForm, \
     ServicePaymentForm, CustomerVermentForm
-from payments.models import SellOrderPayment, BuyOrderPayment, CustomerCheque, ServicePayment
+from payments.models import SellOrderPayment, BuyOrderPayment, CustomerCheque, ServicePayment, SupplierCheque
 from sellorder.models import Order
 from services.models import ServiceProvider
 from supplier.models import Supplier
@@ -111,7 +111,7 @@ def create_customer_verment(request, pk):
             return redirect("payments:customer_payment_list")
 
     context = {
-            "customerchequeform": customervermentform,
+        "customerchequeform": customervermentform,
     }
     return render(request, 'payments/customer/create_cheque.html', context)
 
@@ -162,13 +162,14 @@ def create_supplier_payment(request, pk):
 # Supplier Payment is BuyOrderPayment
 def create_supplier_payment_by_supplier(request, pk):
     supplier = Supplier.objects.get(id=pk)
-    orders = BuyOrder.objects.all().filter(supplier=supplier)
+    orders = BuyOrder.objects.all().filter(supplier=supplier, debt__gt=0).order_by('order_date')
+    print(orders)
     supplierpaymentform = SupplierPaymentForm()
     if request.method == "POST":
         supplierpaymentform = SupplierPaymentForm(request.POST)
         if supplierpaymentform.is_valid():
             supplierpayment = supplierpaymentform.save(commit=False)
-            print(supplierpayment.amount)
+            # print(supplierpayment.amount)
             # supplierpayment.order = order
             supplierpayment.supplier = supplier
             supplierpayment.save()
@@ -178,33 +179,38 @@ def create_supplier_payment_by_supplier(request, pk):
                 # if order.debt == 0 or order.debt is None:
                 # order.debt = order.get_ttc()
                 if rest_amount > 0 and order.debt > 0:
-                    print("#### First Step")
-                    print(order)
-                    print(order.debt)
-                    print(payed_amount)
-                    print(rest_amount)
-                    print("#### Second Step")
+                    # print("#### First Step")
+                    # print(order)
+                    # print(order.debt)
+                    # print(payed_amount)
+                    # print(rest_amount)
+                    # print("#### Second Step")
+                    # how to reach zero for debt
                     if payed_amount > order.debt:
+                        # if payment amount is bigger than reduce only the debt
                         to_reach_zero = order.debt
                     else:
+                        # if the debt is bigger than reduce the amount
                         to_reach_zero = payed_amount
-
+                    # the rest after the operation
                     rest_amount = payed_amount - order.debt
-                    print(to_reach_zero)
+                    # print(to_reach_zero)
                     order.debt -= to_reach_zero
+                    # supplierpayment.order = order
+                    # supplierpayment.save()
                     payed_amount = rest_amount
-                    print("#### Last Step")
-                    print(order.debt)
-                    print(payed_amount)
-                    print(rest_amount)
+                    # print("#### Last Step")
+                    # print(order.debt)
+                    # print(payed_amount)
+                    # print(rest_amount)
                     if order.debt == 0:
                         order.paid = True
                     order.save()
 
             supplier.credit -= supplierpayment.amount
-            caisse = Caisse.objects.all().filter()[:1].get()
-            caisse.caisse_value -= supplierpayment.amount
-            caisse.save()
+            # caisse = Caisse.objects.all().filter()[:1].get()
+            # caisse.caisse_value -= supplierpayment.amount
+            # caisse.save()
             supplier.save()
 
             # TODO: Uncomment this one
@@ -265,6 +271,58 @@ def delete_supplier_payment(request, pk):
     return render(request, 'payments/supplier/delete_payment.html', context)
 
 
+def delete_supplier_by_supplier_payment(request, pk):
+    payment = get_object_or_404(BuyOrderPayment, id=pk)
+    supplier = Supplier.objects.get(id=payment.supplier.id)
+    orders = BuyOrder.objects.all().filter(supplier=supplier, confirmed=True).order_by('order_date')
+    if request.method == "POST":
+        total_payment_amount = payment.amount
+        rest_amount = total_payment_amount
+        for order in orders:
+
+            if rest_amount > 0 and order.get_ttc() != order.debt:
+                print("TTC =====>", order.get_ttc())
+                print("DEBT =====>", order.debt)
+                order_diff_amount = order.get_ttc() - order.debt
+                # to reach zero difference between ttc and debt
+                if total_payment_amount > order_diff_amount:
+                    to_reach_zero = order_diff_amount
+                else:
+                    to_reach_zero = total_payment_amount
+
+                # what rest after the operation
+                rest_amount = total_payment_amount - order_diff_amount
+                order.debt += to_reach_zero
+                total_payment_amount = rest_amount
+                # check order debt
+                if order.debt > 0:
+                    order.paid = False
+                print("ORDER ::::>", order.id)
+                print("TTC =====>", order.get_ttc())
+                print("DEBT =====>", order.debt)
+                order.save()
+
+        # fix supplier credit
+        supplier.credit += payment.amount
+        supplier.save()
+        # if payment is cheque
+        if payment.pay_status == "Cheque":
+            cheque = SupplierCheque.objects.get(buyorderpayment=payment)
+            # delete cheque
+            cheque.delete()
+        # delete payment
+        payment.delete()
+
+        return redirect("supplier:supplier_detail", supplier.id)
+
+    context = {
+        'payment': payment,
+        'supplier': supplier,
+        'orders': orders,
+    }
+    return render(request, 'payments/supplier/delete_supplier_payment.html', context)
+
+
 def create_service_payment(request, pk):
     provider = get_object_or_404(ServiceProvider, id=pk)
     servicepaymentform = ServicePaymentForm()
@@ -294,3 +352,22 @@ def service_payment_list(request):
         'serivcepayments': serivcepayments,
     }
     return render(request, 'payments/service/payment_list.html', context)
+
+
+def delete_service_payment(request, pk):
+    payment = get_object_or_404(ServicePayment, id=pk)
+    provider = get_object_or_404(ServiceProvider, id=payment.provider.id)
+    if request.method == "POST":
+
+        provider.credit += payment.amount
+        provider.save()
+
+        payment.delete()
+
+        return redirect("services:provider_details", provider.id)
+
+    context = {
+        "payment": payment,
+        "provider": provider,
+    }
+    return render(request, "payments/service/delete_payment.html", context)

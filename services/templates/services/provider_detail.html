@@ -170,7 +170,7 @@
             <tr>
                     <th>{% trans "Amount" %}</th>
                     <th>{% trans "Date" %}</th>
-
+                    <th></th>
             </tr>
             </thead>
             <body class="">
@@ -178,7 +178,9 @@
             <tr>
                 <td>{{payment.amount}}</td>
                 <td>{{payment.pay_date}}</td>
-
+                <td>
+                      <a class="btn btn-danger " href="{% url 'payments:delete_service_payment' payment.id %}">{% trans "Delete" %}</a>
+                </td>
             </tr>
                 {% endfor %}
             </body>
