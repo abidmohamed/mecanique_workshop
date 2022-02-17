@@ -158,7 +158,7 @@
                         <td>
                             <select class="form-control"  name="providers" required>
                                 {% if item.provider %}
-                                <option selected>{{item.provider}}</option>
+                                <option value="{{provider.id}}" selected>{{item.provider}}</option>
                                 {% else %}
                                 <option selected>Choose...</option>
                                 {% endif %}
