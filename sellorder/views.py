@@ -1021,6 +1021,80 @@ def sellorder_list_by_date(request):
     return render(request, 'sellorder/list_sellorder_by_date.html', context)
 
 
+def sellorder_list_by_service(request):
+    list_type = 1  # Sellorder
+    # current year
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    # date
+    chosen_date = datetime.now()
+    dateform = DateForm()
+    # chosen orders
+    chosen_orders = Order.objects.none()
+    # Services
+
+    # retrieving items
+    service_items = ServiceItem.objects.filter(order__order_date__year=current_year.year,
+                                               order__confirmed=True)
+    for item in service_items:
+        chosen_orders |= Order.objects.all().filter(id=item.order.id, confirmed=True)
+
+    # Time search
+    if request.method == 'POST':
+        # chosen orders
+        chosen_orders = Order.objects.none()
+
+        alldata = request.POST
+
+        # Search by date
+        chosen_date = alldata.get("date")
+        chosen_date = chosen_date.split("-", 1)
+        chosen_start_date = chosen_date[0]
+        chosen_end_date = chosen_date[1]
+
+        chosen_start_date = chosen_start_date.split("/", 2)
+        start_month = chosen_start_date[0]
+        start_year = chosen_start_date[2]
+        start_day = chosen_start_date[1]
+        # Remove white spaces
+        start_year = ''.join(start_year.split())
+        start_month = ''.join(start_month.split())
+        start_day = ''.join(start_day.split())
+
+        chosen_end_date = chosen_end_date.split("/", 2)
+        end_month = chosen_end_date[0]
+        end_year = chosen_end_date[2]
+        end_day = chosen_end_date[1]
+        # Remove white spaces
+        end_year = ''.join(end_year.split())
+        end_month = ''.join(end_month.split())
+        end_day = ''.join(end_day.split())
+
+        for item in service_items:
+            chosen_orders |= Order.objects.all().filter(
+                Q(
+                    order_date__gt=date(int(start_year), int(start_month),
+                                        int(start_day)),
+                    order_date__lt=date(int(end_year), int(end_month), int(end_day))
+                )
+                |
+                Q(
+                    order_date=date(int(end_year), int(end_month), int(end_day))
+                )
+                ,
+                id=item.order.id,
+                confirmed=True,
+            )
+
+    context = {
+        'sellorders': chosen_orders,
+        "dateform": dateform,
+        'list_type': list_type,
+        'chosen_date': chosen_date,
+        'current_year': current_year,
+    }
+    return render(request, 'sellorder/list_sellorder_by_date.html', context)
+
+
 def factured_sellorder_list(request):
     list_type = 2  # Sellorder Bill
     # chosenyear
