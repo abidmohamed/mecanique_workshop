@@ -561,7 +561,8 @@ def stock_product_details(request, pk):
     buy_pieces = OrderItem.objects.none()
     # order items
     # print(stockproduct.order_item.all())
-    order_items = stockproduct.order_item.all()
+    order_items = stockproduct.order_item.all(order__order_date__year=current_year.year,
+                                              order__confirmed=True)
     for item in order_items:
         chosen_orders |= Order.objects.all().filter(id=item.order.id, created__year=current_year.year)
         sell_quantity += item.quantity
@@ -618,6 +619,10 @@ def stock_product_details(request, pk):
                 Q(
                     order_date=date(int(end_year), int(end_month), int(end_day))
                 )
+                |
+                Q(
+                    order_date__year=None
+                )
                 ,
                 id=item.order.id,
                 confirmed=True,
@@ -641,6 +646,10 @@ def stock_product_details(request, pk):
                 |
                 Q(
                     order_date=date(int(end_year), int(end_month), int(end_day))
+                )
+                |
+                Q(
+                    order_date__year=None
                 )
                 ,
                 id=item.order.id,
