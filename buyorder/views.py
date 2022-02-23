@@ -560,3 +560,18 @@ def confirm_order_item_delete(request, orderpk, itempk):
         'item': item,
     }
     return render(request, 'buyorder/delete_item.html', context)
+
+
+# fixing none date
+def add_date_to_order(request):
+    orders = BuyOrder.objects.all().filter(order_date=None)
+
+    for order in orders:
+        year = order.created.year
+        month = order.created.month
+        day = order.created.day
+        order.order_date = date(year, month, day)
+        print("order date", order.order_date)
+        order.save()
+
+    return HttpResponse("Dates Fixed !!!")
