@@ -19,4 +19,7 @@ urlpatterns = [
     path('confirm_order_item_delete/<str:orderpk>/<str:itempk>', views.confirm_order_item_delete,
          name='confirm_order_item_delete'),
 
+
+    # fixing dates
+    path('fixing_dates', views.add_date_to_order, name='fixing_dates')
 ]
