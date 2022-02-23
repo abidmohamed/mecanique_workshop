@@ -82,7 +82,7 @@ def supplier_detail(request, pk):
             order_date__year=current_year.year
         ) |
         Q(
-            order_date__year=None
+            order_date=None
         ),
         supplier=supplier, confirmed=True,
     )
