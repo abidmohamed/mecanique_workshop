@@ -14,7 +14,7 @@ class UserForm(UserCreationForm):
 
 
 def year_choices():
-    return [(r, r) for r in range(1984, datetime.date.today().year + 100)]
+    return [(r, r) for r in range(2019, datetime.date.today().year + 50)]
 
 
 class MyForm(ModelForm):
