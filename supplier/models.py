@@ -21,5 +21,5 @@ class Supplier(models.Model):
     def get_credit(self):
         return round(sum(order.debt for order in self.orders.filter(
             supplier=self,
-            created__year=CurrentYear.objects.all().filter()[:1].get().year)
+            order_date__year=CurrentYear.objects.all().filter()[:1].get().year)
                          ), 2)
