@@ -42,7 +42,7 @@ class BuyOrderItem(models.Model):
                               on_delete=models.CASCADE)
     product = models.ForeignKey(Product,
                                 related_name='buyorder_item',
-                                on_delete=models.SET_NULL, null=True, blank=True)
+                                on_delete=models.DO_NOTHING, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     stock = models.ForeignKey(Stock, related_name='item_stocks', on_delete=models.DO_NOTHING, null=True, blank=True)
