@@ -147,12 +147,12 @@ def home(request):
 
     # sellorders = Order.objects.all().filter(confirmed=True)  # .filter(created__year=now.year,
     # created__month=now.month) buyorders = BuyOrder.objects.all()  # can be filtred by year & month Today order
-    today_sellorders = Order.objects.all().filter(created__year=current_year.year,
-                                                  created__month=now.month,
-                                                  created__day=now.day, confirmed=True)
-    payed_today_sellorders = Order.objects.all().filter(created__year=current_year.year,
-                                                        created__month=now.month,
-                                                        created__day=now.day, confirmed=True, paid=True)
+    today_sellorders = Order.objects.all().filter(order_date__year=current_year.year,
+                                                  order_date__month=now.month,
+                                                  order_date__day=now.day, confirmed=True)
+    payed_today_sellorders = Order.objects.all().filter(order_date__year=current_year.year,
+                                                        order_date__month=now.month,
+                                                        order_date__day=now.day, confirmed=True, paid=True)
 
     total_salary = 0
     daily_salary = 0
