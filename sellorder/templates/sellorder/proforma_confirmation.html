@@ -148,12 +148,9 @@
                     {% for item in sellorder.services.all %}
                     <tr>
                         <td>
+                            {{item.provider}}
                             <select class="form-control"  name="providers" required>
-                               {% if item.provider %}
-                                <option selected>{{item.provider}}</option>
-                                {% else %}
                                 <option selected>Choose...</option>
-                                {% endif %}
                                  {% for provider in providers %}
                                 <option value="{{provider.id}}">{{provider}}</option>
                                 {% empty %}
