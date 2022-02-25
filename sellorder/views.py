@@ -628,7 +628,8 @@ def update_order(request, pk):
         ttc_difference = new_ttc - old_ttc
         # print(ttc_difference)
         # sellorder.debt = sellorder.get_ttc()
-        sellorder.debt += ttc_difference
+        sellorder.debt -= old_ttc
+        sellorder.debt += new_ttc
 
         sellorder.save()
         # customer debt
