@@ -172,7 +172,7 @@ def home(request):
     allsuppliers = Supplier.objects.filter(credit__gt=0)
 
     # Top 5
-    top_five_suppliers = Supplier.objects.filter(credit__gt=0).order_by('-credit')[:5]
+    top_five_suppliers = Supplier.objects.filter(credit__gt=0).order_by('-get_credit')[:5]
     # print(top_five_suppliers)
     top_five_customer = Customer.objects.filter(debt__gt=0).order_by('-debt')[:5]
     # print(top_five_customer) # excluding my garage provider

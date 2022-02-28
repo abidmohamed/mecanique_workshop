@@ -26,5 +26,4 @@ class Supplier(models.Model):
         self.credit = total_credit
         return total_credit
 
-    def save(self, *args, **kwargs):
-        self.credit = self.get_credit()
+

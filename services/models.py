@@ -34,8 +34,6 @@ class ServiceProvider(models.Model):
         self.credit = real_credit
         return real_credit
 
-    def save(self, *args, **kwargs):
-        self.credit = self.get_credit()
 
 
 class Service(models.Model):
