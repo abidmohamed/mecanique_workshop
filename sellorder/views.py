@@ -844,10 +844,15 @@ def proforma_service_delete(request, orderpk, itempk):
 # order details
 def sellorder_details(request, pk):
     order = Order.objects.get(id=pk)
+    current_year = CurrentYear.objects.all().filter()[:1].get()
     sellorder_payments = SellOrderPayment.objects.all().filter(order=order)
+    list_index = list(order.items.all())
+    print(list_index)
     context = {
         'order': order,
+        'list_index': list_index,
         'sellorder_payments': sellorder_payments,
+        'current_year': current_year,
     }
     return render(request, 'sellorder/sellorder_details.html', context)
 

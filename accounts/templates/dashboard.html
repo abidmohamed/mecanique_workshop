@@ -104,6 +104,8 @@
 </div>
 <!-- First Caisse row Ends Here -->
 <hr>
+<!-- Second Bank row Starts Here -->
+
 <div class="row">
     <div class="col-xl-6 col-md-6 mb-4">
         <div class="card bg-primary shadow h-100 py-2">
@@ -160,6 +162,8 @@
 <!-- Second Bank row Ends Here -->
 
 <hr>
+<!-- Third Salary row Starts Here -->
+
 <div class="row">
     <div class="col-xl-6 col-md-6 mb-4">
         <div class="card bg-gradient-warning shadow h-100 py-2">
@@ -186,8 +190,11 @@
 
 </div>
 <!-- Third Salary row Ends Here -->
+<hr>
+<!-- Fourth row Starts Here -->
 
 <div class="row">
+    <!-- First Cards row Starts Here -->
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
             <a href=" {% url 'customer:customer_debt_list'%} ">
@@ -206,15 +213,15 @@
         </div>
     </div>
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
+        <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{% trans "Sell Orders" %}</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{% if sellorder_number %}{{sellorder_number}}{% else %} 0 {% endif %}</div>
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{% trans "Suppliers Credit" %}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{totalcredit}} {% trans "DZD" %}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-success"></i>
+                        <i class="fas fa-truck fa-2x text-warning"></i>
                     </div>
                 </div>
             </div>
@@ -225,38 +232,16 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{% trans "Buy Orders" %}</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{% if buyorder_number %}{{buyorder_number}} {% else %} 0 {% endif %}</div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{% trans "Service Provider Credit" %}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{% if total_provider_credit %}{{total_provider_credit}} {% else %} 0 {% endif %}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-info"></i>
+                        <i class="fas fa-cogs fa-2x text-info"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{% trans "Suppliers" %}</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{% if suppliers %}{{suppliers}}{% else %} 0 {% endif %}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-truck fa-2x text-warning"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- First Cards row Ends Here -->
-    <br>
-    <div class="col-xl-12 col-md-12 mb-4">
-        <hr>
-    </div>
-    <br>
-    <!-- Second Cards row Starts Here -->
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-danger shadow h-100 py-2">
             <a href="{% url 'stock:stockproduct_stockalert'%}">
@@ -275,57 +260,95 @@
             </a>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <a href="{% url 'sellorder:sellorder_list' %}">
-                <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{% trans "Total Sell Order" %}</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalsellorders}} {% trans "DZD" %}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-success"></i>
-                    </div>
-                </div>
-            </div>
-            </a>
-
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-           <a href="{% url 'buyorder:buyorder_list' %}">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{% trans "Total Buy Orders" %}</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalbuyorders}} {% trans "DZD" %}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-info"></i>
-                    </div>
-                </div>
-            </div>
-           </a>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{% trans "Suppliers Credit" %}</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{totalcredit}} {% trans "DZD" %}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-truck fa-2x text-warning"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- First Cards row Ends Here -->
+    <br>
+    <div class="col-xl-12 col-md-12 mb-4">
+        <hr>
+    </div>
+    <br>
+    <!-- Second Cards row Starts Here -->
+    <!-- Customers -->
+    <div class="col-xl-4 col-md-6 col-sm-12 mb-4">
+        <div class="card border-top-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><h4>{% trans "Customers" %}</h4></div>
+                    <table>
+                <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Amount</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for customer in top_five_customers %}
+                <tr>
+                    <td>{{customer}}</td>
+                    <td>{{customer.get_debt}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suppliers -->
+    <div class="col-xl-4 col-md-6 col-sm-12 mb-4">
+        <div class="card border-right-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><h4>{% trans "Suppliers" %}</h4></div>
+                    <table>
+                <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Amount</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for supplier in top_five_suppliers %}
+                <tr>
+                    <td>{{supplier}}</td>
+                    <td>{{supplier.get_credit}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provider -->
+    <div class="col-xl-4 col-md-6 col-sm-12 mb-4">
+        <div class="card border-right-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><h4>{% trans "Providers" %}</h4></div>
+                    <table>
+                <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Amount</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for provider in top_five_providers %}
+                <tr>
+                    <td>{{provider}}</td>
+                    <td>{{provider.get_credit}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Cards row Ends Here -->
     <br>
     <div class="col-xl-12 col-md-12 mb-4">
         <hr>
@@ -333,7 +356,7 @@
     <br>
 
 </div>
-
+<hr>
 {% endif %}
 
 <!-- ********************Desk Helper View************** -->
