@@ -35,7 +35,6 @@ class ServiceProvider(models.Model):
         return real_credit
 
 
-
 class Service(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
