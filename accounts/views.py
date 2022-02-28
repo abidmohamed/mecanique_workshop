@@ -176,7 +176,7 @@ def home(request):
     # print(top_five_suppliers)
     top_five_customer = Customer.objects.filter(debt__gt=0).order_by('-debt')[:5]
     # print(top_five_customer) # excluding my garage provider
-    top_five_providers = ServiceProvider.objects.filter(~Q(id=18), credit__gt=0).order_by('credit')[:3]
+    top_five_providers = ServiceProvider.objects.filter(credit__gt=0).order_by('-credit')[:5]
     # Caisse
     transactions = Transaction.objects.filter(trans_date__year=current_year.year)
     customerpayments = SellOrderPayment.objects.filter(pay_date__year=current_year.year)
