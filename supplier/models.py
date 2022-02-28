@@ -19,7 +19,12 @@ class Supplier(models.Model):
         return self.firstname + " " + self.lastname
 
     def get_credit(self):
-        return round(sum(order.debt for order in self.orders.filter(
+        total_credit = round(sum(order.debt for order in self.orders.filter(
             supplier=self,
             order_date__year=CurrentYear.objects.all().filter()[:1].get().year)
                          ), 2)
+        self.credit = total_credit
+        return total_credit
+
+    def save(self, *args, **kwargs):
+        self.credit = self.get_credit()

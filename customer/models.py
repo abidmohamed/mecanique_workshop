@@ -43,6 +43,9 @@ class Customer(models.Model):
             order_date__year=CurrentYear.objects.all().filter()[:1].get().year)
                          ), 2)
 
+    def save(self, *args, **kwargs):
+        self.debt = self.get_debt()
+
 
 class Enterprise(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='owner')

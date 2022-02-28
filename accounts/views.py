@@ -3,7 +3,7 @@ import decimal
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User, Group, Permission
-from django.db.models import Sum
+from django.db.models import Sum, Q
 
 from django.shortcuts import render, redirect, get_object_or_404
 import calendar
@@ -27,6 +27,7 @@ from rdv.models import Rdv
 # Calendar Views & functions
 from rdv.utils import Calendar
 from sellorder.models import Order
+from services.models import ServiceProvider
 from stock.models import StockProduct
 from supplier.models import Supplier
 
@@ -162,11 +163,20 @@ def home(request):
         # get only the value
         total_salary = total_salary_dict['weekly_salary__sum']
         # daily total salary
-        daily_salary = round(total_salary/7, 2)
+        daily_salary = round(total_salary / 7, 2)
 
+    # Service Providers
+    providers = ServiceProvider.objects.filter(credit__gt=0)
     # customers + suppliers all objects
     allcustomers = Customer.objects.filter(debt__gt=0)
     allsuppliers = Supplier.objects.filter(credit__gt=0)
+
+    # Top 5
+    top_five_suppliers = Supplier.objects.filter(credit__gt=0).order_by('-credit')[:5]
+    # print(top_five_suppliers)
+    top_five_customer = Customer.objects.filter(debt__gt=0).order_by('-debt')[:5]
+    # print(top_five_customer) # excluding my garage provider
+    top_five_providers = ServiceProvider.objects.filter(~Q(id=18), credit__gt=0).order_by('credit')[:3]
     # Caisse
     transactions = Transaction.objects.filter(trans_date__year=current_year.year)
     customerpayments = SellOrderPayment.objects.filter(pay_date__year=current_year.year)
@@ -195,9 +205,9 @@ def home(request):
     bank = 0
     bank_transactions = BankTransaction.objects.filter(trans_date__year=current_year.year)
     # Customer
-    customers = Customer.objects.all().count()
+    #customers = Customer.objects.all().count()
     # Supplier
-    suppliers = Supplier.objects.all().count()
+    #suppliers = Supplier.objects.all().count()
     # Total customers Debt
     totaldebt = 0
     for customer in allcustomers:
@@ -208,11 +218,15 @@ def home(request):
     for supplier in allsuppliers:
         totalcredit += supplier.get_credit()
 
+    # total provider credit
+    total_provider_credit = 0
+    for provider in providers:
+        total_provider_credit += provider.get_credit()
+
     # BuyOrder
-    buyorder_number = BuyOrder.objects.all().filter(created__year=current_year.year).count()
+    # buyorder_number = BuyOrder.objects.all().filter(created__year=current_year.year).count()
     # SellOrder
-    sellorder_number = Order.objects.all().filter(confirmed=True,
-                                                  created__year=current_year.year).count()
+    # sellorder_number = Order.objects.all().filter(confirmed=True,created__year=current_year.year).count()
     # sell orders total
     totalsellorders = 0
     totalbuyorders = 0
@@ -250,7 +264,8 @@ def home(request):
     stockproductsalertcount = 0
     # products = Product.objects.all()
     for product in StockProduct.objects.all():
-        stockproductsalertcount = StockProduct.objects.all().filter(quantity__lte=product.product.alert_quantity).count()
+        stockproductsalertcount = StockProduct.objects.all().filter(
+            quantity__lte=product.product.alert_quantity).count()
 
     if not stockproductsalertcount:
         stockproductsalertcount = 0
@@ -320,18 +335,27 @@ def home(request):
         'calendar': mark_safe(html_calendar),
         'prev_month': prev_month(calendar_date),
         'next_month': next_month(calendar_date),
-        'caisse': caisse, 'customers': customers,
-        'buyorder_number': buyorder_number, 'sellorder_number': sellorder_number,
+
+        'caisse': caisse, 'bank': bank,
+        # 'customers': customers, 'suppliers': suppliers,
+        # 'buyorder_number': buyorder_number, 'sellorder_number': sellorder_number,
+        # total orders
         'totalsellorders': totalsellorders, 'totalbuyorders': totalbuyorders,
-        'stockproductsalertcount': stockproductsalertcount, 'suppliers': suppliers,
-        'totaldebt': totaldebt, 'totalcredit': totalcredit,
+
+        'stockproductsalertcount': stockproductsalertcount,
+        # total debts & credits
+        'totaldebt': totaldebt, 'totalcredit': totalcredit, 'total_provider_credit': total_provider_credit,
+        # daily data
         'totaltodaypanne': totaltodaypanne, 'totaltodaypiece': totaltodaypiece,
-        'bank': bank, 'payed_totaltodaypanne': payed_totaltodaypanne,
-        'payed_totaltodaypiece': payed_totaltodaypiece,
-        'today_caisse': today_caisse,
-        'daily_salary': daily_salary,
+        'payed_totaltodaypanne': payed_totaltodaypanne, 'payed_totaltodaypiece': payed_totaltodaypiece,
+        'today_caisse': today_caisse, 'daily_salary': daily_salary,
+
         'total_salary': total_salary, 'chief_percentage': chief_percentage,
         'current_year': current_year,
+
+        # top five debts
+        'top_five_suppliers': top_five_suppliers, 'top_five_customers': top_five_customer,
+        'top_five_providers': top_five_providers,
     }
     return render(request, 'dashboard.html', context)
 
@@ -360,4 +384,3 @@ def choose_the_year(request):
     }
 
     return render(request, "setting.html", context)
-

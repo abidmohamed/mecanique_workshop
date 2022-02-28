@@ -111,8 +111,11 @@ def add_provider(request):
 
 def provider_list(request):
     providers = ServiceProvider.objects.all()
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
     context = {
         'providers': providers,
+        'current_year': current_year,
     }
     return render(request, 'services/provider_list.html', context)
 

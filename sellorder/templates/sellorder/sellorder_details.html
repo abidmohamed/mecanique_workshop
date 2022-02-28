@@ -2,6 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load list_indexing %}
 {% block content %}
 <br>
 <div class="row">
@@ -154,6 +155,7 @@
             <table id="table_id" class="table display text-center">
                 <thead class="thead-light">
                 <tr>
+                    <th>{% trans "ID" %}</th>
                     <th>{% trans "Product Brand" %}</th>
                     <th>{% trans "Product Name" %}</th>
                     <th>{% trans "Price" %}</th>
@@ -165,6 +167,7 @@
                 <tbody>
                 {% for item in order.items.all %}
                 <tr>
+                    <td class="table-light">{{ list_index|index:item }}</td>
                     <td class="table-light">{{ item.stockproduct.product.brand }}</td>
                     <td class="table-light">{{ item.stockproduct.product.name }}</td>
                     <td class="table-light ">{% trans "DZD" %}{{ item.price }}</td>
@@ -218,7 +221,7 @@
                     <td class="table-light">{{ item.price }} {% trans "DZD" %}</td>
                     <td class="table-light">{{ item.charge }} {% trans "DZD" %}</td>
                     <td class="table-light">{{ item.get_cost }} {% trans "DZD" %}</td>
-                    <td class="table-light">{{ item.service.provider }}</td>
+                    <td class="table-light">{{ item.provider }}</td>
                 </tr>
                 {% endfor %}
                 </tbody>

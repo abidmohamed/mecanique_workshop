@@ -205,7 +205,11 @@ def customer_detail(request, pk):
     dateform = DateForm()
     # now time
     chosen_date = datetime.now()
-
+    # Customer Payments
+    payments = customer.payments.all().filter(
+        pay_date__year=current_year.year
+    )
+    # confirmed Orders
     orders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False,
                                         order_date__year=current_year.year)
     # total order debt
@@ -215,8 +219,9 @@ def customer_detail(request, pk):
     for order in orders:
         total_order += order.get_ttc()
     # print(total_order)
+    # Unconfirmed Orders
     proforma_orders = Order.objects.all().filter(customer=customer, confirmed=False, order_date__year=current_year.year)
-
+    # Billed Orders
     factured_orders = SellOrderFacture.objects.all().filter(order__customer=customer,
                                                             order__order_date__year=current_year.year)
     # total bills debt
@@ -265,6 +270,19 @@ def customer_detail(request, pk):
         end_year = ''.join(end_year.split())
         end_month = ''.join(end_month.split())
         end_day = ''.join(end_day.split())
+
+        # Filter Customer Payments
+        payments = customer.payments.all().filter(
+            Q(
+                pay_date__gt=date(int(start_year), int(start_month),
+                                    int(start_day)),
+                pay_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                pay_date=date(int(end_year), int(end_month), int(end_day))
+            )
+        )
 
         # Filter order
         orders = Order.objects.all().filter(
@@ -362,6 +380,7 @@ def customer_detail(request, pk):
         'vehicles': vehicles,
         "dateform": dateform,
         'chosen_date': chosen_date,
+        "payments": payments
     }
     return render(request, 'customer/detail.html', context)
 

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from accounts.models import CurrentYear
 from buyorder.models import BuyOrder
 from caisse.forms import DateForm
 from category.models import Category
@@ -66,9 +67,11 @@ def add_product_buyorder(request):
 
 
 def all_product_list(request):
+    current_year = CurrentYear.objects.all().filter()[:1].get()
     products = Product.objects.all()
     context = {
         'products': products,
+        'current_year': current_year,
     }
     return render(request, 'product/all_product_list.html', context)
 

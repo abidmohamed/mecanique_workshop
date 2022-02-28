@@ -63,8 +63,11 @@ def stock_list(request):
 
 def all_stock_list(request):
     stocks = Stock.objects.all()
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
     context = {
         'stocks': stocks,
+        'current_year': current_year,
     }
     return render(request, 'stock/list_stock.html', context)
 
@@ -139,10 +142,13 @@ def add_stockproduct(request):
 
 def stockproduct_list(request, pk):
     stock = Stock.objects.get(id=pk)
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
     stockproducts = StockProduct.objects.all().filter(stock=stock)
 
     context = {
         'stockproducts': stockproducts,
+        'current_year': current_year,
     }
     return render(request, 'stockproduct/all_list_stockproduct.html', context)
 
