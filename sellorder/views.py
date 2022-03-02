@@ -1707,7 +1707,7 @@ def get_orders_pannes(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(order_date__gte=date(int(start_year), int(start_month), int(start_day)),
+        orders = Order.objects.all().filter(confirmed=True, order_date__gte=date(int(start_year), int(start_month), int(start_day)),
                                             order_date__lte=date(int(end_year), int(end_month), int(end_day)))
 
     for order in orders:
@@ -1773,7 +1773,7 @@ def get_orders_pieces(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(order_date__gte=date(int(start_year), int(start_month), int(start_day)),
+        orders = Order.objects.all().filter(confirmed=True, order_date__gte=date(int(start_year), int(start_month), int(start_day)),
                                             order_date__lte=date(int(end_year), int(end_month), int(end_day)))
     for order in orders:
         pieces |= order.items.all()
@@ -1796,7 +1796,7 @@ def get_orders_pannes_payed(request):
     periodform = PeriodForm()
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
-    orders = Order.objects.all().filter(order_date__year=current_year.year,
+    orders = Order.objects.all().filter(confirmed=True, order_date__year=current_year.year,
                                         order_date__month=now.month, order_date__day=now.day,
                                         paid=True)
     pannes = Panne.objects.none()
@@ -1828,7 +1828,7 @@ def get_orders_pannes_payed(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(order_date__year__gte=int(start_year),
+        orders = Order.objects.all().filter(confirmed=True, order_date__year__gte=int(start_year),
                                             order_date__month__gte=int(start_month),
                                             order_date__day__gte=int(start_day),
                                             order_date__year__lte=int(end_year), order_date__month__lte=int(end_month),
@@ -1857,7 +1857,7 @@ def get_orders_pieces_payed(request):
     periodform = PeriodForm()
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
-    orders = Order.objects.all().filter(order_date__year=current_year.year,
+    orders = Order.objects.all().filter(confirmed=True, order_date__year=current_year.year,
                                         order_date__month=now.month, order_date__day=now.day,
                                         paid=True)
     pieces = OrderItem.objects.none()
@@ -1889,7 +1889,7 @@ def get_orders_pieces_payed(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(order_date__gte=date(int(start_year), int(start_month), int(start_day)),
+        orders = Order.objects.all().filter(confirmed=True, order_date__gte=date(int(start_year), int(start_month), int(start_day)),
                                             order_date__lte=date(int(end_year), int(end_month), int(end_day)))
     for order in orders:
         pieces |= order.items.all()
