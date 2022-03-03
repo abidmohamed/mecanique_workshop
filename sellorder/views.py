@@ -1148,6 +1148,7 @@ def performa_sellorder_list(request):
 
 def sellorder_delete(request, pk):
     order = Order.objects.get(id=pk)
+
     if request.method == 'POST':
         if order.confirmed:
             if order.items.all():
