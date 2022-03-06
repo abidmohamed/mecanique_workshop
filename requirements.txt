@@ -25,3 +25,4 @@ django-mathfilters==1.0.0
 pylibmc==1.6.1
 djangorestframework~=3.13.1
 django-filter
+reportlab==3.6.6
