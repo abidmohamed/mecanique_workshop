@@ -89,8 +89,12 @@
                             </li>
                         {% endif %}
                         {% for i in customers.paginator.page_range %}
-                            {% if page.number > 3 and forloop.first %}
-                                <li>1</li>
+                            {% if customers.number > 3 and forloop.first %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1">
+                                    1
+                                        </a>
+                                </li>
                                 <li class="disabled">⋯</li>
                             {% endif %}
                             {% if customers.number == i %}

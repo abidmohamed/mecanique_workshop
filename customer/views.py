@@ -132,7 +132,7 @@ def add_customer_rdv(request):
 
 
 def customer_list(request):
-    customers_list = Customer.objects.only("firstname", "lastname", "phone", "address", "debt", )
+    customers_list = Customer.objects.only("firstname", "lastname", "phone", "address", "debt", ).order_by('-debt')
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
     # Page
