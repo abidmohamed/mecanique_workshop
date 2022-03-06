@@ -112,7 +112,11 @@
                             {% endif %}
                             {% if customers.paginator.num_pages > customers.number|add:'3' and forloop.last %}
                                 <li>...</li>
-                                <li>{{ customers.paginator.num_pages }}</li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ customers.paginator.num_pages }}">
+                                    {{ customers.paginator.num_pages }}
+                                        </a>
+                                </li>
                             {% endif %}
                         {% endfor %}
                         {% if customers.has_next %}
