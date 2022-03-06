@@ -1,5 +1,5 @@
 from datetime import datetime, date
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
 from django.db.models import Sum, Q
 from django.http import HttpResponse
@@ -7,6 +7,7 @@ from rest_framework.generics import ListAPIView
 
 from accounts.models import CurrentYear
 from caisse.forms import DateForm
+from customer.filters import CustomerFilter
 from customer.forms import UserForm, CustomerForm, CityForm, EnterpriseForm, AvancementForm
 from customer.models import Customer, City, Enterprise, Avancements
 from django.contrib.auth.models import User, Group
@@ -131,13 +132,35 @@ def add_customer_rdv(request):
 
 
 def customer_list(request):
-    customers = Customer.objects.only("firstname", "lastname", "phone", "address", "debt", )
+    customers_list = Customer.objects.only("firstname", "lastname", "phone", "address", "debt", )
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(customers_list, 5)
+
+    myFilter = CustomerFilter(request.GET, queryset=customers_list)
+
+    # paginate after filtering
+    customers_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(customers_list, 5)
+
+    try:
+        customers = paginator.page(page)
+    except PageNotAnInteger:
+        customers = paginator.page(1)
+    except EmptyPage:
+        customers = paginator.page(paginator.num_pages)
 
     context = {
         'customers': customers,
         'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'customer/list_customer.html', context)
 

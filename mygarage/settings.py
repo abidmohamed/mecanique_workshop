@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'family', 'category', 'stock', 'product', 'buyorder',
     'billing', 'sellorder', 'vehicule', 'rdv', 'caisse',
     'discount', 'services', 'mathfilters', 'bank', 'employee',
-    'rest_framework',
+    'rest_framework', 'django_filters',
     # 'pwa'
 ]
 
