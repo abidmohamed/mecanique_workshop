@@ -24,4 +24,4 @@ xhtml2pdf==0.2.5
 django-mathfilters==1.0.0
 pylibmc==1.6.1
 djangorestframework~=3.13.1
-django-filter~=21.1
+django-filter
