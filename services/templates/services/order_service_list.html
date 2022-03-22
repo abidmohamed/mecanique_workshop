@@ -1,0 +1,422 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load i18n %}
+{% load list_indexing %}
+{% load search_pagination_url %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card card-body">
+                <div class="row">
+                <div class="col">
+                    <h6>{% trans "Order ID" %}: </h6>
+                    <td>{{order.id}}</td>
+                </div>
+                <div class="col">
+                    <h6>{% trans "Customer" %}: </h6>
+                    <td>{{order.customer}}</td>
+                </div>
+                <div class="col">
+                    <h6>{% trans "Phone" %}: </h6>
+                    <td>{{order.customer.phone}}</td>
+                </div>
+            </div>
+                <br>
+                <hr>
+                <br>
+                <table id="table_id" class="table display text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th>{% trans "ID" %}</th>
+                    <th>{% trans "Product Brand" %}</th>
+                    <th>{% trans "Product Name" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Total Price" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in order.items.all %}
+                <tr>
+                    <td class="table-light">{{ list_index|index:item }}</td>
+                    <td class="table-light">{{ item.stockproduct.product.brand }}</td>
+                    <td class="table-light">{{ item.stockproduct.product.name }}</td>
+                    <td class="table-light ">{% trans "DZD" %}{{ item.price }}</td>
+                    <td class="table-light ">{{ item.quantity }}</td>
+                    <td class="table-light">{% trans "DZD" %}{{ item.get_cost }}</td>
+                    <td class="table-light"></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+                <hr>
+                <br>
+                <hr>
+                <br>
+                <table class="display text-center table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>{% trans "Name" %}</th>
+                        <th>{% trans "Type" %}</th>
+                        <th>{% trans "Matriculation" %}</th>
+                        <th>{% trans "Cart Gris" %}</th>
+                    </tr>
+                    </thead>
+                    <tbody >
+                    <tr>
+                        <td class="table-light">
+                            {{order.vehicle.vehicle_name}}
+                        </td>
+
+                        <td class="table-light">
+                            {{order.vehicle.vehicle_type}}
+                        </td>
+                        <td class="table-light">
+                            {{order.vehicle.vehicle_mat}}
+                        </td>
+                        <td class="table-light">
+                            {{order.vehicle.vehicle_cart_gris}}
+                        </td>
+
+                    </tr>
+                    </tbody>
+
+                </table>
+                <hr>
+                <br>
+                <hr>
+                <br>
+                <table id="table_panne" class="table display text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th>{% trans "Panne" %}</th>
+                    <th>{% trans "Price" %}</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in order.pannes.all %}
+                <tr>
+                    <td class="table-light">{{ item.panne.desc }}</td>
+                    <td class="table-light">{{ item.price }} {% trans "DZD" %}</td>
+                    <td class="table-light"></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card card-body">
+                <h1 class="text-primary">
+                    <i class="fa-solid fa-cogs"></i>
+                    {% trans "Services" %}
+                </h1>
+            </div>
+            <div class="card card-body">
+                <button class="btn btn-primary btn-lg rounded-pill check" onclick="uncheck_all()"><i class="far fa-square text-left pr-5"></i>UnCheck ALL</button>
+                <div class="row">
+                    <div class="col">
+                        <h4 class=" text-primary text-center">{% trans "Search" %}</h4>
+                        <div class="card card-body">
+                        <form method="get">
+                            {{myFilter.form}}
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                <form id="order-form" action="" method="post">
+                    {% csrf_token %}
+                    <h2>{% trans "Choose Services" %}</h2>
+                    <div>
+                        <h5 class="text-primary d-inline">
+                            {% trans "Selected Services" %}:
+                            <div class="d-inline font-weight-bold" id="service_counter">
+                            </div>
+                        </h5>
+                    </div>
+                    <table id="table_service" class="display text-center">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Price" %}</th>
+                                <th>{% trans "Charge" %}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for service in services %}
+                            <tr class="row{% cycle '1' '2' %}">
+                                <td>
+                                    <input onclick="count_services(this.id)" class="form-check-input service-input" type="checkbox" value="{{service.id}}"
+                                        id="{{service.id}}" name="services">
+                                </td>
+                                <td>
+                                    {{service.name}}
+                                </td>
+                                <td>
+                                    {{service.price}}
+                                </td>
+                                <td>
+                                    {{service.charge}}
+                                </td>
+
+
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+
+                    <!--  Pagination -->
+                    {% if services.has_other_pages %}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {% if services.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                        href="?{% param_replace page=services.previous_page_number %}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="disabled page-item">
+                                <a class="page-link"
+                                   href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                                {% endif %}
+                        {% for i in services.paginator.page_range %}
+                            {% if services.number > 3 and forloop.first %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=1 %}">
+                                    1
+                                        </a>
+                                </li>
+                                <li class="disabled">⋯</li>
+                            {% endif %}
+                            {% if services.number == i %}
+                                <li class="page-item active">
+                                    <span>
+                                        <a class="page-link" href="#">
+                                        {{ i }}
+                                            <span class="sr-only">(current)
+                                            </span>
+                                        </a>
+                                    </span>
+                                </li>
+                            {% elif i > services.number|add:'-3' and i < services.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=i %}">
+                                        {{ i }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if services.paginator.num_pages > services.number|add:'3' and forloop.last %}
+                                <li>...</li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=services.paginator.num_pages %}">
+                                    {{ services.paginator.num_pages }}
+                                        </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if services.has_next %}
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="?{% param_replace page=services.next_page_number %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled page-item">
+                                <a class="page-link disabled"
+                                   href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                        </nav>
+                    {% endif %}
+                    <!--  Pagination -->
+                    <hr>
+                    <tr class="text-center">
+                        <td class="text-center">
+                            <input class="btn btn-primary form-control" type="submit" name="submit">
+                        </td>
+                    </tr>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block jsscript %}
+<!-- custom javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
+
+<script type='text/javascript'>
+    // Service Counter
+    var service_counter = 0
+
+    // Register checked box in local storage to stay after refresh
+    document.addEventListener("DOMContentLoaded", function () {
+        var checkbox = document.querySelectorAll("input[type='checkbox']");
+
+        for (var item of checkbox) {
+            item.addEventListener("click", function () {
+                localStorage.s_item ? // verify if item in existe localStorage
+                    localStorage.s_item = localStorage.s_item.indexOf(this.id + ",") == -1 // verifico de localStorage contém o id
+                    ?
+                    localStorage.s_item + this.id + "," // não existe. Adiciono a id no loaclStorage
+                    :
+                    localStorage.s_item.replace(this.id + ",", "") : // já existe, apago do localStorage
+                    localStorage.s_item = this.id + ","; // não existe. Crio com o id do checkbox
+            });
+        }
+
+        if (localStorage.s_item) { // verifico se existe localStorage
+            // Show chosen products number
+                items = localStorage.s_item
+                items = items.split(',')
+                for (var product of items) {
+                    // if item not empty
+                    if(product != ''){
+                        //alert(product)
+                        service_counter++;
+                        document.getElementById('service_counter').innerHTML = service_counter;
+                    }
+                                    }
+            for (var item of checkbox) { // existe, percorro as checkbox
+                for (var product of items) {
+                    if(product != ''){
+                    // Checked the box
+                        if (product === item.id){
+                            item.checked = true;
+                        }
+                    }
+                }
+            }
+        }
+
+
+    });
+
+    // Count Service Checked
+    function count_services(check_id){
+        //console.log("checked", check_id)
+        services = document.getElementsByName("services")
+        //console.log(services)
+        services.forEach(element => {
+         //   console.log(element)
+            if (element.id === check_id){
+           //     console.log("match")
+                if (element.checked){
+                    service_counter++;
+                   document.getElementById('service_counter').innerHTML = service_counter;
+                }else {
+                    service_counter--;
+                   document.getElementById('service_counter').innerHTML = service_counter;
+                }
+            }
+        });
+    }
+
+    // Ucheck all
+    function uncheck_all(){
+        var checkbox = document.querySelectorAll("input[type='checkbox']");
+
+        checkbox.forEach(element => {
+            console.log(element)
+            element.checked = false;
+            console.log("new ", element)
+        });
+        service_counter=0; customer_id = 0;
+        document.getElementById('service_counter').innerHTML = service_counter;
+        localStorage.clear();
+    }
+
+    document.getElementsByClassName("service-input").required = false;
+
+
+    // Form Submition order-form
+    $('#order-form').on('submit', function (e) {
+        var form = this;
+        // Iterate over all checkboxes in the table
+        // product table
+        // var table = document.getElementByID('table_id');
+        // get all check boxes
+        var checkboxs = document.querySelectorAll("input[type='checkbox']:checked");
+        // local storage values
+        var local_storage_items = localStorage.s_item;
+        local_storage_items = local_storage_items.split(',');
+        // exist item
+        exist = -1;
+        for (var product of local_storage_items){
+            // if item not empty
+            if (exist == 0){
+            exist = -1;
+            // break;
+            }
+            for (var item of checkboxs) {
+            if(product != ''){
+                if(product===item.id){
+                   // console.log(item);
+                    console.log(product, item.id, "Equal", item.checked);
+                    if (item.checked){
+                    console.log(item.id, "Checked");
+                    return 1;
+                    break;
+
+                    }
+
+                } else {
+                // console.log(item);
+                    console.log(product, item.id, "Not Equal", item.checked);
+
+                    $(form).append(
+                        $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', item.name)
+                        .attr('checked', true)
+                        .val(product)
+
+                    );
+                    exist = 0;
+                    break;
+
+                }
+             }
+            }
+        }
+       localStorage.clear();
+    });
+
+
+</script>
+
+{% endblock %}

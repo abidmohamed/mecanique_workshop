@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -5,8 +6,10 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 # Create your views here.
+from accounts.models import CurrentYear
 from customer.forms import CustomerForm
 from customer.models import Customer
+from rdv.filters import PanneFilter
 from rdv.forms import RdvFrom, PanneForm
 from rdv.models import Panne, RdvItem, Rdv
 from sellorder.models import Order, PanneItem
@@ -191,6 +194,60 @@ def panne_list(request):
         'pannes': pannes,
     }
     return render(request, 'panne/panne_list.html', context)
+
+
+def order_panne_list(request, pk):
+    # Sell Order
+    sellorder = get_object_or_404(Order, id=pk)
+    list_index = list(sellorder.items.all())
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    pannes_list = Panne.objects.all().order_by('-id')
+
+    myFilter = PanneFilter(request.GET, queryset=pannes_list)
+
+    # paginated after filtering
+    pannes_list = myFilter.qs
+
+    #page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(pannes_list, 5)
+
+    try:
+        pannes = paginator.page(page)
+    except PageNotAnInteger:
+        pannes = paginator.page(1)
+    except EmptyPage:
+        pannes = paginator.page(paginator.num_pages)
+
+    # Form submitting
+    if request.method == 'POST':
+        chosenpannes = request.POST.getlist("pannes")
+        # add pannes
+        if len(chosenpannes) != 0:
+            for panne in chosenpannes:
+                panne = ''.join(panne.split())
+                currentpanne = Panne.objects.get(id=panne)
+                # print(currentpanne)
+                PanneItem.objects.create(
+                    order=sellorder,
+                    panne=currentpanne,
+                    price=currentpanne.price
+                )
+
+        return redirect('services:order_service_list', sellorder.pk)
+
+    context = {
+        'pannes': pannes,
+        'order': sellorder,
+        'myFilter': myFilter,
+        'current_year': current_year,
+        'list_index': list_index,
+    }
+    return render(request, 'panne/order_panne_list.html', context)
+
+
 
 
 def update_panne(request, pk):

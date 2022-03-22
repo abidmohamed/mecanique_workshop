@@ -847,7 +847,7 @@ def sellorder_details(request, pk):
     current_year = CurrentYear.objects.all().filter()[:1].get()
     sellorder_payments = SellOrderPayment.objects.all().filter(order=order)
     list_index = list(order.items.all())
-    print(list_index)
+    #print(list_index)
     context = {
         'order': order,
         'list_index': list_index,

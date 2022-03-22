@@ -1,19 +1,70 @@
 {% extends 'home.html' %}
 {% load static %}
 {% load i18n %}
+{% load list_indexing %}
 {% block content %}
 <br>
 <div class="container">
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>{% trans "Vehicle" %}</h5>
+                <div class="row">
+                <div class="col">
+                    <h6>{% trans "Order ID" %}: </h6>
+                    <td>{{order.id}}</td>
+                </div>
+                <div class="col">
+                    <h6>{% trans "Customer" %}: </h6>
+                    <td>{{order.customer}}</td>
+                </div>
+                <div class="col">
+                    <h6>{% trans "Phone" %}: </h6>
+                    <td>{{order.customer.phone}}</td>
+                </div>
+            </div>
+                <br>
+                <hr>
+                <br>
+                <table id="table_id" class="table display text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th>{% trans "ID" %}</th>
+                    <th>{% trans "Product Brand" %}</th>
+                    <th>{% trans "Product Name" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Total Price" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in order.items.all %}
+                <tr>
+                    <td class="table-light">{{ list_index|index:item }}</td>
+                    <td class="table-light">{{ item.stockproduct.product.brand }}</td>
+                    <td class="table-light">{{ item.stockproduct.product.name }}</td>
+                    <td class="table-light ">{% trans "DZD" %}{{ item.price }}</td>
+                    <td class="table-light ">{{ item.quantity }}</td>
+                    <td class="table-light">{% trans "DZD" %}{{ item.get_cost }}</td>
+                    <td class="table-light"></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h1 class="text-primary"><i class="fa-solid fa-car"></i> {% trans "Vehicle" %}</h1>
             </div>
             <div class="card card-body">
                 <form action="" method="post">
                     {% csrf_token %}
-                    <h2>{% trans "Choose Customers" %}</h2>
-                    <!-- Customers Table -->
+                    <h2>{% trans "Choose Vehicle" %}</h2>
+                    <!-- Vehicle Table -->
                     <table id="table_vehicle" class="display text-center">
                         <thead>
                         <tr>
@@ -73,16 +124,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
-<!-- Data Table  -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
-
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 
 <script type='text/javascript'>
-    //Data Table init
-    $(document).ready( function () {
-    $('#table_vehicle').DataTable();
-} );
 
 
 </script>

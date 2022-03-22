@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -9,11 +10,13 @@ from accounts.models import CurrentYear
 from buyorder.models import BuyOrderItem, BuyOrder
 from caisse.forms import DateForm
 from category.models import Category
+from customer.filters import CustomerFilter
 from customer.models import Customer
 from product.models import Product
 from rdv.models import Panne
 from sellorder.models import Order, OrderItem, PanneItem, ServiceItem
 from services.models import Service, ServiceProvider
+from stock.filters import StockProductFilter
 from stock.forms import StockForm, StockProductForm
 from stock.models import Stock, StockProduct
 from vehicule.models import Vehicle
@@ -254,74 +257,76 @@ def modal_update_order_stockproduct_list(request, pk):
 
 
 # Normal sell order
-def order_stockproduct_list(request):
-    stockproducts = StockProduct.objects.all().filter(quantity__gt=0)
-    customers = Customer.objects.all()
-    pannes = Panne.objects.all()
-    services = Service.objects.all()
+def order_stockproduct_list(request, pk):
+    # Sell Order
+    sellorder = get_object_or_404(Order, id=pk)
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
+    stockproducts_list = StockProduct.objects.all().filter(quantity__gt=0).order_by('-id')
+
+    myFilter = StockProductFilter(request.GET, queryset=stockproducts_list)
+
+    # paginate after filtering
+    stockproducts_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(stockproducts_list, 5)
+
+    try:
+        stockproducts = paginator.page(page)
+    except PageNotAnInteger:
+        stockproducts = paginator.page(1)
+    except EmptyPage:
+        stockproducts = paginator.page(paginator.num_pages)
+
     # providers = ServiceProvider.objects.all()
+    #  ## Form Submittion
     if request.method == 'POST':
         # get submitted orders
         chosenproducts = request.POST.getlist("products")
-        chosencustomer = request.POST.getlist("customers")
         # chosenvehicule = request.POST.getlist("vehicle")
-        chosenpannes = request.POST.getlist("pannes")
-        chosenservices = request.POST.getlist("services")
+
         # print(chosencustomer)
-        # print(chosenvehicule)
-        if len(chosencustomer) != 0:
-            sellorder = Order()
-            chosencustomer[0] = ''.join(chosencustomer[0].split())
-            customer = Customer.objects.get(id=chosencustomer[0])
+        print(chosenproducts)
 
-            sellorder.customer = customer
-            sellorder.save()
-            print(chosenproducts)
-            # add products
-            if len(chosenproducts) != 0:
-                for product in chosenproducts:
-                    product = ''.join(product.split())
-                    print("Product ID ###########>", product)
-                    product = ''.join(product.split())
-                    currentproduct = StockProduct.objects.get(id=product)
-                    # print(currentproduct)
-                    OrderItem.objects.create(
-                        order=sellorder,
-                        stockproduct=currentproduct,
-                        price=currentproduct.product.sellprice,
-                        # weight=currentproduct.product.weight,
-                        quantity=1,
-                    )
-            # add pannes
-            if len(chosenpannes) != 0:
-                for panne in chosenpannes:
-                    panne = ''.join(panne.split())
-                    currentpanne = Panne.objects.get(id=panne)
-                    # print(currentpanne)
-                    PanneItem.objects.create(
-                        order=sellorder,
-                        panne=currentpanne,
-                        price=currentpanne.price
-                    )
-            # add services
-            if len(chosenservices) != 0:
-                for service in chosenservices:
-                    service = ''.join(service.split())
-                    currentservice = Service.objects.get(id=service)
-                    ServiceItem.objects.create(
-                        order=sellorder,
-                        service=currentservice,
-                        price=currentservice.price,
-                        charge=currentservice.charge,
-                    )
+        # add products
+        if len(chosenproducts) != 0:
+            for product in chosenproducts:
+                product = ''.join(product.split())
+                print("Product ID ###########>", product)
+                product = ''.join(product.split())
+                currentproduct = StockProduct.objects.get(id=product)
+                # print(currentproduct)
+                OrderItem.objects.create(
+                    order=sellorder,
+                    stockproduct=currentproduct,
+                    price=currentproduct.product.sellprice,
+                    # weight=currentproduct.product.weight,
+                    quantity=1,
+                )
 
-            return redirect('stock:order_vehicle', sellorder.pk)
+            # # add services
+            # if len(chosenservices) != 0:
+            #     for service in chosenservices:
+            #         service = ''.join(service.split())
+            #         currentservice = Service.objects.get(id=service)
+            #         ServiceItem.objects.create(
+            #             order=sellorder,
+            #             service=currentservice,
+            #             price=currentservice.price,
+            #             charge=currentservice.charge,
+            #         )
+            #
+        return redirect('stock:order_vehicle', sellorder.pk)
 
     context = {
-        'customers': customers,
         'stockproducts': stockproducts,
-        'pannes': pannes,
-        "services": services,
+        'sellorder': sellorder,
+        'myFilter': myFilter,
+        'current_year': current_year,
     }
     return render(request, 'stockproduct/order_list_stockproduct.html', context)
 
@@ -404,9 +409,10 @@ def performa_order_stockproduct_list(request):
 
 # Real Order
 def order_vehicle(request, pk):
-    sellorder = Order.objects.get(id=pk)
+    sellorder = get_object_or_404(Order, id=pk)
     customer = Customer.objects.get(id=sellorder.customer.pk)
     vehicles = Vehicle.objects.all().filter(customer=customer)
+    list_index = list(sellorder.items.all())
     if request.method == 'POST':
         chosenvehicule = request.POST.get("vehicle")
         # Remove white spaces
@@ -417,10 +423,13 @@ def order_vehicle(request, pk):
             # print(vehicle)
             sellorder.vehicle = vehicle
             sellorder.save()
-            return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
+            return redirect('rdv:order_panne_list', sellorder.pk)
 
     context = {
         'vehicles': vehicles,
+        'order': sellorder,
+        'customer': customer,
+        'list_index': list_index,
     }
     return render(request, 'stockproduct/order_vehicle.html', context)
 
@@ -568,7 +577,7 @@ def stock_product_details(request, pk):
     # order items
     # print(stockproduct.order_item.all())
     order_items = stockproduct.order_item.all().filter(order__order_date__year=current_year.year,
-                                              order__confirmed=True)
+                                                       order__confirmed=True)
     for item in order_items:
         chosen_orders |= Order.objects.all().filter(id=item.order.id, created__year=current_year.year)
         sell_quantity += item.quantity

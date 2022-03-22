@@ -1,9 +1,11 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, get_object_or_404
 from datetime import datetime, date
 # Create your views here.
 from accounts.models import CurrentYear
 from caisse.forms import DateForm
 from sellorder.models import Order, ServiceItem
+from services.filters import ServiceFilter
 from services.forms import ServiceForm, ServiceProviderForm
 from services.models import Service, ServiceProvider
 
@@ -94,6 +96,56 @@ def update_order_service_list(request, pk):
         'services': services,
     }
     return render(request, 'services/modal_order_list_service.html', context)
+
+
+def order_service_list(request, pk):
+    sellorder = get_object_or_404(Order, id=pk)
+    list_index = list(sellorder.items.all())
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
+    services_list = Service.objects.all()
+
+    myFilter = ServiceFilter(request.GET, queryset=services_list)
+
+    services_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(services_list, 5)
+
+    try:
+        services = paginator.page(page)
+    except PageNotAnInteger:
+        services = paginator.page(1)
+    except EmptyPage:
+        services = paginator.page(paginator.num_pages)
+
+    if request.method == 'POST':
+        chosenservices = request.POST.getlist("services")
+        # add services
+        if len(chosenservices) != 0:
+            for service in chosenservices:
+                service = ''.join(service.split())
+                currentservice = Service.objects.get(id=service)
+                ServiceItem.objects.create(
+                    order=sellorder,
+                    service=currentservice,
+                    price=currentservice.price,
+                    charge=currentservice.charge,
+                )
+        return redirect('sellorder:confirm_order', sellorder.pk)
+
+    context = {
+        'order': sellorder,
+        'list_index': list_index,
+        'services': services,
+        'current_year': current_year,
+        'myFilter': myFilter,
+    }
+    return render(request, 'services/order_service_list.html', context)
+
 
 
 def add_provider(request):

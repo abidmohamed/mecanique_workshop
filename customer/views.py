@@ -178,9 +178,50 @@ def customer_debt_list(request):
 
 
 def sellorder_customer_list(request):
-    customers = Customer.objects.all()
+    customers_list = Customer.objects.only("firstname", "lastname", "phone", "address", "debt", ).order_by('-id')
+
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(customers_list, 5)
+
+    myFilter = CustomerFilter(request.GET, queryset=customers_list)
+
+    # paginate after filtering
+    customers_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(customers_list, 5)
+
+    try:
+        customers = paginator.page(page)
+    except PageNotAnInteger:
+        customers = paginator.page(1)
+    except EmptyPage:
+        customers = paginator.page(paginator.num_pages)
+
+    # ## Form Submittion
+    if request.method == 'POST':
+        # get customer
+        chosencustomer = request.POST.getlist("customers")
+        if len(chosencustomer) != 0:
+            sellorder = Order()
+            chosencustomer[0] = ''.join(chosencustomer[0].split())
+            customer = Customer.objects.get(id=chosencustomer[0])
+
+            sellorder.customer = customer
+            sellorder.save()
+
+            return redirect('stock:order_stockproduct_list', sellorder.pk)
+
     context = {
-        'customers': customers
+        'customers': customers,
+        'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'customer/sellorder_list_customer.html', context)
 
@@ -298,7 +339,7 @@ def customer_detail(request, pk):
         payments = customer.payments.all().filter(
             Q(
                 pay_date__gt=date(int(start_year), int(start_month),
-                                    int(start_day)),
+                                  int(start_day)),
                 pay_date__lt=date(int(end_year), int(end_month), int(end_day))
             )
             |

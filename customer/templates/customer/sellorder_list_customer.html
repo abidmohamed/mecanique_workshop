@@ -1,41 +1,166 @@
 {% extends 'home.html' %}
 {% load static %}
 {% load i18n %}
+{% load search_pagination_url %}
 {% block content %}
 <br>
 <div class="container">
     <div class="row">
     <div class="col-md">
-        <div class="card card-body">
-            <h5>{% trans "Customers" %}</h5>
+        <div class="card card-body item-center">
+            <h1 class=" text-primary text-center">{% trans "Choose Customer" %}</h1>
         </div>
+        <div class="row">
+                <div class="col">
+                    <h4 class=" text-primary text-center">{% trans "Search" %}</h4>
+                    <div class="card card-body">
+                        <form method="get">
+                            {{myFilter.form}}
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+        </div>
+        <h5 class="text-primary d-inline">
+            {% trans "Selected Customer" %}:
+            <div class="d-inline font-weight-bold" id="customer_id">
+
+            </div>
+        </h5>
+        <br>
+        <form id="order-form" action="" method="post">
+            {% csrf_token %}
         <div class="card card-body">
-            <table id="table_id" class=" table display text-center">
+            <!-- Customers Table -->
+            <table id="table_customer" class="display text-center">
                 <thead>
-                <tr>
-                    <th>{% trans "Customer" %}</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>{% trans "Name" %}</th>
+                        <th>{% trans "Address" %}</th>
+                        <th>{% trans "Phone" %}</th>
+                        <th>{% trans "Debt" %}</th>
+
+                    </tr>
                 </thead>
 
                 <tbody>
-                {% for customer in customers %}
-                <tr>
-                   <td>
-                       {{customer.firstname}}
-                       {{customer.lastname}}
-                   </td>
-                    <td>
-                        <a class="btn btn-info " href="{% url 'sellorder:sellorder_list_by_customer' customer.id %}">{% trans "Bill" %}</a>
-                    </td>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>
+                            <input onclick="show_customer()" class="form-check-input" type="radio" value="{{customer.id}}"
+                                id="{{customer.id}}" name="customers" title="{{customer.firstname}} {{customer.lastname}} - {{customer.phone}}">
+                        </td>
+                        <td>
+                            {{customer.id}}
+                        </td>
+                        <td>
+                            {{customer.firstname}}
+                            {{customer.lastname}}
+                        </td>
+                        <td>
+                            {{customer.address}}
+                        </td>
+                        <td>
+                            {{customer.phone}}
+                        </td>
+                        <td>
+                            {{customer.debt}}
+                        </td>
 
-                </tr>
 
-                {% endfor %}
+                    </tr>
+
+                    {% endfor %}
                 </tbody>
 
             </table>
+            <!-- Customer Pagination -->
+            {% if customers.has_other_pages %}
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {% if customers.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link"
+                                href="?{% param_replace page=customers.previous_page_number %}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled page-item">
+                        <a class="page-link"
+                           href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                        {% endif %}
+                {% for i in customers.paginator.page_range %}
+                    {% if customers.number > 3 and forloop.first %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{% param_replace page=1 %}">
+                            1
+                                </a>
+                        </li>
+                        <li class="disabled">⋯</li>
+                    {% endif %}
+                    {% if customers.number == i %}
+                        <li class="page-item active">
+                            <span>
+                                <a class="page-link" href="#">
+                                {{ i }}
+                                    <span class="sr-only">(current)
+                                    </span>
+                                </a>
+                            </span>
+                        </li>
+                    {% elif i > customers.number|add:'-3' and i < customers.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{% param_replace page=i %}">
+                                {{ i }}
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if customers.paginator.num_pages > customers.number|add:'3' and forloop.last %}
+                        <li>...</li>
+                        <li class="page-item">
+                            <a class="page-link" href="?{% param_replace page=customers.paginator.num_pages %}">
+                            {{ customers.paginator.num_pages }}
+                                </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if customers.has_next %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="?{% param_replace page=customers.next_page_number %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="disabled page-item">
+                        <a class="page-link disabled"
+                           href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+                </nav>
+            {% endif %}
+            <!-- Customer Pagination -->
         </div>
+
+        <tr class="text-center">
+            <td class="text-center">
+                <input class="btn btn-primary form-control" type="submit" name="submit">
+            </td>
+        </tr>
+        </form>
     </div>
 </div>
 
@@ -49,15 +174,37 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
 <!-- Data Table  -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 
 <script type='text/javascript'>
-    //Data Table init
-    $(document).ready( function () {
-    $('#table_id').DataTable();
-} );
+         // Selected Customer
+         var customer_id = 0;
+         var radios = document.getElementsByName("customers");
 
+        // save chosen customer
+        var val = localStorage.getItem('customers');
+        for(var i=0;i<radios.length;i++){
+            if(radios[i].value == val){
+                radios[i].checked = true;
+            }
+        }
+    $('input[name="customers"]').on('change', function(){
+        localStorage.setItem('customers', $(this).val());
+        document.getElementById('customer_id').innerHTML = localStorage.getItem('customers');
+        });
+
+        document.getElementById('customer_id').innerHTML = localStorage.getItem('customers');
+
+        // Show Selected Customer
+        function show_customer(){
+                // customer_id = this.title
+                document.getElementById('customer_id').innerHTML = localStorage.getItem('customers');
+        }
+
+
+    // Form Submition order-form
+    $('#order-form').on('submit', function (e) {
+        localStorage.clear();
+    });
 </script>
 {% endblock %}

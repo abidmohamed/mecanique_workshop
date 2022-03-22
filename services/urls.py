@@ -8,6 +8,7 @@ urlpatterns = [
     path('add_service', views.add_service, name='add_service'),
     path('service_list', views.service_list, name='service_list'),
     path('update_service/<str:pk>', views.update_service, name='update_service'),
+    path('order_service_list/<str:pk>', views.order_service_list, name='order_service_list'),
     path('delete_service/<str:pk>', views.delete_service, name='delete_service'),
 
     path('add_provider', views.add_provider, name='add_provider'),
