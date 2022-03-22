@@ -1,6 +1,7 @@
 import decimal
 from datetime import date, datetime
 
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from xhtml2pdf import pisa
@@ -20,6 +21,7 @@ from payments.forms import CustomerPaymentForm
 from payments.models import SellOrderPayment
 from rdv.models import Panne
 from sellorder.apps import SellorderConfig
+from sellorder.filters import SellorderFilter
 from sellorder.models import Order, SellOrderFacture, OrderItem, PanneItem, ServiceItem
 from services.models import ServiceProvider, Service
 from stock.models import StockProduct
@@ -847,7 +849,7 @@ def sellorder_details(request, pk):
     current_year = CurrentYear.objects.all().filter()[:1].get()
     sellorder_payments = SellOrderPayment.objects.all().filter(order=order)
     list_index = list(order.items.all())
-    #print(list_index)
+    # print(list_index)
     context = {
         'order': order,
         'list_index': list_index,
@@ -888,73 +890,91 @@ def sellorder_list(request):
     # chosen year
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
-    sellorders = Order.objects.all().filter(confirmed=True, factured=False, order_date__day=now.day,
-                                            order_date__month=now.month, order_date__year=current_year.year)
-    sellorders_customers = Customer.objects.all()
+    sellorders_list = Order.objects.all().filter(confirmed=True, factured=False,
+                                                 order_date__year=current_year.year)
+
+    myFilter = SellorderFilter(request.GET, queryset=sellorders_list)
+
+    sellorders_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(sellorders_list, 5)
+
+    try:
+        sellorders = paginator.page(page)
+    except PageNotAnInteger:
+        sellorders = paginator.page(1)
+    except EmptyPage:
+        sellorders = paginator.page(paginator.num_pages)
+
+    # sellorders_customers = Customer.objects.all()
     # sellorders_customers = Order.customer.all()
     # print(sellorders_customers)
-    customers = Customer.objects.all()
+    # customers = Customer.objects.all()
 
     print("Current Year", current_year)
     # Search request by date===>
-    if request.method == 'POST':
-        alldata = request.POST
-        print(alldata)
-        # customer
-        chosencustomer = request.POST.getlist("customers")
-
-        if len(chosencustomer) != 0:
-            # Remove white spaces
-            print("Current Year", current_year)
-            chosencustomer = ''.join(chosencustomer[0].split())
-            customer = Customer.objects.get(id=chosencustomer)
-            sellorders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False,
-                                                    order_date__year=current_year.year)
-
-        # Search by date removed
-        # chosen_date = alldata.get("date")
-        # chosen_date = chosen_date.split("-", 1)
-        # chosen_start_date = chosen_date[0]
-        # chosen_end_date = chosen_date[1]
-        #
-        # chosen_start_date = chosen_start_date.split("/", 2)
-        # start_month = chosen_start_date[0]
-        # start_year = chosen_start_date[2]
-        # start_day = chosen_start_date[1]
-        # # Remove white spaces
-        # start_year = ''.join(start_year.split())
-        # start_month = ''.join(start_month.split())
-        # start_day = ''.join(start_day.split())
-        #
-        # chosen_end_date = chosen_end_date.split("/", 2)
-        # end_month = chosen_end_date[0]
-        # end_year = chosen_end_date[2]
-        # end_day = chosen_end_date[1]
-        # # Remove white spaces
-        # end_year = ''.join(end_year.split())
-        # end_month = ''.join(end_month.split())
-        # end_day = ''.join(end_day.split())
-        #
-        # sellorders = Order.objects.all().filter(
-        #     Q(
-        #         created__gt=date(int(start_year), int(start_month),
-        #                          int(start_day)),
-        #         created__lt=date(int(end_year), int(end_month), int(end_day))
-        #     )
-        #     |
-        #     Q(
-        #         created=date(int(end_year), int(end_month), int(end_day))
-        #     )
-        #     , confirmed=True, factured=False,
-        #
-        # )
+    # if request.method == 'POST':
+    #     alldata = request.POST
+    #     print(alldata)
+    #     # customer
+    #    # chosencustomer = request.POST.getlist("customers")
+    #
+    #     if len(chosencustomer) != 0:
+    #         # Remove white spaces
+    #         print("Current Year", current_year)
+    #         chosencustomer = ''.join(chosencustomer[0].split())
+    #         customer = Customer.objects.get(id=chosencustomer)
+    #         sellorders = Order.objects.all().filter(customer=customer, confirmed=True, factured=False,
+    #                                                 order_date__year=current_year.year)
+    #
+    #     # Search by date removed
+    #     # chosen_date = alldata.get("date")
+    #     # chosen_date = chosen_date.split("-", 1)
+    #     # chosen_start_date = chosen_date[0]
+    #     # chosen_end_date = chosen_date[1]
+    #     #
+    #     # chosen_start_date = chosen_start_date.split("/", 2)
+    #     # start_month = chosen_start_date[0]
+    #     # start_year = chosen_start_date[2]
+    #     # start_day = chosen_start_date[1]
+    #     # # Remove white spaces
+    #     # start_year = ''.join(start_year.split())
+    #     # start_month = ''.join(start_month.split())
+    #     # start_day = ''.join(start_day.split())
+    #     #
+    #     # chosen_end_date = chosen_end_date.split("/", 2)
+    #     # end_month = chosen_end_date[0]
+    #     # end_year = chosen_end_date[2]
+    #     # end_day = chosen_end_date[1]
+    #     # # Remove white spaces
+    #     # end_year = ''.join(end_year.split())
+    #     # end_month = ''.join(end_month.split())
+    #     # end_day = ''.join(end_day.split())
+    #     #
+    #     # sellorders = Order.objects.all().filter(
+    #     #     Q(
+    #     #         created__gt=date(int(start_year), int(start_month),
+    #     #                          int(start_day)),
+    #     #         created__lt=date(int(end_year), int(end_month), int(end_day))
+    #     #     )
+    #     #     |
+    #     #     Q(
+    #     #         created=date(int(end_year), int(end_month), int(end_day))
+    #     #     )
+    #     #     , confirmed=True, factured=False,
+    #     #
+    #     # )
     # print(customers)
     context = {
         'sellorders': sellorders,
         "dateform": dateform,
-        'customers': customers,
+        # 'customers': customers,
         'list_type': list_type,
         'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'sellorder/list_sellorder.html', context)
 
@@ -1708,7 +1728,8 @@ def get_orders_pannes(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(confirmed=True, order_date__gte=date(int(start_year), int(start_month), int(start_day)),
+        orders = Order.objects.all().filter(confirmed=True,
+                                            order_date__gte=date(int(start_year), int(start_month), int(start_day)),
                                             order_date__lte=date(int(end_year), int(end_month), int(end_day)))
 
     for order in orders:
@@ -1774,7 +1795,8 @@ def get_orders_pieces(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(confirmed=True, order_date__gte=date(int(start_year), int(start_month), int(start_day)),
+        orders = Order.objects.all().filter(confirmed=True,
+                                            order_date__gte=date(int(start_year), int(start_month), int(start_day)),
                                             order_date__lte=date(int(end_year), int(end_month), int(end_day)))
     for order in orders:
         pieces |= order.items.all()
@@ -1890,7 +1912,8 @@ def get_orders_pieces_payed(request):
         end_day = ''.join(end_day.split())
 
         # Date Submit ----------date_created
-        orders = Order.objects.all().filter(confirmed=True, order_date__gte=date(int(start_year), int(start_month), int(start_day)),
+        orders = Order.objects.all().filter(confirmed=True,
+                                            order_date__gte=date(int(start_year), int(start_month), int(start_day)),
                                             order_date__lte=date(int(end_year), int(end_month), int(end_day)))
     for order in orders:
         pieces |= order.items.all()

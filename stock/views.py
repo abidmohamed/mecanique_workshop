@@ -144,26 +144,63 @@ def add_stockproduct(request):
 
 
 def stockproduct_list(request, pk):
-    stock = Stock.objects.get(id=pk)
+    stock = get_object_or_404(Stock, id=pk)
     current_year = CurrentYear.objects.all().filter()[:1].get()
 
-    stockproducts = StockProduct.objects.all().filter(stock=stock)
+    stockproducts_list = StockProduct.objects.all().filter(stock=stock).order_by('quantity')
+
+    myFilter = StockProductFilter(request.GET, queryset=stockproducts_list)
+
+    # paginate after filtering
+    stockproducts_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(stockproducts_list, 5)
+
+    try:
+        stockproducts = paginator.page(page)
+    except PageNotAnInteger:
+        stockproducts = paginator.page(1)
+    except EmptyPage:
+        stockproducts = paginator.page(paginator.num_pages)
 
     context = {
         'stockproducts': stockproducts,
         'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'stockproduct/all_list_stockproduct.html', context)
 
 
 def all_stockproduct_list(request):
-    stockproducts = StockProduct.objects.only("product", "quantity", "stock")
+    stockproducts_list = StockProduct.objects.only("product", "quantity", "stock").order_by('quantity')
+
+    myFilter = StockProductFilter(request.GET, queryset=stockproducts_list)
+
+    # paginate after filtering
+    stockproducts_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(stockproducts_list, 5)
+
+    try:
+        stockproducts = paginator.page(page)
+    except PageNotAnInteger:
+        stockproducts = paginator.page(1)
+    except EmptyPage:
+        stockproducts = paginator.page(paginator.num_pages)
+
     categories = Category.objects.all()
-    print("======>", stockproducts[1].product)
+    # print("======>", stockproducts[1].product)
 
     context = {
         'categories': categories,
         'stockproducts': stockproducts,
+        'myFilter': myFilter,
     }
     return render(request, 'stockproduct/all_list_stockproduct.html', context)
 
