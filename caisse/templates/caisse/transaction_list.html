@@ -77,7 +77,7 @@
         </div>
         <div class="card card-body">
             <h1>{% trans "Transaction" %} : {{total_transaction_payments}}</h1>
-            <table id="" class="table table-sm">
+            <table id="table_id" class="table table-sm">
                 <thead>
                 <tr>
                     <th>{% trans "Name" %}</th>
@@ -296,13 +296,13 @@
         ]
     });
     $('#service_table_id').DataTable({
-        "order": [[ 4, "desc" ]],
+        "order": [[ 5, "desc" ]],
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
-    } );
+    });
 
 // Date Picker
 $('input[name="date"]').daterangepicker();
