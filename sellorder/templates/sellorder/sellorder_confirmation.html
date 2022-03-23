@@ -149,7 +149,7 @@
                     <tr>
                         <td>
                             {{item.provider}}
-                             <select class="form-control"  name="providers" required>
+                             <select class="form-control provider-input"  name="providers" required>
                                 <option selected>Choose...</option>
                                  {% for provider in providers %}
                                 <option value="{{provider.id}}">{{provider}}</option>
@@ -178,6 +178,10 @@
     </div>
 </div>
 <script>
+
+    document.getElementsByClassName("provider-input").required = true;
+
+
 // treat numbers from final ","
     String.prototype.replaceAt = function(index, replacement) {
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);

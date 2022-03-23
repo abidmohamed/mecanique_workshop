@@ -16,15 +16,18 @@
     <div class="col-md-10 col-sm-12">
         <hr>
         <div class="card card-body">
-            <h5 class="display-5 text-center"><i class="fas fa-exchange-alt"></i>{% trans "Transactions" %}</h5>
+            <h3 class="display-5 text-center"><i class="fas fa-exchange-alt"></i>{% trans "Transactions" %}</h3>
             <a class="btn btn-success " href="{% url 'caisse:create_transaction' %}">{% trans "Add" %} +</a>
             <br>
-            <h5 class="text-center text-success">{% trans "Income" %} : {{income_per_period}} {% trans "DZD" %}</h5>
+            <hr>
             <br>
-            <h5 class="text-center text-danger">{% trans "Expense" %} : {{expense_per_period}} {% trans "DZD" %}</h5>
+            <h3 class="text-center text-success">{% trans "Income" %} : {{income_per_period}} {% trans "DZD" %}</h3>
             <br>
-            <h5 class="text-center text-primary">{% trans "TOTAL" %} : {{total_per_period}} {% trans "DZD" %}</h5>
+            <h3 class="text-center text-danger">{% trans "Expense" %} : {{expense_per_period}} {% trans "DZD" %}</h3>
             <br>
+            <h3 class="text-center text-primary">{% trans "TOTAL" %} : {{total_per_period}} {% trans "DZD" %}</h3>
+            <br>
+            <hr>
             <form method="post" action="">
                 {% csrf_token %}
                 <div class="form-group">
@@ -38,10 +41,43 @@
                     <input class="form-control btn btn-primary" type="submit" value="Validate">
                 </div>
             </form>
+            <div class="row">
+                <div class="col-xl-4 col-md-4 mb-4">
+                    <div class="card bg-gradient-success shadow h-100 py-2">
+                        <a href="{% url 'sellorder:get_orders_pannes' %}">
+                            <div class="card-body text-center">
+                                <h2 class=" font-weight-bold text-white text-uppercase mb-2"><i class="fa-solid fa-gear"></i> {% trans "MO" %}</h2>
+                                <div class="h3 mb-0 font-weight-bold text-white">{{totaltodaypanne}} {% trans " DZD" %}</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 mb-4">
+                    <div class="card bg-gradient-info shadow h-100 py-2">
+                     <a href="{% url 'sellorder:get_orders_pieces' %}">
+                        <div class="card-body text-center">
+                            <h2 class="font-weight-bold text-white text-uppercase "><i class="fa-solid fa-box"></i> {% trans "Piece" %}</h2>
+                            <div class="h3 mb-0 font-weight-bold text-white">{{totaltodaypiece}} {% trans "DZD" %}</div>
+                        </div>
+                     </a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 mb-4">
+                    <div class="card bg-gradient-warning shadow h-100 py-2">
+                        <!-- Today Caisse -->
+                        <a href="{% url 'sellorder:get_orders_pannes' %}">
+                            <div class="card-body text-center">
+                                <h2 class=" font-weight-bold text-white text-uppercase mb-2"><i class="fa-solid fa-user-gear"></i> {% trans "Workshop Chief 10%" %}</h2>
+                                <div class="h3 mb-0 font-weight-bold text-white">{{chief_percentage}} {% trans " DZD" %}</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card card-body">
             <h1>{% trans "Transaction" %} : {{total_transaction_payments}}</h1>
-            <table id="table_id" class="table table-sm">
+            <table id="" class="table table-sm">
                 <thead>
                 <tr>
                     <th>{% trans "Name" %}</th>
@@ -82,6 +118,8 @@
                 </tbody>
 
             </table>
+            <br>
+
             <hr>
             <h1>{% trans "Customer Payments"%} : {{total_customer_payments}}</h1>
             <table id="customer_table_id" class="display text-center">

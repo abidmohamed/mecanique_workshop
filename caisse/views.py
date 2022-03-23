@@ -1,4 +1,5 @@
 import datetime
+import decimal
 from datetime import date, datetime
 
 from django.db.models import Q
@@ -9,7 +10,9 @@ from django.views.decorators.cache import cache_page
 from accounts.models import CurrentYear
 from caisse.forms import TransactionForm, DateForm, PeriodForm, CategoryTransactionForm
 from caisse.models import Caisse, CaisseHistory, Transaction, TransactionCategory
+from customer.models import Enterprise
 from payments.models import SellOrderPayment, BuyOrderPayment, ServicePayment
+from sellorder.models import Order
 
 
 def create_transaction_category(request):
@@ -161,15 +164,19 @@ def update_transaction(request, pk):
 def transaction_list(request):
     dateform = DateForm()
     periodform = PeriodForm()
-    # current year
-    current_year = CurrentYear.objects.all().filter()[:1].get()
-
-    transactions = Transaction.objects.filter(trans_date__year=current_year.year)
-
     # now time
     now = datetime.now()
     chosen_date = datetime.now()
+    # current year
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+    # Orders
+    today_sellorders = Order.objects.all().filter(order_date__year=current_year.year, confirmed=True)
 
+    transactions = Transaction.objects.filter(trans_date__year=current_year.year)
+
+
+
+    # Payments
     customerpayments = SellOrderPayment.objects.all().filter(pay_status='Cash', pay_date__year=current_year.year)
     supplierpayments = BuyOrderPayment.objects.all().filter(pay_status='Cash', pay_date__year=current_year.year)
     servicepayments = ServicePayment.objects.filter(pay_date__year=current_year.year)
@@ -259,6 +266,19 @@ def transaction_list(request):
             )
         )
 
+        today_sellorders = Order.objects.all().filter(
+            Q(
+                order_date__gt=date(int(start_year), int(start_month), int(start_day)),
+                order_date__lt=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order_date=date(int(end_year), int(end_month), int(end_day))
+            ),
+            confirmed=True
+        )
+
+    # Transactions
     for transaction in transactions:
         if transaction.Transaction_type == "Income":
             total_per_period += transaction.amount
@@ -268,21 +288,37 @@ def transaction_list(request):
             total_per_period -= transaction.amount
             expense_per_period += transaction.amount
             total_transaction_payments -= transaction.amount
-
+    # Customer Payments
     for customerpayment in customerpayments:
         total_per_period += customerpayment.amount
         income_per_period += customerpayment.amount
         total_customer_payments += customerpayment.amount
-
+    # Supplier Payments
     for supplierpayment in supplierpayments:
         total_per_period -= supplierpayment.amount
         expense_per_period += supplierpayment.amount
         total_supplier_payments += supplierpayment.amount
-
+    # Service Payments
     for servicepayment in servicepayments:
         total_per_period -= servicepayment.amount
         expense_per_period += servicepayment.amount
         total_service_payments += servicepayment.amount
+
+    # Sell Orders Pannes & Pieces
+    totaltodaypanne = 0
+    totaltodaypiece = 0
+    chief_percentage = 0
+    for order in today_sellorders:
+        totaltodaypanne += order.get_total_panne()
+        totaltodaypiece += order.get_total_cost()
+        # calculate workshop chief 10%
+        # get customer
+        order_customer = order.customer
+        # check if the customer enterprise 5% else 10%
+        if Enterprise.objects.filter(customer=order_customer):
+            chief_percentage += decimal.Decimal(order.get_total_panne() * 5) / decimal.Decimal(100)
+        else:
+            chief_percentage += decimal.Decimal(order.get_total_panne() * 10) / decimal.Decimal(100)
 
     context = {
         "transactions": transactions,
@@ -303,6 +339,10 @@ def transaction_list(request):
         'total_supplier_payments': total_supplier_payments,
         'total_service_payments': total_service_payments,
         'total_transaction_payments': total_transaction_payments,
+
+        'totaltodaypanne': totaltodaypanne,
+        'totaltodaypiece': totaltodaypiece,
+        'chief_percentage': chief_percentage,
 
         'current_year': current_year,
     }

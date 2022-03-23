@@ -36,6 +36,9 @@ class Order(models.Model):
     def get_total_cost(self):
         return round(sum(item.get_cost() for item in self.items.all()), 2)
 
+    def get_total_benefit(self):
+        return round(sum(item.get_benefit() for item in self.items.all()), 2)
+
     def get_total_panne(self):
         return round(sum(item.get_cost() for item in self.pannes.all()), 2)
 
@@ -71,6 +74,9 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return round(self.price * self.quantity, 2)
+
+    def get_benefit(self):
+        return round(self.price - self.stockproduct.product.buyprice, 2)
 
 
 class PanneItem(models.Model):

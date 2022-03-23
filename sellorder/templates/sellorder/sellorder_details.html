@@ -150,7 +150,15 @@
             </div>
             <hr>
             <br>
-            <h2> {% trans "Products" %} : {{order.get_total_cost}}</h2>
+            <div class="row">
+                <div class="col-6">
+                  <h2> {% trans "Products" %} : {{order.get_total_cost}} </h2>
+                </div>
+                <div class="col-6">
+                    <h2 class="text-success"> {{order.get_total_benefit}}</h2>
+                </div>
+
+            </div>
             <hr>
             <table id="table_id" class="table display text-center">
                 <thead class="thead-light">
@@ -158,9 +166,11 @@
                     <th>{% trans "ID" %}</th>
                     <th>{% trans "Product Brand" %}</th>
                     <th>{% trans "Product Name" %}</th>
-                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Sell Price" %}</th>
+                    <th>{% trans "Buy Price" %}</th>
                     <th>{% trans "Quantity" %}</th>
                     <th>{% trans "Total Price" %}</th>
+                    <th>{% trans "Benefit" %}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -171,8 +181,10 @@
                     <td class="table-light">{{ item.stockproduct.product.brand }}</td>
                     <td class="table-light">{{ item.stockproduct.product.name }}</td>
                     <td class="table-light ">{% trans "DZD" %}{{ item.price }}</td>
+                    <td class="table-light ">{% trans "DZD" %}{{ item.stockproduct.product.buyprice }}</td>
                     <td class="table-light ">{{ item.quantity }}</td>
                     <td class="table-light">{% trans "DZD" %}{{ item.get_cost }}</td>
+                    <td class="table-light text-success">{% trans "DZD" %}{{ item.get_benefit }}</td>
                     <td class="table-light"></td>
                 </tr>
                 {% endfor %}
