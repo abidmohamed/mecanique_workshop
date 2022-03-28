@@ -624,11 +624,11 @@ def update_order(request, pk):
         timbre = ''.join(timbre.split())
         sellorder.timbre = decimal.Decimal(timbre)
         # get money additiion
-        # print(old_ttc)
+        print("=============> OLD TTC ",old_ttc)
         new_ttc = sellorder.get_ttc()
-        # print(new_ttc)
+        print("=============> NEW TTC ",new_ttc)
         ttc_difference = new_ttc - old_ttc
-        # print(ttc_difference)
+        print("=============> DIFF ",ttc_difference)
         # sellorder.debt = sellorder.get_ttc()
         sellorder.debt -= old_ttc
         sellorder.debt += new_ttc
@@ -677,7 +677,7 @@ def order_item_delete(request, orderpk, itempk):
         'sellorder': sellorder,
         'item': item
     }
-    return render(request, 'sellorder/delete_item.html', context)
+    return render(request, 'sellorder/update_order_delete_item.html', context)
 
 
 # Proforma order delete item

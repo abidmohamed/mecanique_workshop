@@ -76,7 +76,10 @@ class OrderItem(models.Model):
         return round(self.price * self.quantity, 2)
 
     def get_benefit(self):
-        return round(self.price - self.stockproduct.product.buyprice, 2)
+        if self.stockproduct:
+            return round((self.price - self.stockproduct.product.buyprice) * self.quantity, 2)
+        else:
+            return 0
 
 
 class PanneItem(models.Model):
