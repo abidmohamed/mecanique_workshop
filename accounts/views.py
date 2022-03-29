@@ -263,7 +263,7 @@ def home(request):
     # Stock Qt Alert
     stockproductsalertcount = 0
     # products = Product.objects.all()
-    for product in StockProduct.objects.all():
+    for product in StockProduct.objects.all().filter(quantity__lte=10):
         stockproductsalertcount = StockProduct.objects.all().filter(
             quantity__lte=product.product.alert_quantity).count()
 
