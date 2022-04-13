@@ -226,6 +226,51 @@ def sellorder_customer_list(request):
     return render(request, 'customer/sellorder_list_customer.html', context)
 
 
+def proforma_customer_list(request):
+    customers_list = Customer.objects.only("firstname", "lastname", "phone", "address", "debt", ).order_by('-id')
+
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
+    myFilter = CustomerFilter(request.GET, queryset=customers_list)
+
+    # paginate after filtering
+    customers_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(customers_list, 5)
+
+    try:
+        customers = paginator.page(page)
+    except PageNotAnInteger:
+        customers = paginator.page(1)
+    except EmptyPage:
+        customers = paginator.page(paginator.num_pages)
+
+    # ## Form Submittion
+    if request.method == 'POST':
+        # get customer
+        chosencustomer = request.POST.getlist("customers")
+        if len(chosencustomer) != 0:
+            sellorder = Order()
+            chosencustomer[0] = ''.join(chosencustomer[0].split())
+            customer = Customer.objects.get(id=chosencustomer[0])
+
+            sellorder.customer = customer
+            sellorder.save()
+
+            return redirect('stock:performa_order_stockproduct_list', sellorder.pk)
+
+    context = {
+        'customers': customers,
+        'current_year': current_year,
+        'myFilter': myFilter,
+    }
+    return render(request, 'customer/sellorder_list_customer.html', context)
+
+
 def update_customer(request, pk):
     customer = get_object_or_404(Customer, id=pk)
     customer_form = CustomerForm(instance=customer)
@@ -526,7 +571,7 @@ def add_avancement(request, pk):
     return render(request, 'customer/add_avancement.html', context)
 
 
-##DataTableCustomer Function
+## DataTableCustomer Function
 def customer_list_json(request):
     queryset = Customer.objects.all()
     json = serializers.serialize('json', queryset)
@@ -534,7 +579,7 @@ def customer_list_json(request):
 
 
 ##########################################
-##############" API's "###################
+# #############" API's "##################
 ##########################################
 # customer List
 class ListCustomer(ListAPIView):

@@ -1125,43 +1125,72 @@ def factured_sellorder_list(request):
     list_type = 2  # Sellorder Bill
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
+    # Date form
+    dateform = DateForm()
 
-    sellorders = Order.objects.filter(order_date__year=current_year.year, factured=True)
+    sellorders_list = Order.objects.filter(order_date__year=current_year.year, factured=True)
+
+    myFilter = SellorderFilter(request.GET, queryset=sellorders_list)
+
+    sellorders_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(sellorders_list, 5)
+
+    try:
+        sellorders = paginator.page(page)
+    except PageNotAnInteger:
+        sellorders = paginator.page(1)
+    except EmptyPage:
+        sellorders = paginator.page(paginator.num_pages)
+
     context = {
         'sellorders': sellorders,
+        "dateform": dateform,
+        # 'customers': customers,
         'list_type': list_type,
         'current_year': current_year,
+        'myFilter': myFilter,
     }
-    return render(request, 'sellorder/list_sellorder_facture.html', context)
+    return render(request, 'sellorder/list_sellorder.html', context)
 
 
 def performa_sellorder_list(request):
     list_type = 3  # Sellorder Proforma Bill
     # now time
     now = datetime.now()
+    # Date form
+    dateform = DateForm()
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
-    sellorders = Order.objects.all().filter(confirmed=False, factured=False, order_date__day=now.day,
-                                            order_date__month=now.month, order_date__year=current_year.year)
+    sellorders_list = Order.objects.all().filter(confirmed=False, factured=False,
+                                                 order_date__year=current_year.year)
 
-    customers = Customer.objects.all()
-    if request.method == 'POST':
-        alldata = request.POST
-        print(alldata)
-        # customer
-        chosencustomer = request.POST.getlist("customers")
-        if len(chosencustomer) != 0:
-            # Remove white spaces
-            chosen_customer = ''.join(chosencustomer[0].split())
-            customer = Customer.objects.get(id=chosen_customer)
-            sellorders = Order.objects.all().filter(customer=customer, confirmed=False, factured=False,
-                                                    order_date__year=current_year.year)
+    myFilter = SellorderFilter(request.GET, queryset=sellorders_list)
+
+    sellorders_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(sellorders_list, 5)
+
+    try:
+        sellorders = paginator.page(page)
+    except PageNotAnInteger:
+        sellorders = paginator.page(1)
+    except EmptyPage:
+        sellorders = paginator.page(paginator.num_pages)
 
     context = {
         'sellorders': sellorders,
+        "dateform": dateform,
+        # 'customers': customers,
         'list_type': list_type,
-        'customers': customers,
         'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'sellorder/list_sellorder.html', context)
 

@@ -14,6 +14,7 @@ urlpatterns = [
     path('delete_customer/<str:pk>', views.delete_customer, name='delete_customer'),
 
     path('sellorder_customer_list', views.sellorder_customer_list, name='sellorder_customer_list'),
+    path('proforma_customer_list', views.proforma_customer_list, name='proforma_customer_list'),
 
     path('add_city', views.add_city, name='add_city'),
     path('city_list', views.city_list, name='city_list'),

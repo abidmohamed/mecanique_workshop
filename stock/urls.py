@@ -20,7 +20,7 @@ urlpatterns = [
     path('all_stockproduct_list', views.all_stockproduct_list, name='all_stockproduct_list'),
     path('order_stockproduct_list/<str:pk>', views.order_stockproduct_list, name='order_stockproduct_list'),
 
-    path('performa_order_stockproduct_list', views.performa_order_stockproduct_list,
+    path('performa_order_stockproduct_list/<str:pk>', views.performa_order_stockproduct_list,
          name='performa_order_stockproduct_list'),
 
     path('modal_order_stockproduct_list/<str:pk>', views.modal_order_stockproduct_list,

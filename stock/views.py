@@ -345,18 +345,6 @@ def order_stockproduct_list(request, pk):
                     quantity=1,
                 )
 
-            # # add services
-            # if len(chosenservices) != 0:
-            #     for service in chosenservices:
-            #         service = ''.join(service.split())
-            #         currentservice = Service.objects.get(id=service)
-            #         ServiceItem.objects.create(
-            #             order=sellorder,
-            #             service=currentservice,
-            #             price=currentservice.price,
-            #             charge=currentservice.charge,
-            #         )
-            #
         return redirect('stock:order_vehicle', sellorder.pk)
 
     context = {
@@ -369,77 +357,56 @@ def order_stockproduct_list(request, pk):
 
 
 # Performa order
-def performa_order_stockproduct_list(request):
-    stockproducts = StockProduct.objects.all()
-    customers = Customer.objects.all()
-    pannes = Panne.objects.all()
-    services = Service.objects.all()
+def performa_order_stockproduct_list(request, pk):
+    # Sell Order
+    sellorder = get_object_or_404(Order, id=pk)
+    # chosenyear
+    current_year = CurrentYear.objects.all().filter()[:1].get()
+
+    stockproducts_list = StockProduct.objects.all().filter(quantity__gt=0).order_by('-id')
+
+    myFilter = StockProductFilter(request.GET, queryset=stockproducts_list)
+
+    # paginate after filtering
+    stockproducts_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(stockproducts_list, 5)
+
+    try:
+        stockproducts = paginator.page(page)
+    except PageNotAnInteger:
+        stockproducts = paginator.page(1)
+    except EmptyPage:
+        stockproducts = paginator.page(paginator.num_pages)
 
     if request.method == 'POST':
         # get submitted orders
         chosenproducts = request.POST.getlist("products")
-        chosencustomer = request.POST.getlist("customers")
-        # chosenvehicule = request.POST.getlist("vehicle")
-        chosenpannes = request.POST.getlist("pannes")
-        chosenservices = request.POST.getlist("services")
 
-        # print(chosencustomer)
-        # print(chosenvehicule)
-        if len(chosencustomer) != 0:
-            sellorder = Order()
-            chosen_customer = chosencustomer[0]
-            chosen_customer = ''.join(chosen_customer.split())
-            customer = Customer.objects.get(id=chosen_customer)
-            # print(customer)
-            # vehicles = Vehicle.objects.all().filter(customer=customer)
-            # print(vehicles)
-            #
-            # vehicle = Vehicle.objects.get(id=chosenvehicule[int(chosencustomer[0]) - 1])
-            # print(vehicle)
-
-            sellorder.customer = customer
-            # sellorder.vehicle = vehicle
-            sellorder.save()
-            print(chosenproducts)
-            # add products
-            if len(chosenproducts) != 0:
-                for product in chosenproducts:
-                    product = ''.join(product.split())
-                    currentproduct = StockProduct.objects.get(id=product)
-                    # print(currentproduct)
-                    OrderItem.objects.create(
-                        order=sellorder,
-                        stockproduct=currentproduct,
-                        price=currentproduct.product.sellprice,
-                        # weight=currentproduct.product.weight,
-                        quantity=1,
-                    )
-            # add Pannes
-            if len(chosenpannes) != 0:
-                for panne in chosenpannes:
-                    currentpanne = Panne.objects.get(id=panne)
-                    # print(currentpanne)
-                    PanneItem.objects.create(
-                        order=sellorder,
-                        panne=currentpanne,
-                        price=currentpanne.price
-                    )
-            # add services
-            if len(chosenservices) != 0:
-                for service in chosenservices:
-                    currentservice = Service.objects.get(id=service)
-                    ServiceItem.objects.create(
-                        order=sellorder,
-                        service=currentservice,
-                        price=currentservice.price + currentservice.charge
-                    )
-            return redirect('stock:performa_order_vehicle', sellorder.pk)
-
+        # add products
+        if len(chosenproducts) != 0:
+            for product in chosenproducts:
+                product = ''.join(product.split())
+                print("Product ID ###########>", product)
+                product = ''.join(product.split())
+                currentproduct = StockProduct.objects.get(id=product)
+                # print(currentproduct)
+                OrderItem.objects.create(
+                    order=sellorder,
+                    stockproduct=currentproduct,
+                    price=currentproduct.product.sellprice,
+                    # weight=currentproduct.product.weight,
+                    quantity=1,
+                )
+        return redirect('stock:performa_order_vehicle', sellorder.pk)
     context = {
-        'customers': customers,
         'stockproducts': stockproducts,
-        'pannes': pannes,
-        'services': services,
+        'sellorder': sellorder,
+        'myFilter': myFilter,
+        'current_year': current_year,
     }
     return render(request, 'stockproduct/order_list_stockproduct.html', context)
 
@@ -473,9 +440,11 @@ def order_vehicle(request, pk):
 
 # PerformaS Order
 def performa_order_vehicle(request, pk):
-    sellorder = Order.objects.get(id=pk)
+    sellorder = get_object_or_404(Order, id=pk)
     customer = Customer.objects.get(id=sellorder.customer.pk)
     vehicles = Vehicle.objects.all().filter(customer=customer)
+    list_index = list(sellorder.items.all())
+
     if request.method == 'POST':
         chosenvehicule = request.POST.get("vehicle")
         if chosenvehicule:
@@ -490,6 +459,9 @@ def performa_order_vehicle(request, pk):
 
     context = {
         'vehicles': vehicles,
+        'order': sellorder,
+        'customer': customer,
+        'list_index': list_index,
     }
     return render(request, 'stockproduct/order_vehicle.html', context)
 
