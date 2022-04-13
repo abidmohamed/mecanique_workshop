@@ -363,7 +363,7 @@ def performa_order_stockproduct_list(request, pk):
     # chosenyear
     current_year = CurrentYear.objects.all().filter()[:1].get()
 
-    stockproducts_list = StockProduct.objects.all().filter(quantity__gt=0).order_by('-id')
+    stockproducts_list = StockProduct.objects.all().order_by('-id')
 
     myFilter = StockProductFilter(request.GET, queryset=stockproducts_list)
 
