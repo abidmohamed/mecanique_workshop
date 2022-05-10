@@ -20,6 +20,7 @@ class Stock(models.Model):
 class StockProduct(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
     quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    buy_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE)
     stock = models.ForeignKey(Stock, null=True, on_delete=models.CASCADE)
 
@@ -29,6 +30,9 @@ class StockProduct(models.Model):
         verbose_name_plural = 'stockproducts'
 
     def __str__(self):
+        if self.buy_price == 0:
+            self.buy_price = self.product.buyprice
+            self.save()
         return self.product.name
 
 #  def save(self, *args, **kwargs):

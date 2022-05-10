@@ -140,13 +140,22 @@ def buyorder_confirmation(request, pk):
                 # check if stock doesn't have the product
                 if len(stockitems) > 0:
                     # stock has products check if product exist
-                    for stockitem in stockitems:
-                        # the same product exist
-                        if stockitem.product.id == item.product.id:
-                            stockitem.quantity += decimal.Decimal(item.quantity)
-                            stockitem.save()
-                            itemexist = 2
-                            # operation done same product plus the new quantity
+                    # get the first value
+                    # CurrentYear.objects.all().filter()[:1].get()
+                    stockitem = StockProduct.objects.all().filter(product=item.product, stock=item.stock)[:1].get()
+                    stockitem.quantity += decimal.Decimal(item.quantity)
+                    stockitem.buy_price = decimal.Decimal(item.price)
+                    stockitem.product.buyprice = decimal.Decimal(item.price)
+                    stockitem.product.save()
+                    stockitem.save()
+                    itemexist = 2
+                    # for stockitem in stockitems:
+                    #     # the same product exist
+                    #     if stockitem.product.id == item.product.id:
+                    #         stockitem.quantity += decimal.Decimal(item.quantity)
+                    #         stockitem.save()
+                    #         itemexist = 2
+                    #         # operation done same product plus the new quantity
 
                     if itemexist == 1:
                         #             # stock not empty product doesn't exist in it
@@ -330,7 +339,10 @@ def buyorder_list(request):
     now = datetime.now()
     suppliers = Supplier.objects.all()
     # current year
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     buyorders = BuyOrder.objects.filter(created__day=now.day, created__month=now.month, created__year=current_year.year)
 
     if request.method == 'POST':
@@ -354,7 +366,10 @@ def buyorder_list_by_date(request):
     now = datetime.now()
     chosen_date = datetime.now()
     # current year
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     buyorders = BuyOrder.objects.all().filter(confirmed=True, created__year=current_year.year, created__day=now.day,
                                               created__month=now.month)
 
@@ -411,7 +426,10 @@ def buyorder_list_by_date(request):
 def buyorderorder_list_by_supplier(request, pk):
     supplier = Supplier.objects.get(id=pk)
     # current year
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     buyorders = BuyOrder.objects.all().filter(supplier=supplier, factured=False, created__year=current_year.year)
 
     if request.method == 'POST':

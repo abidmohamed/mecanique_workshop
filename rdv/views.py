@@ -201,7 +201,10 @@ def order_panne_list(request, pk):
     sellorder = get_object_or_404(Order, id=pk)
     list_index = list(sellorder.items.all())
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     pannes_list = Panne.objects.all().order_by('-id')
 
     myFilter = PanneFilter(request.GET, queryset=pannes_list)

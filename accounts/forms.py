@@ -18,11 +18,12 @@ def year_choices():
 
 
 class MyForm(ModelForm):
-    year = TypedChoiceField(coerce=int, choices=year_choices,)
+    year = TypedChoiceField(coerce=int, choices=year_choices, )
 
 
 class CurrentYearForm(ModelForm):
     class Meta:
         model = CurrentYear
-        fields = ['year',]
+        fields = ['year', ]
+
     year = TypedChoiceField(coerce=int, choices=year_choices, )

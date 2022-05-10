@@ -278,6 +278,7 @@
                 <tr>
                     <td>Name</td>
                     <td>Amount</td>
+                    <td>General Debt</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -285,6 +286,7 @@
                 <tr>
                     <td>{{customer}}</td>
                     <td>{{customer.get_debt}}</td>
+                    <td>{{customer.debt}}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -305,6 +307,7 @@
                 <tr>
                     <td>Name</td>
                     <td>Amount</td>
+                    <td>General Debt</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -312,6 +315,7 @@
                 <tr>
                     <td>{{supplier}}</td>
                     <td>{{supplier.get_credit}}</td>
+                    <td>{{supplier.credit}}</td>
                 </tr>
                 {% endfor %}
                 </tbody>

@@ -17,6 +17,7 @@
                     <th>{% trans "Phone" %}</th>
                     <th>{% trans "Address" %}</th>
                     <th>{% trans "Credit" %}</th>
+                    <th>{% trans "General Credit" %}</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -40,6 +41,9 @@
                     </td>
                     <td>
                         {{supplier.get_credit}}
+                    </td>
+                    <td>
+                        {{supplier.credit}}
                     </td>
                     <td>
                         {% if supplier.credit > 0%}

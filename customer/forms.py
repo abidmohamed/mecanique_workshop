@@ -25,7 +25,7 @@ class CustomerForm(ModelForm):
 
         }
 
-        fields = ('firstname', 'lastname', 'address', 'phone', 'enterprise')
+        fields = ('firstname', 'lastname', 'address', 'phone', 'enterprise', 'debt')
 
 
 class EnterpriseForm(ModelForm):

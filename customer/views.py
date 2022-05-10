@@ -134,7 +134,10 @@ def add_customer_rdv(request):
 def customer_list(request):
     customers_list = Customer.objects.only("firstname", "lastname", "phone", "address", "debt", ).order_by('-debt')
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     # Page
     page = request.GET.get('page', 1)
     # Number of customers in the page
@@ -167,7 +170,10 @@ def customer_list(request):
 
 def customer_debt_list(request):
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
 
     customers = Customer.objects.all().filter(debt__gt=0)
     context = {
@@ -181,7 +187,10 @@ def sellorder_customer_list(request):
     customers_list = Customer.objects.only("firstname", "lastname", "phone", "address", "debt", ).order_by('-id')
 
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     # Page
     page = request.GET.get('page', 1)
     # Number of customers in the page
@@ -230,7 +239,10 @@ def proforma_customer_list(request):
     customers_list = Customer.objects.only("firstname", "lastname", "phone", "address", "debt", ).order_by('-id')
 
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
 
     myFilter = CustomerFilter(request.GET, queryset=customers_list)
 
@@ -310,7 +322,10 @@ def customer_detail(request, pk):
     customer = get_object_or_404(Customer, id=pk)
     # TimeField related
     # current year
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     dateform = DateForm()
     # now time
     chosen_date = datetime.now()

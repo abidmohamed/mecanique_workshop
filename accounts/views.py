@@ -144,7 +144,10 @@ def home(request):
     html_calendar = none_html_calendar.formatmonth(withyear=True)
 
     # Choosed Year
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
 
     # sellorders = Order.objects.all().filter(confirmed=True)  # .filter(created__year=now.year,
     # created__month=now.month) buyorders = BuyOrder.objects.all()  # can be filtred by year & month Today order
@@ -370,12 +373,16 @@ def choose_the_year(request):
         if yearform.is_valid():
             chosen_year = yearform.save(commit=False)
             print("chosen year ===", chosen_year)
-            current_year = CurrentYear.objects.all().filter()[:1].get()
+            if CurrentYear.objects.all().filter(user=request.user):
+                current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+            else:
+                current_year = CurrentYear.objects.create(year=2022, user=request.user)
             print(current_year)
             if chosen_year.year == current_year.year:
                 pass
             else:
                 current_year.year = chosen_year.year
+                current_year.user = request.user
                 current_year.save()
             # return redirect("/")
 

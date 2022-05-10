@@ -412,7 +412,7 @@ def update_order_performa(request, pk):
         'stockproducts': stockproducts,
         'providers': providers,
     }
-    return render(request, 'sellorder/sellorder_confirmation.html', context)
+    return render(request, 'sellorder/proforma_confirmation.html', context)
 
 
 # Copy an Order to Performa
@@ -846,7 +846,10 @@ def proforma_service_delete(request, orderpk, itempk):
 # order details
 def sellorder_details(request, pk):
     order = Order.objects.get(id=pk)
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     sellorder_payments = SellOrderPayment.objects.all().filter(order=order)
     list_index = list(order.items.all())
     # print(list_index)
@@ -889,7 +892,10 @@ def sellorder_list(request):
     now = datetime.now()
     # chosen year
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     sellorders_list = Order.objects.all().filter(confirmed=True, factured=False,
                                                  order_date__year=current_year.year)
 
@@ -988,7 +994,10 @@ def sellorder_list_by_date(request):
 
     chosen_date = datetime.now()
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
 
     sellorders = Order.objects.all().filter(confirmed=True, factured=False, order_date__year=current_year.year,
                                             order_date__day=now.day,
@@ -1050,7 +1059,10 @@ def sellorder_list_by_date(request):
 def sellorder_list_by_service(request):
     list_type = 1  # Sellorder
     # current year
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     # date
     chosen_date = datetime.now()
     dateform = DateForm()
@@ -1124,7 +1136,10 @@ def sellorder_list_by_service(request):
 def factured_sellorder_list(request):
     list_type = 2  # Sellorder Bill
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     # Date form
     dateform = DateForm()
 
@@ -1164,7 +1179,10 @@ def performa_sellorder_list(request):
     # Date form
     dateform = DateForm()
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     sellorders_list = Order.objects.all().filter(confirmed=False, factured=False,
                                                  order_date__year=current_year.year)
 
@@ -1228,7 +1246,10 @@ def sellorder_delete(request, pk):
 def sellorder_list_by_customer(request, pk):
     customer = Customer.objects.get(id=pk)
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     sellorders = Order.objects.all().filter(customer=customer, factured=False,
                                             order_date__year=current_year.year)
 
@@ -1724,7 +1745,10 @@ def get_orders_pannes(request):
     dateform = DateForm()
     periodform = PeriodForm()
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     orders = Order.objects.all().filter(confirmed=True, order_date__year=current_year.year,
                                         order_date__month=now.month, order_date__day=now.day)
     pannes = Panne.objects.none()
@@ -1792,7 +1816,10 @@ def get_orders_pieces(request):
     dateform = DateForm()
     periodform = PeriodForm()
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     orders = Order.objects.all().filter(confirmed=True, order_date__year=current_year.year,
                                         order_date__month=now.month, order_date__day=now.day)
     pieces = OrderItem.objects.none()
@@ -1847,7 +1874,10 @@ def get_orders_pannes_payed(request):
     dateform = DateForm()
     periodform = PeriodForm()
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     orders = Order.objects.all().filter(confirmed=True, order_date__year=current_year.year,
                                         order_date__month=now.month, order_date__day=now.day,
                                         paid=True)
@@ -1908,7 +1938,10 @@ def get_orders_pieces_payed(request):
     dateform = DateForm()
     periodform = PeriodForm()
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     orders = Order.objects.all().filter(confirmed=True, order_date__year=current_year.year,
                                         order_date__month=now.month, order_date__day=now.day,
                                         paid=True)

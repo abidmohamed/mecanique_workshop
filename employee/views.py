@@ -81,3 +81,9 @@ def update_employee(request, pk):
 
     return render(request, 'employee/add.html', context)
 
+
+def delete_employee(request, pk):
+    employee = get_object_or_404(Employee, id=pk)
+    employee.delete()
+
+    return redirect("employee:list_employee")

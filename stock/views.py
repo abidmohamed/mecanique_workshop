@@ -66,7 +66,10 @@ def stock_list(request):
 
 def all_stock_list(request):
     stocks = Stock.objects.all()
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
 
     context = {
         'stocks': stocks,
@@ -145,7 +148,10 @@ def add_stockproduct(request):
 
 def stockproduct_list(request, pk):
     stock = get_object_or_404(Stock, id=pk)
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
 
     stockproducts_list = StockProduct.objects.all().filter(stock=stock).order_by('quantity')
 
@@ -298,7 +304,10 @@ def order_stockproduct_list(request, pk):
     # Sell Order
     sellorder = get_object_or_404(Order, id=pk)
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
 
     stockproducts_list = StockProduct.objects.all().filter(quantity__gt=0).order_by('-id')
 
@@ -341,6 +350,7 @@ def order_stockproduct_list(request, pk):
                     order=sellorder,
                     stockproduct=currentproduct,
                     price=currentproduct.product.sellprice,
+                    buy_price=currentproduct.product.buyprice,
                     # weight=currentproduct.product.weight,
                     quantity=1,
                 )
@@ -361,7 +371,10 @@ def performa_order_stockproduct_list(request, pk):
     # Sell Order
     sellorder = get_object_or_404(Order, id=pk)
     # chosenyear
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
 
     stockproducts_list = StockProduct.objects.all().order_by('-id')
 
@@ -566,7 +579,10 @@ def calculate_one_stock(request, pk):
 # sell & buy details
 def stock_product_details(request, pk):
     # current year
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     # date
     dateform = DateForm()
 

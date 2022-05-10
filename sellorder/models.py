@@ -67,6 +67,7 @@ class OrderItem(models.Model):
                                      related_name='order_item',
                                      on_delete=models.SET_NULL, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    buy_price = models.DecimalField(max_digits=10, decimal_places=2, )
     quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
@@ -76,10 +77,11 @@ class OrderItem(models.Model):
         return round(self.price * self.quantity, 2)
 
     def get_benefit(self):
-        if self.stockproduct:
-            return round((self.price - self.stockproduct.product.buyprice) * self.quantity, 2)
-        else:
-            return 0
+        if self.buy_price == 0:
+            if self.stockproduct:
+                self.buy_price = self.stockproduct.buy_price
+                self.save()
+        return round((self.price - self.buy_price) * self.quantity, 2)
 
 
 class PanneItem(models.Model):

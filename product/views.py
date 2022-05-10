@@ -67,7 +67,10 @@ def add_product_buyorder(request):
 
 
 def all_product_list(request):
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     products = Product.objects.all()
     context = {
         'products': products,

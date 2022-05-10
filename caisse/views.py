@@ -40,7 +40,10 @@ def transaction_category_list(request):
 def transaction_category_details(request, pk):
     category = get_object_or_404(TransactionCategory, id=pk)
     # current year
-    current_year = CurrentYear.objects.all().filter()[:1].get().year
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     transactions = category.items.filter(trans_date__year=current_year)
     # date forms
     dateform = DateForm()
@@ -168,7 +171,10 @@ def transaction_list(request):
     now = datetime.now()
     chosen_date = datetime.now()
     # current year
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
     # Orders
     today_sellorders = Order.objects.all().filter(order_date__year=current_year.year, confirmed=True)
 

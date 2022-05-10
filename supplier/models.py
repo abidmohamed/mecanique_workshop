@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # Create your models here.
 from accounts.models import CurrentYear
 
@@ -22,6 +21,5 @@ class Supplier(models.Model):
         total_credit = round(sum(order.debt for order in self.orders.filter(
             supplier=self,
             order_date__year=CurrentYear.objects.all().filter()[:1].get().year)
-                         ), 2)
-        self.credit = total_credit
+                                 ), 2)
         return total_credit

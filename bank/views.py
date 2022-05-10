@@ -28,7 +28,10 @@ def transaction_list(request):
     dateform = DateForm()
     periodform = PeriodForm()
     # current year
-    current_year = CurrentYear.objects.all().filter()[:1].get()
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
 
     transactions = BankTransaction.objects.filter(trans_date__year=current_year.year).order_by('trans_date')
 
