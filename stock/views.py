@@ -256,6 +256,7 @@ def modal_order_stockproduct_list(request, pk):
                     order=sellorder,
                     stockproduct=currentproduct,
                     price=currentproduct.product.sellprice,
+                    buy_price=currentproduct.product.buyprice,
                     # weight=currentproduct.product.weight,
                     quantity=1,
                 )
@@ -286,6 +287,7 @@ def modal_update_order_stockproduct_list(request, pk):
                     order=sellorder,
                     stockproduct=currentproduct,
                     price=currentproduct.product.sellprice,
+                    buy_price=currentproduct.product.buyprice,
                     # weight=currentproduct.product.weight,
                     quantity=0,
                 )
@@ -411,6 +413,7 @@ def performa_order_stockproduct_list(request, pk):
                     order=sellorder,
                     stockproduct=currentproduct,
                     price=currentproduct.product.sellprice,
+                    buy_price=currentproduct.product.buyprice,
                     # weight=currentproduct.product.weight,
                     quantity=1,
                 )

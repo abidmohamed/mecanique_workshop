@@ -7,7 +7,7 @@ app_name = 'accounts'
 
 urlpatterns = [
     # auths
-    path('login/', views.loginpage, name='login'),
+    path('accounts/login/', views.loginpage, name='login'),
     path('logout/', views.logoutUser, name='logout'),
 
     # Dashboard

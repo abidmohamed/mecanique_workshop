@@ -2,6 +2,7 @@ import decimal
 
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group, Permission
 from django.db.models import Sum, Q
 
@@ -135,6 +136,7 @@ def users_list(request):
 
 
 # Dashboard
+@login_required
 def home(request):
     # now time
     now = datetime.now()
