@@ -350,7 +350,7 @@ def buyorder_list(request):
         chosensupplier = request.POST.getlist("suppliers")
         if len(chosensupplier) != 0:
             supplier = Supplier.objects.get(id=chosensupplier[0])
-            buyorders = BuyOrder.objects.filter(supplier=supplier,created__year=current_year.year)
+            buyorders = BuyOrder.objects.filter(supplier=supplier, created__year=current_year.year)
 
     context = {
         'buyorders': buyorders,
@@ -403,7 +403,7 @@ def buyorder_list_by_date(request):
         buyorders = BuyOrder.objects.all().filter(
             Q(
                 order_date__gt=date(int(start_year), int(start_month),
-                                 int(start_day)),
+                                    int(start_day)),
                 order_date__lt=date(int(end_year), int(end_month), int(end_day))
             )
             |

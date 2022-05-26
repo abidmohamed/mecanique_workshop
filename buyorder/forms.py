@@ -28,7 +28,8 @@ class BuyOrderItemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # if the user hit submit but didn't choose a color & type we fill it directly from product field
+        # if the user hit submit but didn't choose a
+        # color & type we fill it directly from product field
         if 'product' in self.data:
             try:
                 requestproduct = int(self.data.get('product'))
