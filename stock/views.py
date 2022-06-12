@@ -261,12 +261,13 @@ def modal_order_stockproduct_list(request, pk):
                     quantity=1,
                 )
         if sellorder.confirmed:
-            return redirect(f'../../sellorder/confirm_order/{sellorder.pk}')
+            return redirect('sellorder:confirm_order', sellorder.pk)
         else:
             return redirect('sellorder:update_order_performa', sellorder.id)
 
     context = {
         'stockproducts': stockproducts,
+        'sellorder': sellorder,
     }
     return render(request, 'stockproduct/modal_order_list_stockproduct.html', context)
 
@@ -297,6 +298,7 @@ def modal_update_order_stockproduct_list(request, pk):
             return redirect('sellorder:update_order_performa', sellorder.id)
     context = {
         'stockproducts': stockproducts,
+        'sellorder': sellorder,
     }
     return render(request, 'stockproduct/modal_order_list_stockproduct.html', context)
 

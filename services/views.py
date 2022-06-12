@@ -68,7 +68,10 @@ def confirm_order_service_list(request, pk):
                     service=currentservice,
                     price=currentservice.price + currentservice.charge
                 )
-        return redirect('sellorder:confirm_order', sellorder.id)
+        if sellorder.confirmed:
+            return redirect('sellorder:confirm_order', sellorder.pk)
+        else:
+            return redirect('sellorder:update_order_performa', sellorder.id)
 
     context = {
         'services': services,

@@ -181,7 +181,11 @@ def confirm_order_panne_list(request, pk):
                     panne=currentpanne,
                     price=currentpanne.price,
                 )
-        return redirect('sellorder:confirm_order', sellorder.id)
+        if sellorder.confirmed:
+            return redirect('sellorder:confirm_order', sellorder.pk)
+        else:
+            return redirect('sellorder:update_order_performa', sellorder.id)
+
     context = {
         'pannes': pannes,
     }

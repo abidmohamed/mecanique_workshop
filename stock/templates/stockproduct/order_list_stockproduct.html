@@ -9,7 +9,11 @@
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
+                {% if sellorder.confirmed %}
                 <h1>{% trans "Sell Order" %}</h1>
+                {% else %}
+                <h1>{% trans "Proforma Order" %}</h1>
+                {% endif %}
                 <h3>{% trans "Sell Order Customer:" %} {{sellorder.customer}}</h3>
             </div>
             <div class="card card-body">
