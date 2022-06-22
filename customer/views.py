@@ -593,7 +593,7 @@ def old_dette_fix(request):
     for customer in customers:
         total_debt = 0
         # get all sell orders
-        orders = customer.orders.filter(debt__gt=0)
+        orders = customer.orders.filter(debt__gt=0, confirmed=True)
 
         for order in orders:
             # print(order.debt)
