@@ -586,6 +586,29 @@ def add_avancement(request, pk):
     return render(request, 'customer/add_avancement.html', context)
 
 
+# Fixing Old Dette For Cutomers
+def old_dette_fix(request):
+    customers = Customer.objects.all()
+
+    for customer in customers:
+        total_debt = 0
+        # get all sell orders
+        orders = customer.orders.filter(debt__gt=0)
+
+        for order in orders:
+            # print(order.debt)
+            total_debt += order.debt
+
+        # Fixing customer
+        print("Calculated Debt is = ", total_debt)
+        print(customer, " ", customer.debt)
+        customer.debt = total_debt
+        customer.save()
+        print(customer, " ", customer.debt)
+
+    return HttpResponse("Debt Fixed")
+
+
 ## DataTableCustomer Function
 def customer_list_json(request):
     queryset = Customer.objects.all()

@@ -48,7 +48,7 @@ class BuyOrderPayment(models.Model):
     user = models.IntegerField(default=0)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
-    pay_date = models.DateField(null=True, blank=True)
+    pay_date = models.DateField(null=True, blank=True, default=datetime.date.today)
 
     pay_type = (
         ('Cash', 'Cash'),
@@ -71,4 +71,4 @@ class ServicePayment(models.Model):
     user = models.IntegerField(default=0)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
-    pay_date = models.DateField(null=True, blank=True)
+    pay_date = models.DateField(null=True, blank=True, default=datetime.date.today)

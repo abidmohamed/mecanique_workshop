@@ -28,6 +28,9 @@ urlpatterns = [
 
     path('add_avancement/<str:pk>', views.add_avancement, name='add_avancement'),
 
+    # Old Debt Fixing
+    path('old_dette_fix', views.old_dette_fix, name='old_dette_fix'),
+
     #########====> API's
     path('api/customer_list', views.ListCustomer.as_view(), name='api_customer_list'),
 
