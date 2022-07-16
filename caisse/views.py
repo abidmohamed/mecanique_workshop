@@ -44,7 +44,7 @@ def transaction_category_details(request, pk):
         current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
     else:
         current_year = CurrentYear.objects.create(year=2022, user=request.user)
-    transactions = category.items.filter(trans_date__year=current_year)
+    transactions = category.items.filter(trans_date__year=current_year.year)
     # date forms
     dateform = DateForm()
     periodform = PeriodForm()
