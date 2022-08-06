@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>{% trans "Sell Orders" %}</h5>
+            <h5>{% trans "Product Details" %}</h5>
         </div>
          <div class="card card-body">
 
@@ -27,72 +27,114 @@
             </div>
             </form>
         </div>
-        <div class="card card-body bg-primary">
-            <h5 class=" text-center text-white">{{stockproduct}} : {{sell_quantity}}</h5>
-        </div>
+
+        <!-- SELL CARD -->
         <div class="card card-body">
-            <table id="table_id" class="table display text-center">
+            <div class="row">
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card card-body bg-primary">
+                        <h2 class=" text-center text-white">{{product.name}} : {{total_sell_quantity}} </h2>
+                        <h4 class=" text-center text-white">
+                            {% if total_benefits > 0%}
+                            {% trans "Total Benefits" %}: {{total_benefits}} (DA)
+                            {% else %}
+                            {% trans "Total Benefits" %}: {{total_benefits}} (DA)
+                            <i class="fa-solid fa-circle-exclamation text-danger"></i>
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <table id="table_id" class="table display text-center">
                 <thead>
                 <tr>
-                    <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Order" %}</th>
                     <th>{% trans "Customer" %}</th>
                     <th>{% trans "Date" %}</th>
-                    <th>{% trans "Bill" %}</th>
                     <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Buy Price" %}</th>
+                    <th>{% trans "Sell Price" %}</th>
+                    <th>{% trans "Benefit" %}</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for order, item, quantity in sell_list %}
+                {% for sell_orders, sell_quantities, sell_buyprices, sell_sellprices, benefits in sell_list %}
 
                 <tr>
-                    <td>{{order.id}}</td>
-                    <td>{{order.customer}}</td>
-                    <td>{{order.order_date}}</td>
-                    <td>{{order.factured}}</td>
-                    <td>{{quantity}}</td>
+                    <td>{{sell_orders}}</td>
+                    <td>{{sell_orders.customer}}</td>
+                    <td>{{sell_orders.order_date}}</td>
+                    <td>{{sell_quantities}}</td>
+                    <td>{{sell_buyprices}} (DA)</td>
+                    <td>{{sell_sellprices}} (DA)</td>
+                    {% if benefits > 0 %}
+                    <td class="bg-success text-white">{{benefits}} (DA)</td>
+                    {% else %}
+                    <td class="bg-danger text-white">{{benefits}} (DA)</td>
+                    {% endif %}
                     <td>
-                         <a class="btn btn-warning " href="{% url 'sellorder:sellorder_details' order.id %}">{% trans "Details" %}</a>
+                        <a class="btn btn-primary" href="{% url 'sellorder:sellorder_details' sell_orders.id %}">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}
                 </tbody>
             </table>
+
+                </div>
+
+            </div>
         </div>
-        <br>
+
+        <!-- BUY CARD -->
         <div class="card card-body">
-            <h5>{% trans "Buy Orders" %}</h5>
-        </div>
-        <div class="card card-body bg-danger">
-            <h5 class=" text-center text-white">{{product}} : {{buy_quantity}}</h5>
-        </div>
-        <div class="card card-body">
-            <table id="table_buyorder" class="table display text-center">
+
+            <div class="row">
+                <div class="col">
+                    <div class="card card-body bg-danger">
+                        <h2 class=" text-center text-white">{{product.name}} : {{total_buy_quantity}} </h2>
+                    </div>
+                    <table id="table_buy" class="table display text-center">
                 <thead>
                 <tr>
-                    <th>{% trans "Order ID" %}</th>
+                    <th>{% trans "Order" %}</th>
                     <th>{% trans "Supplier" %}</th>
                     <th>{% trans "Date" %}</th>
                     <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Buy Price" %}</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for order, item, quantity in final_buylist %}
+                {% for buy_orders, buy_quantities, buy_buyprices in buy_list %}
 
                 <tr>
-                    <td>{{order.id}}</td>
-                    <td>{{order.supplier}}</td>
-                    <td>{{order.order_date}}</td>
-                    <td>{{quantity}}</td>
+                    <td>{{buy_orders}}</td>
+                    <td>{{buy_orders.supplier}}</td>
+                    <td>{{buy_orders.order_date}}</td>
+                    <td>{{buy_quantities}}</td>
+                    <td>{{buy_buyprices}} (DA)</td>
                     <td>
-                        <a class="btn btn-warning " href="{% url 'buyorder:buyorder_details' order.id %}">Details</a>
+                        <a href="{% url 'buyorder:buyorder_details' buy_orders.id %}">
+                            <button class="btn btn-primary">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}
                 </tbody>
             </table>
+
+                </div>
+
+            </div>
         </div>
+
+
     </div>
 </div>
 
@@ -110,19 +152,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
-<!-- Data Table  -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 <!-- Date Picker-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script type='text/javascript'>
-    //Data Table init
-    $(document).ready( function () {
-    $('#table_id').DataTable();
-    $('#table_buyorder').DataTable();
-} );
 
 // Date Picker
 $('input[name="date"]').daterangepicker();

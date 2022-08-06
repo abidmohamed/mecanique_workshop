@@ -592,39 +592,35 @@ def stock_product_details(request, pk):
     dateform = DateForm()
 
     stockproduct = get_object_or_404(StockProduct, id=pk)
-    # chosen orders
-    chosen_orders = Order.objects.none()
-    chosen_buyorders = BuyOrder.objects.none()
+
+    # Orders
+    sell_orders = []
+    buy_orders = []
+    # Products
+    sell_products = []
+    buy_products = []
     # quantities
     sell_quantities = []
+    total_sell_quantity = 0
     buy_quantities = []
+    total_buy_quantity = 0
+    # Buy Prices
+    sell_buyprices = []
+    buy_buyprices = []
+    # Sell Prices
+    sell_sellprices = []
+    buy_sellprices = []
+    # Benefits
+    benefits = []
+    total_benefits = 0
 
-    sell_quantity = 0
-    buy_quantity = 0
-    # product
-    sell_pieces = OrderItem.objects.none()
-    buy_pieces = OrderItem.objects.none()
     # order items
     # print(stockproduct.order_item.all())
-    order_items = stockproduct.order_item.all().filter(order__order_date__year=current_year.year,
-                                                       order__confirmed=True)
-    for item in order_items:
-        chosen_orders |= Order.objects.all().filter(id=item.order.id, created__year=current_year.year)
-        sell_quantity += item.quantity
-        sell_quantities.append(item.quantity)
-        sell_pieces |= order_items.filter(id=item.id)
-
+    sell_items = stockproduct.order_item.all().filter(order__order_date__year=current_year.year,
+                                                      order__confirmed=True)
     # buy product
     product = get_object_or_404(Product, id=stockproduct.product.id)
-
-    # print(product.buyorder_item.all())
-    order_items = product.buyorder_item.all()
-    for item in order_items:
-        chosen_buyorders |= BuyOrder.objects.all().filter(id=item.order.id, created__year=current_year.year)
-        buy_pieces |= order_items.filter(id=item.id)
-        buy_quantity += item.quantity
-        buy_quantities.append(item.quantity)
-
+    buy_items = product.buyorder_item.all().filter(order__order_date__year=current_year.year)
     # Time search
     if request.method == 'POST':
         alldata = request.POST
@@ -653,74 +649,73 @@ def stock_product_details(request, pk):
         end_month = ''.join(end_month.split())
         end_day = ''.join(end_day.split())
 
-        for item in order_items:
-            chosen_orders |= Order.objects.all().filter(
-                Q(
-                    order_date__gt=date(int(start_year), int(start_month),
-                                        int(start_day)),
-                    order_date__lt=date(int(end_year), int(end_month), int(end_day))
-                )
-                |
-                Q(
-                    order_date=date(int(end_year), int(end_month), int(end_day))
-                )
-                |
-                Q(
-                    order_date__year=None
-                )
-                ,
-                id=item.order.id,
-                confirmed=True,
+        sell_items = stockproduct.order_item.all().filter(
+            Q(
+                order__order_date__gt=date(int(start_year), int(start_month),
+                                           int(start_day)),
+                order__order_date__lt=date(int(end_year), int(end_month), int(end_day))
             )
-            sell_quantity += item.quantity
-            sell_quantities.append(item.quantity)
-            sell_pieces |= OrderItem.objects.filter(id=item.id)
-
-        # buy product
-        product = get_object_or_404(Product, id=stockproduct.product.id)
+            |
+            Q(
+                order__order_date=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order__order_date__year=None
+            ),
+            order__confirmed=True
+        )
 
         # print(product.buyorder_item.all())
-        order_items = product.buyorder_item.all()
-        for item in order_items:
-            chosen_buyorders |= BuyOrder.objects.all().filter(
-                Q(
-                    order_date__gt=date(int(start_year), int(start_month),
-                                        int(start_day)),
-                    order_date__lt=date(int(end_year), int(end_month), int(end_day))
-                )
-                |
-                Q(
-                    order_date=date(int(end_year), int(end_month), int(end_day))
-                )
-                |
-                Q(
-                    order_date__year=None
-                )
-                ,
-                id=item.order.id,
-
+        buy_items = product.buyorder_item.all().filter(
+            Q(
+                order__order_date__gt=date(int(start_year), int(start_month),
+                                    int(start_day)),
+                order__order_date__lt=date(int(end_year), int(end_month), int(end_day))
             )
-            buy_pieces |= order_items.filter(id=item.id)
-            buy_quantity += item.quantity
-            buy_quantities.append(item.quantity)
+            |
+            Q(
+                order__order_date=date(int(end_year), int(end_month), int(end_day))
+            )
+            |
+            Q(
+                order__order_date__year=None
+            ),
+        )
 
-    sell_list = zip(chosen_orders, sell_pieces, sell_quantities)
-    final_buylist = zip(chosen_buyorders, buy_pieces, buy_quantities)
+    for item in sell_items:
+        sell_orders.append(item.order)
+        # sell_products.append(item.product.name)
+        sell_quantities.append(item.quantity)
+        sell_buyprices.append(item.buy_price)
+        sell_sellprices.append(item.price)
+        benefits.append(item.get_benefit())
+
+        total_sell_quantity += item.quantity
+        total_benefits += item.get_benefit()
+
+    # print(product.buyorder_item.all())
+
+    for item in buy_items:
+        buy_orders.append(item.order)
+        buy_quantities.append(item.quantity)
+        buy_buyprices.append(item.price)
+
+        total_buy_quantity += item.quantity
+
+    sell_list = zip(sell_orders, sell_quantities, sell_buyprices, sell_sellprices, benefits)
+    buy_list = zip(buy_orders, buy_quantities, buy_buyprices)
 
     context = {
 
         'current_year': current_year,
-        # sell vars
         'stockproduct': stockproduct,
         'sell_list': sell_list,
-        'sell_pieces': sell_pieces,
-        'chosen_orders': chosen_orders,
-        'sell_quantity': sell_quantity,
-        # buy vars
+        'total_sell_quantity': total_sell_quantity,
         'product': product,
-        'final_buylist': final_buylist,
-        'buy_pieces': buy_pieces,
-        'buy_quantity': buy_quantity,
+        'buy_list': buy_list,
+        'total_benefits': total_benefits,
+        'total_buy_quantity': total_buy_quantity,
         # time
         'dateform': dateform,
     }
