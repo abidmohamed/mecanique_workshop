@@ -149,13 +149,6 @@ def buyorder_confirmation(request, pk):
                     stockitem.product.save()
                     stockitem.save()
                     itemexist = 2
-                    # for stockitem in stockitems:
-                    #     # the same product exist
-                    #     if stockitem.product.id == item.product.id:
-                    #         stockitem.quantity += decimal.Decimal(item.quantity)
-                    #         stockitem.save()
-                    #         itemexist = 2
-                    #         # operation done same product plus the new quantity
 
                     if itemexist == 1:
                         #             # stock not empty product doesn't exist in it
@@ -163,20 +156,15 @@ def buyorder_confirmation(request, pk):
                         StockProduct.objects.create(
                             product=item.product,
                             quantity=decimal.Decimal(item.quantity),
-                            # category=item.product.category,
                             stock=item.stock
                         )
                 else:
                     #         # stock is empty
-                    itemexist = 0
-                    if itemexist == 0:
+                    if itemexist == 1:
                         # create new stockproduct
                         StockProduct.objects.create(
                             product=item.product,
                             quantity=decimal.Decimal(item.quantity),
-                            # type=item.type,
-                            # color=item.color,
-                            # category=item.product.category,
                             stock=item.stock
                         )
             # print(buyorder.get_total_cost())
@@ -215,10 +203,11 @@ def update_order(request, pk):
             if buyorder.items.all():
                 for item in buyorder.items.all():
                     if StockProduct.objects.all().filter(product__id=item.product.id, stock=item.stock):
-                        currentstockitem = StockProduct.objects.get(product__id=item.product.id, stock=item.stock)
+                        currentstockitem = StockProduct.objects.filter(product=item.product, stock=item.stock)[:1].get()
+
                         currentstockitem.quantity -= decimal.Decimal(item.quantity)
                         currentstockitem.save()
-                        print("############# OKAY Update minus")
+                        # print("############# OKAY Update minus")
                         # stockitem = StockProduct.objects.filter(stock=item.stock)
                         # if len(stockitem) > 1:
                         #    for currentstockitem in stockitem:
@@ -269,13 +258,13 @@ def update_order(request, pk):
                 # check if stock doesn't have the product
                 if len(stockitems) > 0:
                     # stock has products check if product exist
-                    for stockitem in stockitems:
-                        # the same product exist
-                        if stockitem.product.id == item.product.id:
-                            stockitem.quantity += decimal.Decimal(item.quantity)
-                            stockitem.save()
-                            itemexist = 2
-                            # operation done same product plus the new quantity
+                    stockitem = StockProduct.objects.all().filter(product=item.product, stock=item.stock)[:1].get()
+                    stockitem.quantity += decimal.Decimal(item.quantity)
+                    stockitem.buy_price = decimal.Decimal(item.price)
+                    stockitem.product.buyprice = decimal.Decimal(item.price)
+                    stockitem.product.save()
+                    stockitem.save()
+                    itemexist = 2
 
                     if itemexist == 1:
                         #             # stock not empty product doesn't exist in it
@@ -283,45 +272,43 @@ def update_order(request, pk):
                         StockProduct.objects.create(
                             product=item.product,
                             quantity=decimal.Decimal(item.quantity),
-                            # category=item.product.category,
                             stock=item.stock
                         )
                 else:
                     #         # stock is empty
-                    itemexist = 0
-                    if itemexist == 0:
+                    if itemexist == 1:
                         # create new stockproduct
                         StockProduct.objects.create(
                             product=item.product,
                             quantity=decimal.Decimal(item.quantity),
-                            # type=item.type,
-                            # color=item.color,
-                            # category=item.product.category,
                             stock=item.stock
                         )
             # print(buyorder.get_total_cost())
             # print(supplier)
             buyorder.order_tva = int(tva)
             # get money additiion
-            print(old_ttc)
+            # print(old_ttc)
             new_ttc = buyorder.get_ttc()
-            print(new_ttc)
+            # print(new_ttc)
             ttc_difference = new_ttc - old_ttc
-            print(ttc_difference)
+            # print(ttc_difference)
+
             buyorder.debt += ttc_difference
             supplier.credit += ttc_difference
             supplier.save()
+
             buyorder.order_date = date(int(chosen_year[0]), int(chosen_month[1]), int(chosen_day[2]))
             buyorder.confirmed = True
             buyorder.total_price = buyorder.get_total_cost()
             buyorder.save()
+
             return redirect('buyorder:buyorder_list')
     context = {
         'buyorderform': buyorderform,
         'buyorder': buyorder,
         'stocks': stocks,
     }
-    return render(request, 'buyorder/buyorder_confirmation.html', context)
+    return render(request, 'buyorder/buyorder_update.html', context)
 
 
 def buyorder_details(request, pk):
@@ -567,11 +554,13 @@ def confirm_order_item_delete(request, orderpk, itempk):
             stockproduct.quantity -= item.quantity
             stockproduct.save()
             item.delete()
+            buyorder.save()
+            return redirect('buyorder:update_order', buyorder.id)
         else:
             item = buyorder.items.get(id=itempk)
             item.delete()
-        buyorder.save()
-        return redirect('buyorder:buyorder_confirmation', buyorder.id)
+            buyorder.save()
+            return redirect('buyorder:buyorder_confirmation', buyorder.id)
 
     context = {
         'buyorder': buyorder,
