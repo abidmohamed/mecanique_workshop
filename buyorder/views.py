@@ -143,11 +143,18 @@ def buyorder_confirmation(request, pk):
                     # get the first value
                     # CurrentYear.objects.all().filter()[:1].get()
                     stockitem = StockProduct.objects.all().filter(product=item.product, stock=item.stock)[:1].get()
+                    # print("##### Stock EXIST - order confirmation")
+                    # print("##### Product - order confirmation => ", stockitem.product.name)
+                    # print("##### Stock GOT - order confirmation => ", item.stock)
+                    # print("##### Quantity GOT - order confirmation => ", item.quantity)
+                    # print("##### Product Quantity BEFORE - order confirmation => ", stockitem.quantity)
                     stockitem.quantity += decimal.Decimal(item.quantity)
                     stockitem.buy_price = decimal.Decimal(item.price)
                     stockitem.product.buyprice = decimal.Decimal(item.price)
                     stockitem.product.save()
                     stockitem.save()
+                    # print("##### Product Quantity AFTER - order confirmation => ", stockitem.quantity)
+
                     itemexist = 2
 
                     if itemexist == 1:
@@ -549,6 +556,9 @@ def confirm_order_item_delete(request, orderpk, itempk):
     if request.method == 'POST':
         if buyorder.confirmed:
             item = buyorder.items.get(id=itempk)
+            if item.stock is None:
+                item.stock = item.product.stock
+                item.save()
             stockproduct = StockProduct.objects.get(product=item.product, stock=item.stock)
             # print("StockProduct =====> ", stockproduct)
             stockproduct.quantity -= item.quantity

@@ -222,6 +222,10 @@ def modal_buyorder_stockproduct_list(request, pk):
             for product in chosenproducts:
                 product = ''.join(product.split())
                 currentproduct = Product.objects.get(id=product)
+                stockproduct = StockProduct.objects.get(product=currentproduct, stock=currentproduct.stock)
+                # print("StockProduct =====> ", stockproduct)
+                stockproduct.quantity += 1
+                stockproduct.save()
                 # print(currentproduct)
                 BuyOrderItem.objects.create(
                     order=order,
