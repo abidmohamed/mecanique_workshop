@@ -1,8 +1,11 @@
 from django.db import models
 
 # Create your models here.
+from accounts.models import CurrentYear
 from category.models import Category
 from product.models import Product
+from django.db.models import Q
+from datetime import date
 
 
 class Stock(models.Model):
@@ -34,6 +37,23 @@ class StockProduct(models.Model):
             self.buy_price = self.product.buyprice
             self.save()
         return self.product.name
+
+    def get_quantity(self):
+        sell_quantity = sum(item.quantity for item in self.order_item.all().filter(
+            order__order_date__year=CurrentYear.objects.all().filter()[:1].get().year,
+            order__confirmed=True,
+            stockproduct__stock=self.stock,
+        ))
+        print("sell Quantity ", sell_quantity, " Product: ", self.product, " Stock: ", self.stock)
+        buy_quantity = sum(item.quantity for item in self.product.buyorder_item.all().filter(
+            order__order_date__year=CurrentYear.objects.all().filter()[:1].get().year,
+            order__confirmed=True,
+            stock=self.stock
+        ))
+        print("Buy Quantity ", buy_quantity)
+
+        quantity = buy_quantity - sell_quantity
+        return quantity
 
 #  def save(self, *args, **kwargs):
 # self.category = self.product.category

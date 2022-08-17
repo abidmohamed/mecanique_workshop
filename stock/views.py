@@ -621,10 +621,14 @@ def stock_product_details(request, pk):
     # order items
     # print(stockproduct.order_item.all())
     sell_items = stockproduct.order_item.all().filter(order__order_date__year=current_year.year,
+                                                      stockproduct__stock=stockproduct.stock,
                                                       order__confirmed=True)
     # buy product
     product = get_object_or_404(Product, id=stockproduct.product.id)
-    buy_items = product.buyorder_item.all().filter(order__order_date__year=current_year.year)
+    buy_items = product.buyorder_item.all().filter(order__order_date__year=current_year.year,
+                                                   stock=stockproduct.stock,
+                                                   order__confirmed=True
+                                                   )
     # Time search
     if request.method == 'POST':
         alldata = request.POST
@@ -669,7 +673,6 @@ def stock_product_details(request, pk):
             ),
             order__confirmed=True
         )
-
         # print(product.buyorder_item.all())
         buy_items = product.buyorder_item.all().filter(
             Q(
@@ -711,7 +714,6 @@ def stock_product_details(request, pk):
     buy_list = zip(buy_orders, buy_quantities, buy_buyprices)
 
     context = {
-
         'current_year': current_year,
         'stockproduct': stockproduct,
         'sell_list': sell_list,

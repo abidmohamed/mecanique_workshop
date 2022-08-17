@@ -35,6 +35,7 @@
                     <th>{% trans "Buy Price" %}</th>
                     <th>{% trans "Stock" %}</th>
                     <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Real Quantity" %}</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -63,6 +64,9 @@
                    </td>
                     <td>
                        {{prod.quantity}}
+                   </td>
+                    <td>
+                       {{prod.get_quantity}}
                    </td>
                     <td>
                         <a class="btn btn-success " href="{% url 'stock:update_stockproduct' prod.id %}">{% trans "Update" %}</a>
