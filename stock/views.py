@@ -12,6 +12,7 @@ from caisse.forms import DateForm
 from category.models import Category
 from customer.filters import CustomerFilter
 from customer.models import Customer
+from product.filters import ProductFilter
 from product.models import Product
 from rdv.models import Panne
 from sellorder.models import Order, OrderItem, PanneItem, ServiceItem
@@ -213,8 +214,32 @@ def all_stockproduct_list(request):
 
 # Modal Add Stock Product To Buy Order
 def modal_buyorder_stockproduct_list(request, pk):
+    # chosenyear
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
+
     order = BuyOrder.objects.get(id=pk)
-    stockproducts = Product.objects.all()
+    stockproducts_list = Product.objects.all().order_by('-name')
+
+    myFilter = ProductFilter(request.GET, queryset=stockproducts_list)
+
+    # paginate after filtering
+    stockproducts_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(stockproducts_list, 5)
+
+    try:
+        stockproducts = paginator.page(page)
+    except PageNotAnInteger:
+        stockproducts = paginator.page(1)
+    except EmptyPage:
+        stockproducts = paginator.page(paginator.num_pages)
+
     if request.method == 'POST':
         # get submitted orders
         chosenproducts = request.POST.getlist("products")
@@ -239,15 +264,43 @@ def modal_buyorder_stockproduct_list(request, pk):
         else:
             return redirect('buyorder:buyorder_confirmation', order.pk)
     context = {
+        'order': order,
         'stockproducts': stockproducts,
+        'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'stockproduct/modal_buyorder_list_stockproduct.html', context)
 
 
 # Modal Add Stock Product To Sell Order
 def modal_order_stockproduct_list(request, pk):
+    # chosenyear
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
+
     sellorder = Order.objects.get(id=pk)
-    stockproducts = StockProduct.objects.all()
+
+    stockproducts_list = StockProduct.objects.all().order_by('-product')
+
+    myFilter = StockProductFilter(request.GET, queryset=stockproducts_list)
+
+    # paginate after filtering
+    stockproducts_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(stockproducts_list, 5)
+
+    try:
+        stockproducts = paginator.page(page)
+    except PageNotAnInteger:
+        stockproducts = paginator.page(1)
+    except EmptyPage:
+        stockproducts = paginator.page(paginator.num_pages)
+
     if request.method == 'POST':
         # get submitted orders
         chosenproducts = request.POST.getlist("products")
@@ -272,14 +325,41 @@ def modal_order_stockproduct_list(request, pk):
     context = {
         'stockproducts': stockproducts,
         'sellorder': sellorder,
+        'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'stockproduct/modal_order_list_stockproduct.html', context)
 
 
 # Modal Add Stock Product To Sell Order update
 def modal_update_order_stockproduct_list(request, pk):
+    # chosenyear
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
+
     sellorder = Order.objects.get(id=pk)
-    stockproducts = StockProduct.objects.all()
+
+    stockproducts_list = StockProduct.objects.all().order_by('-product')
+
+    myFilter = StockProductFilter(request.GET, queryset=stockproducts_list)
+
+    # paginate after filtering
+    stockproducts_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(stockproducts_list, 5)
+
+    try:
+        stockproducts = paginator.page(page)
+    except PageNotAnInteger:
+        stockproducts = paginator.page(1)
+    except EmptyPage:
+        stockproducts = paginator.page(paginator.num_pages)
+
     if request.method == 'POST':
         # get submitted orders
         chosenproducts = request.POST.getlist("products")
@@ -303,6 +383,8 @@ def modal_update_order_stockproduct_list(request, pk):
     context = {
         'stockproducts': stockproducts,
         'sellorder': sellorder,
+        'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'stockproduct/modal_order_list_stockproduct.html', context)
 
@@ -677,7 +759,7 @@ def stock_product_details(request, pk):
         buy_items = product.buyorder_item.all().filter(
             Q(
                 order__order_date__gt=date(int(start_year), int(start_month),
-                                    int(start_day)),
+                                           int(start_day)),
                 order__order_date__lt=date(int(end_year), int(end_month), int(end_day))
             )
             |

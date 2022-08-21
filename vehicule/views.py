@@ -1,8 +1,11 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect
 
 # Create your views here.
 # Brand Views
+from accounts.models import CurrentYear
 from customer.models import Customer
+from vehicule.filters import VehicleFilter
 from vehicule.forms import BrandForm, TypeForm, VehiculeFrom
 from vehicule.models import Brand, Type, Vehicle
 
@@ -134,7 +137,7 @@ def add_vehicule(request):
         if vehiculeform.is_valid():
             vehicle = vehiculeform.save(commit=False)
             # Remove white spaces
-            chosencustomer= request.POST.get("customer")
+            chosencustomer = request.POST.get("customer")
             chosencustomer = ''.join(chosencustomer.split())
             vehicle.customer = Customer.objects.get(id=chosencustomer)
 
@@ -172,9 +175,35 @@ def add_vehicule_rdv(request, pk):
 
 
 def all_vehicule_list(request):
-    vehicles = Vehicle.objects.all()
+    # chosenyear
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
+
+    vehicles_list = Vehicle.objects.all().order_by('-vehicle_name')
+
+    myFilter = VehicleFilter(request.GET, queryset=vehicles_list)
+
+    # paginate after filtering
+    customers_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(customers_list, 5)
+
+    try:
+        vehicles = paginator.page(page)
+    except PageNotAnInteger:
+        vehicles = paginator.page(1)
+    except EmptyPage:
+        vehicles = paginator.page(paginator.num_pages)
+
     context = {
         'vehicles': vehicles,
+        'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'vehicule/all_list_vehicule.html', context)
 

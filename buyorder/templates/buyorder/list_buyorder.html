@@ -1,6 +1,8 @@
 {% extends 'home.html' %}
 {% load static %}
 {% load i18n %}
+{% load search_pagination_url %}
+
 {% block content %}
 <br>
 <div class="row">
@@ -9,78 +11,21 @@
             <h5>{% trans "Buy Orders" %}</h5>
         </div>
         <br>
-        <div class="card card-body">
-                        <h5>{% trans "Suppliers" %}</h5>
-
-            <form id="order-form" action="" method="post">
-                    {% csrf_token %}
-            <table id="table_supplier" class="display text-center">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>{% trans "First Name" %}</th>
-                    <th>{% trans "Last Name" %}</th>
-                    <th>{% trans "Phone" %}</th>
-                    <th>{% trans "Address" %}</th>
-                    <th>{% trans "Credit" %}</th>
-                    <th>{% trans "Date" %}</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for supplier in suppliers %}
-                <tr>
-                    <td>
-                                <input class="form-check-input" type="radio" value="{{supplier.id}}"
-                                       id="{{supplier.id}}" name="suppliers">
-                    </td>
-                    <td>
-                        {{supplier.firstname}}
-                    </td>
-                    <td>
-                        {{supplier.lastname}}
-                    </td>
-                    <td>
-                        {{supplier.phone}}
-                    </td>
-                    <td>
-                        {{supplier.address}}
-                    </td>
-                    <td>
-                        {{supplier.get_credit}}
-                    </td>
-                    <td>{{order.order_date}}</td>
-                    <td>
-                        {% if supplier.credit > 0%}
-                        <a class="btn btn-primary " href="{% url 'payments:create_supplier_payment_by_supplier' supplier.id %}">{% trans "PayDebt" %}</a>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a class="btn btn-success " href="{% url 'supplier:update_supplier' supplier.id %}">{% trans "Update" %}</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-danger " href="{% url 'supplier:delete_supplier' supplier.id %}">{% trans "Delete" %}</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-warning " href="{% url 'supplier:supplier_detail' supplier.id %}">{% trans "Details" %}</a>
-                    </td>
-
-                </tr>
-                {% endfor %}
-                </tbody>
-
-            </table>
-
-            <input class="form-control btn btn-primary" type="submit" name="submit">
-            </form>
-        </div>
-        <br>
         <hr>
         <br>
         <div class="card card-body">
+
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <div class="collapse" id="collapseExample">
+             <div class="card card-body">
+                 <form method="get">
+                                {{myFilter.form}}
+                                <button class="btn btn-primary" type="submit">Search</button>
+                 </form>
+              </div>
+            </div>
             <table id="table_id" class="table display text-center">
 
                 <thead>
@@ -134,6 +79,83 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <!--  Pagination -->
+                    {% if buyorders.has_other_pages %}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {% if buyorders.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                        href="?{% param_replace page=buyorders.previous_page_number %}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="disabled page-item">
+                                <a class="page-link"
+                                   href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                                {% endif %}
+                        {% for i in buyorders.paginator.page_range %}
+                            {% if buyorders.number > 3 and forloop.first %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=1 %}">
+                                    1
+                                        </a>
+                                </li>
+                                <li class="disabled">⋯</li>
+                            {% endif %}
+                            {% if buyorders.number == i %}
+                                <li class="page-item active">
+                                    <span>
+                                        <a class="page-link" href="#">
+                                        {{ i }}
+                                            <span class="sr-only">(current)
+                                            </span>
+                                        </a>
+                                    </span>
+                                </li>
+                            {% elif i > buyorders.number|add:'-3' and i < buyorders.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=i %}">
+                                        {{ i }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if buyorders.paginator.num_pages > buyorders.number|add:'3' and forloop.last %}
+                                <li>...</li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=buyorders.paginator.num_pages %}">
+                                    {{ buyorders.paginator.num_pages }}
+                                        </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if buyorders.has_next %}
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="?{% param_replace page=buyorders.next_page_number %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled page-item">
+                                <a class="page-link disabled"
+                                   href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                        </nav>
+                    {% endif %}
+            <!--  Pagination -->
         </div>
     </div>
 </div>
@@ -147,18 +169,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
-<!-- Data Table  -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
-
-<script type='text/javascript'>
-    //Data Table init
-    $(document).ready( function () {
-    $('#table_id').DataTable();
-    $('#table_supplier').DataTable();
-} );
-
-
-</script>
 {% endblock %}

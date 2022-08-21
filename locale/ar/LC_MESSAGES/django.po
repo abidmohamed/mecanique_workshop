@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-01 11:59+0100\n"
+"POT-Creation-Date: 2022-08-21 15:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,108 +19,189 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: .\accounts\templates\dashboard.html:50
-#: .\accounts\templates\dashboard.html:65
-#: .\accounts\templates\sidenavbar.html:41
+#: .\accounts\models.py:10
+msgid "year"
+msgstr ""
+
+#: .\accounts\templates\dashboard.html:56
+#: .\accounts\templates\dashboard.html:71
+#: .\accounts\templates\sidenavbar.html:82
 msgid "Caisse"
 msgstr "صندوق الدفع"
 
-#: .\accounts\templates\dashboard.html:66
-#: .\accounts\templates\dashboard.html:92
-#: .\accounts\templates\dashboard.html:109
-#: .\accounts\templates\dashboard.html:196
-#: .\accounts\templates\dashboard.html:214
-#: .\accounts\templates\dashboard.html:230
+#: .\accounts\templates\dashboard.html:72
+#: .\accounts\templates\dashboard.html:98
+#: .\accounts\templates\dashboard.html:129
+#: .\accounts\templates\dashboard.html:205
+#: .\accounts\templates\dashboard.html:221
+#: .\accounts\templates\dashboard.html:398
+#: .\bank\templates\bank\transaction_list.html:22
+#: .\bank\templates\bank\transaction_list.html:24
+#: .\bank\templates\bank\transaction_list.html:26
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:32
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:57
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:59
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:38
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:58
 #: .\buyorder\templates\buyorder\buyorder_details.html:38
 #: .\buyorder\templates\buyorder\buyorder_details.html:42
-#: .\buyorder\templates\buyorder\list_buyorder.html:38
-#: .\buyorder\templates\buyorder\list_buyorder.html:39
-#: .\buyorder\templates\buyorder\list_buyorder.html:40
-#: .\buyorder\templates\buyorder\list_buyorder.html:41
-#: .\caisse\templates\caisse\transaction_list.html:22
+#: .\buyorder\templates\buyorder\buyorder_update.html:58
+#: .\buyorder\templates\buyorder\list_buyorder.html:56
+#: .\buyorder\templates\buyorder\list_buyorder.html:57
+#: .\buyorder\templates\buyorder\list_buyorder.html:58
+#: .\buyorder\templates\buyorder\list_buyorder.html:59
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:61
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:62
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:63
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:64
 #: .\caisse\templates\caisse\transaction_list.html:24
 #: .\caisse\templates\caisse\transaction_list.html:26
-#: .\customer\templates\customer\detail.html:54
-#: .\customer\templates\customer\detail.html:55
-#: .\customer\templates\customer\detail.html:56
-#: .\customer\templates\customer\detail.html:57
-#: .\customer\templates\customer\detail.html:95
-#: .\customer\templates\customer\detail.html:96
-#: .\customer\templates\customer\detail.html:97
-#: .\customer\templates\customer\detail.html:98
-#: .\customer\templates\customer\detail.html:135
-#: .\customer\templates\customer\detail.html:136
-#: .\customer\templates\customer\detail.html:137
-#: .\customer\templates\customer\detail.html:138
-#: .\product\templates\product\all_product_list.html:44
-#: .\product\templates\product\all_product_list.html:47
+#: .\caisse\templates\caisse\transaction_list.html:28
+#: .\caisse\templates\caisse\transaction_list.html:60
+#: .\caisse\templates\category\details.html:22
+#: .\caisse\templates\category\details.html:24
+#: .\caisse\templates\category\details.html:26
+#: .\customer\templates\customer\detail.html:141
+#: .\customer\templates\customer\detail.html:142
+#: .\customer\templates\customer\detail.html:143
+#: .\customer\templates\customer\detail.html:144
+#: .\customer\templates\customer\detail.html:186
+#: .\customer\templates\customer\detail.html:187
+#: .\customer\templates\customer\detail.html:188
+#: .\customer\templates\customer\detail.html:189
+#: .\customer\templates\customer\detail.html:239
+#: .\customer\templates\customer\detail.html:240
+#: .\customer\templates\customer\detail.html:241
+#: .\customer\templates\customer\detail.html:242
+#: .\product\templates\product\all_product_list.html:57
+#: .\product\templates\product\all_product_list.html:60
 #: .\product\templates\product\list_product.html:35
 #: .\product\templates\product\list_product.html:38
+#: .\rdv\templates\panne\order_panne_list.html:47
+#: .\rdv\templates\panne\order_panne_list.html:49
 #: .\rdv\templates\rdv\rdv_detail.html:55
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:33
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:58
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:60
-#: .\sellorder\templates\sellorder\list_sellorder.html:39
-#: .\sellorder\templates\sellorder\list_sellorder.html:40
-#: .\sellorder\templates\sellorder\list_sellorder.html:41
-#: .\sellorder\templates\sellorder\list_sellorder.html:42
-#: .\sellorder\templates\sellorder\list_sellorder.html:43
-#: .\sellorder\templates\sellorder\list_sellorder.html:44
-#: .\sellorder\templates\sellorder\list_sellorder.html:45
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:39
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:40
+#: .\sellorder\templates\sellorder\list_sellorder.html:64
+#: .\sellorder\templates\sellorder\list_sellorder.html:65
+#: .\sellorder\templates\sellorder\list_sellorder.html:66
+#: .\sellorder\templates\sellorder\list_sellorder.html:67
+#: .\sellorder\templates\sellorder\list_sellorder.html:68
+#: .\sellorder\templates\sellorder\list_sellorder.html:69
+#: .\sellorder\templates\sellorder\list_sellorder.html:70
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:70
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:71
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:72
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:73
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:74
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:75
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:76
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:41
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:42
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:43
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:44
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:45
-#: .\sellorder\templates\sellorder\sellorder_details.html:67
-#: .\sellorder\templates\sellorder\sellorder_details.html:71
-#: .\sellorder\templates\sellorder\sellorder_details.html:75
-#: .\sellorder\templates\sellorder\sellorder_details.html:79
-#: .\sellorder\templates\sellorder\sellorder_details.html:83
-#: .\sellorder\templates\sellorder\sellorder_details.html:87
-#: .\sellorder\templates\sellorder\sellorder_details.html:110
-#: .\sellorder\templates\sellorder\sellorder_details.html:112
-#: .\sellorder\templates\sellorder\sellorder_details.html:134
-#: .\sellorder\templates\sellorder\sellorder_details.html:158
-#: .\sellorder\templates\sellorder\sellorder_details.html:159
-#: .\sellorder\templates\sellorder\sellorder_details.html:160
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:46
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:47
+#: .\sellorder\templates\sellorder\sellorder_details.html:120
+#: .\sellorder\templates\sellorder\sellorder_details.html:124
+#: .\sellorder\templates\sellorder\sellorder_details.html:128
+#: .\sellorder\templates\sellorder\sellorder_details.html:132
+#: .\sellorder\templates\sellorder\sellorder_details.html:136
+#: .\sellorder\templates\sellorder\sellorder_details.html:140
+#: .\sellorder\templates\sellorder\sellorder_details.html:183
+#: .\sellorder\templates\sellorder\sellorder_details.html:184
+#: .\sellorder\templates\sellorder\sellorder_details.html:186
+#: .\sellorder\templates\sellorder\sellorder_details.html:187
+#: .\sellorder\templates\sellorder\sellorder_details.html:209
+#: .\sellorder\templates\sellorder\sellorder_details.html:233
+#: .\sellorder\templates\sellorder\sellorder_details.html:234
+#: .\sellorder\templates\sellorder\sellorder_details.html:235
 #: .\sellorder\templates\sellorder\sellorders_pannes.html:15
-#: .\sellorder\templates\sellorder\sellorders_pannes.html:42
+#: .\sellorder\templates\sellorder\sellorders_pannes.html:55
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:15
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:45
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:47
+#: .\services\templates\services\order_service_list.html:47
+#: .\services\templates\services\order_service_list.html:49
+#: .\services\templates\services\order_service_list.html:105
 #: .\services\templates\services\service_list.html:31
 #: .\services\templates\services\service_list.html:34
+#: .\stock\templates\stock\state.html:16 .\stock\templates\stock\state.html:33
+#: .\stock\templates\stock\state.html:51
 #: .\stock\templates\stockproduct\list_stockproduct.html:38
 #: .\stock\templates\stockproduct\list_stockproduct.html:40
 #: .\stock\templates\stockproduct\list_stockproduct.html:42
 #: .\stock\templates\stockproduct\list_stockproduct.html:44
+#: .\stock\templates\stockproduct\order_vehicle.html:46
+#: .\stock\templates\stockproduct\order_vehicle.html:48
+#: .\supplier\templates\supplier\detail.html:84
+#: .\supplier\templates\supplier\detail.html:85
+#: .\supplier\templates\supplier\detail.html:86
+#: .\supplier\templates\supplier\detail.html:126
+#: .\supplier\templates\supplier\detail.html:127
+#: .\supplier\templates\supplier\detail.html:128
 msgid "DZD"
 msgstr "د.ج"
 
-#: .\accounts\templates\dashboard.html:79
+#: .\accounts\templates\dashboard.html:85
+#: .\accounts\templates\dashboard.html:385
+#: .\caisse\templates\caisse\transaction_list.html:49
 msgid "MO"
 msgstr ""
 
-#: .\accounts\templates\dashboard.html:80
+#: .\accounts\templates\dashboard.html:86
+#: .\accounts\templates\dashboard.html:144
+#: .\accounts\templates\dashboard.html:155
+#: .\accounts\templates\dashboard.html:174
+#: .\accounts\templates\dashboard.html:185
+#: .\accounts\templates\dashboard.html:376
+#: .\accounts\templates\dashboard.html:386
+#: .\caisse\templates\caisse\transaction_list.html:50
+#: .\caisse\templates\caisse\transaction_list.html:71
+#: .\sellorder\templates\sellorder\sellorders_pannes.html:36
 #, fuzzy
 #| msgid "Price DZD"
 msgid " DZD"
 msgstr "الثمن د.ج"
 
-#: .\accounts\templates\dashboard.html:91
+#: .\accounts\templates\dashboard.html:97
+#: .\accounts\templates\dashboard.html:397
+#: .\caisse\templates\caisse\transaction_list.html:59
 msgid "Piece"
 msgstr "قطع الغيار"
 
-#: .\accounts\templates\dashboard.html:108
-#: .\customer\templates\customer\list_customer.html:10
-#: .\customer\templates\customer\sellorder_list_customer.html:10
+#: .\accounts\templates\dashboard.html:115
+#: .\accounts\templates\dashboard.html:128
+msgid "Bank"
+msgstr ""
+
+#: .\accounts\templates\dashboard.html:143
+#: .\accounts\templates\dashboard.html:375
+#, fuzzy
+#| msgid "Caisse"
+msgid "Today Caisse"
+msgstr "صندوق الدفع"
+
+#: .\accounts\templates\dashboard.html:154
+msgid "Daily Salary"
+msgstr ""
+
+#: .\accounts\templates\dashboard.html:173
+#: .\employee\templates\employee\list.html:22
+msgid "Weekly Salary"
+msgstr ""
+
+#: .\accounts\templates\dashboard.html:184
+#: .\caisse\templates\caisse\transaction_list.html:70
+#: .\sellorder\templates\sellorder\sellorders_pannes.html:35
+#, python-format
+msgid "Workshop Chief 10%%"
+msgstr ""
+
+#: .\accounts\templates\dashboard.html:204
+#: .\accounts\templates\dashboard.html:275
+#: .\customer\templates\customer\list_customer.html:12
 #: .\payments\templates\payments\customer_pay_list.html:9
 #: .\payments\templates\payments\supplier_pay_list.html:9
 #: .\rdv\templates\rdv\customer_list.html:10
@@ -128,48 +209,39 @@ msgstr "قطع الغيار"
 msgid "Customers"
 msgstr "الزبائن"
 
-#: .\accounts\templates\dashboard.html:124
-#: .\product\templates\product\details.html:10
-#: .\sellorder\templates\sellorder\list_sellorder.html:9
-msgid "Sell Orders"
-msgstr "أمر البيع"
+#: .\accounts\templates\dashboard.html:220
+msgid "Suppliers Credit"
+msgstr "ائتمان الموردين"
 
-#: .\accounts\templates\dashboard.html:139
-#: .\buyorder\templates\buyorder\list_buyorder.html:9
-#: .\product\templates\product\details.html:46
-msgid "Buy Orders"
-msgstr "أوامر البيع"
+#: .\accounts\templates\dashboard.html:235
+msgid "Service Provider Credit"
+msgstr ""
 
-#: .\accounts\templates\dashboard.html:154
+#: .\accounts\templates\dashboard.html:251
+#: .\accounts\templates\dashboard.html:410
+msgid "Stock Alert"
+msgstr "إنذار المخزن"
+
+#: .\accounts\templates\dashboard.html:304
 #: .\supplier\templates\supplier\buyorder_list_supplier.html:10
 msgid "Suppliers"
 msgstr "الموردين"
 
-#: .\accounts\templates\dashboard.html:177
-msgid "Stock Alert"
-msgstr "إنذار المخزن"
+#: .\accounts\templates\dashboard.html:333
+#, fuzzy
+#| msgid "Orders"
+msgid "Providers"
+msgstr "أوامر"
 
-#: .\accounts\templates\dashboard.html:195
-msgid "Total Sell Order"
-msgstr "مجموع أمر البيع"
-
-#: .\accounts\templates\dashboard.html:213
-msgid "Total Buy Orders"
-msgstr "مجموع أمر الشراء"
-
-#: .\accounts\templates\dashboard.html:229
-msgid "Suppliers Credit"
-msgstr "ائتمان الموردين"
-
-#: .\accounts\templates\dashboard.html:251
+#: .\accounts\templates\dashboard.html:428
 msgid "Next Month "
 msgstr "الشهر المقبل"
 
-#: .\accounts\templates\dashboard.html:252
+#: .\accounts\templates\dashboard.html:429
 msgid " Previous Month"
 msgstr "الشهر السابق"
 
-#: .\accounts\templates\dashboard.html:253
+#: .\accounts\templates\dashboard.html:430
 msgid "New RDV"
 msgstr "موعد جديد"
 
@@ -185,374 +257,851 @@ msgstr "تسجيل الدخول"
 msgid "Don't have an account?"
 msgstr "ليس لديك حساب؟"
 
-#: .\accounts\templates\navbar.html:57
-#, fuzzy
-#| msgid "Message Center"
-msgid "Alerts Center"
-msgstr "مركز الرسائل"
-
-#: .\accounts\templates\navbar.html:67
-msgid "A new monthly report is ready to download!"
-msgstr "تقرير الشهر الجديد جاهز للتحميل"
-
-#: .\accounts\templates\navbar.html:78
-#, fuzzy
-#| msgid "has been deposited into your account!"
-msgid " $290.29 has been deposited into your account!"
-msgstr "تم إيداعه في حسابك!"
-
-#: .\accounts\templates\navbar.html:89
-#, fuzzy
-#| msgid ""
-#| "Spending Alert: We've noticed unusually high spending for your account."
-msgid ""
-" Spending Alert: We've noticed unusually high spending for your account."
-msgstr "تنبيه الإنفاق: لقد لاحظنا إنفاقًا مرتفعًا بشكل غير عادي لحسابك"
-
-#: .\accounts\templates\navbar.html:92
-msgid "Show All Alerts"
-msgstr "إظهار كل التنبيهات"
-
-#: .\accounts\templates\navbar.html:106
-msgid "Message Center"
-msgstr "مركز الرسائل"
-
-#: .\accounts\templates\navbar.html:114
-msgid ""
-"Hi there! I am wondering if you can help me with a problem I've been having."
+#: .\accounts\templates\login\login.html:115
+msgid "Sign Up"
 msgstr ""
 
-#: .\accounts\templates\navbar.html:115
-msgid "Emily Fowler · 58m"
-msgstr ""
-
-#: .\accounts\templates\navbar.html:124
-msgid ""
-"I have the photos that you ordered last month, how would you like them sent "
-"to you?"
-msgstr ""
-
-#: .\accounts\templates\navbar.html:134
-msgid ""
-"Last month's report looks great, I am very happy with the progress so far, "
-"keep up the good work!"
-msgstr ""
-
-#: .\accounts\templates\navbar.html:144
-msgid ""
-"Am I a good boy? The reason I ask is because someone told me that people say "
-"this to all dogs, even if they aren't good..."
-msgstr ""
-
-#: .\accounts\templates\navbar.html:148
-msgid "Read More Messages"
-msgstr "قراءة رسائل أكثر"
-
-#: .\accounts\templates\navbar.html:164
+#: .\accounts\templates\navbar.html:70
 msgid "Profile"
 msgstr "الملف الشخصي"
 
-#: .\accounts\templates\navbar.html:168
+#: .\accounts\templates\navbar.html:74
 msgid "Settings"
 msgstr "إعدادات"
 
-#: .\accounts\templates\navbar.html:172
+#: .\accounts\templates\navbar.html:78
 msgid "Activity Log"
 msgstr "سجل النشاطات"
 
-#: .\accounts\templates\navbar.html:177
+#: .\accounts\templates\navbar.html:83
 #, fuzzy
 #| msgid "Logout"
 msgid " Logout"
 msgstr "تسجيل الخروج"
 
-#: .\accounts\templates\sidenavbar.html:25
+#: .\accounts\templates\sidenavbar.html:26
 msgid "Dashboard"
 msgstr "لوحة القيادة"
 
-#: .\accounts\templates\sidenavbar.html:33
+#: .\accounts\templates\sidenavbar.html:34
 msgid "Interface"
 msgstr "واجهه المستخدم"
 
-#: .\accounts\templates\sidenavbar.html:45
-#: .\accounts\templates\sidenavbar.html:61
-#: .\accounts\templates\sidenavbar.html:84
-#: .\accounts\templates\sidenavbar.html:100
-#: .\accounts\templates\sidenavbar.html:116
-#: .\accounts\templates\sidenavbar.html:152
-#: .\accounts\templates\sidenavbar.html:168
-#: .\accounts\templates\sidenavbar.html:184
-#: .\accounts\templates\sidenavbar.html:200
-#: .\accounts\templates\sidenavbar.html:217
-#: .\accounts\templates\sidenavbar.html:232
-#: .\accounts\templates\sidenavbar.html:248
+#: .\accounts\templates\sidenavbar.html:42
+msgid "User"
+msgstr ""
+
+#: .\accounts\templates\sidenavbar.html:46
+#: .\accounts\templates\sidenavbar.html:64
+#: .\accounts\templates\sidenavbar.html:86
+#: .\accounts\templates\sidenavbar.html:110
+#: .\accounts\templates\sidenavbar.html:133
+#: .\accounts\templates\sidenavbar.html:151
+#: .\accounts\templates\sidenavbar.html:167
+#: .\accounts\templates\sidenavbar.html:203
+#: .\accounts\templates\sidenavbar.html:219
+#: .\accounts\templates\sidenavbar.html:236
+#: .\accounts\templates\sidenavbar.html:254
+#: .\accounts\templates\sidenavbar.html:271
+#: .\accounts\templates\sidenavbar.html:289
+#: .\accounts\templates\sidenavbar.html:307
 msgid "Operations"
 msgstr "العمليات"
 
-#: .\accounts\templates\sidenavbar.html:46
-#: .\accounts\templates\sidenavbar.html:85
-#: .\accounts\templates\sidenavbar.html:101
-#: .\accounts\templates\sidenavbar.html:117
-#: .\accounts\templates\sidenavbar.html:133
-#: .\accounts\templates\sidenavbar.html:137
-#: .\accounts\templates\sidenavbar.html:153
-#: .\accounts\templates\sidenavbar.html:169
-#: .\accounts\templates\sidenavbar.html:185
-#: .\accounts\templates\sidenavbar.html:201
-#: .\accounts\templates\sidenavbar.html:233
-#: .\accounts\templates\sidenavbar.html:249
+#: .\accounts\templates\sidenavbar.html:47
+#: .\accounts\templates\sidenavbar.html:87
+#: .\accounts\templates\sidenavbar.html:134
+#: .\accounts\templates\sidenavbar.html:152
+#: .\accounts\templates\sidenavbar.html:168
+#: .\accounts\templates\sidenavbar.html:184
+#: .\accounts\templates\sidenavbar.html:188
+#: .\accounts\templates\sidenavbar.html:204
+#: .\accounts\templates\sidenavbar.html:220
+#: .\accounts\templates\sidenavbar.html:237
+#: .\accounts\templates\sidenavbar.html:255
+#: .\accounts\templates\sidenavbar.html:290
+#: .\accounts\templates\sidenavbar.html:308
+#: .\bank\templates\bank\transaction_list.html:20
 #: .\caisse\templates\caisse\transaction_list.html:20
+#: .\caisse\templates\category\details.html:20
 msgid "Add"
 msgstr "إضافة"
 
-#: .\accounts\templates\sidenavbar.html:47
-#: .\accounts\templates\sidenavbar.html:86
-#: .\accounts\templates\sidenavbar.html:102
-#: .\accounts\templates\sidenavbar.html:118
-#: .\accounts\templates\sidenavbar.html:134
-#: .\accounts\templates\sidenavbar.html:138
-#: .\accounts\templates\sidenavbar.html:154
-#: .\accounts\templates\sidenavbar.html:170
-#: .\accounts\templates\sidenavbar.html:186
-#: .\accounts\templates\sidenavbar.html:202
-#: .\accounts\templates\sidenavbar.html:218
-#: .\accounts\templates\sidenavbar.html:234
-#: .\accounts\templates\sidenavbar.html:250
+#: .\accounts\templates\sidenavbar.html:48
+#: .\accounts\templates\sidenavbar.html:90
+#: .\accounts\templates\sidenavbar.html:135
+#: .\accounts\templates\sidenavbar.html:153
+#: .\accounts\templates\sidenavbar.html:169
+#: .\accounts\templates\sidenavbar.html:185
+#: .\accounts\templates\sidenavbar.html:189
+#: .\accounts\templates\sidenavbar.html:205
+#: .\accounts\templates\sidenavbar.html:221
+#: .\accounts\templates\sidenavbar.html:238
+#: .\accounts\templates\sidenavbar.html:256
+#: .\accounts\templates\sidenavbar.html:272
+#: .\accounts\templates\sidenavbar.html:291
+#: .\accounts\templates\sidenavbar.html:309
 msgid "List"
 msgstr "قائمة"
 
-#: .\accounts\templates\sidenavbar.html:57
-#: .\customer\templates\customer\detail.html:160
-#: .\rdv\templates\rdv\rdv_detail.html:23 .\rdv\templates\rdv\rdv_list.html:17
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:56
-#: .\sellorder\templates\sellorder\sellorder_update.html:62
-#: .\stock\templates\stockproduct\order_vehicle.html:10
-msgid "Vehicle"
-msgstr "سيارة"
-
-#: .\accounts\templates\sidenavbar.html:62
-msgid "Add Brand"
-msgstr "إضافة ماركة"
-
-#: .\accounts\templates\sidenavbar.html:63
-msgid "Brand List"
-msgstr "قائمة الماركات"
+#: .\accounts\templates\sidenavbar.html:60
+#: .\employee\templates\employee\list.html:10
+msgid "Employees"
+msgstr ""
 
 #: .\accounts\templates\sidenavbar.html:65
-msgid "Add Type"
+#, fuzzy
+#| msgid "Add Type"
+msgid "Add Employee"
 msgstr "إضافة صنف"
 
 #: .\accounts\templates\sidenavbar.html:66
-msgid "Type List"
+#, fuzzy
+#| msgid "Type List"
+msgid "Employee List"
 msgstr "قائمة الأصناف"
 
 #: .\accounts\templates\sidenavbar.html:68
+msgid "Add Job"
+msgstr ""
+
+#: .\accounts\templates\sidenavbar.html:69
+#, fuzzy
+#| msgid "List"
+msgid "Job List"
+msgstr "قائمة"
+
+#: .\accounts\templates\sidenavbar.html:93
+#, fuzzy
+#| msgid "Category"
+msgid "Add Category"
+msgstr "صنف"
+
+#: .\accounts\templates\sidenavbar.html:95
+#, fuzzy
+#| msgid "Categories"
+msgid "Category List"
+msgstr "الأصناف"
+
+#: .\accounts\templates\sidenavbar.html:106
+#: .\customer\templates\customer\detail.html:123
+#: .\customer\templates\customer\detail.html:168
+#: .\customer\templates\customer\detail.html:220
+#: .\customer\templates\customer\detail.html:264
+#: .\rdv\templates\rdv\rdv_detail.html:23 .\rdv\templates\rdv\rdv_list.html:17
+#: .\sellorder\templates\sellorder\list_sellorder.html:41
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:47
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:18
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:65
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:65
+#: .\sellorder\templates\sellorder\sellorder_update.html:69
+#: .\stock\templates\stockproduct\order_vehicle.html:61
+msgid "Vehicle"
+msgstr "سيارة"
+
+#: .\accounts\templates\sidenavbar.html:111
+msgid "Add Brand"
+msgstr "إضافة ماركة"
+
+#: .\accounts\templates\sidenavbar.html:112
+msgid "Brand List"
+msgstr "قائمة الماركات"
+
+#: .\accounts\templates\sidenavbar.html:114
+msgid "Add Type"
+msgstr "إضافة صنف"
+
+#: .\accounts\templates\sidenavbar.html:115
+msgid "Type List"
+msgstr "قائمة الأصناف"
+
+#: .\accounts\templates\sidenavbar.html:117
 msgid "Add Vehicle"
 msgstr "إضافة سيارة"
 
-#: .\accounts\templates\sidenavbar.html:69
+#: .\accounts\templates\sidenavbar.html:118
 msgid "Vehicle List"
 msgstr "قائمة السيارات"
 
-#: .\accounts\templates\sidenavbar.html:80
-#: .\caisse\templates\caisse\transaction_list.html:76
+#: .\accounts\templates\sidenavbar.html:129
+#: .\bank\templates\bank\transaction_list.html:76
+#: .\caisse\templates\caisse\transaction_list.html:129
 #: .\customer\templates\customer\detail.html:14
-#: .\customer\templates\customer\detail.html:38
-#: .\customer\templates\customer\detail.html:79
-#: .\customer\templates\customer\detail.html:118
-#: .\customer\templates\customer\sellorder_list_customer.html:16
+#: .\customer\templates\customer\detail.html:88
+#: .\customer\templates\customer\detail.html:121
+#: .\customer\templates\customer\detail.html:166
+#: .\customer\templates\customer\detail.html:218
+#: .\customer\templates\customer\list_enterprise.html:16
 #: .\payments\templates\payments\customer\payment_list.html:17
 #: .\payments\templates\payments\customer_pay_list.html:15
-#: .\product\templates\product\details.html:20
+#: .\product\templates\product\details.html:38
+#: .\rdv\templates\panne\order_panne_list.html:18
 #: .\rdv\templates\rdv\rdv_detail.html:19 .\rdv\templates\rdv\rdv_list.html:16
 #: .\rdv\templates\rdv\vehicle_list.html:29
-#: .\sellorder\templates\sellorder\list_sellorder.html:16
+#: .\sellorder\templates\sellorder\list_sellorder.html:39
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:45
 #: .\sellorder\templates\sellorder\list_sellorder_facture.html:16
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:13
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:64
 #: .\sellorder\templates\sellorder\sellorder_confirmation.html:13
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:55
-#: .\sellorder\templates\sellorder\sellorder_details.html:43
-#: .\sellorder\templates\sellorder\sellorder_details.html:173
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:64
+#: .\sellorder\templates\sellorder\sellorder_details.html:95
+#: .\sellorder\templates\sellorder\sellorder_details.html:248
 #: .\sellorder\templates\sellorder\sellorder_update.html:13
-#: .\sellorder\templates\sellorder\sellorder_update.html:61
-#: .\stock\templates\stockproduct\order_vehicle.html:22
-#: .\vehicule\templates\vehicule\all_list_vehicule.html:17
+#: .\sellorder\templates\sellorder\sellorder_update.html:68
+#: .\services\templates\services\order_service_list.html:18
+#: .\stock\templates\stockproduct\order_vehicle.html:17
+#: .\stock\templates\stockproduct\order_vehicle.html:73
+#: .\stock\templates\stockproduct\product_details.html:53
+#: .\vehicule\templates\vehicule\all_list_vehicule.html:29
 msgid "Customer"
 msgstr "الزبون"
 
-#: .\accounts\templates\sidenavbar.html:96
+#: .\accounts\templates\sidenavbar.html:137
+msgid "Enterprise List"
+msgstr ""
+
+#: .\accounts\templates\sidenavbar.html:147
 msgid "Rdv"
 msgstr "موعد"
 
-#: .\accounts\templates\sidenavbar.html:112
-#: .\sellorder\templates\sellorder\sellorder_details.html:124
-#: .\sellorder\templates\sellorder\sellorders_pannes.html:32
+#: .\accounts\templates\sidenavbar.html:163
+#: .\rdv\templates\panne\order_panne_list.html:98
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:29
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:29
+#: .\sellorder\templates\sellorder\sellorder_details.html:199
+#: .\sellorder\templates\sellorder\sellorder_update.html:30
+#: .\sellorder\templates\sellorder\sellorders_pannes.html:45
+#: .\services\templates\services\order_service_list.html:95
 msgid "Panne"
 msgstr "عطل"
 
-#: .\accounts\templates\sidenavbar.html:128
-#: .\accounts\templates\sidenavbar.html:132
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:121
-#: .\sellorder\templates\sellorder\sellorder_details.html:147
+#: .\accounts\templates\sidenavbar.html:179
+#: .\accounts\templates\sidenavbar.html:183
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:34
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:141
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:34
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:141
+#: .\sellorder\templates\sellorder\sellorder_details.html:222
+#: .\sellorder\templates\sellorder\sellorder_update.html:35
+#: .\sellorder\templates\sellorder\sellorder_update.html:149
+#: .\services\templates\services\modal_order_list_service.html:20
+#: .\services\templates\services\provider_detail.html:62
+#: .\services\templates\services\provider_detail.html:95
+#: .\services\templates\services\provider_detail.html:134
 msgid "Service"
 msgstr ""
 
-#: .\accounts\templates\sidenavbar.html:136
-#: .\sellorder\templates\sellorder\sellorder_details.html:151
+#: .\accounts\templates\sidenavbar.html:187
+#: .\caisse\templates\caisse\transaction_list.html:214
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:140
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:140
+#: .\sellorder\templates\sellorder\sellorder_details.html:226
+#: .\sellorder\templates\sellorder\sellorder_update.html:148
 #: .\services\templates\services\service_list.html:19
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:160
 msgid "Provider"
 msgstr ""
 
-#: .\accounts\templates\sidenavbar.html:148
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:26
+#: .\accounts\templates\sidenavbar.html:199
+#: .\bank\templates\bank\transaction_list.html:117
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:13
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:46
 #: .\buyorder\templates\buyorder\buyorder_details.html:25
-#: .\buyorder\templates\buyorder\list_buyorder.html:18
-#: .\caisse\templates\caisse\transaction_list.html:117
+#: .\buyorder\templates\buyorder\buyorder_details.html:76
+#: .\buyorder\templates\buyorder\buyorder_update.html:13
+#: .\buyorder\templates\buyorder\buyorder_update.html:46
+#: .\buyorder\templates\buyorder\list_buyorder.html:34
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:38
+#: .\caisse\templates\caisse\transaction_list.html:172
 #: .\payments\templates\payments\supplier\payment_list.html:16
 #: .\payments\templates\payments\supplier_pay_list.html:14
-#: .\product\templates\product\details.html:56
+#: .\product\templates\product\details.html:74
+#: .\stock\templates\stockproduct\product_details.html:104
+#: .\supplier\templates\supplier\detail.html:14
+#: .\supplier\templates\supplier\detail.html:68
+#: .\supplier\templates\supplier\detail.html:110
+#: .\supplier\templates\supplier\detail.html:150
 msgid "Supplier"
 msgstr "مورد"
 
-#: .\accounts\templates\sidenavbar.html:164
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:27
+#: .\accounts\templates\sidenavbar.html:215
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:47
+#: .\buyorder\templates\buyorder\buyorder_update.html:47
 #: .\customer\templates\city\list_city.html:15
 #: .\customer\templates\city\order_city_list.html:15
 #: .\supplier\templates\supplier\buyorder_list_supplier.html:15
 msgid "City"
 msgstr "حي"
 
-#: .\accounts\templates\sidenavbar.html:180
-#: .\product\templates\product\all_product_list.html:22
+#: .\accounts\templates\sidenavbar.html:232
+#: .\buyorder\templates\buyorder\add_buyorder.html:44
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:68
+#: .\buyorder\templates\buyorder\buyorder_update.html:68
+#: .\product\templates\product\all_product_list.html:35
 #: .\product\templates\product\list_product.html:20
-#: .\stock\templates\stockproduct\all_list_stockproduct.html:19
-#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:25
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:25
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:36
+#: .\stock\templates\stockproduct\modal_buyorder_list_stockproduct.html:25
+#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:29
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:53
 #: .\stock\templates\stockproduct\stock_alert_list.html:19
 msgid "Stock"
 msgstr "مخزن"
 
-#: .\accounts\templates\sidenavbar.html:196
+#: .\accounts\templates\sidenavbar.html:240
+#: .\customer\templates\customer\detail.html:297
+#, fuzzy
+#| msgid "Pay Status"
+msgid "Status"
+msgstr "حالة الدفع"
+
+#: .\accounts\templates\sidenavbar.html:250
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:24
+#: .\buyorder\templates\buyorder\buyorder_update.html:24
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:24
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:24
+#: .\sellorder\templates\sellorder\sellorder_update.html:25
 msgid "Product"
 msgstr "منتج"
 
-#: .\accounts\templates\sidenavbar.html:212
-#: .\stock\templates\stockproduct\all_list_stockproduct.html:10
+#: .\accounts\templates\sidenavbar.html:266
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:12
 msgid "Stock Products"
 msgstr "مخزن المنتوجات"
 
-#: .\accounts\templates\sidenavbar.html:228
+#: .\accounts\templates\sidenavbar.html:285
 msgid "Buyorder"
 msgstr "أمر الشراء"
 
-#: .\accounts\templates\sidenavbar.html:244
+#: .\accounts\templates\sidenavbar.html:292
+#: .\accounts\templates\sidenavbar.html:310
+#, fuzzy
+#| msgid "Pick a Date"
+msgid "List By Date"
+msgstr "إختيار التاريخ"
+
+#: .\accounts\templates\sidenavbar.html:303
 #: .\rdv\templates\panne\modal_order_list_panne.html:10
-#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:10
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:10
+#: .\services\templates\services\modal_order_list_service.html:10
+#: .\stock\templates\stockproduct\modal_buyorder_list_stockproduct.html:10
+#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:11
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:13
 msgid "Sell Order"
 msgstr "أمر البيع"
 
-#: .\accounts\templates\sidenavbar.html:252
+#: .\accounts\templates\sidenavbar.html:311
+#, fuzzy
+#| msgid "Choose Products"
+msgid "List By Service"
+msgstr "اختيار المنتجات"
+
+#: .\accounts\templates\sidenavbar.html:313
 msgid "Add Proforma"
 msgstr "إضافة بروفورما"
 
-#: .\accounts\templates\sidenavbar.html:253
+#: .\accounts\templates\sidenavbar.html:314
 #, fuzzy
 #| msgid "Brand List"
 msgid "Proforma List"
 msgstr "قائمة الماركات"
 
-#: .\accounts\templates\sidenavbar.html:255
+#: .\accounts\templates\sidenavbar.html:316
+#: .\sellorder\templates\sellorder\list_sellorder.html:16
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:14
 msgid "Facture List"
 msgstr "قائمة الفواتير"
 
-#: .\accounts\templates\sidenavbar.html:267
+#: .\accounts\templates\sidenavbar.html:328
 msgid "More Info"
 msgstr "معلومات أكثر"
 
-#: .\accounts\templates\sidenavbar.html:273
+#: .\accounts\templates\sidenavbar.html:334
 msgid "Customers Payments"
 msgstr "مدفوعات العملاء"
 
-#: .\accounts\templates\sidenavbar.html:280
+#: .\accounts\templates\sidenavbar.html:341
 msgid "Suppliers Payments"
 msgstr "مدفوعات الموردين"
 
-#: .\buyorder\templates\buyorder\add_buyorder.html:13
-msgid "Create Order"
-msgstr "إنشاء أمر"
+#: .\accounts\templates\sidenavbar.html:347
+#, fuzzy
+#| msgid "Suppliers Payments"
+msgid "Service Provider Payments"
+msgstr "مدفوعات الموردين"
 
-#: .\buyorder\templates\buyorder\add_buyorder.html:31
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:24
-#: .\sellorder\templates\sellorder\sellorder_update.html:25
-msgid "New Product"
-msgstr "منتوج جديد"
+#: .\accounts\templates\user\list_user.html:10
+msgid "Users"
+msgstr ""
 
-#: .\buyorder\templates\buyorder\add_buyorder.html:41
-#: .\product\templates\product\all_product_list.html:17
-#: .\rdv\templates\rdv\vehicle_list.html:103
-#: .\stock\templates\stockproduct\all_list_stockproduct.html:16
-#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:20
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:20
-#: .\stock\templates\stockproduct\stock_alert_list.html:16
-#: .\vehicule\templates\type\all_list_type.html:18
-#: .\vehicule\templates\vehicule\add_vehicule.html:58
-msgid "Brand"
-msgstr "ماركة"
+#: .\accounts\templates\user\list_user.html:16
+msgid "Username"
+msgstr ""
 
+#: .\accounts\templates\user\list_user.html:17
+#: .\employee\templates\employee\list.html:17
+#: .\supplier\templates\supplier\list_supplier.html:15
+msgid "First Name"
+msgstr "اللقب"
+
+#: .\accounts\templates\user\list_user.html:18
+#: .\employee\templates\employee\list.html:18
+#: .\supplier\templates\supplier\list_supplier.html:16
+msgid "Last Name"
+msgstr "الاسم"
+
+#: .\accounts\templates\user\list_user.html:19
+#: .\rdv\templates\rdv\customer_list.html:31
+#: .\vehicule\templates\vehicule\add_vehicule.html:24
+msgid "Email"
+msgstr "البريد الالكتروني"
+
+#: .\accounts\templates\user\list_user.html:40
+#: .\buyorder\templates\buyorder\list_buyorder.html:62
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:67
+#: .\caisse\templates\caisse\transaction_list.html:111
+#: .\caisse\templates\category\details.html:73
+#: .\customer\templates\city\list_city.html:25
+#: .\customer\templates\customer\list_customer.html:60
+#: .\customer\templates\customer\list_enterprise.html:46
+#: .\employee\templates\employee\list.html:55
+#: .\product\templates\product\all_product_list.html:66
+#: .\product\templates\product\list_product.html:44
+#: .\rdv\templates\panne\panne_list.html:35
+#: .\sellorder\templates\sellorder\list_sellorder.html:81
+#: .\sellorder\templates\sellorder\list_sellorder.html:91
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:87
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:97
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:62
+#: .\services\templates\services\provider_list.html:45
+#: .\services\templates\services\service_list.html:40
+#: .\stock\templates\stock\list_stock.html:29
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:72
+#: .\supplier\templates\supplier\list_supplier.html:54
+#: .\vehicule\templates\brand\list_brand.html:37
+#: .\vehicule\templates\type\all_list_type.html:38
+#: .\vehicule\templates\type\list_type.html:44
+#: .\vehicule\templates\vehicule\all_list_vehicule.html:57
+msgid "Update"
+msgstr "تحديثات"
+
+#: .\accounts\templates\user\permissions_list.html:11
+#: .\accounts\templates\user\update_permissions.html:39
+msgid "Permissions"
+msgstr ""
+
+#: .\accounts\templates\user\permissions_list.html:21
+#: .\accounts\templates\user\update_permissions.html:20
+#: .\accounts\templates\user\update_permissions.html:48
+#: .\bank\templates\bank\transaction_list.html:43
 #: .\buyorder\templates\buyorder\add_buyorder.html:42
-#: .\caisse\templates\caisse\transaction_list.html:43
-#: .\customer\templates\customer\list_customer.html:16
-#: .\product\templates\product\all_product_list.html:18
+#: .\caisse\templates\caisse\transaction_list.html:83
+#: .\caisse\templates\category\details.html:47
+#: .\customer\templates\customer\detail.html:61
+#: .\customer\templates\customer\list_customer.html:28
+#: .\customer\templates\customer\sellorder_list_customer.html:40
+#: .\product\templates\product\all_product_list.html:31
 #: .\product\templates\product\list_product.html:16
 #: .\rdv\templates\panne\modal_order_list_panne.html:20
+#: .\rdv\templates\panne\order_panne_list.html:62
+#: .\rdv\templates\panne\order_panne_list.html:131
 #: .\rdv\templates\panne\panne_list.html:16
 #: .\rdv\templates\rdv\customer_list.html:28
 #: .\rdv\templates\rdv\vehicle_list.html:28
 #: .\rdv\templates\rdv\vehicle_list.html:102
-#: .\services\templates\services\provider_list.html:16
+#: .\services\templates\services\order_service_list.html:62
+#: .\services\templates\services\order_service_list.html:152
+#: .\services\templates\services\provider_list.html:17
 #: .\services\templates\services\service_list.html:16
 #: .\stock\templates\stock\list_stock.html:16
-#: .\stock\templates\stockproduct\all_list_stockproduct.html:17
-#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:21
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:21
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:71
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:120
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:157
-#: .\stock\templates\stockproduct\order_vehicle.html:21
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:32
+#: .\stock\templates\stockproduct\modal_buyorder_list_stockproduct.html:21
+#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:25
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:49
+#: .\stock\templates\stockproduct\order_vehicle.html:72
 #: .\stock\templates\stockproduct\stock_alert_list.html:18
 #: .\vehicule\templates\brand\list_brand.html:17
 #: .\vehicule\templates\type\all_list_type.html:17
 #: .\vehicule\templates\type\list_type.html:29
 #: .\vehicule\templates\vehicule\add_vehicule.html:21
 #: .\vehicule\templates\vehicule\add_vehicule.html:57
-#: .\vehicule\templates\vehicule\all_list_vehicule.html:16
+#: .\vehicule\templates\vehicule\all_list_vehicule.html:28
 msgid "Name"
 msgstr "الاسم"
 
+#: .\accounts\templates\user\update_permissions.html:13
+msgid "Old Permissions"
+msgstr ""
+
+#: .\bank\templates\bank\transaction_delete.html:13
+#: .\buyorder\templates\buyorder\buyorder_delete.html:13
+#: .\buyorder\templates\buyorder\delete_item.html:13
+#: .\caisse\templates\caisse\transaction_delete.html:13
+#: .\category\templates\category\delete_category.html:13
+#: .\customer\templates\city\delete.html:13
+#: .\customer\templates\customer\delete_customer.html:13
+#: .\customer\templates\customer\delete_enterprise.html:13
+#: .\family\templates\family\delete_family.html:13
+#: .\payments\templates\payments\customer\delete_payment.html:13
+#: .\payments\templates\payments\service\delete_payment.html:13
+#: .\payments\templates\payments\supplier\delete_payment.html:13
+#: .\payments\templates\payments\supplier\delete_supplier_payment.html:13
+#: .\product\templates\product\delete.html:13
+#: .\rdv\templates\panne\delete_panne.html:13
+#: .\rdv\templates\rdv\delete_rdv.html:13
+#: .\sellorder\templates\sellorder\delete_item.html:13
+#: .\sellorder\templates\sellorder\delete_panne.html:13
+#: .\sellorder\templates\sellorder\delete_service.html:13
+#: .\sellorder\templates\sellorder\proforma_order_delete_item.html:13
+#: .\sellorder\templates\sellorder\proforma_order_delete_panne.html:13
+#: .\sellorder\templates\sellorder\proforma_order_delete_service.html:13
+#: .\sellorder\templates\sellorder\sellorder_delete.html:13
+#: .\sellorder\templates\sellorder\update_order_delete_item.html:13
+#: .\sellorder\templates\sellorder\update_order_delete_panne.html:13
+#: .\sellorder\templates\sellorder\update_order_delete_service.html:13
+#: .\services\templates\services\delete_provider.html:13
+#: .\services\templates\services\delete_service.html:13
+#: .\stock\templates\stock\delete.html:12
+#: .\stock\templates\stockproduct\delete.html:13
+#: .\supplier\templates\supplier\delete_supplier.html:13
+#: .\vehicule\templates\brand\delete_brand.html:13
+#: .\vehicule\templates\type\delete_type.html:13
+#: .\vehicule\templates\vehicule\delete_vehicule.html:13
+msgid "ARE YOU SURE YOU WANT TO DELETE"
+msgstr "هل تريد حقا الحذف؟"
+
+#: .\bank\templates\bank\transaction_delete.html:21
+#: .\buyorder\templates\buyorder\buyorder_delete.html:17
+#: .\buyorder\templates\buyorder\delete_item.html:16
+#: .\caisse\templates\caisse\transaction_delete.html:21
+#: .\category\templates\category\delete_category.html:18
+#: .\customer\templates\customer\delete_customer.html:18
+#: .\customer\templates\customer\delete_enterprise.html:18
+#: .\family\templates\family\delete_family.html:17
+#: .\payments\templates\payments\customer\delete_payment.html:18
+#: .\payments\templates\payments\service\delete_payment.html:18
+#: .\payments\templates\payments\supplier\delete_payment.html:18
+#: .\payments\templates\payments\supplier\delete_supplier_payment.html:18
+#: .\product\templates\product\delete.html:18
+#: .\rdv\templates\panne\delete_panne.html:17
+#: .\rdv\templates\rdv\delete_rdv.html:17
+#: .\sellorder\templates\sellorder\delete_item.html:17
+#: .\sellorder\templates\sellorder\delete_panne.html:17
+#: .\sellorder\templates\sellorder\delete_service.html:17
+#: .\sellorder\templates\sellorder\proforma_order_delete_item.html:17
+#: .\sellorder\templates\sellorder\proforma_order_delete_panne.html:17
+#: .\sellorder\templates\sellorder\proforma_order_delete_service.html:17
+#: .\sellorder\templates\sellorder\sellorder_delete.html:17
+#: .\sellorder\templates\sellorder\sellorder_facture.html:19
+#: .\sellorder\templates\sellorder\update_order_delete_item.html:17
+#: .\sellorder\templates\sellorder\update_order_delete_panne.html:17
+#: .\sellorder\templates\sellorder\update_order_delete_service.html:17
+#: .\services\templates\services\delete_provider.html:18
+#: .\services\templates\services\delete_service.html:18
+#: .\stock\templates\stock\delete.html:16 .\stock\templates\stock\reset.html:16
+#: .\stock\templates\stockproduct\delete.html:18
+#: .\supplier\templates\supplier\delete_supplier.html:18
+#: .\vehicule\templates\brand\delete_brand.html:17
+#: .\vehicule\templates\type\delete_type.html:17
+#: .\vehicule\templates\vehicule\delete_vehicule.html:17
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: .\bank\templates\bank\transaction_list.html:19
+#: .\caisse\templates\caisse\transaction_list.html:19
+#: .\caisse\templates\category\details.html:19
+msgid "Transactions"
+msgstr "التحويل"
+
+#: .\bank\templates\bank\transaction_list.html:22
+#: .\caisse\templates\caisse\transaction_list.html:24
+#: .\caisse\templates\category\details.html:22
+msgid "Income"
+msgstr "المخرجات"
+
+#: .\bank\templates\bank\transaction_list.html:24
+#: .\caisse\templates\caisse\transaction_list.html:26
+#: .\caisse\templates\category\details.html:24
+msgid "Expense"
+msgstr "المصاريف"
+
+#: .\bank\templates\bank\transaction_list.html:26
+#: .\caisse\templates\caisse\transaction_list.html:28
+#: .\caisse\templates\category\details.html:26
+msgid "TOTAL"
+msgstr "المجموع"
+
+#: .\bank\templates\bank\transaction_list.html:31
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:22
+#: .\caisse\templates\caisse\transaction_list.html:34
+#: .\caisse\templates\category\details.html:31
+#: .\customer\templates\customer\detail.html:40
+#: .\product\templates\product\details.html:19
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:29
+#: .\sellorder\templates\sellorder\sellorders_pannes.html:20
+#: .\sellorder\templates\sellorder\sellorders_pieces.html:20
+#: .\services\templates\services\provider_detail.html:34
+#: .\stock\templates\stockproduct\product_details.html:19
+#: .\supplier\templates\supplier\detail.html:42
+msgid "Pick a Date"
+msgstr "إختيار التاريخ"
+
+#: .\bank\templates\bank\transaction_list.html:44
+#: .\bank\templates\bank\transaction_list.html:78
+#: .\bank\templates\bank\transaction_list.html:119
+#: .\buyorder\templates\buyorder\buyorder_details.html:78
+#: .\caisse\templates\caisse\transaction_list.html:84
+#: .\caisse\templates\caisse\transaction_list.html:131
+#: .\caisse\templates\caisse\transaction_list.html:174
+#: .\caisse\templates\caisse\transaction_list.html:215
+#: .\caisse\templates\category\details.html:48
+#: .\customer\templates\customer\detail.html:90
+#: .\customer\templates\customer\detail.html:298
+#: .\payments\templates\payments\customer\payment_list.html:19
+#: .\payments\templates\payments\customer_pay_list.html:16
+#: .\payments\templates\payments\service\payment_list.html:17
+#: .\payments\templates\payments\supplier\payment_list.html:18
+#: .\payments\templates\payments\supplier_pay_list.html:15
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:48
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:48
+#: .\sellorder\templates\sellorder\sellorder_details.html:250
+#: .\sellorder\templates\sellorder\sellorder_update.html:52
+#: .\services\templates\services\provider_detail.html:171
+#: .\supplier\templates\supplier\detail.html:152
+msgid "Amount"
+msgstr "الملبغ"
+
+#: .\bank\templates\bank\transaction_list.html:45
+#: .\caisse\templates\caisse\transaction_list.html:85
+#: .\caisse\templates\category\details.html:49
+#: .\customer\templates\customer\detail.html:62
+#: .\rdv\templates\panne\order_panne_list.html:63
+#: .\rdv\templates\rdv\vehicle_list.html:30
+#: .\services\templates\services\order_service_list.html:63
+#: .\stock\templates\stockproduct\order_vehicle.html:74
+#: .\vehicule\templates\vehicule\all_list_vehicule.html:30
+msgid "Type"
+msgstr "النوع"
+
+#: .\bank\templates\bank\transaction_list.html:46
+#: .\buyorder\templates\buyorder\list_buyorder.html:36
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:40
+#: .\caisse\templates\caisse\transaction_list.html:86
+#: .\caisse\templates\category\details.html:50
+#: .\customer\templates\customer\detail.html:124
+#: .\customer\templates\customer\detail.html:169
+#: .\customer\templates\customer\detail.html:221
+#: .\customer\templates\customer\detail.html:265
+#: .\customer\templates\customer\detail.html:296
+#: .\payments\templates\payments\customer_pay_list.html:17
+#: .\payments\templates\payments\supplier_pay_list.html:16
+#: .\product\templates\product\details.html:39
+#: .\product\templates\product\details.html:75
+#: .\rdv\templates\rdv\rdv_detail.html:27 .\rdv\templates\rdv\rdv_list.html:18
+#: .\sellorder\templates\sellorder\list_sellorder.html:40
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:46
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:17
+#: .\services\templates\services\provider_detail.html:172
+#: .\stock\templates\stockproduct\product_details.html:54
+#: .\stock\templates\stockproduct\product_details.html:105
+#: .\supplier\templates\supplier\detail.html:73
+#: .\supplier\templates\supplier\detail.html:115
+msgid "Date"
+msgstr "التاريخ"
+
+#: .\bank\templates\bank\transaction_list.html:47
+#: .\caisse\templates\caisse\transaction_list.html:89
+#: .\caisse\templates\category\details.html:52
+msgid "Date Created"
+msgstr "تاريخ الإنشاء"
+
+#: .\bank\templates\bank\transaction_list.html:62
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:107
+#: .\buyorder\templates\buyorder\buyorder_details.html:103
+#: .\buyorder\templates\buyorder\buyorder_update.html:108
+#: .\buyorder\templates\buyorder\list_buyorder.html:76
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:81
+#: .\caisse\templates\caisse\transaction_list.html:107
+#: .\caisse\templates\category\details.html:69
+#: .\customer\templates\city\list_city.html:28
+#: .\customer\templates\customer\detail.html:311
+#: .\customer\templates\customer\list_customer.html:68
+#: .\customer\templates\customer\list_enterprise.html:50
+#: .\employee\templates\employee\list.html:61
+#: .\product\templates\product\all_product_list.html:72
+#: .\product\templates\product\list_product.html:47
+#: .\rdv\templates\panne\panne_list.html:39
+#: .\rdv\templates\rdv\rdv_list.html:38
+#: .\sellorder\templates\sellorder\list_sellorder.html:100
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:106
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:59
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:107
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:129
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:167
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:107
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:129
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:167
+#: .\sellorder\templates\sellorder\sellorder_details.html:275
+#: .\sellorder\templates\sellorder\sellorder_update.html:136
+#: .\sellorder\templates\sellorder\sellorder_update.html:175
+#: .\services\templates\services\provider_detail.html:182
+#: .\services\templates\services\provider_list.html:48
+#: .\services\templates\services\service_list.html:43
+#: .\stock\templates\stock\list_stock.html:32
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:75
+#: .\supplier\templates\supplier\list_supplier.html:57
+#: .\vehicule\templates\brand\list_brand.html:40
+#: .\vehicule\templates\type\all_list_type.html:41
+#: .\vehicule\templates\type\list_type.html:45
+#: .\vehicule\templates\vehicule\all_list_vehicule.html:60
+#: .\venv\Lib\site-packages\django\forms\formsets.py:391
+msgid "Delete"
+msgstr "حذف"
+
+#: .\bank\templates\bank\transaction_list.html:67
+#: .\caisse\templates\caisse\transaction_list.html:116
+#: .\caisse\templates\category\details.html:78
+#, fuzzy
+#| msgid "No Elements Found"
+msgid "No Elements"
+msgstr "لا يوجد أي عنصر"
+
+#: .\bank\templates\bank\transaction_list.html:75
+#: .\caisse\templates\caisse\transaction_list.html:128
+#: .\customer\templates\customer\detail.html:295
+#: .\payments\templates\payments\customer\payment_list.html:16
+#: .\payments\templates\payments\customer_pay_list.html:14
+#: .\services\templates\services\provider_detail.html:61
+#: .\services\templates\services\provider_detail.html:94
+#: .\services\templates\services\provider_detail.html:133
+#: .\stock\templates\stockproduct\product_details.html:52
+#: .\stock\templates\stockproduct\product_details.html:103
+#: .\venv\Lib\site-packages\django\forms\formsets.py:379
+#: .\venv\Lib\site-packages\django\forms\formsets.py:386
+msgid "Order"
+msgstr "طلب"
+
+#: .\bank\templates\bank\transaction_list.html:77
+#: .\bank\templates\bank\transaction_list.html:118
+#: .\buyorder\templates\buyorder\buyorder_details.html:77
+#: .\caisse\templates\caisse\transaction_list.html:130
+#: .\caisse\templates\caisse\transaction_list.html:173
+#: .\payments\templates\payments\customer\payment_list.html:18
+#: .\payments\templates\payments\supplier\payment_list.html:17
+#: .\sellorder\templates\sellorder\sellorder_details.html:249
+#: .\supplier\templates\supplier\detail.html:151
+msgid "Pay Status"
+msgstr "حالة الدفع"
+
+#: .\bank\templates\bank\transaction_list.html:79
+#: .\bank\templates\bank\transaction_list.html:120
+#: .\buyorder\templates\buyorder\buyorder_details.html:79
+#: .\caisse\templates\caisse\transaction_list.html:132
+#: .\caisse\templates\caisse\transaction_list.html:175
+#: .\caisse\templates\caisse\transaction_list.html:216
+#: .\payments\templates\payments\customer\payment_list.html:20
+#: .\payments\templates\payments\service\payment_list.html:18
+#: .\payments\templates\payments\supplier\payment_list.html:19
+#: .\sellorder\templates\sellorder\sellorder_details.html:143
+#: .\sellorder\templates\sellorder\sellorder_details.html:251
+#: .\supplier\templates\supplier\detail.html:153
+msgid "Created"
+msgstr "أنشئت"
+
+#: .\bank\templates\bank\transaction_list.html:80
+#: .\bank\templates\bank\transaction_list.html:121
+#: .\buyorder\templates\buyorder\buyorder_details.html:80
+#: .\caisse\templates\caisse\transaction_list.html:133
+#: .\caisse\templates\caisse\transaction_list.html:176
+#: .\caisse\templates\caisse\transaction_list.html:217
+#: .\payments\templates\payments\customer\payment_list.html:21
+#: .\payments\templates\payments\service\payment_list.html:19
+#: .\payments\templates\payments\supplier\payment_list.html:20
+#: .\sellorder\templates\sellorder\sellorder_details.html:252
+#: .\supplier\templates\supplier\detail.html:154
+msgid "Payed"
+msgstr "دفعت"
+
+#: .\bank\templates\bank\transaction_list.html:107
+#: .\bank\templates\bank\transaction_list.html:146
+#: .\buyorder\templates\buyorder\list_buyorder.html:73
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:78
+#: .\caisse\templates\caisse\transaction_list.html:160
+#: .\caisse\templates\caisse\transaction_list.html:201
+#: .\caisse\templates\category\list.html:29
+#: .\customer\templates\customer\detail.html:152
+#: .\customer\templates\customer\detail.html:194
+#: .\customer\templates\customer\detail.html:250
+#: .\customer\templates\customer\detail.html:280
+#: .\customer\templates\customer\list_customer.html:64
+#: .\payments\templates\payments\customer\payment_list.html:48
+#: .\payments\templates\payments\supplier\payment_list.html:45
+#: .\product\templates\product\all_product_list.html:69
+#: .\product\templates\product\details.html:55
+#: .\rdv\templates\rdv\rdv_list.html:35
+#: .\sellorder\templates\sellorder\list_sellorder.html:97
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:103
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:56
+#: .\services\templates\services\provider_detail.html:9
+#: .\services\templates\services\provider_detail.html:77
+#: .\services\templates\services\provider_detail.html:110
+#: .\services\templates\services\provider_detail.html:149
+#: .\services\templates\services\provider_list.html:42
+#: .\stock\templates\stock\list_stock.html:38
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:78
+#: .\supplier\templates\supplier\detail.html:95
+#: .\supplier\templates\supplier\detail.html:137
+#: .\supplier\templates\supplier\detail.html:180
+#: .\supplier\templates\supplier\list_supplier.html:60
+msgid "Details"
+msgstr "التفاصيل"
+
+#: .\buyorder\templates\buyorder\add_buyorder.html:13
+msgid "Create Order"
+msgstr "إنشاء أمر"
+
+#: .\buyorder\templates\buyorder\add_buyorder.html:31
+msgid "New Product"
+msgstr "منتوج جديد"
+
+#: .\buyorder\templates\buyorder\add_buyorder.html:41
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:63
+#: .\buyorder\templates\buyorder\buyorder_update.html:63
+#: .\product\templates\product\all_product_list.html:30
+#: .\rdv\templates\rdv\vehicle_list.html:103
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:31
+#: .\stock\templates\stockproduct\modal_buyorder_list_stockproduct.html:20
+#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:24
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:48
+#: .\stock\templates\stockproduct\stock_alert_list.html:16
+#: .\vehicule\templates\type\all_list_type.html:18
+#: .\vehicule\templates\vehicule\add_vehicule.html:58
+msgid "Brand"
+msgstr "ماركة"
+
 #: .\buyorder\templates\buyorder\add_buyorder.html:43
-#: .\product\templates\product\all_product_list.html:19
-#: .\stock\templates\stockproduct\all_list_stockproduct.html:18
-#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:22
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:22
+#: .\product\templates\product\all_product_list.html:32
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:33
+#: .\stock\templates\stockproduct\modal_buyorder_list_stockproduct.html:22
+#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:26
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:50
 #: .\stock\templates\stockproduct\stock_alert_list.html:17
 msgid "Ref"
 msgstr "رقم المرجعي"
 
-#: .\buyorder\templates\buyorder\add_buyorder.html:44
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:45
+#: .\buyorder\templates\buyorder\add_buyorder.html:45
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:66
+#: .\buyorder\templates\buyorder\buyorder_update.html:66
 #: .\rdv\templates\rdv\add_rdv.html:31
 msgid "Price DZD"
 msgstr "الثمن د.ج"
 
-#: .\buyorder\templates\buyorder\add_buyorder.html:114
+#: .\buyorder\templates\buyorder\add_buyorder.html:116
 #: .\rdv\templates\rdv\customer_list.html:99
 #: .\rdv\templates\rdv\vehicle_list.html:151
 #: .\rdv\templates\rdv\vehicle_list.html:192
 msgid "Close"
 msgstr "الاغلاق"
 
-#: .\buyorder\templates\buyorder\add_buyorder.html:115
+#: .\buyorder\templates\buyorder\add_buyorder.html:117
 #: .\rdv\templates\rdv\customer_list.html:100
 #: .\rdv\templates\rdv\vehicle_list.html:152
 #: .\rdv\templates\rdv\vehicle_list.html:193
@@ -560,39 +1109,53 @@ msgid "Save changes"
 msgstr "حفظ التغيرات"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:9
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:10
-#: .\customer\templates\customer\detail.html:32
+#: .\customer\templates\customer\detail.html:106
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:9
+#: .\services\templates\services\provider_detail.html:47
+#: .\supplier\templates\supplier\detail.html:32
 msgid "Orders"
 msgstr "أوامر"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:22
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:25
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:45
 #: .\buyorder\templates\buyorder\buyorder_details.html:21
-#: .\buyorder\templates\buyorder\list_buyorder.html:17
-#: .\customer\templates\customer\detail.html:37
-#: .\customer\templates\customer\detail.html:78
-#: .\customer\templates\customer\detail.html:117
-#: .\product\templates\product\details.html:19
-#: .\product\templates\product\details.html:55
+#: .\buyorder\templates\buyorder\buyorder_update.html:45
+#: .\buyorder\templates\buyorder\list_buyorder.html:33
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:37
+#: .\customer\templates\customer\detail.html:120
+#: .\customer\templates\customer\detail.html:165
+#: .\customer\templates\customer\detail.html:217
+#: .\product\templates\product\details.html:37
+#: .\product\templates\product\details.html:73
+#: .\rdv\templates\panne\order_panne_list.html:14
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:22
-#: .\sellorder\templates\sellorder\list_sellorder.html:15
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:54
-#: .\sellorder\templates\sellorder\sellorder_details.html:39
-#: .\sellorder\templates\sellorder\sellorder_update.html:60
+#: .\sellorder\templates\sellorder\list_sellorder.html:38
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:44
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:63
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:63
+#: .\sellorder\templates\sellorder\sellorder_details.html:91
+#: .\sellorder\templates\sellorder\sellorder_update.html:67
+#: .\services\templates\services\order_service_list.html:14
+#: .\stock\templates\stockproduct\order_vehicle.html:13
+#: .\supplier\templates\supplier\detail.html:67
+#: .\supplier\templates\supplier\detail.html:109
 msgid "Order ID"
 msgstr "رقم الامر"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:23
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:29
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:49
 #: .\buyorder\templates\buyorder\buyorder_details.html:37
 #: .\buyorder\templates\buyorder\buyorder_details.html:52
-#: .\customer\templates\customer\detail.html:163
+#: .\buyorder\templates\buyorder\buyorder_update.html:49
+#: .\customer\templates\customer\detail.html:267
+#: .\rdv\templates\panne\order_panne_list.html:37
 #: .\rdv\templates\rdv\rdv_detail.html:35 .\rdv\templates\rdv\rdv_list.html:20
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:23
-#: .\sellorder\templates\sellorder\sellorder_details.html:82
-#: .\sellorder\templates\sellorder\sellorder_details.html:101
+#: .\sellorder\templates\sellorder\sellorder_details.html:135
+#: .\sellorder\templates\sellorder\sellorder_details.html:172
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:36
+#: .\services\templates\services\order_service_list.html:37
+#: .\stock\templates\stockproduct\order_vehicle.html:36
 msgid "Total Price"
 msgstr "مجموع الثمن"
 
@@ -611,49 +1174,71 @@ msgid "KG"
 msgstr "كغ"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:43
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:44
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:65
 #: .\buyorder\templates\buyorder\buyorder_details.html:49
+#: .\buyorder\templates\buyorder\buyorder_update.html:65
+#: .\rdv\templates\panne\order_panne_list.html:34
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:44
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:69
-#: .\sellorder\templates\sellorder\sellorder_details.html:98
-#: .\sellorder\templates\sellorder\sellorder_update.html:75
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:78
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:78
+#: .\sellorder\templates\sellorder\sellorder_details.html:168
+#: .\sellorder\templates\sellorder\sellorder_update.html:82
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:33
+#: .\services\templates\services\order_service_list.html:34
+#: .\stock\templates\stockproduct\order_vehicle.html:33
 msgid "Product Name"
 msgstr "إسم المنتوج"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:44
 #: .\buyorder\templates\buyorder\buyorder_details.html:50
 #: .\rdv\templates\panne\modal_order_list_panne.html:21
+#: .\rdv\templates\panne\order_panne_list.html:35
+#: .\rdv\templates\panne\order_panne_list.html:132
 #: .\rdv\templates\panne\panne_list.html:17
 #: .\rdv\templates\rdv\rdv_detail.html:45
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:45
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:103
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:122
-#: .\sellorder\templates\sellorder\sellorder_details.html:99
-#: .\sellorder\templates\sellorder\sellorder_details.html:125
-#: .\sellorder\templates\sellorder\sellorder_details.html:148
-#: .\sellorder\templates\sellorder\sellorder_update.html:118
-#: .\sellorder\templates\sellorder\sellorders_pannes.html:33
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:117
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:142
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:117
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:142
+#: .\sellorder\templates\sellorder\sellorder_details.html:200
+#: .\sellorder\templates\sellorder\sellorder_details.html:223
+#: .\sellorder\templates\sellorder\sellorder_update.html:125
+#: .\sellorder\templates\sellorder\sellorder_update.html:150
+#: .\sellorder\templates\sellorder\sellorders_pannes.html:46
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:34
+#: .\services\templates\services\modal_order_list_service.html:21
+#: .\services\templates\services\order_service_list.html:35
+#: .\services\templates\services\order_service_list.html:96
+#: .\services\templates\services\order_service_list.html:153
+#: .\services\templates\services\provider_detail.html:63
+#: .\services\templates\services\provider_detail.html:96
+#: .\services\templates\services\provider_detail.html:135
 #: .\services\templates\services\service_list.html:17
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:121
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:158
+#: .\stock\templates\stockproduct\order_vehicle.html:34
 msgid "Price"
 msgstr "الثمن"
 
 #: .\buyorder\templates\buyorder\billing_list_buyorder.html:45
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:46
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:67
 #: .\buyorder\templates\buyorder\buyorder_details.html:51
-#: .\product\templates\product\details.html:23
-#: .\product\templates\product\details.html:58
+#: .\buyorder\templates\buyorder\buyorder_update.html:67
+#: .\product\templates\product\details.html:41
+#: .\product\templates\product\details.html:76
+#: .\rdv\templates\panne\order_panne_list.html:36
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:46
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:72
-#: .\sellorder\templates\sellorder\sellorder_details.html:100
-#: .\sellorder\templates\sellorder\sellorder_update.html:78
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:81
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:81
+#: .\sellorder\templates\sellorder\sellorder_details.html:171
+#: .\sellorder\templates\sellorder\sellorder_update.html:85
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:35
-#: .\stock\templates\stockproduct\all_list_stockproduct.html:20
-#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:26
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:26
+#: .\services\templates\services\order_service_list.html:36
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:37
+#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:30
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:54
+#: .\stock\templates\stockproduct\order_vehicle.html:35
+#: .\stock\templates\stockproduct\product_details.html:55
+#: .\stock\templates\stockproduct\product_details.html:106
 #: .\stock\templates\stockproduct\stock_alert_list.html:20
 msgid "Quantity"
 msgstr "الكمية"
@@ -663,306 +1248,246 @@ msgstr "الكمية"
 msgid "Total Cost"
 msgstr "مجموع الكلفة"
 
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:19
-#: .\buyorder\templates\buyorder\list_buyorder.html:22
-#: .\sellorder\templates\sellorder\list_sellorder.html:21
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:21
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:44
-#: .\sellorder\templates\sellorder\sellorder_update.html:50
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:10
+#, fuzzy
+#| msgid "Order Confirmation"
+msgid "Buy Order Confirmation"
+msgstr "تأكيد الأمر"
+
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:14
+#: .\buyorder\templates\buyorder\buyorder_update.html:14
+#: .\caisse\templates\category\list.html:16
+#: .\customer\templates\customer\detail.html:127
+#: .\customer\templates\customer\detail.html:172
+#: .\customer\templates\customer\detail.html:224
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:14
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:14
+#: .\sellorder\templates\sellorder\sellorder_details.html:225
+#: .\sellorder\templates\sellorder\sellorder_update.html:14
+#: .\sellorder\templates\sellorder\sellorders_pannes.html:15
+#: .\sellorder\templates\sellorder\sellorders_pieces.html:15
+msgid "Total"
+msgstr "المجموع"
+
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:39
+#: .\buyorder\templates\buyorder\buyorder_update.html:39
+#: .\buyorder\templates\buyorder\list_buyorder.html:39
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:43
+#: .\sellorder\templates\sellorder\list_sellorder.html:45
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:51
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:22
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:53
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:53
+#: .\sellorder\templates\sellorder\sellorder_update.html:57
 msgid "TVA"
 msgstr "الضريبة"
 
-#: .\buyorder\templates\buyorder\buyorder_confirmation.html:28
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:48
 #: .\buyorder\templates\buyorder\buyorder_details.html:33
-#: .\buyorder\templates\buyorder\list_buyorder.html:20
-#: .\sellorder\templates\sellorder\sellorder_details.html:51
+#: .\buyorder\templates\buyorder\buyorder_update.html:48
+#: .\buyorder\templates\buyorder\list_buyorder.html:37
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:41
+#: .\sellorder\templates\sellorder\sellorder_details.html:103
 msgid "Paid"
 msgstr "مدفوع"
 
-#: .\buyorder\templates\buyorder\buyorder_delete.html:13
-#: .\caisse\templates\caisse\transaction_delete.html:13
-#: .\category\templates\category\delete_category.html:13
-#: .\customer\templates\city\delete.html:13
-#: .\customer\templates\customer\delete_customer.html:13
-#: .\family\templates\family\delete_family.html:13
-#: .\payments\templates\payments\customer\delete_payment.html:13
-#: .\product\templates\product\delete.html:13
-#: .\rdv\templates\panne\delete_panne.html:13
-#: .\rdv\templates\rdv\delete_rdv.html:13
-#: .\sellorder\templates\sellorder\delete_item.html:13
-#: .\sellorder\templates\sellorder\delete_panne.html:13
-#: .\sellorder\templates\sellorder\sellorder_delete.html:13
-#: .\services\templates\services\delete_provider.html:13
-#: .\services\templates\services\delete_service.html:13
-#: .\stock\templates\stock\delete.html:12
-#: .\stock\templates\stockproduct\delete.html:13
-#: .\supplier\templates\supplier\delete_supplier.html:13
-#: .\vehicule\templates\brand\delete_brand.html:13
-#: .\vehicule\templates\type\delete_type.html:13
-#: .\vehicule\templates\vehicule\delete_vehicule.html:13
-msgid "ARE YOU SURE YOU WANT TO DELETE"
-msgstr "هل تريد حقا الحذف؟"
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:64
+#: .\buyorder\templates\buyorder\buyorder_update.html:64
+msgid "REF"
+msgstr ""
 
-#: .\buyorder\templates\buyorder\buyorder_delete.html:17
-#: .\category\templates\category\delete_category.html:18
-#: .\customer\templates\customer\delete_customer.html:18
-#: .\family\templates\family\delete_family.html:17
-#: .\payments\templates\payments\customer\delete_payment.html:18
-#: .\product\templates\product\delete.html:18
-#: .\rdv\templates\panne\delete_panne.html:17
-#: .\rdv\templates\rdv\delete_rdv.html:17
-#: .\sellorder\templates\sellorder\delete_item.html:17
-#: .\sellorder\templates\sellorder\delete_panne.html:17
-#: .\sellorder\templates\sellorder\sellorder_delete.html:17
-#: .\sellorder\templates\sellorder\sellorder_facture.html:19
-#: .\services\templates\services\delete_provider.html:18
-#: .\services\templates\services\delete_service.html:18
-#: .\stock\templates\stock\delete.html:16
-#: .\stock\templates\stockproduct\delete.html:18
-#: .\supplier\templates\supplier\delete_supplier.html:18
-#: .\vehicule\templates\brand\delete_brand.html:17
-#: .\vehicule\templates\type\delete_type.html:17
-#: .\vehicule\templates\vehicule\delete_vehicule.html:17
-msgid "Cancel"
-msgstr "إلغاء"
+#: .\buyorder\templates\buyorder\buyorder_confirmation.html:101
+#: .\buyorder\templates\buyorder\buyorder_update.html:102
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:157
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:157
+#: .\sellorder\templates\sellorder\sellorder_update.html:165
+msgid "None"
+msgstr ""
 
 #: .\buyorder\templates\buyorder\buyorder_details.html:10
 #: .\customer\templates\customer\detail.html:9
-#: .\sellorder\templates\sellorder\sellorder_details.html:10
+#: .\sellorder\templates\sellorder\sellorder_details.html:11
+#: .\supplier\templates\supplier\detail.html:9
 msgid "Order Details"
 msgstr "تفاصيل الأمر"
 
 #: .\buyorder\templates\buyorder\buyorder_details.html:15
 #: .\sellorder\templates\sellorder\billing_list_sellorder.html:36
-#: .\sellorder\templates\sellorder\sellorder_details.html:16
 #: .\sellorder\templates\sellorder\sellorder_details.html:21
-#: .\sellorder\templates\sellorder\sellorder_details.html:22
-#: .\sellorder\templates\sellorder\sellorder_details.html:29
+#: .\sellorder\templates\sellorder\sellorder_details.html:44
+#: .\sellorder\templates\sellorder\sellorder_details.html:45
+#: .\sellorder\templates\sellorder\sellorder_details.html:69
 msgid "Print"
 msgstr "الطباعة"
 
 #: .\buyorder\templates\buyorder\buyorder_details.html:29
-#: .\buyorder\templates\buyorder\list_buyorder.html:19
+#: .\buyorder\templates\buyorder\list_buyorder.html:35
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:39
 #: .\customer\templates\customer\detail.html:22
-#: .\customer\templates\customer\list_customer.html:17
+#: .\customer\templates\customer\list_customer.html:29
+#: .\customer\templates\customer\sellorder_list_customer.html:42
+#: .\employee\templates\employee\list.html:20
+#: .\rdv\templates\panne\order_panne_list.html:22
 #: .\rdv\templates\rdv\customer_list.html:29
-#: .\sellorder\templates\sellorder\sellorder_details.html:47
-#: .\services\templates\services\provider_list.html:17
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:74
+#: .\sellorder\templates\sellorder\sellorder_details.html:99
+#: .\services\templates\services\order_service_list.html:22
+#: .\services\templates\services\provider_list.html:18
+#: .\stock\templates\stockproduct\order_vehicle.html:21
+#: .\supplier\templates\supplier\detail.html:22
 #: .\supplier\templates\supplier\list_supplier.html:17
 #: .\vehicule\templates\vehicule\add_vehicule.html:22
 msgid "Phone"
 msgstr "الهاتف"
 
 #: .\buyorder\templates\buyorder\buyorder_details.html:48
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:68
-#: .\sellorder\templates\sellorder\sellorder_details.html:97
-#: .\sellorder\templates\sellorder\sellorder_update.html:74
+#: .\rdv\templates\panne\order_panne_list.html:33
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:77
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:77
+#: .\sellorder\templates\sellorder\sellorder_details.html:167
+#: .\sellorder\templates\sellorder\sellorder_update.html:81
 #: .\sellorder\templates\sellorder\sellorders_pieces.html:32
+#: .\services\templates\services\order_service_list.html:33
+#: .\stock\templates\stockproduct\order_vehicle.html:32
 msgid "Product Brand"
 msgstr "اسم الماركة"
 
-#: .\buyorder\templates\buyorder\list_buyorder.html:21
-#: .\sellorder\templates\sellorder\list_sellorder.html:20
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:20
-#: .\sellorder\templates\sellorder\sellorder_details.html:66
+#: .\buyorder\templates\buyorder\buyorder_details.html:71
+#: .\customer\templates\customer\detail.html:289
+#: .\payments\templates\payments\customer\payment_list.html:10
+#: .\payments\templates\payments\service\payment_list.html:10
+#: .\payments\templates\payments\supplier\payment_list.html:10
+#: .\sellorder\templates\sellorder\sellorder_details.html:243
+#: .\services\templates\services\provider_detail.html:159
+#: .\supplier\templates\supplier\detail.html:145
+msgid "Payments"
+msgstr "المدفوعات"
+
+#: .\buyorder\templates\buyorder\buyorder_update.html:10
+#, fuzzy
+#| msgid "Buy Orders"
+msgid "Buy Order Update"
+msgstr "أوامر البيع"
+
+#: .\buyorder\templates\buyorder\list_buyorder.html:11
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:10
+#: .\product\templates\product\details.html:64
+msgid "Buy Orders"
+msgstr "أوامر البيع"
+
+#: .\buyorder\templates\buyorder\list_buyorder.html:38
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:42
+#: .\sellorder\templates\sellorder\list_sellorder.html:44
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:50
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:21
+#: .\sellorder\templates\sellorder\sellorder_details.html:119
+#: .\supplier\templates\supplier\detail.html:70
+#: .\supplier\templates\supplier\detail.html:112
 msgid "HT"
 msgstr ""
 
-#: .\buyorder\templates\buyorder\list_buyorder.html:23
-#: .\sellorder\templates\sellorder\list_sellorder.html:23
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:23
+#: .\buyorder\templates\buyorder\list_buyorder.html:40
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:44
+#: .\sellorder\templates\sellorder\list_sellorder.html:47
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:53
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:24
+#: .\supplier\templates\supplier\detail.html:71
+#: .\supplier\templates\supplier\detail.html:113
 msgid "TTC"
 msgstr ""
 
-#: .\buyorder\templates\buyorder\list_buyorder.html:24
+#: .\buyorder\templates\buyorder\list_buyorder.html:41
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:45
 #: .\customer\templates\customer\detail.html:26
-#: .\customer\templates\customer\detail.html:43
-#: .\customer\templates\customer\detail.html:84
-#: .\customer\templates\customer\detail.html:123
-#: .\customer\templates\customer\list_customer.html:20
-#: .\sellorder\templates\sellorder\list_sellorder.html:24
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:24
-#: .\sellorder\templates\sellorder\sellorder_details.html:86
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:75
+#: .\customer\templates\customer\detail.html:128
+#: .\customer\templates\customer\detail.html:173
+#: .\customer\templates\customer\detail.html:225
+#: .\customer\templates\customer\list_customer.html:31
+#: .\customer\templates\customer\sellorder_list_customer.html:43
+#: .\sellorder\templates\sellorder\list_sellorder.html:48
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:54
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:25
+#: .\sellorder\templates\sellorder\sellorder_details.html:139
 msgid "Debt"
 msgstr "الديون"
 
-#: .\buyorder\templates\buyorder\list_buyorder.html:44
-#: .\customer\templates\city\list_city.html:25
-#: .\customer\templates\customer\list_customer.html:46
-#: .\product\templates\product\all_product_list.html:53
-#: .\product\templates\product\list_product.html:44
-#: .\rdv\templates\panne\panne_list.html:35
-#: .\sellorder\templates\sellorder\list_sellorder.html:56
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:60
-#: .\services\templates\services\provider_list.html:32
-#: .\services\templates\services\service_list.html:40
-#: .\stock\templates\stock\list_stock.html:29
-#: .\stock\templates\stockproduct\all_list_stockproduct.html:45
-#: .\supplier\templates\supplier\list_supplier.html:49
-#: .\vehicule\templates\brand\list_brand.html:37
-#: .\vehicule\templates\type\all_list_type.html:38
-#: .\vehicule\templates\type\list_type.html:44
-#: .\vehicule\templates\vehicule\all_list_vehicule.html:45
-msgid "Update"
-msgstr "تحديثات"
-
-#: .\buyorder\templates\buyorder\list_buyorder.html:46
-#: .\customer\templates\customer\detail.html:100
-#: .\sellorder\templates\sellorder\list_sellorder.html:58
+#: .\buyorder\templates\buyorder\list_buyorder.html:64
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:69
+#: .\customer\templates\customer\detail.html:191
+#: .\sellorder\templates\sellorder\list_sellorder.html:83
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:89
 msgid "Confirm"
 msgstr "التأكيد"
 
-#: .\buyorder\templates\buyorder\list_buyorder.html:51
-#: .\customer\templates\customer\detail.html:60
-#: .\customer\templates\customer\detail.html:141
-#: .\sellorder\templates\sellorder\list_sellorder.html:63
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:49
-#: .\sellorder\templates\sellorder\sellorder_details.html:12
-#: .\supplier\templates\supplier\list_supplier.html:45
+#: .\buyorder\templates\buyorder\list_buyorder.html:69
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:74
+#: .\customer\templates\customer\detail.html:147
+#: .\customer\templates\customer\detail.html:245
+#: .\sellorder\templates\sellorder\list_sellorder.html:88
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:94
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:51
+#: .\sellorder\templates\sellorder\sellorder_details.html:14
+#: .\supplier\templates\supplier\detail.html:90
+#: .\supplier\templates\supplier\detail.html:132
+#: .\supplier\templates\supplier\list_supplier.html:50
 #, fuzzy
 #| msgid "Debt"
 msgid "PayDebt"
 msgstr "الديون"
 
-#: .\buyorder\templates\buyorder\list_buyorder.html:55
-#: .\caisse\templates\caisse\transaction_list.html:107
-#: .\caisse\templates\caisse\transaction_list.html:146
-#: .\customer\templates\customer\detail.html:65
-#: .\customer\templates\customer\detail.html:103
-#: .\customer\templates\customer\detail.html:146
-#: .\customer\templates\customer\detail.html:176
-#: .\customer\templates\customer\list_customer.html:50
-#: .\payments\templates\payments\customer\payment_list.html:48
-#: .\payments\templates\payments\supplier\payment_list.html:45
-#: .\product\templates\product\all_product_list.html:56
-#: .\product\templates\product\details.html:37
-#: .\rdv\templates\rdv\rdv_list.html:35
-#: .\sellorder\templates\sellorder\list_sellorder.html:68
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:54
-msgid "Details"
-msgstr "التفاصيل"
-
-#: .\buyorder\templates\buyorder\list_buyorder.html:58
-#: .\caisse\templates\caisse\transaction_list.html:62
-#: .\customer\templates\city\list_city.html:28
-#: .\product\templates\product\all_product_list.html:59
-#: .\product\templates\product\list_product.html:47
-#: .\rdv\templates\panne\panne_list.html:39
-#: .\rdv\templates\rdv\rdv_list.html:38
-#: .\sellorder\templates\sellorder\list_sellorder.html:71
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:57
-#: .\sellorder\templates\sellorder\sellorder_details.html:200
-#: .\sellorder\templates\sellorder\sellorder_update.html:129
-#: .\services\templates\services\provider_list.html:35
-#: .\services\templates\services\service_list.html:43
-#: .\stock\templates\stock\list_stock.html:32
-#: .\stock\templates\stockproduct\all_list_stockproduct.html:48
-#: .\supplier\templates\supplier\list_supplier.html:52
-#: .\vehicule\templates\brand\list_brand.html:40
-#: .\vehicule\templates\type\all_list_type.html:41
-#: .\vehicule\templates\type\list_type.html:45
-#: .\vehicule\templates\vehicule\all_list_vehicule.html:48
-#: .\venv\Lib\site-packages\django\forms\formsets.py:391
-msgid "Delete"
-msgstr "حذف"
-
-#: .\caisse\templates\caisse\transaction_list.html:19
-msgid "Transactions"
-msgstr "التحويل"
-
-#: .\caisse\templates\caisse\transaction_list.html:22
-msgid "Income"
-msgstr "المخرجات"
-
-#: .\caisse\templates\caisse\transaction_list.html:24
-msgid "Expense"
-msgstr "المصاريف"
-
-#: .\caisse\templates\caisse\transaction_list.html:26
-msgid "TOTAL"
-msgstr "المجموع"
-
-#: .\caisse\templates\caisse\transaction_list.html:31
-#: .\sellorder\templates\sellorder\sellorders_pannes.html:20
-#: .\sellorder\templates\sellorder\sellorders_pieces.html:20
-msgid "Pick a Date"
-msgstr "إختيار التاريخ"
-
-#: .\caisse\templates\caisse\transaction_list.html:44
-#: .\caisse\templates\caisse\transaction_list.html:78
-#: .\caisse\templates\caisse\transaction_list.html:119
-#: .\payments\templates\payments\customer\payment_list.html:19
-#: .\payments\templates\payments\customer_pay_list.html:16
-#: .\payments\templates\payments\supplier\payment_list.html:18
-#: .\payments\templates\payments\supplier_pay_list.html:15
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:39
-#: .\sellorder\templates\sellorder\sellorder_details.html:175
-#: .\sellorder\templates\sellorder\sellorder_update.html:45
-msgid "Amount"
-msgstr "الملبغ"
-
-#: .\caisse\templates\caisse\transaction_list.html:45
-#: .\rdv\templates\rdv\vehicle_list.html:30
-#: .\stock\templates\stockproduct\order_vehicle.html:23
-#: .\vehicule\templates\vehicule\all_list_vehicule.html:18
-msgid "Type"
-msgstr "النوع"
-
-#: .\caisse\templates\caisse\transaction_list.html:46
-#: .\customer\templates\customer\detail.html:161
-#: .\payments\templates\payments\customer_pay_list.html:17
-#: .\payments\templates\payments\supplier_pay_list.html:16
-#: .\product\templates\product\details.html:21
-#: .\product\templates\product\details.html:57
-#: .\rdv\templates\rdv\rdv_detail.html:27 .\rdv\templates\rdv\rdv_list.html:18
-#: .\sellorder\templates\sellorder\list_sellorder.html:17
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:17
-msgid "Date"
+#: .\buyorder\templates\buyorder\list_buyorder_by_date.html:26
+#: .\caisse\templates\caisse\transaction_list.html:38
+#: .\caisse\templates\category\details.html:35
+#: .\customer\templates\customer\detail.html:44
+#: .\product\templates\product\details.html:23
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:33
+#: .\services\templates\services\provider_detail.html:38
+#: .\stock\templates\stockproduct\product_details.html:23
+#: .\supplier\templates\supplier\detail.html:46
+#, fuzzy
+#| msgid "Date"
+msgid "Date:"
 msgstr "التاريخ"
 
-#: .\caisse\templates\caisse\transaction_list.html:47
-msgid "Date Created"
-msgstr "تاريخ الإنشاء"
-
-#: .\caisse\templates\caisse\transaction_list.html:67
-#, fuzzy
-#| msgid "No Elements Found"
-msgid "No Elements"
-msgstr "لا يوجد أي عنصر"
-
-#: .\caisse\templates\caisse\transaction_list.html:75
-#: .\payments\templates\payments\customer\payment_list.html:16
-#: .\payments\templates\payments\customer_pay_list.html:14
-#: .\venv\Lib\site-packages\django\forms\formsets.py:379
-#: .\venv\Lib\site-packages\django\forms\formsets.py:386
-msgid "Order"
-msgstr "طلب"
-
-#: .\caisse\templates\caisse\transaction_list.html:77
-#: .\caisse\templates\caisse\transaction_list.html:118
-#: .\payments\templates\payments\customer\payment_list.html:18
-#: .\payments\templates\payments\supplier\payment_list.html:17
-#: .\sellorder\templates\sellorder\sellorder_details.html:174
-msgid "Pay Status"
-msgstr "حالة الدفع"
-
 #: .\caisse\templates\caisse\transaction_list.html:79
-#: .\caisse\templates\caisse\transaction_list.html:120
-#: .\payments\templates\payments\customer\payment_list.html:20
-#: .\payments\templates\payments\supplier\payment_list.html:19
-#: .\sellorder\templates\sellorder\sellorder_details.html:176
-msgid "Created"
-msgstr "أنشئت"
+#: .\caisse\templates\category\details.html:43
+#, fuzzy
+#| msgid "Transactions"
+msgid "Transaction"
+msgstr "التحويل"
 
-#: .\caisse\templates\caisse\transaction_list.html:80
-#: .\caisse\templates\caisse\transaction_list.html:121
-#: .\payments\templates\payments\customer\payment_list.html:21
-#: .\payments\templates\payments\supplier\payment_list.html:20
-#: .\sellorder\templates\sellorder\sellorder_details.html:177
-msgid "Payed"
-msgstr "دفعت"
+#: .\caisse\templates\caisse\transaction_list.html:87
+#: .\caisse\templates\category\details.html:51
+#: .\caisse\templates\category\list.html:15
+#: .\product\templates\product\list_product.html:17
+msgid "Category"
+msgstr "صنف"
+
+#: .\caisse\templates\caisse\transaction_list.html:88
+msgid "Note"
+msgstr ""
+
+#: .\caisse\templates\caisse\transaction_list.html:124
+#, fuzzy
+#| msgid "Customers Payments"
+msgid "Customer Payments"
+msgstr "مدفوعات العملاء"
+
+#: .\caisse\templates\caisse\transaction_list.html:168
+#, fuzzy
+#| msgid "Suppliers Payments"
+msgid "Supplier Payments"
+msgstr "مدفوعات الموردين"
+
+#: .\caisse\templates\caisse\transaction_list.html:210
+#, fuzzy
+#| msgid "Suppliers Payments"
+msgid "Service Payments"
+msgstr "مدفوعات الموردين"
+
+#: .\caisse\templates\category\list.html:10
+#: .\stock\templates\stockproduct\list_stockproduct.html:10
+msgid "Categories"
+msgstr "الأصناف"
 
 #: .\category\templates\category\list_category.html:11
 msgid "Families"
@@ -974,107 +1499,207 @@ msgid "Cities"
 msgstr "الأحياء"
 
 #: .\customer\templates\city\order_city_list.html:25
-#: .\customer\templates\customer\sellorder_list_customer.html:29
-#: .\product\templates\product\details.html:22
+#: .\product\templates\product\details.html:40
 #: .\supplier\templates\supplier\buyorder_list_supplier.html:26
 #, fuzzy
 #| msgid "Bills"
 msgid "Bill"
 msgstr "الفواتير"
 
+#: .\customer\templates\customer\add_avancement.html:23
+#: .\customer\templates\customer\detail.html:89
+msgid "Enterprise"
+msgstr ""
+
 #: .\customer\templates\customer\detail.html:18
-#: .\customer\templates\customer\detail.html:39
-#: .\customer\templates\customer\detail.html:80
-#: .\customer\templates\customer\detail.html:119
-#: .\customer\templates\customer\list_customer.html:18
+#: .\customer\templates\customer\detail.html:122
+#: .\customer\templates\customer\detail.html:167
+#: .\customer\templates\customer\detail.html:219
+#: .\customer\templates\customer\list_customer.html:30
+#: .\customer\templates\customer\sellorder_list_customer.html:41
+#: .\employee\templates\employee\list.html:19
 #: .\rdv\templates\rdv\customer_list.html:30
+#: .\supplier\templates\supplier\detail.html:18
+#: .\supplier\templates\supplier\detail.html:69
+#: .\supplier\templates\supplier\detail.html:111
 #: .\supplier\templates\supplier\list_supplier.html:18
 #: .\vehicule\templates\vehicule\add_vehicule.html:23
 msgid "Address"
 msgstr "العنوان"
 
-#: .\customer\templates\customer\detail.html:40
-#: .\customer\templates\customer\detail.html:81
-#: .\customer\templates\customer\detail.html:120
-#: .\sellorder\templates\sellorder\list_sellorder.html:18
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:18
+#: .\customer\templates\customer\detail.html:53
+#: .\rdv\templates\rdv\vehicle_list.html:11
+#: .\vehicule\templates\vehicule\add_vehicule.html:10
+#: .\vehicule\templates\vehicule\all_list_vehicule.html:12
+msgid "Vehicles"
+msgstr "سيارات"
+
+#: .\customer\templates\customer\detail.html:63
+#: .\rdv\templates\panne\order_panne_list.html:64
+#: .\rdv\templates\rdv\vehicle_list.html:31
+#: .\services\templates\services\order_service_list.html:64
+#: .\stock\templates\stockproduct\order_vehicle.html:75
+#: .\vehicule\templates\vehicule\all_list_vehicule.html:31
+msgid "Matriculation"
+msgstr "الرقم التسلسلي"
+
+#: .\customer\templates\customer\detail.html:78
+#, fuzzy
+#| msgid "Payments"
+msgid "Advancements"
+msgstr "المدفوعات"
+
+#: .\customer\templates\customer\detail.html:80
+msgid "New Advancement"
+msgstr ""
+
+#: .\customer\templates\customer\detail.html:87
+msgid "N°"
+msgstr ""
+
+#: .\customer\templates\customer\detail.html:125
+#: .\customer\templates\customer\detail.html:170
+#: .\customer\templates\customer\detail.html:222
+#: .\sellorder\templates\sellorder\list_sellorder.html:42
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:48
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:19
 #, fuzzy
 #| msgid "Total Price"
 msgid "Total Piece"
 msgstr "مجموع الثمن"
 
-#: .\customer\templates\customer\detail.html:41
-#: .\customer\templates\customer\detail.html:82
-#: .\customer\templates\customer\detail.html:121
-#: .\sellorder\templates\sellorder\list_sellorder.html:19
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:19
+#: .\customer\templates\customer\detail.html:126
+#: .\customer\templates\customer\detail.html:171
+#: .\customer\templates\customer\detail.html:223
+#: .\sellorder\templates\sellorder\list_sellorder.html:43
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:49
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:20
 #, fuzzy
 #| msgid "Total Price"
 msgid "Total Panne"
 msgstr "مجموع الثمن"
 
-#: .\customer\templates\customer\detail.html:42
-#: .\customer\templates\customer\detail.html:83
-#: .\customer\templates\customer\detail.html:122
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:14
-#: .\sellorder\templates\sellorder\sellorder_details.html:150
-#: .\sellorder\templates\sellorder\sellorder_update.html:14
-#: .\sellorder\templates\sellorder\sellorders_pannes.html:15
-#: .\sellorder\templates\sellorder\sellorders_pieces.html:15
-msgid "Total"
-msgstr "المجموع"
-
-#: .\customer\templates\customer\detail.html:73
+#: .\customer\templates\customer\detail.html:160
 msgid "Proforma Orders"
 msgstr ""
 
-#: .\customer\templates\customer\detail.html:111
+#: .\customer\templates\customer\detail.html:202
+#: .\services\templates\services\provider_detail.html:121
 #, fuzzy
 #| msgid "Sell Orders"
 msgid "Billed Orders"
 msgstr "أمر البيع"
 
-#: .\customer\templates\customer\detail.html:116
+#: .\customer\templates\customer\detail.html:216
 #, fuzzy
 #| msgid "Bills"
 msgid "Bill ID"
 msgstr "الفواتير"
 
-#: .\customer\templates\customer\detail.html:154
+#: .\customer\templates\customer\detail.html:258
 msgid "RDVs"
 msgstr "مواعيد"
 
-#: .\customer\templates\customer\detail.html:159
+#: .\customer\templates\customer\detail.html:263
 #: .\rdv\templates\rdv\rdv_detail.html:15 .\rdv\templates\rdv\rdv_list.html:15
 msgid "RDV ID"
 msgstr "رقم الموعد"
 
-#: .\customer\templates\customer\detail.html:162
+#: .\customer\templates\customer\detail.html:266
 #: .\rdv\templates\rdv\rdv_detail.html:31 .\rdv\templates\rdv\rdv_list.html:19
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2088
 msgid "Time"
 msgstr "التوقيت"
 
-#: .\customer\templates\customer\list_customer.html:19
-#: .\rdv\templates\rdv\customer_list.html:31
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:73
-#: .\vehicule\templates\vehicule\add_vehicule.html:24
-msgid "Email"
-msgstr "البريد الالكتروني"
+#: .\customer\templates\customer\detail.html:294
+#, fuzzy
+#| msgid "Payments"
+msgid "Payment ID"
+msgstr "المدفوعات"
+
+#: .\customer\templates\customer\list_customer.html:32
+msgid "General Debt"
+msgstr ""
+
+#: .\customer\templates\customer\list_enterprise.html:10
+msgid "Enterprises"
+msgstr ""
+
+#: .\customer\templates\customer\list_enterprise.html:17
+msgid "RC"
+msgstr ""
+
+#: .\customer\templates\customer\list_enterprise.html:18
+msgid "NIF"
+msgstr ""
+
+#: .\customer\templates\customer\list_enterprise.html:19
+msgid "NIS"
+msgstr ""
+
+#: .\customer\templates\customer\list_enterprise.html:20
+msgid "ART"
+msgstr ""
+
+#: .\customer\templates\customer\sellorder_list_customer.html:11
+#, fuzzy
+#| msgid "Choose Customers"
+msgid "Choose Customer"
+msgstr "اختيار الزبائن"
+
+#: .\customer\templates\customer\sellorder_list_customer.html:15
+#: .\rdv\templates\panne\order_panne_list.html:105
+#: .\services\templates\services\order_service_list.html:129
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:17
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:23
+#, fuzzy
+#| msgid "March"
+msgid "Search"
+msgstr "مارس"
+
+#: .\customer\templates\customer\sellorder_list_customer.html:25
+#, fuzzy
+#| msgid "Customer"
+msgid "Selected Customer"
+msgstr "الزبون"
+
+#: .\employee\templates\employee\list.html:16
+#: .\employee\templates\job\list.html:15
+msgid "Job"
+msgstr ""
+
+#: .\employee\templates\employee\list.html:21
+#, fuzzy
+#| msgid "Date Created"
+msgid "Date Joined"
+msgstr "تاريخ الإنشاء"
+
+#: .\employee\templates\job\list.html:10
+msgid "Jobs"
+msgstr ""
 
 #: .\payments\templates\payments\customer\create_payment.html:12
 msgid "Customer Payment"
 msgstr "دفع الزبون"
 
 #: .\payments\templates\payments\customer\delete_payment.html:13
+#: .\payments\templates\payments\supplier\delete_payment.html:13
 msgid "OF THE ORDER"
 msgstr ""
 
-#: .\payments\templates\payments\customer\payment_list.html:10
-#: .\payments\templates\payments\supplier\payment_list.html:10
-#: .\sellorder\templates\sellorder\sellorder_details.html:168
-msgid "Payments"
-msgstr "المدفوعات"
+#: .\payments\templates\payments\service\create_payment.html:12
+#, fuzzy
+#| msgid "Supplier Payment"
+msgid "Service Provider Payment"
+msgstr "دفع المورد"
+
+#: .\payments\templates\payments\service\delete_payment.html:13
+msgid "OF THE PROVIDER"
+msgstr ""
+
+#: .\payments\templates\payments\service\payment_list.html:16
+msgid "Service Provider"
+msgstr ""
 
 #: .\payments\templates\payments\supplier\create_cheque.html:12
 msgid "Payment Form"
@@ -1084,12 +1709,18 @@ msgstr "نوع الدفع"
 msgid "Supplier Payment"
 msgstr "دفع المورد"
 
-#: .\product\templates\product\all_product_list.html:10
-#: .\sellorder\templates\sellorder\sellorder_details.html:92
+#: .\payments\templates\payments\supplier\delete_supplier_payment.html:13
+#, fuzzy
+#| msgid "Supplier"
+msgid "OF THE Supplier"
+msgstr "مورد"
+
+#: .\product\templates\product\all_product_list.html:12
+#: .\sellorder\templates\sellorder\sellorder_details.html:155
 msgid "Products"
 msgstr "منتوجات"
 
-#: .\product\templates\product\all_product_list.html:16
+#: .\product\templates\product\all_product_list.html:29
 #: .\product\templates\product\list_product.html:15
 #: .\rdv\templates\rdv\vehicle_list.html:101
 #: .\vehicule\templates\brand\list_brand.html:16
@@ -1100,33 +1731,65 @@ msgstr "منتوجات"
 msgid "Image"
 msgstr "صورة"
 
-#: .\product\templates\product\all_product_list.html:20
+#: .\product\templates\product\all_product_list.html:33
 #: .\product\templates\product\list_product.html:18
-#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:23
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:23
+#: .\sellorder\templates\sellorder\sellorder_details.html:169
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:34
+#: .\stock\templates\stockproduct\modal_buyorder_list_stockproduct.html:23
+#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:27
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:51
+#: .\stock\templates\stockproduct\product_details.html:57
 msgid "Sell Price"
-msgstr "ثمن الشراء"
-
-#: .\product\templates\product\all_product_list.html:21
-#: .\product\templates\product\list_product.html:19
-#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:24
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:24
-msgid "Buy Price"
 msgstr "ثمن البيع"
 
-#: .\product\templates\product\list_product.html:17
-msgid "Category"
-msgstr "صنف"
+#: .\product\templates\product\all_product_list.html:34
+#: .\product\templates\product\list_product.html:19
+#: .\sellorder\templates\sellorder\sellorder_details.html:170
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:35
+#: .\stock\templates\stockproduct\modal_buyorder_list_stockproduct.html:24
+#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:28
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:52
+#: .\stock\templates\stockproduct\product_details.html:56
+#: .\stock\templates\stockproduct\product_details.html:107
+msgid "Buy Price"
+msgstr "ثمن الشراء"
+
+#: .\product\templates\product\details.html:10
+#: .\sellorder\templates\sellorder\list_sellorder.html:13
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:11
+msgid "Sell Orders"
+msgstr "أمر البيع"
 
 #: .\rdv\templates\panne\modal_order_list_panne.html:15
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:114
+#: .\rdv\templates\panne\order_panne_list.html:118
 #, fuzzy
 #| msgid "Choose Products"
 msgid "Choose Pannes"
 msgstr "اختيار المنتجات"
 
+#: .\rdv\templates\panne\order_panne_list.html:32
+#: .\sellorder\templates\sellorder\sellorder_details.html:166
+#: .\services\templates\services\order_service_list.html:32
+#: .\services\templates\services\provider_list.html:16
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:47
+#: .\stock\templates\stockproduct\order_vehicle.html:31
+msgid "ID"
+msgstr ""
+
+#: .\rdv\templates\panne\order_panne_list.html:65
+#: .\rdv\templates\rdv\vehicle_list.html:32
+#: .\services\templates\services\order_service_list.html:65
+#: .\stock\templates\stockproduct\order_vehicle.html:76
+#: .\vehicule\templates\vehicule\all_list_vehicule.html:32
+msgid "Cart Gris"
+msgstr "البطاقة الرمادية"
+
+#: .\rdv\templates\panne\order_panne_list.html:121
+msgid "Selected Pannes"
+msgstr ""
+
 #: .\rdv\templates\panne\panne_list.html:10
-#: .\sellorder\templates\sellorder\sellorder_details.html:119
+#: .\sellorder\templates\sellorder\sellorder_details.html:194
 msgid "Pannes"
 msgstr "أعطال"
 
@@ -1166,30 +1829,12 @@ msgstr "لا يوجد أي عنصر"
 msgid "Appointments"
 msgstr "المواعيد"
 
-#: .\rdv\templates\rdv\vehicle_list.html:11
-#: .\vehicule\templates\vehicule\add_vehicule.html:10
-#: .\vehicule\templates\vehicule\all_list_vehicule.html:10
-msgid "Vehicles"
-msgstr "سيارات"
-
 #: .\rdv\templates\rdv\vehicle_list.html:18
 #: .\rdv\templates\rdv\vehicle_list.html:78
 #, fuzzy
 #| msgid "Vehicle"
 msgid "New Vehicle"
 msgstr "سيارة"
-
-#: .\rdv\templates\rdv\vehicle_list.html:31
-#: .\stock\templates\stockproduct\order_vehicle.html:24
-#: .\vehicule\templates\vehicule\all_list_vehicule.html:19
-msgid "Matriculation"
-msgstr "الرقم التسلسلي"
-
-#: .\rdv\templates\rdv\vehicle_list.html:32
-#: .\stock\templates\stockproduct\order_vehicle.html:25
-#: .\vehicule\templates\vehicule\all_list_vehicule.html:20
-msgid "Cart Gris"
-msgstr "البطاقة الرمادية"
 
 #: .\rdv\templates\rdv\vehicle_list.html:88
 #: .\vehicule\templates\vehicule\add_vehicule.html:51
@@ -1203,13 +1848,22 @@ msgstr "اختار نوع السيارة"
 msgid "New Type"
 msgstr "النوع"
 
-#: .\sellorder\templates\sellorder\list_sellorder.html:22
-#: .\sellorder\templates\sellorder\list_sellorder_facture.html:22
-#: .\sellorder\templates\sellorder\sellorder_details.html:74
+#: .\sellorder\templates\sellorder\list_sellorder.html:19
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:17
+#, fuzzy
+#| msgid "Brand List"
+msgid "Proforma list"
+msgstr "قائمة الماركات"
+
+#: .\sellorder\templates\sellorder\list_sellorder.html:46
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:52
+#: .\sellorder\templates\sellorder\list_sellorder_facture.html:23
+#: .\sellorder\templates\sellorder\sellorder_details.html:127
 msgid "Discount"
 msgstr "تخفيض"
 
-#: .\sellorder\templates\sellorder\list_sellorder.html:51
+#: .\sellorder\templates\sellorder\list_sellorder.html:76
+#: .\sellorder\templates\sellorder\list_sellorder_by_date.html:82
 msgid "Facture"
 msgstr "فاتورة"
 
@@ -1223,86 +1877,154 @@ msgstr "أمر البيع"
 msgid "Facture ID"
 msgstr "رقم الفاتورة"
 
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:10
-#: .\sellorder\templates\sellorder\sellorder_update.html:10
-msgid "Order Confirmation"
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:10
+#, fuzzy
+#| msgid "Order Confirmation"
+msgid "Proforma Order Confirmation"
 msgstr "تأكيد الأمر"
 
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:38
-#: .\sellorder\templates\sellorder\sellorder_update.html:44
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:47
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:47
+#: .\sellorder\templates\sellorder\sellorder_update.html:51
 msgid "Percentage"
 msgstr "النسبة المئوية"
 
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:48
-#: .\sellorder\templates\sellorder\sellorder_details.html:78
-#: .\sellorder\templates\sellorder\sellorder_update.html:54
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:57
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:57
+#: .\sellorder\templates\sellorder\sellorder_details.html:131
+#: .\sellorder\templates\sellorder\sellorder_update.html:61
 msgid "Timbre"
 msgstr "الطابع"
 
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:70
-#: .\sellorder\templates\sellorder\sellorder_update.html:76
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:79
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:79
+#: .\sellorder\templates\sellorder\sellorder_update.html:83
 #, fuzzy
 #| msgid "Sell Price"
 msgid "Sell Price DZD"
 msgstr "ثمن الشراء"
 
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:71
-#: .\sellorder\templates\sellorder\sellorder_update.html:77
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:80
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:80
+#: .\sellorder\templates\sellorder\sellorder_update.html:84
 #, fuzzy
 #| msgid "Price DZD"
 msgid "Buy Price DZD"
 msgstr "الثمن د.ج"
 
-#: .\sellorder\templates\sellorder\sellorder_confirmation.html:102
-#: .\sellorder\templates\sellorder\sellorder_update.html:117
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:116
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:116
+#: .\sellorder\templates\sellorder\sellorder_update.html:124
 #, fuzzy
 #| msgid "Mon"
 msgid "Mo"
 msgstr "الإثـ"
 
-#: .\sellorder\templates\sellorder\sellorder_details.html:18
-#, fuzzy
-#| msgid "Add Proforma"
-msgid "Copy to Proforma"
-msgstr "إضافة بروفورما"
-
-#: .\sellorder\templates\sellorder\sellorder_details.html:24
-msgid "Print Bon Pour"
+#: .\sellorder\templates\sellorder\proforma_confirmation.html:143
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:143
+#: .\sellorder\templates\sellorder\sellorder_details.html:224
+#: .\sellorder\templates\sellorder\sellorder_update.html:151
+#: .\services\templates\services\order_service_list.html:154
+#: .\services\templates\services\provider_detail.html:64
+#: .\services\templates\services\provider_detail.html:97
+#: .\services\templates\services\provider_detail.html:136
+msgid "Charge"
 msgstr ""
 
-#: .\sellorder\templates\sellorder\sellorder_details.html:26
-msgid "Print Livraison"
-msgstr ""
+#: .\sellorder\templates\sellorder\sellorder_confirmation.html:10
+#: .\sellorder\templates\sellorder\sellorder_update.html:10
+msgid "Order Confirmation"
+msgstr "تأكيد الأمر"
 
-#: .\sellorder\templates\sellorder\sellorder_details.html:31
+#: .\sellorder\templates\sellorder\sellorder_details.html:23
+#: .\sellorder\templates\sellorder\sellorder_details.html:75
 #, fuzzy
 #| msgid "Pick a Date"
 msgid "Print No Date"
 msgstr "إختيار التاريخ"
 
-#: .\sellorder\templates\sellorder\sellorder_details.html:55
+#: .\sellorder\templates\sellorder\sellorder_details.html:26
+#: .\sellorder\templates\sellorder\sellorder_details.html:71
+#, fuzzy
+#| msgid "Print"
+msgid "Print MO"
+msgstr "الطباعة"
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:28
+#, fuzzy
+#| msgid "Pick a Date"
+msgid "Print MO No Date"
+msgstr "إختيار التاريخ"
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:32
+#: .\sellorder\templates\sellorder\sellorder_details.html:38
+#, fuzzy
+#| msgid "Add Proforma"
+msgid "Copy to Proforma"
+msgstr "إضافة بروفورما"
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:48
+msgid "Print Bon Pour"
+msgstr ""
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:51
+msgid "Print Livraison"
+msgstr ""
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:73
+#, fuzzy
+#| msgid "Total Price"
+msgid "Print Pieces"
+msgstr "مجموع الثمن"
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:79
+#, fuzzy
+#| msgid "Brand List"
+msgid "Proforma BSB"
+msgstr "قائمة الماركات"
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:81
+#, fuzzy
+#| msgid "Brand List"
+msgid "Proforma Nacer"
+msgstr "قائمة الماركات"
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:83
+#, fuzzy
+#| msgid "Brand List"
+msgid "Proforma Ghezal"
+msgstr "قائمة الماركات"
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:107
 msgid "Confirmed"
 msgstr "مثبتة"
 
-#: .\sellorder\templates\sellorder\sellorder_details.html:59
+#: .\sellorder\templates\sellorder\sellorder_details.html:111
 #, fuzzy
 #| msgid "Bills"
 msgid "Billed"
 msgstr "الفواتير"
 
-#: .\sellorder\templates\sellorder\sellorder_details.html:70
+#: .\sellorder\templates\sellorder\sellorder_details.html:123
 msgid "Tva"
 msgstr "الضريبة"
 
-#: .\sellorder\templates\sellorder\sellorder_details.html:142
+#: .\sellorder\templates\sellorder\sellorder_details.html:147
+#, fuzzy
+#| msgid "Update"
+msgid "Updated"
+msgstr "تحديثات"
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:173
+#: .\stock\templates\stockproduct\product_details.html:58
+msgid "Benefit"
+msgstr ""
+
+#: .\sellorder\templates\sellorder\sellorder_details.html:217
+#: .\services\templates\services\order_service_list.html:122
 #: .\services\templates\services\provider_list.html:10
 #: .\services\templates\services\service_list.html:10
 msgid "Services"
-msgstr ""
-
-#: .\sellorder\templates\sellorder\sellorder_details.html:149
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:159
-msgid "Charge"
 msgstr ""
 
 #: .\sellorder\templates\sellorder\sellorder_facture.html:13
@@ -1310,12 +2032,6 @@ msgstr ""
 #| msgid "ARE YOU SURE YOU WANT TO DELETE"
 msgid "ARE YOU SURE YOU WANT TO FACTURE"
 msgstr "هل تريد حقا الحذف؟"
-
-#: .\sellorder\templates\sellorder\sellorder_update.html:30
-#, fuzzy
-#| msgid "Panne"
-msgid "New Panne"
-msgstr "عطل"
 
 #: .\sellorder\templates\sellorder\sellorders_pannes.html:11
 msgid "Today MO"
@@ -1325,6 +2041,39 @@ msgstr ""
 msgid "Today Pieces"
 msgstr "قطع غيار اليوم"
 
+#: .\services\templates\services\modal_order_list_service.html:15
+#: .\services\templates\services\order_service_list.html:140
+#, fuzzy
+#| msgid "Choose Products"
+msgid "Choose Services"
+msgstr "اختيار المنتجات"
+
+#: .\services\templates\services\order_service_list.html:143
+#, fuzzy
+#| msgid "Choose Products"
+msgid "Selected Services"
+msgstr "اختيار المنتجات"
+
+#: .\services\templates\services\provider_detail.html:86
+#, fuzzy
+#| msgid "Add Proforma"
+msgid "Proforma"
+msgstr "إضافة بروفورما"
+
+#: .\services\templates\services\provider_list.html:19
+#: .\supplier\templates\supplier\detail.html:26
+#: .\supplier\templates\supplier\detail.html:72
+#: .\supplier\templates\supplier\detail.html:114
+#: .\supplier\templates\supplier\list_supplier.html:19
+msgid "Credit"
+msgstr "الدين"
+
+#: .\services\templates\services\provider_list.html:52
+#, fuzzy
+#| msgid "Debt"
+msgid "Pay Debt"
+msgstr "الديون"
+
 #: .\services\templates\services\service_list.html:18
 msgid "Charges"
 msgstr ""
@@ -1333,49 +2082,109 @@ msgstr ""
 msgid "Stocks"
 msgstr "المخازن"
 
-#: .\stock\templates\stockproduct\list_stockproduct.html:10
-msgid "Categories"
-msgstr "الأصناف"
+#: .\stock\templates\stock\list_stock.html:35
+msgid "Reset"
+msgstr ""
+
+#: .\stock\templates\stock\reset.html:12
+#, fuzzy
+#| msgid "ARE YOU SURE YOU WANT TO DELETE"
+msgid "ARE YOU SURE YOU WANT TO RESET"
+msgstr "هل تريد حقا الحذف؟"
+
+#: .\stock\templates\stock\state.html:11
+msgid "In"
+msgstr ""
+
+#: .\stock\templates\stock\state.html:28
+msgid "Out"
+msgstr ""
+
+#: .\stock\templates\stock\state.html:46
+msgid "Benefits"
+msgstr ""
+
+#: .\stock\templates\stockproduct\all_list_stockproduct.html:38
+#, fuzzy
+#| msgid "Quantity"
+msgid "Real Quantity"
+msgstr "الكمية"
 
 #: .\stock\templates\stockproduct\list_stockproduct.html:51
 msgid "Add to cart"
 msgstr "الاضافة الى السلة"
 
-#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:15
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:15
+#: .\stock\templates\stockproduct\modal_buyorder_list_stockproduct.html:15
+#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:19
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:34
 msgid "Choose Products"
 msgstr "اختيار المنتجات"
 
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:65
-#: .\stock\templates\stockproduct\order_vehicle.html:15
-msgid "Choose Customers"
-msgstr "اختيار الزبائن"
+#: .\stock\templates\stockproduct\modal_order_list_stockproduct.html:13
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:15
+#, fuzzy
+#| msgid "Brand List"
+msgid "Proforma Order"
+msgstr "قائمة الماركات"
 
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:72
-msgid "Adress"
-msgstr "العنوان"
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:17
+#, fuzzy
+#| msgid "Sell Orders"
+msgid "Sell Order Customer:"
+msgstr "أمر البيع"
 
-#: .\stock\templates\stockproduct\order_list_stockproduct.html:152
+#: .\stock\templates\stockproduct\order_list_stockproduct.html:37
+#, fuzzy
+#| msgid "Stock Products"
+msgid "Selected Products"
+msgstr "مخزن المنتوجات"
+
+#: .\stock\templates\stockproduct\order_vehicle.html:66
 #, fuzzy
 #| msgid "Choose Products"
-msgid "Choose Services"
+msgid "Choose Vehicle"
 msgstr "اختيار المنتجات"
+
+#: .\stock\templates\stockproduct\product_details.html:10
+#, fuzzy
+#| msgid "Order Details"
+msgid "Product Details"
+msgstr "تفاصيل الأمر"
+
+#: .\stock\templates\stockproduct\product_details.html:42
+#: .\stock\templates\stockproduct\product_details.html:44
+#, fuzzy
+#| msgid "Total Weight"
+msgid "Total Benefits"
+msgstr "مجموع الوزن"
 
 #: .\stock\templates\stockproduct\stock_alert_list.html:10
 msgid "Stock Products Alert"
 msgstr "تنبيه منتجات المخزن"
 
-#: .\supplier\templates\supplier\list_supplier.html:15
-msgid "First Name"
-msgstr "اللقب"
+#: .\supplier\templates\supplier\detail.html:104
+#, fuzzy
+#| msgid "Confirmed"
+msgid "Not Confirmed Orders"
+msgstr "مثبتة"
 
-#: .\supplier\templates\supplier\list_supplier.html:16
-msgid "Last Name"
-msgstr "الاسم"
+#: .\supplier\templates\supplier\detail.html:185
+#, fuzzy
+#| msgid "Customer Payment"
+msgid "Delete Order Payment"
+msgstr "دفع الزبون"
 
-#: .\supplier\templates\supplier\list_supplier.html:19
-msgid "Credit"
-msgstr "الدين"
+#: .\supplier\templates\supplier\detail.html:187
+#, fuzzy
+#| msgid "Supplier Payment"
+msgid "Delete Supplier Payment"
+msgstr "دفع المورد"
+
+#: .\supplier\templates\supplier\list_supplier.html:20
+#, fuzzy
+#| msgid "Suppliers Credit"
+msgid "General Credit"
+msgstr "ائتمان الموردين"
 
 #: .\vehicule\templates\brand\list_brand.html:10
 #: .\vehicule\templates\type\list_type.html:9
@@ -2568,6 +3377,49 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:409
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#~ msgid "Total Sell Order"
+#~ msgstr "مجموع أمر البيع"
+
+#~ msgid "Total Buy Orders"
+#~ msgstr "مجموع أمر الشراء"
+
+#, fuzzy
+#~| msgid "Message Center"
+#~ msgid "Alerts Center"
+#~ msgstr "مركز الرسائل"
+
+#~ msgid "A new monthly report is ready to download!"
+#~ msgstr "تقرير الشهر الجديد جاهز للتحميل"
+
+#, fuzzy
+#~| msgid "has been deposited into your account!"
+#~ msgid " $290.29 has been deposited into your account!"
+#~ msgstr "تم إيداعه في حسابك!"
+
+#, fuzzy
+#~| msgid ""
+#~| "Spending Alert: We've noticed unusually high spending for your account."
+#~ msgid ""
+#~ " Spending Alert: We've noticed unusually high spending for your account."
+#~ msgstr "تنبيه الإنفاق: لقد لاحظنا إنفاقًا مرتفعًا بشكل غير عادي لحسابك"
+
+#~ msgid "Show All Alerts"
+#~ msgstr "إظهار كل التنبيهات"
+
+#~ msgid "Message Center"
+#~ msgstr "مركز الرسائل"
+
+#~ msgid "Read More Messages"
+#~ msgstr "قراءة رسائل أكثر"
+
+#, fuzzy
+#~| msgid "Panne"
+#~ msgid "New Panne"
+#~ msgstr "عطل"
+
+#~ msgid "Adress"
+#~ msgstr "العنوان"
 
 #~ msgid "Bills"
 #~ msgstr "الفواتير"

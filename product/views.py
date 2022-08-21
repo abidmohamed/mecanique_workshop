@@ -1,5 +1,6 @@
 from datetime import datetime, date
 
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -9,6 +10,7 @@ from accounts.models import CurrentYear
 from buyorder.models import BuyOrder
 from caisse.forms import DateForm
 from category.models import Category
+from product.filters import ProductFilter
 from product.forms import ProductForm
 from product.models import Product
 from sellorder.models import Order, OrderItem
@@ -71,10 +73,30 @@ def all_product_list(request):
         current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
     else:
         current_year = CurrentYear.objects.create(year=2022, user=request.user)
-    products = Product.objects.all()
+
+    products_list = Product.objects.all().order_by('-name')
+
+    myFilter = ProductFilter(request.GET, queryset=products_list)
+
+    # paginate after filtering
+    products_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(products_list, 5)
+
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
     context = {
         'products': products,
         'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'product/all_product_list.html', context)
 

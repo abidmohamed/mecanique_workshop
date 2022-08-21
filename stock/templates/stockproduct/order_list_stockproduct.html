@@ -348,23 +348,6 @@
 
         });
 
-        // Iterate over all checkboxes in the table
-        // product table
-        var table = $('#table_panne').DataTable();
-        table.$('input[type="checkbox"]').each(function () {
-            // If checkbox doesn't exist in DOM
-            if (this.checked) {
-                // Create a hidden element
-                $(form).append(
-                    $('<input>')
-                    .attr('type', 'hidden')
-                    .attr('name', this.name)
-                    .val(this.value)
-                );
-            }
-
-        });
-
     }
 </script>
 {% endblock %}

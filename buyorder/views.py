@@ -2,6 +2,7 @@ import decimal
 from datetime import date, datetime
 from decimal import Decimal
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
@@ -14,6 +15,7 @@ from xhtml2pdf import pisa
 # Create your views here.
 from accounts.models import CurrentYear
 from billing.models import BuyOrderBilling, BillBuyOrderItem
+from buyorder.filters import BuyorderFilter
 from buyorder.forms import BuyOrderForm, BuyOrderItemFormset
 from buyorder.models import BuyOrderItem, BuyOrder
 from caisse.forms import DateForm
@@ -337,19 +339,30 @@ def buyorder_list(request):
         current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
     else:
         current_year = CurrentYear.objects.create(year=2022, user=request.user)
-    buyorders = BuyOrder.objects.filter(created__day=now.day, created__month=now.month, created__year=current_year.year)
 
-    if request.method == 'POST':
-        alldata = request.POST
-        chosensupplier = request.POST.getlist("suppliers")
-        if len(chosensupplier) != 0:
-            supplier = Supplier.objects.get(id=chosensupplier[0])
-            buyorders = BuyOrder.objects.filter(supplier=supplier, created__year=current_year.year)
+    buyorders_list = BuyOrder.objects.all().order_by("supplier")
+
+    myFilter = BuyorderFilter(request.GET, queryset=buyorders_list)
+
+    # paginate after filtering
+    buyorders_list = myFilter.qs
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(buyorders_list, 5)
+
+    try:
+        buyorders = paginator.page(page)
+    except PageNotAnInteger:
+        buyorders = paginator.page(1)
+    except EmptyPage:
+        buyorders = paginator.page(paginator.num_pages)
 
     context = {
         'buyorders': buyorders,
-        'suppliers': suppliers,
-        'current_year': current_year
+        'current_year': current_year,
+        'myFilter': myFilter,
     }
     return render(request, 'buyorder/list_buyorder.html', context)
 

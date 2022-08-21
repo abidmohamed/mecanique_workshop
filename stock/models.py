@@ -50,7 +50,7 @@ class StockProduct(models.Model):
             order__confirmed=True,
             stock=self.stock
         ))
-        print("Buy Quantity ", buy_quantity)
+        # print("Buy Quantity ", buy_quantity)
 
         quantity = buy_quantity - sell_quantity
         return quantity
