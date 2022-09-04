@@ -31,7 +31,7 @@ def create_customer_payment(request, pk):
             customerpayment = customerpaymentform.save(commit=False)
             # print(customerpayment.amount)
 
-            if SellOrderPayment.objects.filter(order=order, customer=order.customer, created=datetime.now()):
+            if not SellOrderPayment.objects.filter(order=order, customer=order.customer, created=datetime.now()):
                 customerpayment.order = order
                 customerpayment.customer = order.customer
                 customerpayment.save()
