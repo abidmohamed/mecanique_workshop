@@ -1,9 +1,14 @@
+from datetime import datetime
+
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
+from accounts.models import CurrentYear
 from buyorder.models import BuyOrder
 from caisse.models import Caisse
 from customer.models import Customer
+from payments.filters import SupplierPaymentFilter
 from payments.forms import CustomerChequeForm, SupplierPaymentForm, SupplierChequeForm, CustomerPaymentForm, \
     ServicePaymentForm, CustomerVermentForm
 from payments.models import SellOrderPayment, BuyOrderPayment, CustomerCheque, ServicePayment, SupplierCheque
@@ -17,35 +22,38 @@ def create_customer_payment(request, pk):
     order = Order.objects.get(id=pk)
     customer = Customer.objects.get(id=order.customer.id)
     customerpaymentform = CustomerPaymentForm()
+
     if request.method == "POST":
         customerpaymentform = CustomerPaymentForm(request.POST)
+
         if customerpaymentform.is_valid():
+
             customerpayment = customerpaymentform.save(commit=False)
-            print(customerpayment.amount)
-            customerpayment.order = order
-            customerpayment.customer = order.customer
-            customerpayment.save()
-            if order.debt == 0 or order.debt is None:
-                order.debt = order.get_ttc()
-            print(order.debt)
-            order.debt -= customerpayment.amount
-            # print(order.debt)
-            if order.debt == 0:
-                order.paid = True
-            order.save()
-            customer.debt -= customerpayment.amount
-            customer.save()
+            # print(customerpayment.amount)
 
-            caisse = Caisse.objects.all().filter()[:1].get()
-            caisse.caisse_value += customerpayment.amount
-            caisse.save()
+            if SellOrderPayment.objects.filter(order=order, customer=order.customer, created=datetime.now()):
+                customerpayment.order = order
+                customerpayment.customer = order.customer
+                customerpayment.save()
 
-            # TODO: Uncomment this one
-            # customerpayment.user = request.user.id
-            if customerpayment.pay_status == "Cheque":
-                return redirect(f'../create_customer_cheque/{customerpayment.pk}')
-            if customerpayment.pay_status == "Verement":
-                return redirect("payments:create_customer_verment", customerpayment.pk)
+                if order.debt == 0 or order.debt is None:
+                    order.debt = order.get_ttc()
+                print(order.debt)
+                order.debt -= customerpayment.amount
+                # print(order.debt)
+
+                if order.debt == 0:
+                    order.paid = True
+                order.save()
+                customer.debt -= customerpayment.amount
+                customer.save()
+
+                customerpayment.user = request.user.id
+
+                if customerpayment.pay_status == "Cheque":
+                    return redirect(f'../create_customer_cheque/{customerpayment.pk}')
+                if customerpayment.pay_status == "Verement":
+                    return redirect("payments:create_customer_verment", customerpayment.pk)
             return redirect('customer:customer_list')
     context = {
         'customerpaymentform': customerpaymentform,
@@ -243,9 +251,34 @@ def create_supplier_cheque(request, pk):
 
 
 def supplier_payment_list(request):
-    supplierpayments = BuyOrderPayment.objects.all()
+    # chosen year
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
+
+    supplierpayments_list = BuyOrderPayment.objects.all()
+
+    myFilter = SupplierPaymentFilter(request.GET, queryset=supplierpayments_list)
+
+    supplierpayments_list = myFilter.qs
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(supplierpayments_list, 5)
+
+    try:
+        supplierpayments = paginator.page(page)
+    except PageNotAnInteger:
+        supplierpayments = paginator.page(1)
+    except EmptyPage:
+        supplierpayments = paginator.page(paginator.num_pages)
+
     context = {
-        "supplierpayments": supplierpayments
+        "supplierpayments": supplierpayments,
+        "myFilter": myFilter,
+        'current_year': current_year,
+
     }
     return render(request, 'payments/supplier/payment_list.html', context)
 

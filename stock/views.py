@@ -247,7 +247,15 @@ def modal_buyorder_stockproduct_list(request, pk):
             for product in chosenproducts:
                 product = ''.join(product.split())
                 currentproduct = Product.objects.get(id=product)
-                stockproduct = StockProduct.objects.get(product=currentproduct, stock=currentproduct.stock)
+                if StockProduct.objects.filter(product=currentproduct, stock=currentproduct.stock):
+                    stockproduct = StockProduct.objects.get(product=currentproduct, stock=currentproduct.stock)
+                else:
+                    stockproduct = StockProduct.objects.create(
+                        product=currentproduct,
+                        quantity=0,
+                        buy_price=currentproduct.buyprice,
+                        stock=currentproduct.stock,
+                    )
                 # print("StockProduct =====> ", stockproduct)
                 stockproduct.quantity += 1
                 stockproduct.save()

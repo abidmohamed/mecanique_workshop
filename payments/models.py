@@ -21,7 +21,6 @@ class SellOrderPayment(models.Model):
         ('Cash', 'Cash'),
         ('Cheque', 'Cheque'),
         ('Verement', 'Verement'),
-
     )
     pay_status = models.CharField(max_length=9, choices=pay_type, blank=True, default="Cash")
 
