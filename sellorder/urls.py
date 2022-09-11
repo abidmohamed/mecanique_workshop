@@ -62,4 +62,7 @@ urlpatterns = [
     path('get_orders_pannes_payed', views.get_orders_pannes_payed, name='get_orders_pannes_payed'),
     path('get_orders_pieces_payed', views.get_orders_pieces_payed, name='get_orders_pieces_payed'),
 
+    # order debt fixing
+    path('order_fix_debt', views.order_fix_debt, name='order_fix_debt'),
+
 ]

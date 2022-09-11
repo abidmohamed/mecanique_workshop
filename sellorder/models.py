@@ -56,7 +56,8 @@ class Order(models.Model):
         return round(self.get_total_item_panne() + self.get_tva() - self.discount_amount + self.timbre, 2)
 
     def get_debt(self):
-        return self.debt
+        payments = round(sum(item.amount for item in self.payments_items.all()), 2)
+        return self.get_ttc() - payments
 
 
 class OrderItem(models.Model):

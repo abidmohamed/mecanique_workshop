@@ -316,24 +316,26 @@ def delete_supplier_by_supplier_payment(request, pk):
             if rest_amount > 0 and order.get_ttc() != order.debt:
                 print("TTC =====>", order.get_ttc())
                 print("DEBT =====>", order.debt)
-                order_diff_amount = order.get_ttc() - order.debt
-                # to reach zero difference between ttc and debt
-                if total_payment_amount > order_diff_amount:
-                    to_reach_zero = order_diff_amount
-                else:
-                    to_reach_zero = total_payment_amount
+                if order.get_ttc() is not None and order.debt is not None:
+                    order_diff_amount = order.get_ttc() - order.debt
 
-                # what rest after the operation
-                rest_amount = total_payment_amount - order_diff_amount
-                order.debt += to_reach_zero
-                total_payment_amount = rest_amount
-                # check order debt
-                if order.debt > 0:
-                    order.paid = False
-                print("ORDER ::::>", order.id)
-                print("TTC =====>", order.get_ttc())
-                print("DEBT =====>", order.debt)
-                order.save()
+                    # to reach zero difference between ttc and debt
+                    if total_payment_amount > order_diff_amount:
+                        to_reach_zero = order_diff_amount
+                    else:
+                        to_reach_zero = total_payment_amount
+
+                    # what rest after the operation
+                    rest_amount = total_payment_amount - order_diff_amount
+                    order.debt += to_reach_zero
+                    total_payment_amount = rest_amount
+                    # check order debt
+                    if order.debt > 0:
+                        order.paid = False
+                    print("ORDER ::::>", order.id)
+                    print("TTC =====>", order.get_ttc())
+                    print("DEBT =====>", order.debt)
+                    order.save()
 
         # fix supplier credit
         supplier.credit += payment.amount

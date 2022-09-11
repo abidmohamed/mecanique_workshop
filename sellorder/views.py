@@ -1989,4 +1989,15 @@ def get_orders_pieces_payed(request):
     }
     return render(request, 'sellorder/sellorders_pieces.html', context)
 
+
+# Fixing orders debt
+def order_fix_debt(request):
+    sellorders = Order.objects.all().filter(confirmed=True, factured=False)
+
+    for order in sellorders:
+        order.debt = order.get_debt()
+        order.save()
+
+    return HttpResponse("Order Debt Fixed")
+
 # Add Avancement
