@@ -1,5 +1,6 @@
 from datetime import date, datetime
 
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Sum
 # Create your views here.
@@ -25,7 +26,7 @@ def add_supplier(request):
             return redirect('supplier:supplier_list')
 
     context = {
-            'supplier_form': supplier_form
+        'supplier_form': supplier_form
     }
 
     return render(request, 'supplier/add_supplier.html', context)
@@ -117,7 +118,7 @@ def supplier_detail(request, pk):
             order_date__year=None
         ),
         supplier=supplier, confirmed=False,
-        )
+    )
     # Payments
     payments = BuyOrderPayment.objects.all().filter(supplier=supplier, pay_date__year=current_year.year)
     # searching by date
@@ -215,3 +216,26 @@ def supplier_detail(request, pk):
         'chosen_date': chosen_date,
     }
     return render(request, 'supplier/detail.html', context)
+
+
+# Fix credit
+def fix_old_credit(request):
+    suppliers = Supplier.objects.all()
+
+    for supplier in suppliers:
+        total_credit = 0
+        # get all sell orders
+        orders = supplier.orders.filter(debt__gt=0, confirmed=True)
+
+        for order in orders:
+            # print(order.debt)
+            total_credit += order.debt
+
+        # Fixing customer
+        print("Calculated Credit is = ", total_credit)
+        print(supplier, " ", supplier.credit)
+        supplier.credit = total_credit
+        supplier.save()
+        print(supplier, " ", supplier.credit)
+
+    return HttpResponse("Credit Fixed")
