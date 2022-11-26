@@ -4,12 +4,16 @@ from . import views
 app_name = 'caisse'
 
 urlpatterns = [
-
+    # Cash Regiter
     path('create_transaction/', views.create_transaction, name='create_transaction'),
-    path('transaction_list/', views.transaction_list, name='transaction_list'),
+    path('cash/', views.transaction_list, name='transaction_list'),
+    # Transactions
+    path('transaction_list/', views.in_out_transaction_list, name='in_out_transaction_list'),
+    path('transaction_details/<str:pk>', views.transaction_details, name='transaction_details'),
+    path('transaction_update/<str:pk>', views.transaction_update, name='transaction_update'),
+
     path('today_transaction_list/', views.today_transaction_list, name='today_transaction_list'),
-    path('delete_transaction/<str:pk>', views.delete_transaction, name='delete_transaction'),
-    path('update_transaction/<str:pk>', views.update_transaction, name='update_transaction'),
+    path('delete_transaction/<str:pk>', views.transaction_delete, name='transaction_delete'),
 
     # Category
 

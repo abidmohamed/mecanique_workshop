@@ -1,0 +1,66 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block main %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h1>{% trans "Transaction Details" %} </h1>
+            <br>
+            <hr>
+            {% if transaction.Transaction_type == "Expense" %}
+            <h3 class="text-danger">{{transaction.Transaction_type}}</h3>
+            {% else %}
+            <h3 class="text-success">{{transaction.Transaction_type}}</h3>
+            {% endif %}
+            <br>
+
+        </div>
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-md">
+                    <h4>{% trans "Transaction" %}: </h4>
+                    <td>
+                        <p class="fs-3">{{transaction.Transaction_name}}</p>
+
+                    </td>
+                </div>
+                <div class="col-md">
+                    <h4>{% trans "Amount" %}: </h4>
+                    <td>
+                        <p class="fs-3">{{transaction.amount}} DA</p>
+
+                    </td>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <h4>{% trans "Created By" %}: </h4>
+                    <td>
+                        <p class="fs-3">{{transaction.user}}</p>
+
+                    </td>
+                </div>
+                <div class="col-md">
+                    <h4>{% trans "Date" %}: </h4>
+                    <td>
+                        <p class="fs-3">{{transaction.trans_date}}</p>
+
+                    </td>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <p class=" fs-4">
+                        {{transaction.desc}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
