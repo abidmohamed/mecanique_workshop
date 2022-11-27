@@ -181,7 +181,8 @@ def transaction_list(request):
         current_year = CurrentYear.objects.create(year=2022, user=request.user)
     # Orders
     yearly_sellorders = Order.objects.all().filter(order_date__year=current_year.year, confirmed=True)
-    paid_daily_sellorders = Order.objects.all().filter(order_date__year=current_year.year, order_date__day=now.day, confirmed=True, paid=True)
+    paid_daily_sellorders = Order.objects.all().filter(order_date__year=current_year.year, order_date__day=now.day,
+                                                       confirmed=True, paid=True)
     # transaction
     in_transaction = Transaction.objects.filter(Transaction_type='Income',
                                                 trans_date__year=current_year.year).aggregate(Sum('amount'))
@@ -335,17 +336,19 @@ def transaction_list(request):
             confirmed=True, paid=True
         )
 
-
     # checking variables
-    if customerpayments is None:
-        customerpayments = 0
-    if supplierpayments is None:
-        supplierpayments = 0
+    if customerpayments['amount__sum'] is None:
+        customerpayments['amount__sum'] = 0
+    if supplierpayments['amount__sum'] is None:
+        supplierpayments['amount__sum'] = 0
     if transactions is None:
         transactions = 0
-    if servicepayments is None:
-        servicepayments = 0
-
+    if servicepayments['amount__sum'] is None:
+        servicepayments['amount__sum'] = 0
+    if in_transaction['amount__sum'] is None:
+        in_transaction['amount__sum'] = 0
+    if out_transaction['amount__sum'] is None:
+        out_transaction['amount__sum'] = 0
     # Transactions
     # # ADD
     total_per_period += in_transaction['amount__sum']
