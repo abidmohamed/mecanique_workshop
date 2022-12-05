@@ -4,6 +4,7 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load search_pagination_url %}
+{% load erpextra %}
 
 {% block content %}
 <br>
@@ -11,7 +12,7 @@
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>{% trans "Payments" %}</h5>
+                <h2 class="text-primary">{% trans "Supplier" %} {% trans "Payments" %} | {% if request.user|has_group:"admin" %} {{total_payments}}{% endif %} {% trans "DZD" %}</h2>
             </div>
             <div class="card card-body">
             <div class="row">

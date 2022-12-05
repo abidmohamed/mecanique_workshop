@@ -12,3 +12,23 @@ class SupplierPaymentFilter(django_filters.FilterSet):
         model = BuyOrderPayment
 
         fields = ['supplier', 'start_date', 'end_date', 'pay_status']
+
+
+class CustomerPaymentFilter(django_filters.FilterSet):
+    start_date = DateFilter(field_name='pay_date', lookup_expr="gte", widget=forms.DateInput(attrs={'type': 'date'}))
+    end_date = DateFilter(field_name='pay_date', lookup_expr="lte", widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = SellOrderPayment
+
+        fields = ['customer', 'start_date', 'end_date', 'pay_status']
+
+
+class ServicePaymentFilter(django_filters.FilterSet):
+    start_date = DateFilter(field_name='pay_date', lookup_expr="gte", widget=forms.DateInput(attrs={'type': 'date'}))
+    end_date = DateFilter(field_name='pay_date', lookup_expr="lte", widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = ServicePayment
+
+        fields = ['provider', 'start_date', 'end_date']

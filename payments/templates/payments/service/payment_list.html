@@ -1,14 +1,31 @@
 {% extends 'home.html' %}
+
 {% load static %}
+{% load crispy_forms_tags %}
 {% load i18n %}
+{% load search_pagination_url %}
+{% load erpextra %}
+
 {% block content %}
 <br>
 <div class="container">
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>{% trans "Payments" %}</h5>
+                <h2 class="text-primary">{% trans "Service" %} {% trans "Payments" %} | {% if request.user|has_group:"admin" %} {{total_payments}}{% endif %} {% trans "DZD" %}</h2>
             </div>
+            <div class="card card-body">
+            <div class="row">
+                    <div class="col">
+                        <div class="card card-body">
+                            <form method="get">
+                                {{myFilter.form}}
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
             <div class="card card-body">
                 <table id="table_id" class="display text-center">
                     <thead>
@@ -23,7 +40,6 @@
                     <tbody>
                     {% for payment in serivcepayments %}
                     <tr>
-
                         <td>
                             {{payment.provider}}
                         </td>
@@ -42,6 +58,86 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <br>
+                <hr>
+                <br>
+                <!--  Pagination -->
+                    {% if serivcepayments.has_other_pages %}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {% if serivcepayments.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                        href="?{% param_replace page=serivcepayments.previous_page_number %}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="disabled page-item">
+                                <a class="page-link"
+                                   href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                                {% endif %}
+                        {% for i in serivcepayments.paginator.page_range %}
+                            {% if serivcepayments.number > 3 and forloop.first %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=1 %}">
+                                    1
+                                        </a>
+                                </li>
+                                <li class="disabled">⋯</li>
+                            {% endif %}
+                            {% if serivcepayments.number == i %}
+                                <li class="page-item active">
+                                    <span>
+                                        <a class="page-link" href="#">
+                                        {{ i }}
+                                            <span class="sr-only">(current)
+                                            </span>
+                                        </a>
+                                    </span>
+                                </li>
+                            {% elif i > serivcepayments.number|add:'-3' and i < serivcepayments.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=i %}">
+                                        {{ i }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if serivcepayments.paginator.num_pages > serivcepayments.number|add:'3' and forloop.last %}
+                                <li>...</li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=serivcepayments.paginator.num_pages %}">
+                                    {{ serivcepayments.paginator.num_pages }}
+                                        </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if serivcepayments.has_next %}
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="?{% param_replace page=serivcepayments.next_page_number %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled page-item">
+                                <a class="page-link disabled"
+                                   href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                        </nav>
+                    {% endif %}
+            <!--  Pagination -->
             </div>
         </div>
     </div>
@@ -49,32 +145,9 @@
 </div>
 {% endblock %}
 {% block jsscript %}
-<!-- Data Table  -->
-
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script type="text/javascript"  src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript"  src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
-<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script type="text/javascript"  src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
-<script type="text/javascript"  src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
 
 <script type='text/javascript'>
-    //Data Table init
-    $(document).ready( function () {
-    $('#table_id').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-    } );
+
 
 </script>
 {% endblock %}

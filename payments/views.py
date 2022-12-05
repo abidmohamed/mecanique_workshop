@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
@@ -8,7 +9,7 @@ from accounts.models import CurrentYear
 from buyorder.models import BuyOrder
 from caisse.models import Caisse
 from customer.models import Customer
-from payments.filters import SupplierPaymentFilter
+from payments.filters import SupplierPaymentFilter, CustomerPaymentFilter, ServicePaymentFilter
 from payments.forms import CustomerChequeForm, SupplierPaymentForm, SupplierChequeForm, CustomerPaymentForm, \
     ServicePaymentForm, CustomerVermentForm
 from payments.models import SellOrderPayment, BuyOrderPayment, CustomerCheque, ServicePayment, SupplierCheque
@@ -125,9 +126,37 @@ def create_customer_verment(request, pk):
 
 
 def customer_payment_list(request):
-    customerpayments = SellOrderPayment.objects.all()
+    # chosen year
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
+
+    customerpayments_list = SellOrderPayment.objects.all().order_by('-pay_date')
+
+    myFilter = CustomerPaymentFilter(request.GET, queryset=customerpayments_list)
+
+    customerpayments_list = myFilter.qs
+
+    total_payments = customerpayments_list.aggregate(Sum('amount'))['amount__sum']
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(customerpayments_list, 5)
+
+    try:
+        customerpayments = paginator.page(page)
+    except PageNotAnInteger:
+        customerpayments = paginator.page(1)
+    except EmptyPage:
+        customerpayments = paginator.page(paginator.num_pages)
+
     context = {
-        "customerpayments": customerpayments
+        "customerpayments": customerpayments,
+        "myFilter": myFilter,
+        'current_year': current_year,
+        'total_payments': total_payments,
     }
     return render(request, 'payments/customer/payment_list.html', context)
 
@@ -257,11 +286,14 @@ def supplier_payment_list(request):
     else:
         current_year = CurrentYear.objects.create(year=2022, user=request.user)
 
-    supplierpayments_list = BuyOrderPayment.objects.all()
+    supplierpayments_list = BuyOrderPayment.objects.all().order_by('-pay_date')
 
     myFilter = SupplierPaymentFilter(request.GET, queryset=supplierpayments_list)
 
     supplierpayments_list = myFilter.qs
+
+    total_payments = supplierpayments_list.aggregate(Sum('amount'))['amount__sum']
+
     # Page
     page = request.GET.get('page', 1)
     # Number of customers in the page
@@ -278,7 +310,7 @@ def supplier_payment_list(request):
         "supplierpayments": supplierpayments,
         "myFilter": myFilter,
         'current_year': current_year,
-
+        'total_payments': total_payments,
     }
     return render(request, 'payments/supplier/payment_list.html', context)
 
@@ -381,10 +413,37 @@ def create_service_payment(request, pk):
 
 
 def service_payment_list(request):
-    serivcepayments = ServicePayment.objects.all()
+    # chosen year
+    if CurrentYear.objects.all().filter(user=request.user):
+        current_year = CurrentYear.objects.all().filter(user=request.user)[:1].get()
+    else:
+        current_year = CurrentYear.objects.create(year=2022, user=request.user)
+
+    serivcepayments_list = ServicePayment.objects.all().order_by('-pay_date')
+
+    myFilter = ServicePaymentFilter(request.GET, queryset=serivcepayments_list)
+
+    serivcepayments_list = myFilter.qs
+
+    total_payments = serivcepayments_list.aggregate(Sum('amount'))['amount__sum']
+
+    # Page
+    page = request.GET.get('page', 1)
+    # Number of customers in the page
+    paginator = Paginator(serivcepayments_list, 5)
+
+    try:
+        serivcepayments = paginator.page(page)
+    except PageNotAnInteger:
+        serivcepayments = paginator.page(1)
+    except EmptyPage:
+        serivcepayments = paginator.page(paginator.num_pages)
 
     context = {
         'serivcepayments': serivcepayments,
+        "myFilter": myFilter,
+        'current_year': current_year,
+        'total_payments': total_payments,
     }
     return render(request, 'payments/service/payment_list.html', context)
 
